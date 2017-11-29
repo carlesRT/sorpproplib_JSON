@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{BE1CA790-12A8-4CC0-83CC-582EAE657D8D}</ProjectGuid>
+    <RootNamespace>SorpPropLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>nosjob\include;C:\Qt\5.8\mingw53_32\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>nosjob\include;D:\bin\Qt\5.9.1\mingw53_32\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>nosjob\include;D:\bin\Qt\5.9.1\mingw53_32\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>nosjob\include;D:\bin\Qt\5.9.1\mingw53_32\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4716;4996</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4716;4996;</DisableSpecificWarnings>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);SORPPROPLIB_LIBRARY;</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4716;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4716;4996;</DisableSpecificWarnings>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);SORPPROPLIB_LIBRARY;</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="eos_water.cpp" />
+    <ClCompile Include="eqn_ac_floryhuggins.cpp" />
+    <ClCompile Include="eqn_ac_heil.cpp" />
+    <ClCompile Include="eqn_ac_nrtl_fixeddg.cpp" />
+    <ClCompile Include="eqn_ac_tsubokakatayama.cpp" />
+    <ClCompile Include="eqn_ac_uniquac_du_t.cpp" />
+    <ClCompile Include="eqn_ac_uniquac_fixeddu.cpp" />
+    <ClCompile Include="eqn_ac_wangchao.cpp" />
+    <ClCompile Include="eqn_ac_wilson.cpp" />
+    <ClCompile Include="eqn_antoine.cpp" />
+    <ClCompile Include="eqn_dss.cpp" />
+    <ClCompile Include="eqn_dubininastakov_mass.cpp" />
+    <ClCompile Include="eqn_dubininastakov_volume.cpp" />
+    <ClCompile Include="eqn_duhring.cpp" />
+    <ClCompile Include="eqn_langmuir.cpp" />
+    <ClCompile Include="eqn_nrtl.cpp" />
+    <ClCompile Include="eqn_template.cpp" />
+    <ClCompile Include="eqn_toth.cpp" />
+    <ClCompile Include="nosjob\src\Array.cpp" />
+    <ClCompile Include="nosjob\src\Boolean.cpp" />
+    <ClCompile Include="nosjob\src\Double.cpp" />
+    <ClCompile Include="nosjob\src\Integer.cpp" />
+    <ClCompile Include="nosjob\src\nosjob.cpp" />
+    <ClCompile Include="nosjob\src\Object.cpp" />
+    <ClCompile Include="nosjob\src\Parser.cpp" />
+    <ClCompile Include="nosjob\src\parser\JSON_parser.c" />
+    <ClCompile Include="nosjob\src\parser\main.c" />
+    <ClCompile Include="nosjob\src\Utf16String.cpp" />
+    <ClCompile Include="nosjob\src\Utf8String.cpp" />
+    <ClCompile Include="eqn_ac_nrtl_dg_t.cpp" />
+    <ClCompile Include="pair_rs.cpp" />
+    <ClCompile Include="parms.cpp" />
+    <ClCompile Include="sorpproplib.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\sorpproplib_global.h" />
+    <ClInclude Include="eos_water.h" />
+    <ClInclude Include="eqn_ac_floryhuggins.h" />
+    <ClInclude Include="eqn_ac_heil.h" />
+    <ClInclude Include="eqn_ac_nrtl_fixeddg.h" />
+    <ClInclude Include="eqn_ac_tsubokakatayama.h" />
+    <ClInclude Include="eqn_ac_uniquac_du_t.h" />
+    <ClInclude Include="eqn_ac_uniquac_fixeddu.h" />
+    <ClInclude Include="eqn_ac_wangchao.h" />
+    <ClInclude Include="eqn_ac_wilson.h" />
+    <ClInclude Include="eqn_antoine.h" />
+    <ClInclude Include="eqn_dss.h" />
+    <ClInclude Include="eqn_dubininastakov_mass.h" />
+    <ClInclude Include="eqn_dubininastakov_volume.h" />
+    <ClInclude Include="eqn_duhring.h" />
+    <ClInclude Include="eqn_langmuir.h" />
+    <ClInclude Include="eqn_nrtl.h" />
+    <ClInclude Include="eqn_template.h" />
+    <ClInclude Include="eqn_toth.h" />
+    <ClInclude Include="nosjob\include\wh\nosjob\Allocator.hpp" />
+    <ClInclude Include="nosjob\include\wh\nosjob\AtomAccess.hpp" />
+    <ClInclude Include="nosjob\include\wh\nosjob\nosjob.hpp" />
+    <ClInclude Include="nosjob\include\wh\nosjob\nosjob_convert.hpp" />
+    <ClInclude Include="nosjob\include\wh\nosjob\nosjob_s11n.hpp" />
+    <ClInclude Include="nosjob\include\wh\nosjob\utfcpp\utf8.h" />
+    <ClInclude Include="nosjob\include\wh\nosjob\utfcpp\utf8\checked.h" />
+    <ClInclude Include="nosjob\include\wh\nosjob\utfcpp\utf8\core.h" />
+    <ClInclude Include="nosjob\include\wh\nosjob\utfcpp\utf8\unchecked.h" />
+    <ClInclude Include="nosjob\packages\pthreads.2.9.1.4\build\native\include\need_errno.h" />
+    <ClInclude Include="nosjob\packages\pthreads.2.9.1.4\build\native\include\pthread.h" />
+    <ClInclude Include="nosjob\packages\pthreads.2.9.1.4\build\native\include\sched.h" />
+    <ClInclude Include="nosjob\packages\pthreads.2.9.1.4\build\native\include\semaphore.h" />
+    <ClInclude Include="nosjob\src\parser\JSON_parser.h" />
+    <ClInclude Include="eqn_ac_nrtl_dg_t.h" />
+    <ClInclude Include="pair_rs.h" />
+    <ClInclude Include="parms.h" />
+    <ClInclude Include="pair_template.h" />
+    <ClInclude Include="sorpproplib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IPair_rs.h" />
+    <None Include="nosjob\packages\pthreads.2.9.1.4\build\native\docs\index.html" />
+    <None Include="sorpPropLib.pro" />
+    <None Include="sorpPropLib.pro.user" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
