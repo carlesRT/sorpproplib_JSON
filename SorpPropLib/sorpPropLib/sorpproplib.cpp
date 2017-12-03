@@ -34,6 +34,7 @@
 #include "eqn_langmuir.h"
 #include "eqn_nrtl.h"
 #include "eqn_toth.h"
+#include "eqn_mr_1pvdw.h"
 
 
 SorpPropLib::SorpPropLib()
@@ -68,6 +69,7 @@ eqn_template *getEqnByName(std::string eqn_name)
 		eqn = new eqn_langmuir;
 	}
 	else if (eqn_name == "mixingrule-1pvdw") {
+		eqn = new eqn_mr_1pvdw;
 	}
 	else if (eqn_name == "mixingrule-2pcmr") {
 	}
@@ -112,7 +114,7 @@ std::string calcpair(pair_rs *p, double tK, double xMass)
 	for (auto pr : p->eqn_parms) {
 		eqn_template *eqn = getEqnByName(pr.first);
 		if (eqn != nullptr) {
-			double pressure = eqn->calc(pr.second, tK, xMass);
+			double pressure = eqn->calc(pr.second, tK, xMass, p->getRefName());
 			s.flush();
 			s << tK << "\t" << xMass << "\t";
 			if (pressure<0) {
@@ -219,8 +221,11 @@ bool SorpPropLib::readCsv(DATAMAP& pairs, std::string equation, std::istream& in
 		else
 		{
 			//add conversion of ref/sorb to lower case
+			if (tokens.size()>2) {
 			for (int i : {0, 1, 2}) {
 				std::transform(tokens[i].begin(), tokens[i].end(), tokens[i].begin(), ::tolower);
+			}
+
 			}
 			
 			PK pk = PK(tokens[0], tokens[1], tokens[2]);

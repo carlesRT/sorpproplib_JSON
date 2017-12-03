@@ -61,6 +61,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
+
+	std::cout << "Press enter to exit.";
+	std::getchar();
+
 	sLib->destroy(pairs);
 	delete sLib;
 

@@ -114,6 +114,9 @@
     <ClCompile Include="eqn_ac_nrtl_fixeddg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="eqn_mr_1pvdw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eos_water.h">
@@ -228,6 +231,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eqn_ac_nrtl_fixeddg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eqn_mr_1pvdw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

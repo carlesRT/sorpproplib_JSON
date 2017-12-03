@@ -11,3 +11,4 @@
 *.tlog
 /sorpPropLib/Debug
 /sorpPropLib/sorpPropLib/Debug
+*.opendb

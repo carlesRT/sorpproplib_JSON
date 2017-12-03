@@ -143,6 +143,7 @@
     <ClCompile Include="eqn_dubininastakov_volume.cpp" />
     <ClCompile Include="eqn_duhring.cpp" />
     <ClCompile Include="eqn_langmuir.cpp" />
+    <ClCompile Include="eqn_mr_1pvdw.cpp" />
     <ClCompile Include="eqn_nrtl.cpp" />
     <ClCompile Include="eqn_template.cpp" />
     <ClCompile Include="eqn_toth.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="eqn_dubininastakov_volume.h" />
     <ClInclude Include="eqn_duhring.h" />
     <ClInclude Include="eqn_langmuir.h" />
+    <ClInclude Include="eqn_mr_1pvdw.h" />
     <ClInclude Include="eqn_nrtl.h" />
     <ClInclude Include="eqn_template.h" />
     <ClInclude Include="eqn_toth.h" />
