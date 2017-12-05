@@ -32,9 +32,9 @@
 #include "eqn_dubininastakov_mass.h"
 #include "eqn_duhring.h"
 #include "eqn_langmuir.h"
-#include "eqn_nrtl.h"
 #include "eqn_toth.h"
 #include "eqn_mr_1pvdw.h"
+#include "eqn_duhring.h"
 
 
 SorpPropLib::SorpPropLib()
@@ -58,6 +58,9 @@ eqn_template *getEqnByName(std::string eqn_name)
 	}
 	else if (eqn_name == "dubinin-astakov-volume") {
 		eqn = new eqn_dubininastakov_volume;
+	}
+	else if (eqn_name == "duhring") {
+		eqn = new eqn_duhring;
 	}
 	else if (eqn_name == "flory-huggins") {
 		eqn = new eqn_ac_floryhuggins;
@@ -108,13 +111,13 @@ eqn_template *getEqnByName(std::string eqn_name)
 /**
 	Execute refrigerant-adsorption calculation
 */
-std::string calcpair(pair_rs *p, double tK, double xMass)
+std::string calcpair(DATAMAP& pairs, pair_rs *p, double tK, double xMass)
 {
 	std::ostringstream s;
 	for (auto pr : p->eqn_parms) {
 		eqn_template *eqn = getEqnByName(pr.first);
 		if (eqn != nullptr) {
-			double pressure = eqn->calc(pr.second, tK, xMass, p->getRefName());
+			double pressure = eqn->calc(pairs, pr.second, tK, xMass, p->getRefName());
 			s.flush();
 			s << tK << "\t" << xMass << "\t";
 			if (pressure<0) {
@@ -137,6 +140,9 @@ std::string SorpPropLib::calc(DATAMAP& pairs, std::string ref, std::string sorb,
 	// note: all string data is lower case except comments (literature & references)
 	std::transform(sorb.begin(), sorb.end(), sorb.begin(), ::tolower);
 	std::vector<std::string> srb = split(sorb, ':');
+	if (srb.size() < 2) {
+		srb.push_back("");//for no-subtype pairs
+	}
 	
 	PK rsKey(ref, srb[0], srb[1]);
 
@@ -148,7 +154,7 @@ std::string SorpPropLib::calc(DATAMAP& pairs, std::string ref, std::string sorb,
 			std::cout << "no equations found for: " << ref << ", " << sorb;
 		}
 		else {
-			std::string rc = calcpair(pr, tK, xMass);
+			std::string rc = calcpair(pairs, pr, tK, xMass);
 			std::cout << rc;
 			return rc;
 		}
@@ -405,395 +411,5 @@ void SorpPropLib::destroy(DATAMAP& pairs) {
 */
 void SorpPropLib::addExtra(DATAMAP& pairs)
 {
-	pair_rs *pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "ch3cook");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "ch3ch(oh)coona");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "h2n(ch2)2oh");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "ho(ch2)3oh");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "lino3-lii-licl");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "lii-oh(ch2)3oh");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "libr", "lino3");
-	pr->add("duhring", "a0", -2.00755);
-	pr->add("duhring", "a1", 0.16976);
-	pr->add("duhring", "a2", -3.133362e-3);
-	pr->add("duhring", "a3", 1.97668e-5);
-	pr->add("duhring", "b0", 321.128);
-	pr->add("duhring", "b1", -19.322);
-	pr->add("duhring", "b2", 0.374382);
-	pr->add("duhring", "b3", -2.0637e-3);
-	pr->add("duhring", "n", 1.8);
-	pr->add("duhring", "m", 32);
-	pr->add("duhring", "r", 6.89476);
-	pr->add("duhring", "q", 459.72);
-	pr->add("duhring", "c", 6.21147);
-	pr->add("duhring", "d", -2886.373);
-	pr->add("duhring", "e", -337269.46);
-	pairs[pr->getKey()] = pr;
-
-	/*
-	pr->setComment("Duhring", "");
-	pr->setKeys("water", "licl", "");
-	pr->setKeys("water", "cacl2", "");
-	pr->setComment("Duhring", "");
-	pr->setKeys("water", "zeolite", "5a");
-	pr->setKeys("water", "zeolite", "13x");
-	pr->setComment("Duhring", "");
-	pr->setKeys("water", "silicagel", "");
-	*/
-
-	pr = new pair_rs;
-	pr->setComment("Duhring", "");
-	pr->setKey("water", "naoh", "koh-csoh");
-	pr->add("duhring", "a0", 6.164233723);
-	pr->add("duhring", "a1", 2.746665026e-1);
-	pr->add("duhring", "a2", 4.916023734e-3);
-	pr->add("duhring", "a3", 2.859098259e-5);
-	pr->add("duhring", "b0", 5.380343163e1);
-	pr->add("duhring", "b1", 5.004848451);
-	pr->add("duhring", "b2", 1.228273028e-1);
-	pr->add("duhring", "b3", 1.096142341e-3);
-	pr->add("duhring", "n", 1);
-	pr->add("duhring", "m", 0);
-	pr->add("duhring", "r", 1);
-	pr->add("duhring", "q", 273.15);
-	pr->add("duhring", "c", 6.427154896);
-	pr->add("duhring", "d", 1208.919437);
-	pr->add("duhring", "e", 166159.9630);
-	pairs[pr->getKey()] = pr;
-
-	const std::string toth_citing = "Da Silva, F. A., & Rodrigues, A. E. (1999). Adsorption equilibria and kinetics for propylene and propane over 13X and 4A zeolite pellets. Industrial & engineering chemistry research, 38(5), 2051-2057.";
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propylene", "zeolite", "4a");
-	pr->add("toth", "q_s", 85.26);
-	pr->add("toth", "b_0", 7.4e-6);
-	pr->add("toth", "qstar_r", 3.6e3);
-	pr->add("toth", "n_0", 0.666);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propylene", "zeolite", "13x");
-	pr->add("toth", "q_s", 112.5);
-	pr->add("toth", "b_0", 3.5e-7);
-	pr->add("toth", "qstar_r", 5.1e3);
-	pr->add("toth", "n_0", 0.608);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propylene", "zeolite", "5a-crystal");
-	pr->add("toth", "q_s", 168.84);
-	pr->add("toth", "b_0", 1.33e-2);
-	pr->add("toth", "qstar_r", 1.684e3);
-	pr->add("toth", "n_0", 0.4);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 2.5);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propylene", "zeolite", "5a-pellets");
-	pr->add("toth", "q_s", 123.06);
-	pr->add("toth", "b_0", 2.02e-2);
-	pr->add("toth", "qstar_r", 1.612e3);
-	pr->add("toth", "n_0", 0.36);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 2.78);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("butene", "zeolite", "13x");
-	pr->add("toth", "q_s", 121.8);
-	pr->add("toth", "b_0", 2.5e-7);
-	pr->add("toth", "qstar_r", 6.543e3);
-	pr->add("toth", "n_0", 0.452);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 2.21);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("co2", "carbon", "acf-a-20");
-	pr->add("toth", "q_s", 1.56e3);
-	pr->add("toth", "b_0", 2.55e-7);
-	pr->add("toth", "qstar_r", 2.313e3);
-	pr->add("toth", "n_0", 0.696);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("co2", "carbon", "ac-maxsorbiii");
-	pr->add("toth", "q_s", 3.06e3);
-	pr->add("toth", "b_0", 1.17e-7);
-	pr->add("toth", "qstar_r", 2.45e3);
-	pr->add("toth", "n_0", 0.664);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("co2", "silicagel", "");
-	pr->add("toth", "q_s", 655.6);
-	pr->add("toth", "b_0", 5.164e-7);
-	pr->add("toth", "qstar_r", 2.330e3);
-	pr->add("toth", "n_0", -3.053e-1);
-	pr->add("toth", "c", 2.386e2);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("co2", "zeolite", "5a");
-	pr->add("toth", "q_s", 642.4);
-	pr->add("toth", "b_0", 6.761e-8);
-	pr->add("toth", "qstar_r", 5.625e3);
-	pr->add("toth", "n_0", 2.7e-1);
-	pr->add("toth", "c", -2.002e1);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("co2", "zeolite", "13x");
-	pr->add("toth", "q_s", 585.2);
-	pr->add("toth", "b_0", 4.884e-4);
-	pr->add("toth", "qstar_r", 2.991e3);
-	pr->add("toth", "n_0", 7.487e-2);
-	pr->add("toth", "c", 3.805e1);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("hfc134a", "carbon", "ac-maxsorbiii");
-	pr->add("toth", "q_s", 4.32e3);
-	pr->add("toth", "b_0", 3.51e-6);
-	pr->add("toth", "qstar_r", 3.27e3);
-	pr->add("toth", "n_0", 0.321);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("hfo1234ze", "carbon", "ac-maxsorbiii");
-	pr->add("toth", "q_s", 3.74e3);
-	pr->add("toth", "b_0", 1.3e-6);
-	pr->add("toth", "qstar_r", 3.685e3);
-	pr->add("toth", "n_0", 0.295);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propane", "carbon", "molecularsieve");
-	pr->add("toth", "q_s", 77.308);
-	pr->add("toth", "b_0", 1.81e-2);
-	pr->add("toth", "qstar_r", 1.378e3);
-	pr->add("toth", "n_0", 0.356);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 2.81);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propane", "zeolite", "4a");
-	pr->add("toth", "q_s", 89.32);
-	pr->add("toth", "b_0", 6e-4);
-	pr->add("toth", "qstar_r", 0);
-	pr->add("toth", "n_0", 1);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propane", "zeolite", "13x");
-	pr->add("toth", "q_s", 117.92);
-	pr->add("toth", "b_0", 3.5e-7);
-	pr->add("toth", "qstar_r", 4.3e3);
-	pr->add("toth", "n_0", 0.58);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1);
-	pr->add("toth", "r", -1);       //if p = n
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propane", "zeolite", "5a-crystal");
-	pr->add("toth", "q_s", 160.16);
-	pr->add("toth", "b_0", 4.3e-3);
-	pr->add("toth", "qstar_r", 1.828e3);
-	pr->add("toth", "n_0", 0.46);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 2.17);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propane", "zeolite", "5a-pellets");
-	pr->add("toth", "q_s", 114.84);
-	pr->add("toth", "b_0", 4.94e-4);
-	pr->add("toth", "qstar_r", 2.393e3);
-	pr->add("toth", "n_0", 0.58);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 1.72);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
-
-	pr = new pair_rs;
-	pr->setComment("Toth", toth_citing);
-	pr->setKey("propylene", "carbon", "molecularsieve");
-	pr->add("toth", "q_s", 80.934);
-	pr->add("toth", "b_0", 1.32e-2);
-	pr->add("toth", "qstar_r", 1.726e3);
-	pr->add("toth", "n_0", 0.325);
-	pr->add("toth", "c", 0);
-	pr->add("toth", "m", 3.08);
-	pr->add("toth", "r", 1);
-	pairs[pr->getKey()] = pr;
 }
 

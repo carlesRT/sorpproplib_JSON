@@ -24,8 +24,8 @@ public:
 class eqn_dubininastakov_mass :public eqn_template
 {
 public:
-	double calc(const parms prms, double tK, double xMass, std::string ref = "");
-	double calcY(const para_dubininastakov_mass& para, double tK, double pKpa);
+	double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref = "");
+	double calcY(DATAMAP& pairs, const para_dubininastakov_mass& para, double tK, double pKpa, std::string ref = "");
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;

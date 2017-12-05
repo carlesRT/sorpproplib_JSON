@@ -1,7 +1,7 @@
 #include "eqn_duhring.h"
 
 
-double eqn_duhring::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_duhring::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
     para_duhring myPara(prms);
 

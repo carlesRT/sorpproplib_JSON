@@ -1,6 +1,6 @@
 #include "eqn_ac_nrtl_dg_t.h"
 
-double eqn_ac_NRTL_Dg_T::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_NRTL_Dg_T::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref)
 {
 	para_ac_NRTL_Dg_T mpara(prms);
 

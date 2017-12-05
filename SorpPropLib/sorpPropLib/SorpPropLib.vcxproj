@@ -144,7 +144,6 @@
     <ClCompile Include="eqn_duhring.cpp" />
     <ClCompile Include="eqn_langmuir.cpp" />
     <ClCompile Include="eqn_mr_1pvdw.cpp" />
-    <ClCompile Include="eqn_nrtl.cpp" />
     <ClCompile Include="eqn_template.cpp" />
     <ClCompile Include="eqn_toth.cpp" />
     <ClCompile Include="nosjob\src\Array.cpp" />
@@ -161,6 +160,7 @@
     <ClCompile Include="eqn_ac_nrtl_dg_t.cpp" />
     <ClCompile Include="pair_rs.cpp" />
     <ClCompile Include="parms.cpp" />
+    <ClCompile Include="refrigerants.cpp" />
     <ClCompile Include="sorpproplib.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +181,6 @@
     <ClInclude Include="eqn_duhring.h" />
     <ClInclude Include="eqn_langmuir.h" />
     <ClInclude Include="eqn_mr_1pvdw.h" />
-    <ClInclude Include="eqn_nrtl.h" />
     <ClInclude Include="eqn_template.h" />
     <ClInclude Include="eqn_toth.h" />
     <ClInclude Include="nosjob\include\wh\nosjob\Allocator.hpp" />
@@ -202,6 +201,7 @@
     <ClInclude Include="pair_rs.h" />
     <ClInclude Include="parms.h" />
     <ClInclude Include="pair_template.h" />
+    <ClInclude Include="refrigerants.h" />
     <ClInclude Include="sorpproplib.h" />
   </ItemGroup>
   <ItemGroup>

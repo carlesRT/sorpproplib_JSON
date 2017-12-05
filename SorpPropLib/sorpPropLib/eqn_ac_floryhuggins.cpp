@@ -1,6 +1,6 @@
 #include "eqn_ac_floryhuggins.h"
 
-double eqn_ac_floryhuggins::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_floryhuggins::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
 	para_floryhuggins mpara(prms);
     double chi = mpara.w0/(8.314*tK)*(1+mpara.w1/tK);

@@ -1,6 +1,6 @@
 #include "eqn_ac_uniquac_fixeddu.h"
 
-double eqn_ac_UNIQUAC_fixedDu::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_UNIQUAC_fixedDu::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref)
 {
     para_UNIQUAC_fixedDu mpara(prms);
 

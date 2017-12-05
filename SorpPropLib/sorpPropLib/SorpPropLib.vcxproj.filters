@@ -24,9 +24,6 @@
     <ClCompile Include="eqn_duhring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="eqn_nrtl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="eqn_template.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
     <ClCompile Include="eqn_mr_1pvdw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="refrigerants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eos_water.h">
@@ -126,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eqn_duhring.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="eqn_nrtl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eqn_template.h">
@@ -234,6 +231,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eqn_mr_1pvdw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="refrigerants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

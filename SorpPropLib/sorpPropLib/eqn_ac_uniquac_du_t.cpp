@@ -1,6 +1,6 @@
 #include "eqn_ac_uniquac_du_t.h"
 
-double eqn_ac_UNIQUAC_Du_T::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_UNIQUAC_Du_T::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref)
 {
 	para_UNIQUAC_Du_T mpara(prms);
 

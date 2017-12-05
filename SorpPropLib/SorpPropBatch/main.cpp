@@ -81,7 +81,7 @@ int ProcessFile(SorpPropLib *sLib, DATAMAP pairs, std::ifstream& iFile, std::str
 	double tK, xMass;
 	std::vector<std::string> strs;
 
-	std::ofstream oFile(outputFilename, std::ofstream::out | std::ofstream::app);
+	std::ofstream oFile(outputFilename, std::ofstream::out | std::ofstream::trunc);
 	if (!oFile) {
 		oFile.open(outputFilename, std::ofstream::in | std::ofstream::out | std::ofstream::trunc);
 	}

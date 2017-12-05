@@ -1,6 +1,6 @@
 #include "eqn_langmuir.h"
 
-double eqn_langmuir::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_langmuir::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
 	para_langmuir myPara(prms);
 

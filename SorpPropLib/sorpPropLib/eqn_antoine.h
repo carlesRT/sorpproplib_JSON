@@ -47,7 +47,7 @@ class eqn_antoine:public eqn_template
 {
 public:
 
-    double calc(const parms prms, double temperatureK, double xMass, std::string ref = "");
+    double calc(DATAMAP& pairs, const parms prms, double temperatureK, double xMass, std::string ref = "");
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;

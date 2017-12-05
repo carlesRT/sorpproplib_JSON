@@ -1,6 +1,6 @@
 #include "eqn_dubininastakov_volume.h"
 
-double eqn_dubininastakov_volume::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_dubininastakov_volume::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
 	para_dubininastakov_volume myPara(prms);
     double p_guess = 10;

@@ -16,7 +16,7 @@ double eqn_dss::calcY(const para_dss& para, double tK, double pKpa)
     return (YAA+YBB);
 }
 
-double eqn_dss::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_dss::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
 	para_dss myPara(prms);
 

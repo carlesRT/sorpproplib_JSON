@@ -1,6 +1,6 @@
 #include "eqn_mr_1pvdw.h"
 
-double eqn_mr_1pvdw::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_mr_1pvdw::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
 {
 	para_1pvdw myPara(prms);
 

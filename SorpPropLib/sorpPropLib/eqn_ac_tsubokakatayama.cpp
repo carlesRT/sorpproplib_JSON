@@ -1,6 +1,6 @@
 #include "eqn_ac_tsubokakatayama.h"
 
-double eqn_ac_tsubokakatayama::calc(const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_tsubokakatayama::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref)
 {
 	para_tsubokakatayama mpara(prms);
 

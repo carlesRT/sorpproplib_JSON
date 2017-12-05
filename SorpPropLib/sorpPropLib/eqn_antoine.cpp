@@ -1,6 +1,6 @@
 #include "eqn_antoine.h"
 
-double eqn_antoine::calc(parms prms, double temperatureK, double xMass, std::string ref)
+double eqn_antoine::calc(DATAMAP& pairs, parms prms, double temperatureK, double xMass, std::string ref)
 {
 	para_antoine myPara(prms);
 

@@ -9,7 +9,7 @@
 
 class para_toth {
 public:
-    double q_s;
+    double Y0;
     double b_0;
     double qstar_R;
     double n_0;
@@ -18,7 +18,7 @@ public:
     double r;
 
 	para_toth(parms prms) {
-		q_s = prms.get("q_s");
+		Y0 = prms.get("Y0");
 		b_0 = prms.get("b_0");
 		qstar_R = prms.get("qstar_R");
 		n_0 = prms.get("n_0");
@@ -33,13 +33,13 @@ public:
 class eqn_toth:public eqn_template
 {
 public:
-    double calc(const parms prms, double tK, double xMass, std::string ref = "");
+    double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref = "");
     double calcY(const para_toth& para, double tK, double pKpa);
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;
 		s << "\"" << prms.getEquation() << "\",";
-		if (!prms.has("q_s")) { s << "q_s" << ","; isOk = false; }
+		if (!prms.has("Y0")) { s << "Y0" << ","; isOk = false; }
 		if (!prms.has("b_0")) { s << "b_0" << ","; isOk = false; }
 		if (!prms.has("qstar_R")) { s << "qstar_R" << ","; isOk = false; }
 		if (!prms.has("n_0")) { s << "n_0" << ","; isOk = false; }
