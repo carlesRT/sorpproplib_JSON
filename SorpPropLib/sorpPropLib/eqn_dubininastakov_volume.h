@@ -24,8 +24,8 @@ public:
 class eqn_dubininastakov_volume :public eqn_template
 {
 public:
-    double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref = "");
-    double calcY(const para_dubininastakov_volume& para,double tK, double pKpa);
+    double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::vector<double> refInfo);
+    double calcY(DATAMAP& pairs, const para_dubininastakov_volume& para,double tK, double pKpa, std::vector<double> refInfo);
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;

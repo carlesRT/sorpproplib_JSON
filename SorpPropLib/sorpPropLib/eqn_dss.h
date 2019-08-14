@@ -28,15 +28,15 @@ public:
 		dHA = prms.get("dHA");
 		dHB = prms.get("dHB");
 	}
-	para_dss(const para_dss &) {}
-	para_dss & operator=(const para_dss& a) { return *this; }
+	//para_dss(const para_dss &) {}
+	//para_dss & operator=(const para_dss& a) { return *this; }
 };
 
 class eqn_dss :public eqn_template
 {
 public:
 	double calcY(const para_dss& para, double tK, double pKpa);
-	double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref = "");
+	double calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::vector<double> refInfo);
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;

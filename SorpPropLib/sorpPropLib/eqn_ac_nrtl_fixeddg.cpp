@@ -1,6 +1,6 @@
 #include "eqn_ac_nrtl_fixeddg.h"
 
-double eqn_ac_NRTL_fixdDg::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_NRTL_fixdDg::calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::vector<double> refInfo)
 {
 	para_ac_NRTL_fixdDg mpara(prms);
 

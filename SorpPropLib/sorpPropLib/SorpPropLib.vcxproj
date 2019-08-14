@@ -140,10 +140,12 @@
     <ClCompile Include="eqn_antoine.cpp" />
     <ClCompile Include="eqn_dss.cpp" />
     <ClCompile Include="eqn_dubininastakov_mass.cpp" />
+    <ClCompile Include="eqn_dubininastakov_mass_mod.cpp" />
     <ClCompile Include="eqn_dubininastakov_volume.cpp" />
     <ClCompile Include="eqn_duhring.cpp" />
     <ClCompile Include="eqn_langmuir.cpp" />
     <ClCompile Include="eqn_mr_1pvdw.cpp" />
+    <ClCompile Include="eqn_refrigerants.cpp" />
     <ClCompile Include="eqn_template.cpp" />
     <ClCompile Include="eqn_toth.cpp" />
     <ClCompile Include="nosjob\src\Array.cpp" />
@@ -164,7 +166,6 @@
     <ClCompile Include="sorpproplib.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\sorpproplib_global.h" />
     <ClInclude Include="eos_water.h" />
     <ClInclude Include="eqn_ac_floryhuggins.h" />
     <ClInclude Include="eqn_ac_heil.h" />
@@ -177,10 +178,12 @@
     <ClInclude Include="eqn_antoine.h" />
     <ClInclude Include="eqn_dss.h" />
     <ClInclude Include="eqn_dubininastakov_mass.h" />
+    <ClInclude Include="eqn_dubininastakov_mass_mod.h" />
     <ClInclude Include="eqn_dubininastakov_volume.h" />
     <ClInclude Include="eqn_duhring.h" />
     <ClInclude Include="eqn_langmuir.h" />
     <ClInclude Include="eqn_mr_1pvdw.h" />
+    <ClInclude Include="eqn_refrigerants.h" />
     <ClInclude Include="eqn_template.h" />
     <ClInclude Include="eqn_toth.h" />
     <ClInclude Include="nosjob\include\wh\nosjob\Allocator.hpp" />

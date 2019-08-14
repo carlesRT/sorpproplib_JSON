@@ -117,6 +117,12 @@
     <ClCompile Include="refrigerants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="eqn_refrigerants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eqn_dubininastakov_mass_mod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eos_water.h">
@@ -141,9 +147,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pair_rs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sorpproplib_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nosjob\include\wh\nosjob\utfcpp\utf8\checked.h">
@@ -234,6 +237,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="refrigerants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eqn_refrigerants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eqn_dubininastakov_mass_mod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

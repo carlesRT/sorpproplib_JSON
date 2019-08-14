@@ -11,8 +11,9 @@
 class eqn_template
 {
 public:
-    virtual double calc(DATAMAP& pairs, parms prms, double tK, double xMass, std::string ref = "") = 0;
+    virtual double calc(DATAMAP& pairs, parms prms, double tK, double xMass, std::vector<double> refInfo) = 0;
 	virtual bool check(parms prms, std::string& badparms) = 0;
+
 };
 
 #endif // EQN_TEMPLATE_H

@@ -1,6 +1,6 @@
 #include "eqn_ac_wilson.h"
 
-double eqn_ac_wilson::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
+double eqn_ac_wilson::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::vector<double> refInfo)
 {
     para_wilson mpara(prms);
 

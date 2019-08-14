@@ -35,6 +35,8 @@
 #include "eqn_toth.h"
 #include "eqn_mr_1pvdw.h"
 #include "eqn_duhring.h"
+#include "eqn_refrigerants.h"
+#include "eqn_dubininastakov_mass_mod.h"
 
 
 SorpPropLib::SorpPropLib()
@@ -56,6 +58,9 @@ eqn_template *getEqnByName(std::string eqn_name)
 	else if (eqn_name == "dubinin-astakov-mass") {
 		eqn = new eqn_dubininastakov_mass;
 	}
+	else if (eqn_name == "dubinin-astakov-mass_mod") {
+		eqn = new eqn_dubininastakov_mass_mod;
+	}
 	else if (eqn_name == "dubinin-astakov-volume") {
 		eqn = new eqn_dubininastakov_volume;
 	}
@@ -74,7 +79,7 @@ eqn_template *getEqnByName(std::string eqn_name)
 	else if (eqn_name == "mixingrule-1pvdw") {
 		eqn = new eqn_mr_1pvdw;
 	}
-	else if (eqn_name == "mixingrule-2pcmr") {
+	else if (eqn_name == "mixingrule-2pcmr") {	
 	}
 	else if (eqn_name == "mixingrule-vdwb") {
 	}
@@ -105,19 +110,23 @@ eqn_template *getEqnByName(std::string eqn_name)
 	else if (eqn_name == "wilson") {
 		eqn = new eqn_ac_wilson;
 	}
+	else if (eqn_name == "refrigerants") {
+		eqn = new eqn_refrigerants;
+	}
 	return eqn;
 }
 
 /**
 	Execute refrigerant-adsorption calculation
 */
-std::string calcpair(DATAMAP& pairs, pair_rs *p, double tK, double xMass)
+std::string calcpair(DATAMAP& pairs, pair_rs *p, double tK, double xMass, std::vector<double> refInfo)
 {
 	std::ostringstream s;
 	for (auto pr : p->eqn_parms) {
 		eqn_template *eqn = getEqnByName(pr.first);
 		if (eqn != nullptr) {
-			double pressure = eqn->calc(pairs, pr.second, tK, xMass, p->getRefName());
+					
+			double pressure = eqn->calc(pairs, pr.second, tK, xMass, refInfo);
 			s.flush();
 			s << tK << "\t" << xMass << "\t";
 			if (pressure<0) {
@@ -133,16 +142,81 @@ std::string calcpair(DATAMAP& pairs, pair_rs *p, double tK, double xMass)
 }
 
 /**
+	Calculate refrigerant Psat and extract other physical property data
+*/
+std::vector<double> calcref(DATAMAP& pairs, pair_rs *p, double tK)
+{
+	std::vector<double> vect;
+
+	for (auto pr : p->eqn_parms) {
+		eqn_template *eqn = getEqnByName(pr.first);
+		if (eqn != nullptr) {
+
+			
+			para_refrigerants myPara(pr.second);
+			std::vector<double> dum;
+
+			double pressure = eqn->calc(pairs, pr.second, tK,0, dum);
+			if (pressure<0) {
+				std::cout << "neg Psat";
+			}
+			else {
+
+				vect.push_back(pressure);
+				vect.push_back(myPara.rho);
+				vect.push_back(myPara.a0);
+				vect.push_back(myPara.b0);
+				vect.push_back(myPara.c);
+				vect.push_back(myPara.vm);
+				vect.push_back(myPara.p_crit);
+				vect.push_back(myPara.t_crit);
+				vect.push_back(myPara.w);
+				//refInfo: pressure/rho/vm/pcrit/tcrit/w
+			}
+		}
+		else {
+			std::cout << "not able to find eqn";
+		}
+	}
+	return vect;
+}
+
+/**
 	decode input, find data pair and execute
 */
 std::string SorpPropLib::calc(DATAMAP& pairs, std::string ref, std::string sorb, double tK, double xMass)
 {
 	// note: all string data is lower case except comments (literature & references)
+	std::transform(ref.begin(), ref.end(), ref.begin(), ::tolower);
 	std::transform(sorb.begin(), sorb.end(), sorb.begin(), ::tolower);
+
+	std::vector<double> refInfo;
+
 	std::vector<std::string> srb = split(sorb, ':');
 	if (srb.size() < 2) {
 		srb.push_back("");//for no-subtype pairs
 	}
+
+	//first get the refrigerant data "refr"
+
+	PK rKey(ref, "dum_sorb", "dum_subtype");
+
+	DATAMAP::iterator itr = pairs.find(rKey);
+	if (itr != pairs.end()) {
+		pair_rs *refr = (pair_rs *)pairs[rKey];
+		if (refr->eqn_parms.size() < 1) {
+			std::cout << "no EOS found for: " << ref ;
+		}
+		else {
+			refInfo = calcref(pairs, refr, tK);
+			//refInfo: pressure/rho/vm/pcrit/tcrit/w
+		}
+	}
+	else {
+		std::cout << ref << " not found\n";
+	}
+
+	//then calculate the actual pressure of mixture
 	
 	PK rsKey(ref, srb[0], srb[1]);
 
@@ -154,7 +228,8 @@ std::string SorpPropLib::calc(DATAMAP& pairs, std::string ref, std::string sorb,
 			std::cout << "no equations found for: " << ref << ", " << sorb;
 		}
 		else {
-			std::string rc = calcpair(pairs, pr, tK, xMass);
+
+			std::string rc = calcpair(pairs, pr, tK, xMass, refInfo);
 			std::cout << rc;
 			return rc;
 		}

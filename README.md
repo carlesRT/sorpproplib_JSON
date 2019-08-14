@@ -60,7 +60,8 @@ A dynamic library for isotherm correlaiton of sorption working pairs. The librar
 	
 todo:
 * check all available data
-* add pure refrigerant EOS and property parameter in ref_ classes
+* let pure refrigerant class access ref data, and be accessed where EOS and property is needed
 * keep white space in comment
+* multiple equation for one pair: display all results
 
 Readme last updated 12/4/2017

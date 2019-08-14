@@ -25,9 +25,10 @@ int main(int argc, char *argv[])
 		return -2;
 	}
 
-	std::string fullname = (argc > 1) ? argv[1] : "input.csv";
+	std::string fullname = (argc > 1) ? argv[1] : "input.txt";
 	std::string outname = (argc > 2) ? argv[2] : "output.txt";
 	std::string dataname = (argc > 3) ? argv[2] : "sorpproplib.json";
+
 	
 	/**
 		If we're given a folder as the first argument, 
@@ -52,10 +53,12 @@ int main(int argc, char *argv[])
 
 		std::ifstream iFile(fullname);
 		if (!iFile) {
+			std::cout << "single point";
 
 			ProcessSinglePoint(sLib, pairs);
 		}
 		else {
+			std::cout << "process file";
 
 			ProcessFile(sLib, pairs, iFile, outname);
 		}

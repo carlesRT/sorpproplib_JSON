@@ -33,12 +33,10 @@ public:
 		b2 = prms.get("b2");
 		b3 = prms.get("b3");
 		b4 = prms.get("b4");
-		c = prms.get("c");
 		/** Zihyao
 
 			no parms
 		*/
-		c = 43.15;
 		a0 = a1 = a2 = a3 = a4 = b1 = b2 = b3 = b4 = 0;
 	}
 };
@@ -47,7 +45,7 @@ class eqn_antoine:public eqn_template
 {
 public:
 
-    double calc(DATAMAP& pairs, const parms prms, double temperatureK, double xMass, std::string ref = "");
+    double calc(DATAMAP& pairs, const parms prms, double temperatureK, double xMass, std::vector<double> refInfo);
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;
@@ -62,7 +60,6 @@ public:
 		if (!prms.has("b2")) { s << "b2" << ","; isOk = false; }
 		if (!prms.has("b3")) { s << "b3" << ","; isOk = false; }
 		if (!prms.has("b4")) { s << "b4" << ","; isOk = false; }
-		if (!prms.has("c")) { s << "c" << ","; isOk = false; }
 		if (!isOk) {
 			s << std::endl;
 			badparms = s.str();

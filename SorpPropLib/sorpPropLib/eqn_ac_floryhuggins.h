@@ -20,7 +20,7 @@ public:
 class eqn_ac_floryhuggins:public eqn_template
 {
 public:
-    double calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::string ref = "");
+    double calc(DATAMAP& pairs,const parms prms, double tK, double xMass, std::vector<double> refInfo);
 	bool check(parms prms, std::string& badparms) {
 		bool isOk = true;
 		std::ostringstream s;

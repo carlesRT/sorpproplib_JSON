@@ -16,29 +16,42 @@ double eqn_dss::calcY(const para_dss& para, double tK, double pKpa)
     return (YAA+YBB);
 }
 
-double eqn_dss::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::string ref)
+double eqn_dss::calc(DATAMAP& pairs, const parms prms, double tK, double xMass, std::vector<double> refInfo)
 {
 	para_dss myPara(prms);
 
-    double p_guess = 10;
-    double Y_guess = 0;
-    double tolerance = 1e-4;
-    double scaler = 0.005;
-    int counter = 0;
+	double tolerance = 1e-4;
 
-    for(Y_guess = calcY(myPara,tK,p_guess);fabs(Y_guess - xMass)>tolerance&&counter<100;counter++){
+	double p_guess = 10;
+	double Y_guess = 10;
+	double Y_guess_d = 0;
+	double dYdp = 0;
 
-        Y_guess = calcY(myPara,tK,p_guess);
+	int counter = 0;
 
-        if(counter%10==0){
-        }
+	for (Y_guess = calcY(myPara, tK, p_guess); fabs(Y_guess - xMass)>tolerance&&counter<50; counter++) {
 
-        p_guess += (xMass-Y_guess) * scaler;
-        p_guess = p_guess<0?0:p_guess;
 
-        if(counter%10==0){
-        }
-    }
+		//use Newton-Raphson to solve for pressure
+		//calculate the functional value
+		Y_guess = calcY(myPara, tK, p_guess);
 
-    return (counter==1000?-1:p_guess);
+		//calculate the first derivative
+		Y_guess_d = calcY(myPara, tK, p_guess + 0.001);
+		dYdp = (Y_guess_d - Y_guess) / 0.001;
+
+		//update guess value
+		p_guess -= (Y_guess - xMass) / dYdp;
+		//std::cout <<"xMass\t"<<xMass<< "\tYguess\t" << Y_guess <<"\tYgussd\t"<<Y_guess_d<< "\tdYdp\t" << dYdp << "\tp_guess\t" << p_guess << "\t";
+
+		// Since the calcY function cannot be evaluated with negative p_guess, p_guess is kept above 0.01
+		if (p_guess < 0) {
+			p_guess = 0.01;
+		}
+
+	}
+
+	//std::cout << "iter\t" << counter << "\t";
+
+	return (counter == 50 ? -1 : p_guess);
 }
