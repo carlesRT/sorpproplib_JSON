@@ -2,12 +2,11 @@
 # form and coefficients given the 
 # type of sorbent and refrigerant
 
+import json
+import string
 
 def getEqnAndCoeff(ref,sorb,subtype):
 
-    import json
-    import sys
-    import string
 
     print(ref+':'+sorb+':'+subtype)
 
@@ -26,3 +25,5 @@ def getEqnAndCoeff(ref,sorb,subtype):
             entries.append(item.get('v').get('_ep_'))
 
     print(entries)
+
+    return entries
