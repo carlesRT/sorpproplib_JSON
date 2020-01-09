@@ -7,9 +7,6 @@ import string
 
 def getEqnAndCoeff(ref,sorb,subtype):
 
-
-    print(ref+':'+sorb+':'+subtype)
-
     with open('sorpproplib.json','r') as mfile:
         data = mfile.read()
     lib = json.loads(data)
@@ -23,7 +20,5 @@ def getEqnAndCoeff(ref,sorb,subtype):
         subTmatch = item.get('v').get('_t_')==str(subtype)
         if(sorbMatch&refMatch&subTmatch):
             entries.append(item.get('v').get('_ep_'))
-
-    print(entries)
 
     return entries
