@@ -54,19 +54,18 @@ int main() {
 	printf("\n\n##\n##\nCreated structure for refrigerant.");	
 	printf("\nSelected refrigerant is \"R-134a\".");	
 	
-	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");
 	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
 		T_K, psat_Pa);
-	printf("\nFor T = %f, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
 		T_K, dpsat_dT_PaK);
-	printf("\nFor T = %f, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
 		T_K, dpsat_dT_PaK_num);	
 		
 	printf("\nFor T = %f K, saturated liquid density results in rho_l = %f kg/m3.", 
 		T_K, rho_l_kgm3);
-	printf("\nFor T = %f, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
+	printf("\nFor T = %f K, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
 		T_K, drho_l_dT_kgm3K);
-	printf("\nFor T = %f, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
+	printf("\nFor T = %f K, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
 		T_K, drho_l_dT_kgm3K_num);
 		
 		

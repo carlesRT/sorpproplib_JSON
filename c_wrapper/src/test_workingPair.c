@@ -178,7 +178,7 @@ int main() {
 	// Test working pair: Carbon Maxsorb-III / R-134a
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"maxsorb-iii",
 		"r-134a",
@@ -190,7 +190,7 @@ int main() {
 	// Test working pair: Carbon Acf-a-20 / R-134a
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"acf-a-20",
 		"r-134a",
@@ -202,7 +202,7 @@ int main() {
 	// Test working pair: Carbon Acf-a-20 / R507a
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"acf-a-20",
 		"r507a",
@@ -214,7 +214,7 @@ int main() {
 	// Test working pair: Carbon Maxsorb-III / R-410a
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"maxsorb-iii",
 		"r-410a",
@@ -226,7 +226,7 @@ int main() {
 	// Test working pair: Carbon Maxsorb-III / Propane
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"maxsorb-iii",
 		"propane",
@@ -238,7 +238,7 @@ int main() {
 	// Test working pair: Carbon Norit-rb1 / CO2
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"norit-rb1",
 		"co2",
@@ -250,7 +250,7 @@ int main() {
 	// Test working pair: Carbon Norit-rb1 / Methane
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"norit-rb1",
 		"methane",
@@ -262,7 +262,7 @@ int main() {
 	// Test working pair: Zeolite 5A / Water
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"zeolite",
 		"5a",
 		"water",
@@ -274,7 +274,7 @@ int main() {
 	// Test working pair: Zeolite 13X / Water
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"zeolite",
 		"13x",
 		"water",
@@ -286,7 +286,7 @@ int main() {
 	// Test working pair: Silicagel / Water
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"silicagel",
 		"",
 		"water",
@@ -298,7 +298,7 @@ int main() {
 	// Test working pair: Zeolite 5A / CO2
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"zeolite",
 		"5a",
 		"co2",
@@ -310,7 +310,7 @@ int main() {
 	// Test working pair: Zeolite 13X / CO2
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"zeolite",
 		"13x",
 		"co2",
@@ -322,7 +322,7 @@ int main() {
 	// Test working pair: Silicagel / CO2
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"silicagel",
 		"",
 		"co2",
@@ -334,7 +334,7 @@ int main() {
 	// Test working pair: MOF CuBtC / Propane
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"mof",
 		"cubtc",
 		"propane",
@@ -346,7 +346,7 @@ int main() {
 	// Test working pair: MOF CuBtC / Isobutane
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"mof",
 		"cubtc",
 		"isobutane",
@@ -358,7 +358,7 @@ int main() {
 	// Test working pair: MOF CuBtC / Propylene
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"mof",
 		"cubtc",
 		"propylene",

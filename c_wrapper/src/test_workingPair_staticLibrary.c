@@ -182,7 +182,7 @@ int main() {
 	// Test working pair: Carbon Maxsorb-III / R-134a
 	//	
 	testWorkingPair(
-		"..\\data\\sorpproplib_ValidationCInterface.json",
+		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"maxsorb-iii",
 		"r-134a",

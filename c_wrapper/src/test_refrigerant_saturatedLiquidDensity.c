@@ -39,9 +39,9 @@ int main() {
 	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");		
 	printf("\n\nFor T = %f K, saturated liquid density results in rho_l = %f kg/m3.", 
 		T_K, rho_l_kgm3);
-	printf("\nFor T = %f, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
+	printf("\nFor T = %f K, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
 		T_K, drho_l_dT_kgm3K);
-	printf("\nFor T = %f, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
+	printf("\nFor T = %f K, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
 		T_K, drho_l_dT_kgm3K_num);
 
     return EXIT_SUCCESS;	

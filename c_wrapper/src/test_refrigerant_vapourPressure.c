@@ -38,9 +38,9 @@ int main() {
 	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");
 	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
 		T_K, psat_Pa);
-	printf("\nFor T = %f, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
 		T_K, dpsat_dT_PaK);
-	printf("\nFor T = %f, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
 		T_K, dpsat_dT_PaK_num);
 
     return EXIT_SUCCESS;	
