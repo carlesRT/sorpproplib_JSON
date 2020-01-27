@@ -71,7 +71,7 @@ int main() {
 	// Print calculated values
 	//
 	printf("\n\n##\n##\nSelected working pair is \"NaOH-KOH-CsOH / H2O\".");	
-	printf("\nSelected isotherm is \"Duehring\".");
+	printf("\nSelected absorption equation is \"Duehring\".");
 	
 	printf("\n\nFor T = %f K and p = %f Pa, equilibrium loading results in x = %f kg/kg.", 
 		T_K, p_Pa, w_kgkg);
