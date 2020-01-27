@@ -7,17 +7,9 @@
 PROJECT = sorpPropLib
 
 
-#
-# Change between 32 and 64 bit
-#
-# "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvarsall.bat" x86
-# "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvarsall.bat" amd64
-#
-
-
 # Specify build release:
 #
-# YES: Disable debugging information
+# YES: Disable debugging information and optimize code
 # NO: Debugging information
 #
 BUILD_RELEASE = YES
@@ -25,30 +17,32 @@ BUILD_RELEASE = YES
 
 # Names of sources
 #	
-SOURCES_LIB = $(DIR_SRC)\json_interface.c\
-	$(DIR_SRC)\cJSON.c\
-	$(DIR_SRC)\adsorption.c\
-	$(DIR_SRC)\adsorption_dualSiteSips.c\
-	$(DIR_SRC)\adsorption_langmuir.c\
-	$(DIR_SRC)\adsorption_toth.c\
-	$(DIR_SRC)\adsorption_dubininAstakhov.c\
-	$(DIR_SRC)\refrigerant.c\
-	$(DIR_SRC)\refrigerant_vapourPressure.c\
-	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
-	
-SOURCES = $(SOURCES_LIB) $(DIR_SRC)\workingPair.c
+SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
+	json_interface.c\
+	cJSON.c\
+	adsorption.c\
+	adsorption_dualSiteSips.c\
+	adsorption_langmuir.c\
+	adsorption_toth.c\
+	adsorption_dubininAstakhov.c\
+	absorption_duehring.c\
+	refrigerant.c\
+	refrigerant_vapourPressure.c\
+	refrigerant_saturatedLiquidDensity.c)
+
+SOURCES = $(SOURCES_LIB) $(DIR_SRC)/workingPair.c
 
 
 # Names of objects generated automatically:
 #
 # 1) Substitute path "src" with "obj"
-# 2) Substitute extension ".c" with ".obj"
+# 2) Substitute extension ".c" with ".o"
 #
-TMP_OBJECTS_LIB = $(SOURCES_LIB:src=obj)
-OBJECTS_LIB = $(TMP_OBJECTS_LIB:.c=.obj)
+TMP_OBJECTS_LIB = $(subst src,obj,$(SOURCES_LIB))
+OBJECTS_LIB = $(TMP_OBJECTS_LIB:%.c=%.o)
 
-TMP_OBJECTS = $(SOURCES:src=obj)
-OBJECTS = $(TMP_OBJECTS:.c=.obj)
+TMP_OBJECTS = $(subst src,obj,$(SOURCES))
+OBJECTS = $(TMP_OBJECTS:%.c=%.o)
 
 
 
@@ -59,16 +53,16 @@ OBJECTS = $(TMP_OBJECTS:.c=.obj)
 #
 # Top directory
 #
-DIR_TOP 	= $(MAKEDIR)
+DIR_TOP 	= $(CURDIR)
 
 
 # Subdirectories
 #
-DIR_INCL 	= $(DIR_TOP)\incl
-DIR_SRC 	= $(DIR_TOP)\src
-DIR_OBJ 	= $(DIR_TOP)\obj
-DIR_LIB 	= $(DIR_TOP)\lib
-DIR_TEST 	= $(DIR_TOP)\test
+DIR_INCL 	= $(DIR_TOP)/incl
+DIR_SRC 	= $(DIR_TOP)/src
+DIR_OBJ 	= $(DIR_TOP)/obj
+DIR_LIB 	= $(DIR_TOP)/lib
+DIR_TEST 	= $(DIR_TOP)/test
 
 
 
@@ -79,17 +73,12 @@ DIR_TEST 	= $(DIR_TOP)\test
 #
 # C compiler
 #
-CC		= cl
-
-
-# Linker
-#
-LINK	= link
+CC		= gcc
 
 
 # Library
 #
-LIBRARY	= lib
+LIBRARY	= ar
 
 
 
@@ -100,32 +89,27 @@ LIBRARY	= lib
 #
 # C compiler options
 #
-FLAGS_CC 		= /c
-FLAGS_CC_OBJ	= $(FLAGS_CC_BUILD_DEBUG) /Fo$(DIR_OBJ)\ /I$(DIR_INCL)
-
-
-# Linking otpions
-#
-FLAGS_LINK	= $(FLAGS_LINK_BUILD_DEBUG) /OUT:$(DIR_TEST)^\
+FLAGS_CC 		= -c
+FLAGS_CC_OBJ	= $(FLAGS_CC_BUILD_DEBUG) -I $(DIR_INCL)/ -o $(DIR_OBJ)/
 
 
 # Library options
 #
-FLAGS_LIBRARY_STATIC	= /OUT:$(DIR_LIB)\lib$(PROJECT)_static.lib 
-FLAGS_LIBRARY_DYNAMIC	= /DDLL_EXPORTS $(DIR_SRC)\workingPair.c\
-	/LD /Fo$(DIR_OBJ)\lib$(PROJECT).lib /I$(DIR_INCL)
+FLAGS_LIBRARY_STATIC	= -rcs $(DIR_LIB)/lib$(PROJECT)_static.a 
+FLAGS_LIBRARY_DYNAMIC	= -shared -o $(DIR_LIB)/lib$(PROJECT).dll\
+	-Wl,--out-implib,$(DIR_LIB)/lib$(PROJECT).a
 
 
 # Program options depending on build
 # or debug release /Zi
 #
-!IF "$(BUILD_RELEASE)"=="YES"
-FLAGS_CC_BUILD_DEBUG = /Ot
+ifeq ($(BUILD_RELEASE),YES)
+FLAGS_CC_BUILD_DEBUG = -Ofast
 FLAGS_LINK_BUILD_DEBUG = 
-!ELSE
-FLAGS_CC_BUILD_DEBUG = /W4 /WX
+else
+FLAGS_CC_BUILD_DEBUG = -Og -Wall -Wextra -Werror
 FLAGS_LINK_BUILD_DEBUG = /DEBUG
-!ENDIF
+endif
 
 
 
@@ -136,21 +120,22 @@ FLAGS_LINK_BUILD_DEBUG = /DEBUG
 #
 # Test all files
 #
-all: $(DIR_SRC)\cJSON.c\
+all: $(DIR_SRC)/cJSON.c\
 	test_refrigerants\
 	test_adsorption\
 	test_workingPair\
 	test_libraries
 
-
+	
 # Execute test scripts for refrigerants
 #
 test_refrigerants: test_refrigerant_vapourPressure.exe\
 	test_refrigerant_saturatedLiquidDensity.exe\
-	test_refrigerant.exe	
-	$(DIR_TEST)\test_refrigerant_vapourPressure.exe
-	$(DIR_TEST)\test_refrigerant_saturatedLiquidDensity.exe
-	$(DIR_TEST)\test_refrigerant.exe
+	test_refrigerant.exe
+
+	$(DIR_TEST)/test_refrigerant_vapourPressure.exe
+	$(DIR_TEST)/test_refrigerant_saturatedLiquidDensity.exe
+	$(DIR_TEST)/test_refrigerant.exe
 
 
 # Execute test scripts for adsorption
@@ -159,38 +144,43 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	test_adsorption_langmuir.exe\
 	test_adsorption_toth.exe\
 	test_adsorption_dubininAstakhov.exe\
-	test_adsorption.exe		
-	$(DIR_TEST)\test_adsorption_dualSiteSips.exe
-	$(DIR_TEST)\test_adsorption_langmuir.exe
-	$(DIR_TEST)\test_adsorption_toth.exe
-	$(DIR_TEST)\test_adsorption_dubininAstakhov.exe
-	$(DIR_TEST)\test_adsorption.exe
+	test_absorption_duehring.exe\
+	test_adsorption.exe
 
-
+	$(DIR_TEST)/test_adsorption_dualSiteSips.exe
+	$(DIR_TEST)/test_adsorption_langmuir.exe
+	$(DIR_TEST)/test_adsorption_toth.exe
+	$(DIR_TEST)/test_adsorption_dubininAstakhov.exe
+	$(DIR_TEST)/test_absorption_duehring.exe
+	$(DIR_TEST)/test_adsorption.exe
+	
+	
 # Execute test scripts for refrigerants
 #
-test_workingPair: $(DIR_SRC)\cJSON.c\
+test_workingPair: $(DIR_SRC)/cJSON.c\
 	test_workingPair.exe
-	$(DIR_TEST)\test_workingPair.exe
-
-
+	
+	$(DIR_TEST)/test_workingPair.exe
+	
+	
 # Execute test scripts for libraries
 #
-test_libraries: $(DIR_SRC)\cJSON.c\
+test_libraries: $(DIR_SRC)/cJSON.c\
 	test_workingPair_staticLibrary.exe\
-	test_workingPair_DLL.exe	
-	$(DIR_TEST)\test_workingPair_staticLibrary.exe
-	copy $(DIR_LIB)\lib$(PROJECT).dll $(DIR_TOP)\lib$(PROJECT).dll
-	$(DIR_TEST)\test_workingPair_DLL.exe
-	del $(DIR_TOP)\lib$(PROJECT).dll
+	test_workingPair_DLL.exe
+
+	$(DIR_TEST)/test_workingPair_staticLibrary.exe
+	cp "$(DIR_LIB)/lib$(PROJECT).dll" "$(DIR_TOP)/lib$(PROJECT).dll"
+	$(DIR_TEST)/test_workingPair_DLL.exe
+	rm "$(DIR_TOP)/lib$(PROJECT).dll"
 
 
 # Update external libraries:
 # 1.) cJSON
 #
-$(DIR_SRC)\cJSON.c: $(DIR_LIB)\cJSON\cJSON.c
-	copy $(**R).h $(@R:src=incl).h
-	copy $** $@
+$(DIR_SRC)/cJSON.c: $(DIR_LIB)/cJSON/cJSON.c
+	cp "$(DIR_LIB)/cJSON/cJSON.h" "$(DIR_INCL)/cJSON.h"
+	cp "$(DIR_LIB)/cJSON/cJSON.c" "$(DIR_SRC)/cJSON.c"
 
 
 # Create internal libraries:
@@ -202,75 +192,76 @@ create_libraries: $(DIR_LIB)/lib$(PROJECT)_static.a\
 	$(DIR_LIB)/lib$(PROJECT).dll
 
 
-$(DIR_LIB)\lib$(PROJECT)_static.lib: $(OBJECTS)
-	$(LIBRARY) $(FLAGS_LIBRARY_STATIC) $**
-
-$(DIR_LIB)\lib$(PROJECT).lib: $(DIR_LIB)\lib$(PROJECT).dll
-
-$(DIR_LIB)\lib$(PROJECT).dll: $(OBJECTS_LIB)
-	$(CC) $(FLAGS_LIBRARY_DYNAMIC) $**	
+$(DIR_LIB)/lib$(PROJECT)_static.a: $(OBJECTS)
+	$(LIBRARY) $(FLAGS_LIBRARY_STATIC) $?
 	
-	copy lib$(PROJECT).lib $(DIR_LIB)\lib$(PROJECT).lib
-	copy lib$(PROJECT).dll $(DIR_LIB)\lib$(PROJECT).dll
-	del lib$(PROJECT).lib
-	del lib$(PROJECT).dll
-	del lib$(PROJECT).exp
-	
+$(DIR_LIB)/lib$(PROJECT).dll: $(DIR_OBJ)/workingPair_dll.o $(OBJECTS_LIB)
+	$(CC) $(FLAGS_LIBRARY_DYNAMIC) $?
+
+$(DIR_OBJ)/workingPair_dll.o: $(DIR_SRC)/workingPair.c
+	$(CC) $(FLAGS_CC) -D DLL_EXPORTS $< $(FLAGS_CC_OBJ)$(@F)
+
 
 # Create test scripts
-#	
-test_refrigerant_vapourPressure.exe: $(DIR_OBJ)\test_refrigerant_vapourPressure.obj\
-	$(DIR_OBJ)\refrigerant_vapourPressure.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+#
+test_refrigerant_vapourPressure.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant_vapourPressure.o refrigerant_vapourPressure.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_refrigerant_saturatedLiquidDensity.exe: $(DIR_OBJ)\test_refrigerant_saturatedLiquidDensity.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_refrigerant_saturatedLiquidDensity.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant_saturatedLiquidDensity.o\
+	refrigerant_saturatedLiquidDensity.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_refrigerant.exe: $(DIR_OBJ)\test_refrigerant.obj\
-	$(DIR_OBJ)\refrigerant.obj $(DIR_OBJ)\refrigerant_vapourPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_refrigerant.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant.o refrigerant.o\
+	refrigerant_vapourPressure.o refrigerant_saturatedLiquidDensity.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-	
-test_adsorption_dualSiteSips.exe: $(DIR_OBJ)\test_adsorption_dualSiteSips.obj\
-	$(DIR_OBJ)\adsorption_dualSiteSips.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
 
-test_adsorption_langmuir.exe: $(DIR_OBJ)\test_adsorption_langmuir.obj\
-	$(DIR_OBJ)\adsorption_langmuir.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_adsorption_dualSiteSips.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_dualSiteSips.o adsorption_dualSiteSips.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_adsorption_toth.exe: $(DIR_OBJ)\test_adsorption_toth.obj\
-	$(DIR_OBJ)\adsorption_toth.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_adsorption_langmuir.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_langmuir.o adsorption_langmuir.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_adsorption_dubininAstakhov.exe: $(DIR_OBJ)\test_adsorption_dubininAstakhov.obj\
-	$(DIR_OBJ)\adsorption_dubininAstakhov.obj $(DIR_OBJ)\refrigerant.obj\
-	$(DIR_OBJ)\refrigerant_vapourPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_adsorption_toth.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_toth.o adsorption_toth.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\
-	$(DIR_OBJ)\adsorption.obj $(DIR_OBJ)\adsorption_dualSiteSips.obj\
-	$(DIR_OBJ)\adsorption_langmuir.obj $(DIR_OBJ)\adsorption_dubininAstakhov.obj\
-	$(DIR_OBJ)\adsorption_toth.obj $(DIR_OBJ)\refrigerant.obj\
-	$(DIR_OBJ)\refrigerant_vapourPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
-	
-	
-test_workingPair.exe: $(DIR_OBJ)\test_workingPair.obj $(OBJECTS)
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_adsorption_dubininAstakhov.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_dubininAstakhov.o adsorption_dubininAstakhov.o\
+	refrigerant_vapourPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_workingPair_staticLibrary.exe: $(DIR_OBJ)\test_workingPair_staticLibrary.obj\
-	$(DIR_LIB)\lib$(PROJECT)_static.lib
-	$(LINK) $(FLAGS_LINK)$(@F) $**
+test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_duehring.o absorption_duehring.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_workingPair_DLL.exe: $(DIR_OBJ)\test_workingPair_DLL.obj\
-	$(DIR_LIB)\lib$(PROJECT).lib
-	$(LINK) $(FLAGS_LINK)$(@F) $**
-	
+test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption.o adsorption.o\
+	adsorption_dualSiteSips.o adsorption_langmuir.o adsorption_toth.o\
+	adsorption_dubininAstakhov.o\
+	refrigerant_vapourPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+
+test_workingPair.exe: $(DIR_OBJ)/test_workingPair.o $(OBJECTS)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+
+test_workingPair_staticLibrary.exe: $(DIR_OBJ)/test_workingPair_staticLibrary.o\
+	$(DIR_LIB)/lib$(PROJECT)_static.a
+	$(CC) $< -L $(DIR_LIB) -l $(PROJECT)_static -o $(DIR_TEST)/$(@F)
+
+test_workingPair_DLL.exe: $(DIR_OBJ)/test_workingPair_DLL.o\
+	$(DIR_LIB)/lib$(PROJECT).dll 
+	$(CC) $< -L $(DIR_LIB) -l $(PROJECT) -o $(DIR_TEST)/$(@F)
+
 
 
 
@@ -281,5 +272,5 @@ test_workingPair_DLL.exe: $(DIR_OBJ)\test_workingPair_DLL.obj\
 # Update object-files that
 # depend on source files
 #
-{$(DIR_SRC)}.c{$(DIR_OBJ)}.obj:
-	$(CC) $(FLAGS_CC) $< $(FLAGS_CC_OBJ) 
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
+	$(CC) $(FLAGS_CC) $< $(FLAGS_CC_OBJ)$(@F)

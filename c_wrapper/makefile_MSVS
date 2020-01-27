@@ -20,7 +20,7 @@ PROJECT = sorpPropLib
 # YES: Disable debugging information
 # NO: Debugging information
 #
-BUILD_RELEASE = YES
+BUILD_RELEASE = NO
 
 
 # Names of sources
@@ -32,6 +32,7 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\adsorption_langmuir.c\
 	$(DIR_SRC)\adsorption_toth.c\
 	$(DIR_SRC)\adsorption_dubininAstakhov.c\
+	$(DIR_SRC)\absorption_duehring.c\
 	$(DIR_SRC)\refrigerant.c\
 	$(DIR_SRC)\refrigerant_vapourPressure.c\
 	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
@@ -159,11 +160,13 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	test_adsorption_langmuir.exe\
 	test_adsorption_toth.exe\
 	test_adsorption_dubininAstakhov.exe\
+	test_absorption_duehring.exe\
 	test_adsorption.exe		
 	$(DIR_TEST)\test_adsorption_dualSiteSips.exe
 	$(DIR_TEST)\test_adsorption_langmuir.exe
 	$(DIR_TEST)\test_adsorption_toth.exe
 	$(DIR_TEST)\test_adsorption_dubininAstakhov.exe
+	$(DIR_TEST)\test_absorption_duehring.exe
 	$(DIR_TEST)\test_adsorption.exe
 
 
@@ -249,6 +252,10 @@ test_adsorption_dubininAstakhov.exe: $(DIR_OBJ)\test_adsorption_dubininAstakhov.
 	$(DIR_OBJ)\adsorption_dubininAstakhov.obj $(DIR_OBJ)\refrigerant.obj\
 	$(DIR_OBJ)\refrigerant_vapourPressure.obj\
 	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+
+test_absorption_duehring.exe: $(DIR_OBJ)\test_absorption_duehring.obj\
+	$(DIR_OBJ)\absorption_duehring.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\

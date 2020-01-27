@@ -383,14 +383,14 @@ double adsorption_dualSiteSips_dp_dw_wT(double w_kgkg, double T_K,
 	//
 	const double dw_kgkg = 0.00001;
 	
-	double w_plus_kgkg = adsorption_dualSiteSips_p_wT(w_kgkg + dw_kgkg, T_K,
+	double p_plus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg + dw_kgkg, T_K,
 		isotherm_par);
-	double w_minus_kgkg = adsorption_dualSiteSips_p_wT(w_kgkg - dw_kgkg, T_K,
+	double p_minus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg - dw_kgkg, T_K,
 		isotherm_par);
 	
 	// Calculate derivative of pressure wrt loading
 	//
-	return (w_plus_kgkg - w_minus_kgkg) / (2*dw_kgkg);
+	return (p_plus_Pa - p_minus_Pa) / (2*dw_kgkg);
 }
  
 
@@ -433,14 +433,14 @@ double adsorption_dualSiteSips_dp_dT_wT(double w_kgkg, double T_K,
 	//
 	const double dT_K = 0.001;
 	
-	double w_plus_kgkg = adsorption_dualSiteSips_p_wT(w_kgkg, T_K + dT_K,
+	double p_plus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg, T_K + dT_K,
 		isotherm_par);
-	double w_minus_kgkg = adsorption_dualSiteSips_p_wT(w_kgkg, T_K - dT_K,
+	double p_minus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg, T_K - dT_K,
 		isotherm_par);
 	
 	// Calculate derivative of pressure wrt loading
 	//
-	return (w_plus_kgkg - w_minus_kgkg) / (2*dT_K);
+	return (p_plus_Pa - p_minus_Pa) / (2*dT_K);
 }
  
 

@@ -25,6 +25,7 @@ SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
 	adsorption_langmuir.c\
 	adsorption_toth.c\
 	adsorption_dubininAstakhov.c\
+	absorption_duehring.c\
 	refrigerant.c\
 	refrigerant_vapourPressure.c\
 	refrigerant_saturatedLiquidDensity.c)
@@ -143,12 +144,14 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	test_adsorption_langmuir.exe\
 	test_adsorption_toth.exe\
 	test_adsorption_dubininAstakhov.exe\
+	test_absorption_duehring.exe\
 	test_adsorption.exe
 
 	$(DIR_TEST)/test_adsorption_dualSiteSips.exe
 	$(DIR_TEST)/test_adsorption_langmuir.exe
 	$(DIR_TEST)/test_adsorption_toth.exe
 	$(DIR_TEST)/test_adsorption_dubininAstakhov.exe
+	$(DIR_TEST)/test_absorption_duehring.exe
 	$(DIR_TEST)/test_adsorption.exe
 	
 	
@@ -232,6 +235,10 @@ test_adsorption_dubininAstakhov.exe: $(addprefix $(DIR_OBJ)/,\
 	test_adsorption_dubininAstakhov.o adsorption_dubininAstakhov.o\
 	refrigerant_vapourPressure.o refrigerant_saturatedLiquidDensity.o\
 	refrigerant.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_duehring.o absorption_duehring.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
