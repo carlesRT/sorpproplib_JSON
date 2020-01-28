@@ -15,33 +15,62 @@ int main() {
 	//	for Temperatures from 170 K to 455 K and Pressures up to 70 MPa. Journal
 	//	of Physical and Chemical Reference Data 1994. 23: p. 657-729.
 	//
-	double refrigerant_par[] = {374.18, 4.05629e6, -7.686556, 1, 2.311791,
+	double refrigerant_R34a_par[] = {374.18, 4.05629e6, -7.686556, 1, 2.311791,
 		1.5, -2.039554, 2, -3.583758, 4, 0, 0, 0, 0};
+	
+	// Define parameter record for executing vapour pressure equation. Data for
+	// refrigerant "Benzene" is taken from:
+	//
+	// 	NIST Webbook.
+	//
+	double refrigerant_par_benzene[] = {4.72583, 1660.652, -1.461};
 
 
 	// Define some input values for calculating vapour pressure
 	//
-	double T_K = 246.78;
+	double T_K = 353.15;
 	
 	
 	// Calculate vapour pressure
 	//
-	double psat_Pa = refrigerant_p_sat(T_K, refrigerant_par);
-	double psat_Pa_plus = refrigerant_p_sat(T_K+0.0001, refrigerant_par);
-	double psat_Pa_minus = refrigerant_p_sat(T_K-0.0001, refrigerant_par);
-	double dpsat_dT_PaK = refrigerant_dp_sat_dT(T_K, refrigerant_par);
-	double dpsat_dT_PaK_num = (psat_Pa_plus - psat_Pa_minus) / 0.0002;
+	double psat_R34a_Pa = refrigerant_p_sat(T_K, refrigerant_R34a_par);
+	double psat_R34a_Pa_plus = refrigerant_p_sat(T_K+0.0001, 
+		refrigerant_R34a_par);
+	double psat_R34a_Pa_minus = refrigerant_p_sat(T_K-0.0001, 
+		refrigerant_R34a_par);
+	double dpsat_dT_R34a_PaK = refrigerant_dp_sat_dT(T_K, refrigerant_R34a_par);
+	double dpsat_dT_R34a_PaK_num = (psat_R34a_Pa_plus - psat_R34a_Pa_minus) /
+		0.0002;
+		
+	double psat_benzene_Pa = refrigerant_p_sat_antoine(T_K,
+		refrigerant_par_benzene);
+	double psat_benzene_Pa_plus = refrigerant_p_sat_antoine(T_K+0.0001, 
+		refrigerant_par_benzene);
+	double psat_benzene_Pa_minus = refrigerant_p_sat_antoine(T_K-0.0001, 
+		refrigerant_par_benzene);
+	double dpsat_dT_benzene_PaK = refrigerant_dp_sat_dT_antoine(T_K,
+		refrigerant_par_benzene);
+	double dpsat_dT_benzene_PaK_num = (psat_benzene_Pa_plus - 
+		psat_benzene_Pa_minus) / 0.0002;
 
 
 	// Print calculated values
 	//
 	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");
 	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
-		T_K, psat_Pa);
+		T_K, psat_R34a_Pa);
 	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_PaK);
+		T_K, dpsat_dT_R34a_PaK);
 	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_PaK_num);
+		T_K, dpsat_dT_R34a_PaK_num);
+		
+	printf("\n\n##\n##\nSelected refrigerant: \"Benzene\".");
+	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
+		T_K, psat_benzene_Pa);
+	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+		T_K, dpsat_dT_benzene_PaK);
+	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
+		T_K, dpsat_dT_benzene_PaK_num);
 
     return EXIT_SUCCESS;	
 }

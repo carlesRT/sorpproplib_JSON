@@ -72,6 +72,10 @@ Refrigerant *newRefrigerant(const char *vapourPressure_approach,
 		retRefrigerant->psat_T = &refrigerant_p_sat;
 		retRefrigerant->dpsat_dT = &refrigerant_dp_sat_dT;
 		
+	} else if (strcmp(vapourPressure_approach, "Antoine") == 0) {
+		retRefrigerant->psat_T = &refrigerant_p_sat_antoine;
+		retRefrigerant->dpsat_dT = &refrigerant_dp_sat_dT_antoine;
+		
 	} else {
 		// Calculation approach does not exist. Therefore, throw warning.
 		//

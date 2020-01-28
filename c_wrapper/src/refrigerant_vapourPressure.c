@@ -137,3 +137,91 @@ double refrigerant_dp_sat_dT(double T_K, double refrigerant_par[]) {
 		refrigerant_par[13] * refrigerant_par[12] * 
 			pow(THETA, refrigerant_par[13] - 1));
 }
+
+
+/*
+ * General form of equation for vapour pressure:
+ * ---------------------------------------------
+ * 	p_sat = 10 ^ (a - b / (T + c))
+ *
+ * Inputs required by user:
+ * ------------------------
+ *	T: Temperature in K
+ *
+ * Order of coefficients in JSON-file:
+ * -----------------------------------
+ *	isotherm_par[0]		-> a	-> in -
+ * 	isotherm_par[1] 	-> b	-> in K
+ * 	isotherm_par[2] 	-> c	-> in K
+ *
+ */
+
+
+/*
+ * refrigerant_p_sat_antoine:
+ * --------------------------
+ *
+ * Calculates vapour pressure in Pa depending on saturation temperature T in K
+ * using Antoine-equation.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for Antoine-equation.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Vapour pressure in Pa.
+ *
+ * History:
+ * --------
+ *	01/28/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_p_sat_antoine(double T_K, double refrigerant_par[]) {
+	// Calculate vapour pressure
+	//
+	return pow(10, refrigerant_par[0] - (refrigerant_par[1] / 
+		(T_K + refrigerant_par[2]))) * 100000;
+}
+
+
+/*
+ * refrigerant_dp_sat_dT_antoine:
+ * ------------------------------
+ *
+ * Calculates derivative of vapour pressure wrt. temperature in Pa/K depending
+ * on saturation temperature T in K using Antoine-equation.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for Antoine-equation.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of vapour pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	01/28/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_dp_sat_dT_antoine(double T_K, double refrigerant_par[]) {
+	// Calculate vapour pressure
+	//
+	double p_Pa = refrigerant_p_sat_antoine(T_K, refrigerant_par);
+	
+	// Calculate derivative of vapour pressure wrt temperature
+	//
+	return refrigerant_par[1] * log(10) / pow(refrigerant_par[2] + T_K, 2) * 
+		p_Pa;
+}
