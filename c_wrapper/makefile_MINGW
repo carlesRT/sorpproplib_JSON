@@ -26,6 +26,9 @@ SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
 	adsorption_toth.c\
 	adsorption_dubininAstakhov.c\
 	absorption_duehring.c\
+	absorption_activity_wilson.c\
+	absorption_activity_nrtl.c\
+	absorption_activity_uniquac.c\
 	refrigerant.c\
 	refrigerant_vapourPressure.c\
 	refrigerant_saturatedLiquidDensity.c)
@@ -123,6 +126,7 @@ endif
 all: $(DIR_SRC)/cJSON.c\
 	test_refrigerants\
 	test_adsorption\
+	test_absorption\
 	test_workingPair\
 	test_libraries
 
@@ -144,15 +148,26 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	test_adsorption_langmuir.exe\
 	test_adsorption_toth.exe\
 	test_adsorption_dubininAstakhov.exe\
-	test_absorption_duehring.exe\
 	test_adsorption.exe
 
 	$(DIR_TEST)/test_adsorption_dualSiteSips.exe
 	$(DIR_TEST)/test_adsorption_langmuir.exe
 	$(DIR_TEST)/test_adsorption_toth.exe
 	$(DIR_TEST)/test_adsorption_dubininAstakhov.exe
-	$(DIR_TEST)/test_absorption_duehring.exe
 	$(DIR_TEST)/test_adsorption.exe
+
+
+# Execute test scripts for absorption
+#
+test_absorption: test_absorption_duehring.exe\
+	test_absorption_activity_wilson.exe\
+	test_absorption_activity_nrtl.exe\
+	test_absorption_activity_uniquac.exe
+
+	$(DIR_TEST)/test_absorption_duehring.exe
+	$(DIR_TEST)/test_absorption_activity_wilson.exe
+	$(DIR_TEST)/test_absorption_activity_nrtl.exe
+	$(DIR_TEST)/test_absorption_activity_uniquac.exe
 	
 	
 # Execute test scripts for refrigerants
@@ -237,16 +252,32 @@ test_adsorption_dubininAstakhov.exe: $(addprefix $(DIR_OBJ)/,\
 	refrigerant.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
-	test_absorption_duehring.o absorption_duehring.o)
-	$(CC) $? -o $(DIR_TEST)/$(@F)
-
 test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
 	test_adsorption.o adsorption.o\
 	adsorption_dualSiteSips.o adsorption_langmuir.o adsorption_toth.o\
 	adsorption_dubininAstakhov.o\
 	refrigerant_vapourPressure.o refrigerant_saturatedLiquidDensity.o\
 	refrigerant.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+
+test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_duehring.o absorption_duehring.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_activity_wilson.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_wilson.o absorption_activity_wilson.o\
+	refrigerant_vapourPressure)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_activity_nrtl.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_nrtl.o absorption_activity_nrtl.o\
+	refrigerant_vapourPressure)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_activity_uniquac.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_uniquac.o absorption_activity_uniquac.o\
+	refrigerant_vapourPressure)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 

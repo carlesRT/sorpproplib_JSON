@@ -20,7 +20,7 @@ PROJECT = sorpPropLib
 # YES: Disable debugging information
 # NO: Debugging information
 #
-BUILD_RELEASE = NO
+BUILD_RELEASE = YES
 
 
 # Names of sources
@@ -34,6 +34,8 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\adsorption_dubininAstakhov.c\
 	$(DIR_SRC)\absorption_duehring.c\
 	$(DIR_SRC)\absorption_activity_wilson.c\
+	$(DIR_SRC)\absorption_activity_nrtl.c\
+	$(DIR_SRC)\absorption_activity_uniquac.c\
 	$(DIR_SRC)\refrigerant.c\
 	$(DIR_SRC)\refrigerant_vapourPressure.c\
 	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
@@ -141,6 +143,7 @@ FLAGS_LINK_BUILD_DEBUG = /DEBUG
 all: $(DIR_SRC)\cJSON.c\
 	test_refrigerants\
 	test_adsorption\
+	test_absorption\
 	test_workingPair\
 	test_libraries
 
@@ -161,16 +164,25 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	test_adsorption_langmuir.exe\
 	test_adsorption_toth.exe\
 	test_adsorption_dubininAstakhov.exe\
-	test_absorption_duehring.exe\
-	test_absorption_activity_wilson.exe\
 	test_adsorption.exe		
 	$(DIR_TEST)\test_adsorption_dualSiteSips.exe
 	$(DIR_TEST)\test_adsorption_langmuir.exe
 	$(DIR_TEST)\test_adsorption_toth.exe
 	$(DIR_TEST)\test_adsorption_dubininAstakhov.exe
+	$(DIR_TEST)\test_adsorption.exe
+	$(DIR_TEST)\test_refrigerant.exe
+
+
+# Execute test scripts for absorption
+#
+test_absorption: test_absorption_duehring.exe\
+	test_absorption_activity_wilson.exe\
+	test_absorption_activity_nrtl.exe\
+	test_absorption_activity_uniquac.exe
 	$(DIR_TEST)\test_absorption_duehring.exe
 	$(DIR_TEST)\test_absorption_activity_wilson.exe
-	$(DIR_TEST)\test_adsorption.exe
+	$(DIR_TEST)\test_absorption_activity_nrtl.exe
+	$(DIR_TEST)\test_absorption_activity_uniquac.exe
 
 
 # Execute test scripts for refrigerants
@@ -257,14 +269,6 @@ test_adsorption_dubininAstakhov.exe: $(DIR_OBJ)\test_adsorption_dubininAstakhov.
 	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
-test_absorption_duehring.exe: $(DIR_OBJ)\test_absorption_duehring.obj\
-	$(DIR_OBJ)\absorption_duehring.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
-
-test_absorption_activity_wilson.exe: $(DIR_OBJ)\test_absorption_activity_wilson.obj\
-	$(DIR_OBJ)\absorption_activity_wilson.obj
-	$(LINK) $(FLAGS_LINK)$(@F) $**
-
 test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\
 	$(DIR_OBJ)\adsorption.obj $(DIR_OBJ)\adsorption_dualSiteSips.obj\
 	$(DIR_OBJ)\adsorption_langmuir.obj $(DIR_OBJ)\adsorption_dubininAstakhov.obj\
@@ -272,8 +276,28 @@ test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\
 	$(DIR_OBJ)\refrigerant_vapourPressure.obj\
 	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
+
+
+test_absorption_duehring.exe: $(DIR_OBJ)\test_absorption_duehring.obj\
+	$(DIR_OBJ)\absorption_duehring.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+
+test_absorption_activity_wilson.exe: $(DIR_OBJ)\test_absorption_activity_wilson.obj\
+	$(DIR_OBJ)\absorption_activity_wilson.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
 	
+test_absorption_activity_nrtl.exe: $(DIR_OBJ)\test_absorption_activity_nrtl.obj\
+	$(DIR_OBJ)\absorption_activity_nrtl.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
 	
+test_absorption_activity_uniquac.exe: $(DIR_OBJ)\test_absorption_activity_uniquac.obj\
+	$(DIR_OBJ)\absorption_activity_uniquac.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+
+
 test_workingPair.exe: $(DIR_OBJ)\test_workingPair.obj $(OBJECTS)
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
@@ -284,7 +308,7 @@ test_workingPair_staticLibrary.exe: $(DIR_OBJ)\test_workingPair_staticLibrary.ob
 test_workingPair_DLL.exe: $(DIR_OBJ)\test_workingPair_DLL.obj\
 	$(DIR_LIB)\lib$(PROJECT).lib
 	$(LINK) $(FLAGS_LINK)$(@F) $**
-	
+
 
 
 

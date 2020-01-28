@@ -25,7 +25,7 @@
  * Possible inputs required by user:
  * ---------------------------------
  *	T: Temperature in K
- *	x: Mole fraction in liquid phase
+ *	x: Mole fraction in liquid phase in mol/mol
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------

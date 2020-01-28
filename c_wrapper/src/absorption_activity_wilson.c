@@ -33,7 +33,7 @@
  * Possible inputs required by user:
  * ---------------------------------
  *	T: Temperature in K
- *	x: Mole fraction in liquid phase
+ *	x: Mole fraction in liquid phase in mol/mol
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------
@@ -89,9 +89,9 @@ double absorption_activity_wilson_g1_Tx(double T_K, double x_molmol,
 	if (isotherm_par[0] * isotherm_par[0] == 0) {
 		// Lambdas depend on temperature
 		//
-		A_12 = isotherm_par[5] / isotherm_par[4] * exp(isotherm_par[2] /
+		A_12 = isotherm_par[5] / isotherm_par[4] * exp(-isotherm_par[2] /
 			(IDEAL_GAS_CONSTANT * T_K));
-		A_21 = isotherm_par[4] / isotherm_par[5] * exp(isotherm_par[3] /
+		A_21 = isotherm_par[4] / isotherm_par[5] * exp(-isotherm_par[3] /
 			(IDEAL_GAS_CONSTANT * T_K));
 		
 	} else {
