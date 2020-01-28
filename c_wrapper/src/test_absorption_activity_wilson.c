@@ -34,11 +34,13 @@ int main() {
 	double x_molmol = 0.9386;
 	
 	double psat_Pa = refrigerant_p_sat(T_K, refrigerant_par);
-	
+		
 	
 	// Calculate equilibrium data
 	//
 	double gamma_1 = absorption_activity_wilson_g1_Tx(T_K , x_molmol,
+		isotherm_par);
+	double p_Pa = absorption_activity_wilson_p_Txpsat(T_K , x_molmol, psat_Pa,
 		isotherm_par);
 		
 	
@@ -49,8 +51,8 @@ int main() {
 	
 	printf("\n\nFor T = %f K and x = %f mol/mol, activity coefficient of H2O results in gamma_1 = %f.", 
 		T_K, x_molmol, gamma_1);
-	printf("\n\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
-		T_K, x_molmol, gamma_1*x_molmol*psat_Pa);
+	printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
+		T_K, x_molmol, p_Pa);
 		
     return EXIT_SUCCESS;	
 }

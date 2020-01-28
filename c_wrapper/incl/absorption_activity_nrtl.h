@@ -115,4 +115,42 @@ double absorption_activity_nrtl_fdg_g1_Tx(double T_K, double x_molmol,
 double absorption_activity_nrtl_dgT_g1_Tx(double T_K, double x_molmol,
 	double isotherm_par[]);
 
+
+/*
+ * absorption_activity_nrtl_p_Txgpsat:
+ * -----------------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * saturation pressure of first component p_sat_Pa in Pa, and function pointer 
+ * for activity coefficient of first component.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double (*func_gamma)(double, double, double[]):
+ *		Function pointer for activity coefficient of first component.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa. *
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * History:
+ * --------
+ *	01/27/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double absorption_activity_nrtl_p_Txgpsat(double T_K, double x_molmol,
+	double p_sat_Pa, double (*func_gamma)(double, double, double[]),
+	double isotherm_par[]);
+
 #endif
