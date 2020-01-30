@@ -36,6 +36,9 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\absorption_activity_wilson.c\
 	$(DIR_SRC)\absorption_activity_nrtl.c\
 	$(DIR_SRC)\absorption_activity_uniquac.c\
+	$(DIR_SRC)\absorption_activity_floryhuggins.c\
+	$(DIR_SRC)\absorption_activity_heil.c\
+	$(DIR_SRC)\absorption_activity_tsubokakatayama.c\
 	$(DIR_SRC)\refrigerant.c\
 	$(DIR_SRC)\refrigerant_vapourPressure.c\
 	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
@@ -140,8 +143,7 @@ FLAGS_LINK_BUILD_DEBUG = /DEBUG
 #
 # Test all files
 #
-all: $(DIR_SRC)\cJSON.c\
-	test_refrigerants\
+all: test_refrigerants\
 	test_adsorption\
 	test_absorption\
 	test_workingPair\
@@ -178,11 +180,17 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_wilson.exe\
 	test_absorption_activity_nrtl.exe\
-	test_absorption_activity_uniquac.exe
+	test_absorption_activity_uniquac.exe\
+	test_absorption_activity_floryhuggins.exe\
+	test_absorption_activity_heil.exe\
+	test_absorption_activity_tsubokakatayama.exe
 	$(DIR_TEST)\test_absorption_duehring.exe
 	$(DIR_TEST)\test_absorption_activity_wilson.exe
 	$(DIR_TEST)\test_absorption_activity_nrtl.exe
 	$(DIR_TEST)\test_absorption_activity_uniquac.exe
+	$(DIR_TEST)\test_absorption_activity_floryhuggins.exe
+	$(DIR_TEST)\test_absorption_activity_heil.exe
+	$(DIR_TEST)\test_absorption_activity_tsubokakatayama.exe
 
 
 # Execute test scripts for refrigerants
@@ -294,6 +302,21 @@ test_absorption_activity_nrtl.exe: $(DIR_OBJ)\test_absorption_activity_nrtl.obj\
 	
 test_absorption_activity_uniquac.exe: $(DIR_OBJ)\test_absorption_activity_uniquac.obj\
 	$(DIR_OBJ)\absorption_activity_uniquac.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+	
+test_absorption_activity_floryhuggins.exe: $(DIR_OBJ)\test_absorption_activity_floryhuggins.obj\
+	$(DIR_OBJ)\absorption_activity_floryhuggins.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+	
+test_absorption_activity_heil.exe: $(DIR_OBJ)\test_absorption_activity_heil.obj\
+	$(DIR_OBJ)\absorption_activity_heil.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+	
+test_absorption_activity_tsubokakatayama.exe: $(DIR_OBJ)\test_absorption_activity_tsubokakatayama.obj\
+	$(DIR_OBJ)\absorption_activity_tsubokakatayama.obj\
 	$(DIR_OBJ)\refrigerant_vapourPressure.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 

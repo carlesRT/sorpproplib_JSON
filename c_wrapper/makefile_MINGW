@@ -29,6 +29,8 @@ SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
 	absorption_activity_wilson.c\
 	absorption_activity_nrtl.c\
 	absorption_activity_uniquac.c\
+	absorption_activity_floryhuggins.c\
+	absorption_activity_heil.c\
 	refrigerant.c\
 	refrigerant_vapourPressure.c\
 	refrigerant_saturatedLiquidDensity.c)
@@ -123,8 +125,7 @@ endif
 #
 # Test all files
 #
-all: $(DIR_SRC)/cJSON.c\
-	test_refrigerants\
+all: test_refrigerants\
 	test_adsorption\
 	test_absorption\
 	test_workingPair\
@@ -162,12 +163,16 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_wilson.exe\
 	test_absorption_activity_nrtl.exe\
-	test_absorption_activity_uniquac.exe
+	test_absorption_activity_uniquac.exe\
+	test_absorption_activity_floryhuggins.exe\
+	test_absorption_activity_heil.exe
 
 	$(DIR_TEST)/test_absorption_duehring.exe
 	$(DIR_TEST)/test_absorption_activity_wilson.exe
 	$(DIR_TEST)/test_absorption_activity_nrtl.exe
 	$(DIR_TEST)/test_absorption_activity_uniquac.exe
+	$(DIR_TEST)/test_absorption_activity_floryhuggins.exe
+	$(DIR_TEST)/test_absorption_activity_heil.exe
 	
 	
 # Execute test scripts for refrigerants
@@ -267,17 +272,27 @@ test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
 
 test_absorption_activity_wilson.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_wilson.o absorption_activity_wilson.o\
-	refrigerant_vapourPressure)
+	refrigerant_vapourPressure.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_nrtl.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_nrtl.o absorption_activity_nrtl.o\
-	refrigerant_vapourPressure)
+	refrigerant_vapourPressure.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_uniquac.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_uniquac.o absorption_activity_uniquac.o\
-	refrigerant_vapourPressure)
+	refrigerant_vapourPressure.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_activity_floryhuggins.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_floryhuggins.o absorption_activity_floryhuggins.o\
+	refrigerant_vapourPressure.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption_activity_heil.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_heil.o absorption_activity_heil.o\
+	refrigerant_vapourPressure.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 

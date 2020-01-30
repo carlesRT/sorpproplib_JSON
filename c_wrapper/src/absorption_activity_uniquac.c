@@ -19,17 +19,13 @@
 /*
  * General form of UNIQUAC equation:
  * ---------------------------------
- * 	gamma_1 = exp(ln(phi_1 / x_1) + z / 2 * q_1 * ln(theta_1 / phi_1) + phi_2 *
- *		(l_1 - r_1 / r_2 * l_2) - q_1 * ln(theta_1 + theta_2 * tau_21) +
- *		phi_2 * q_1 * (tau_21 / (phi_1 + phi_2 * tau_21) - tau_12 / 
- *		(phi_2 + phi_1 * tau_12)))
+ * 	gamma_1 = exp(1 - V_1 + ln(V_1) - z / 2 * q_1 * (1 - V_1 / F_1 + ln(V_1 /
+ *		F_1)) + q_1 * (1 - ln((q_1 * x_1 + q_2 * x_2 * tau_21) / (q_1 * x_1 +
+ *		q_2 * x_2)) - (q_1 * x_1 / (q_1 * x_1 + q_2 * x_2 * tau_21) + q_2 *
+ *		x_2 * tau_12 / (q_1 * x_1 * tau_12 + q_2 * x_2))))
  *
- *	with: l_1 = z / 2 * (r_1 - q_1) - (r_1 - 1)
- *	----- l_2 = z / 2 * (r_2 - q_2) - (r_2 - 1)
- *		  phi_1 = r_1 * x_1 / (r_1 * x_1 + r_2 * x_2)
- *		  phi_2 = r_2 * x_2 / (r_1 * x_1 + r_2 * x_2)
- *		  theta_1 = q_1 * x_1 / (q_1 * x_1 + q_2 * x_2)
- *		  theta_2 = q_2 * x_1 / (q_1 * x_1 + q_2 * x_2)
+ *	with: V_1 = r_1 / (x_1 * r_1 + x_2 * r_2)
+ *	----- F_1 = q_1 / (x_1 * q_1 + x_2 * q_2)
  *		  
  * Temperature-dependent coefficients:
  * -----------------------------------
