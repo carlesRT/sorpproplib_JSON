@@ -32,18 +32,27 @@
  *			  b_1 = b_0 * R * T_crit,1 / p_crit,1
  *			  b_2 = b_0 * R * T_crit,2 / p_crit,2
  *
+ *				with: For PR equation, alpha_0 = 0.45724, c_0 = 0.37464,
+ *				----- c_1 = 1.54226, c_2 = -0.26992 and b_0 = 0.077796
+ *					  For SRK equation, alpha_0 = 1/(9*(2^(1/3)-1)), 
+ *					  c_0 = 0.480, c_1 = 1.574, c_2 = -0.176 and b_0 = 0.08664
+ *
  * Possible inputs required by user:
  * ---------------------------------
  *	T: Temperature in K
  *	x: Mole fraction in liquid phase in mol/mol
- *	V_m: Molar volume in m³/mol
+ *	v: Molar volume in m³/mol
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------
- *	isotherm_par[0]	-> dlambda_12	-> in J/mol
- * 	isotherm_par[1] -> dlambda_21	-> in J/mol
- * 	isotherm_par[2] -> vm_1			-> in m³/mol
- * 	isotherm_par[3] -> vm_2			-> in m³/mol
+ *	isotherm_par[0]	-> EOS		-> in -
+ * 	isotherm_par[1] -> w_1		-> in -
+ * 	isotherm_par[2] -> w_2		-> in -
+ * 	isotherm_par[3] -> k_12		-> in -
+ * 	isotherm_par[4] -> T_crit1	-> in K
+ * 	isotherm_par[5] -> T_crit2	-> in K
+ * 	isotherm_par[6] -> p_crit1	-> in Pa
+ * 	isotherm_par[7] -> p_crit2	-> in Pa
  *
  */
 
@@ -79,7 +88,7 @@
  *		First implementation.
  *
  */
-double absorption_mixing_1pvdw_p_Tvx(double T_K, double v,
+double absorption_mixing_1pvdw_p_Tvx(double T_K, double v_m3mol,
 	double x_molmol, double isotherm_par[]);
 
 #endif
