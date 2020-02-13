@@ -32,6 +32,7 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\adsorption_langmuir.c\
 	$(DIR_SRC)\adsorption_toth.c\
 	$(DIR_SRC)\adsorption_dubininAstakhov.c\
+	$(DIR_SRC)\absorption.c\
 	$(DIR_SRC)\absorption_duehring.c\
 	$(DIR_SRC)\absorption_activity_wilson.c\
 	$(DIR_SRC)\absorption_activity_nrtl.c\
@@ -184,7 +185,8 @@ test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_floryhuggins.exe\
 	test_absorption_activity_heil.exe\
 	test_absorption_activity_tsubokakatayama.exe\
-	test_absorption_mixing_1pvdw.exe
+	test_absorption_mixing_1pvdw.exe\
+	test_absorption.exe		
 	$(DIR_TEST)\test_absorption_duehring.exe
 	$(DIR_TEST)\test_absorption_activity_wilson.exe
 	$(DIR_TEST)\test_absorption_activity_nrtl.exe
@@ -193,6 +195,7 @@ test_absorption: test_absorption_duehring.exe\
 	$(DIR_TEST)\test_absorption_activity_heil.exe
 	$(DIR_TEST)\test_absorption_activity_tsubokakatayama.exe
 	$(DIR_TEST)\test_absorption_mixing_1pvdw.exe
+	$(DIR_TEST)\test_absorption.exe
 
 
 # Execute test scripts for refrigerants
@@ -325,6 +328,18 @@ test_absorption_activity_tsubokakatayama.exe: $(DIR_OBJ)\test_absorption_activit
 	
 test_absorption_mixing_1pvdw.exe: $(DIR_OBJ)\test_absorption_mixing_1pvdw.obj\
 	$(DIR_OBJ)\absorption_mixing_1pvdw.obj
+	$(LINK) $(FLAGS_LINK)$(@F) $**
+
+test_absorption.exe: $(DIR_OBJ)\test_absorption.obj\
+	$(DIR_OBJ)\absorption.obj $(DIR_OBJ)\absorption_duehring.obj\
+	$(DIR_OBJ)\absorption_activity_wilson.obj\
+	$(DIR_OBJ)\absorption_activity_nrtl.obj\
+	$(DIR_OBJ)\absorption_activity_uniquac.obj\
+	$(DIR_OBJ)\absorption_activity_floryhuggins.obj\
+	$(DIR_OBJ)\absorption_activity_heil.obj\
+	$(DIR_OBJ)\absorption_activity_tsubokakatayama.obj\
+	$(DIR_OBJ)\absorption_mixing_1pvdw.obj\
+	$(DIR_OBJ)\refrigerant_vapourPressure.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 

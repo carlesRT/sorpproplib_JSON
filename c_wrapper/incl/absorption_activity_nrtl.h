@@ -150,7 +150,7 @@ double absorption_activity_nrtl_dgT_g1_Tx(double T_K, double x_molmol,
  *
  */
 double absorption_activity_nrtl_p_Txgpsat(double T_K, double x_molmol,
-	double p_sat_Pa, double (*func_gamma)(double, double, double[]),
+	double (*func_gamma)(double, double, double[]), double p_sat_Pa, 
 	double isotherm_par[]);
 
 #endif

@@ -20,7 +20,10 @@
  */
 typedef double (*genFunc_1_1_0)(double, double[]);
 typedef double (*genFunc_2_1_0)(double, double, double[]);
+typedef double (*genFunc_3_1_0)(double, double, double, double[]);
 typedef double (*genFunc_4_1_0)(double, double, double, double, double[]);
+typedef double (*genFunc_5_1_0)(double, double, double, double, double,
+	double[]);
 typedef double (*genFunc_6_1_0)(double, double, double, double, double, double, 
 	double[]);
 typedef double (*genFunc_2_3_2)(double, double, double[], double[], double[], 
@@ -258,6 +261,118 @@ struct Adsorption {
 
 
 /*
+ * Absorption:
+ * -----------
+ *
+ * Contains function pointers for functions of a specific isotherm type.
+ * Function pointers are set during initialisation of Absorption-struct.
+ *
+ * General attributes:
+ * -------------------
+ *	const char *isotherm_type:
+ *		String indicating name of isotherm.
+ *
+ * Attributes for conventional isotherms:
+ * --------------------------------------
+ * 	function con_X_pT:
+ *		Returns equilibrium concentration X in kg/kg depending on equilibrium 
+ * 		pressure p in Pa, and equilibrium temperature T in K.
+ * 	function con_p_XT:
+ *		Returns equilibrium pressure p in Pa depending on equilibrium 
+ * 		concentration X in kg/kg, and equilibrium temperature T in K.
+ * 	function con_T_pX:
+ *		Returns equilibrium temperature in K depending on equilibrium pressure p
+ * 		in Pa, and equilibrium concentration X in kg/kg.
+ *
+ * 	function con_dX_dp_pT:
+ *		Returns derivative of equilibrium concentration X with respect to  
+ * 		pressure p in kg/kg/Pa depending on equilibrium pressure p in Pa and  
+ * 		equilibrium temperature T in K.
+ * 	function con_dX_dT_pT:
+ *		Returns derivative of equilibrium concentration X with respect to 
+ * 		temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * 		equilibrium temperature T in K.
+ * 	function con_dp_dX_XT:
+ *		Returns derivative of equilibrium pressure p with respect to  
+ * 		concentration X in kgPa/kg depending on equilibrium concentration X in  
+ * 		kg/kg and  equilibrium temperature T in K.
+ * 	function con_dp_dT_XT:
+ *		Returns derivative of equilibrium pressure p with respect to temperature 
+ * 		T in Pa/K depending on equilibrium concentration X in kg/kg and  
+ * 		equilibrium temperature T in K.
+ *
+ * Attributes for isotherms based on activity coefficients:
+ * --------------------------------------------------------
+ * 	function act_g_Txv1v2:
+ *		Returns activity coefficient of first component depending on temperature 
+ * 		T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar
+ *  	volume of first component in m³/mol, and molar volume of second 
+ *		component in m³/mol.
+ * 	function act_p_Txgv1v2psat:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * 		function pointer for activity coefficient of first component, molar 
+ *		volume of first component in m³/mol, molar volume of second component in
+ *		m³/mol, and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Attributes for isotherms based on mixing rules:
+ * -----------------------------------------------
+ * 	function mix_p_Tvx:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * 		fraction in liquid phase x_molmol in mol/mol
+ *
+ *
+ * Remarks:
+ * --------
+ *	Function returns NULL when function does not exist for a specific isotherm
+ *	type.
+ *
+ * History:
+ * --------
+ *	02/13/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+struct Absorption {
+	// General information of isotherm
+	//
+	const char *isotherm_type;
+	
+	// Pointers for isotherm functions that are always defined
+	//
+	
+	
+	// Pointers for isotherm functions that are only defined for isotherm types
+	// that are conventional (e.g. Duehring, ...)
+	//
+    genFunc_2_1_0 con_X_pT;
+    genFunc_2_1_0 con_p_XT;
+    genFunc_2_1_0 con_T_pX;
+	
+    genFunc_2_1_0 con_dX_dp_pT;
+    genFunc_2_1_0 con_dX_dT_pT;
+    genFunc_2_1_0 con_dp_dX_XT;
+    genFunc_2_1_0 con_dp_dT_XT;	
+	
+	// Pointers for isotherm functions that are only defined for isotherm types
+	// based on activity coefficients (e.g. Wilson, NRTL, UNIQUAC, ...)
+	//
+	genFunc_2_1_0 act_g_Tx;
+	genFunc_4_1_0 act_g_Txv1v2;
+	
+	genFunc_3_1_0 act_p_Txpsat;
+	genFunc_5_1_0 act_p_Txv1v2psat;
+    double (*act_p_Txgpsat)(double, double, genFunc_2_1_0, double, double[]);
+			
+	// Pointers for isotherm functions that are only defined for isotherm types
+	// based on mixing rules (e.g. 1PVDW, ...)
+	//
+	genFunc_3_1_0 mix_p_Tvx;	
+};
+
+
+/*
  * Refrigerant:
  * ------------
  *
@@ -301,6 +416,51 @@ struct Refrigerant {
 };
 
 
+/*
+ * WorkingPair:
+ * ------------
+ *
+ * Contains strings defining working pair and calculations approaches,
+ * coefficients for calculation approaches, and structures that contain function
+ * pointers for the isotherm and the refrigerant functions of the working pair.
+ *
+ * Attributes:
+ * -----------
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ * 	const char *rf_ac:
+ *		Name of calculation approach for activity coefficients.
+ *
+ * 	double *iso_par:
+ *		Array containing coefficients of isotherm.
+ * 	double *psat_par:
+ *		Array containing coefficients of vapour pressure equation.
+ * 	double *rhol_par:
+ *		Array containing coefficients of saturated liquid density equation.
+ * 	double *ac_par:
+ *		Array containing coefficients of activity coefficent equation.
+ *
+ *	Adsorption *adsorption:
+ *		Struct containing function pointers for isotherm functions.
+ *	Refrigerant *refrigerant:
+ *		Struct containing function pointers for refrigerant functions.
+ *
+ * History:
+ * --------
+ *	01/06/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
 struct WorkingPair {
 	// General information of working pair
 	//

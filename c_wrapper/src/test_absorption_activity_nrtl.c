@@ -64,12 +64,12 @@ int main() {
 	double gamma_H2O = absorption_activity_nrtl_fdg_g1_Tx(T_K , x_H2O_molmol,
 		isotherm_par_fdg);	
 	double p_H2O_Pa = absorption_activity_nrtl_p_Txgpsat(T_K , x_H2O_molmol,
-		psat_H2O_Pa, absorption_activity_nrtl_fdg_g1_Tx, isotherm_par_fdg);
+		absorption_activity_nrtl_fdg_g1_Tx, psat_H2O_Pa, isotherm_par_fdg);
 	
 	double gamma_benzene = absorption_activity_nrtl_dgT_g1_Tx(T_K , 
 		x_benzene_molmol, isotherm_par_dgt);	
 	double p_benzene_Pa = absorption_activity_nrtl_p_Txgpsat(T_K , x_benzene_molmol,
-		psat_benzene_Pa, absorption_activity_nrtl_dgT_g1_Tx, isotherm_par_dgt);
+		absorption_activity_nrtl_dgT_g1_Tx, psat_benzene_Pa, isotherm_par_dgt);
 		
 	
 	// Print calculated values

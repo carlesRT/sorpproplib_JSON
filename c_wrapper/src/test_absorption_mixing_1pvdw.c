@@ -42,7 +42,7 @@ int main() {
 	
 	printf("\n\nFor T = %f K, x = %f mol/mol and PRE, equilibrium pressure results in p = %f Pa.", 
 		T_K, x_molmol, p_Pa_PR);
-	printf("\nFor T = %f K, x = %f mol/mol and PRE, equilibrium pressure results in p = %f Pa.", 
+	printf("\nFor T = %f K, x = %f mol/mol and SRK, equilibrium pressure results in p = %f Pa.", 
 		T_K, x_molmol, p_Pa_SRK);
 		
     return EXIT_SUCCESS;	
