@@ -135,6 +135,11 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
 DLL_API void delWorkingPair(void *workingPair);
 
 
+////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding adsorption //
+////////////////////////////////////////////////////////////
+
+
 /*
  * iso_w_pT:
  * ---------
@@ -886,5 +891,53 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double M_kgmol, void *workingPair);
-	
+
+
+/*
+ * direct_iso_w_pT_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
+ * p in Pa, equilibrium temperature T in K, and specified working pair.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ * 	const char *rf_ac:
+ *		Name of calculation approach for activity coefficients.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium loading in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/11/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, const char *rf_psat, 
+	const char *rf_rhol, const char *rf_ac);
+
 #endif

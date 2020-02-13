@@ -18,15 +18,15 @@
  * 	T_ref = (n*T_cor + m - B) / A + q
  *	T_cor = T - 273.15
  *
- *		with: A = a0 + a1*w_cor + a2*w_cor^2 + a3*w_cor^3
- *		----- B = b0 + b1*w_cor + b2*w_cor^2 + b3*w_cor^3
- *			  w_cor = w * 100
+ *		with: A = a0 + a1*X_cor + a2*X_cor^2 + a3*X_cor^3
+ *		----- B = b0 + b1*X_cor + b2*X_cor^2 + b3*X_cor^3
+ *			  X_cor = X * 100
  *
  * Possible inputs required by user:
  * ---------------------------------
  *	p: Pressure in Pa
  *	T: Temperature in K
- *	w: Loading in kg/kg
+ *	X: Concentration in kg/kg
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------
@@ -50,11 +50,11 @@
 
 
 /*
- * absorption_duehring_w_pT:
+ * absorption_duehring_X_pT:
  * -------------------------
  *
- * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
- * p in Pa and equilibrium temperature T in K.
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * pressure p in Pa and equilibrium temperature T in K.
  *
  * Parameters:
  * -----------
@@ -68,11 +68,11 @@
  * Returns:
  * --------
  *	double:
- *		Equilibrium loading in kg/kg.
+ *		Equilibrium concentration in kg/kg.
  *
  * Remarks:
  * --------
- *	Uses Newton-Raphson method for calculating equlibrium loading.
+ *	Uses Newton-Raphson method for calculating equilibrium concentration.
  *
  * History:
  * --------
@@ -80,59 +80,59 @@
  *		First implementation.
  *
  */
-double absorption_duehring_w_pT(double p_Pa, double T_K,
+double absorption_duehring_X_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
-	// Initialise variables for using Newton-Raphson method
+	// Initialize variables for using Newton-Raphson method
 	//
-	double w_guess_kgkg = 0.5;
+	double X_guess_kgkg = 0.5;
 	double p_guess_Pa  = p_Pa;
-	double dp_guess_dw_Pakgkg = p_Pa/w_guess_kgkg;
+	double dp_guess_dX_Pakgkg = p_Pa/X_guess_kgkg;
 
 	int counter_NRM = 0;
 	const double tolerance = 1e-8;
 
-	// Calculate loading using Newton-Raphson method
+	// Calculate concentration using Newton-Raphson method
 	//
-	for (p_guess_Pa = absorption_duehring_p_wT(w_guess_kgkg, T_K,
+	for (p_guess_Pa = absorption_duehring_p_XT(X_guess_kgkg, T_K,
 		 isotherm_par);
 	     fabs(p_guess_Pa - p_Pa)>tolerance && counter_NRM<50; 
 		 counter_NRM++) {
-		// Calculate pressure depending on guess value for loading and 
+		// Calculate pressure depending on guess value for concentration and 
 		// temperature
 		//
-		p_guess_Pa = absorption_duehring_p_wT(w_guess_kgkg, T_K,
+		p_guess_Pa = absorption_duehring_p_XT(X_guess_kgkg, T_K,
 			isotherm_par);
 
-		// Calculate derivative of the pressure with respect to loading
+		// Calculate derivative of the pressure with respect to concentration
 		//
-		dp_guess_dw_Pakgkg = absorption_duehring_dp_dw_wT(w_guess_kgkg, T_K,
+		dp_guess_dX_Pakgkg = absorption_duehring_dp_dX_XT(X_guess_kgkg, T_K,
 		 isotherm_par);
 
-		// Update guess value for loading
+		// Update guess value for concentration
 		// Only positive values are allowed
 		//
-		w_guess_kgkg -= (p_guess_Pa - p_Pa) / dp_guess_dw_Pakgkg;
-		w_guess_kgkg = w_guess_kgkg < 0 ? 0.001 : w_guess_kgkg;
+		X_guess_kgkg -= (p_guess_Pa - p_Pa) / dp_guess_dX_Pakgkg;
+		X_guess_kgkg = X_guess_kgkg < 0 ? 0.001 : X_guess_kgkg;
 	}
 
-	// Return -1 when number of iteratoons exceeds 50
+	// Return -1 when number of iteratons exceeds 50
 	//
-	return (counter_NRM == 50 ? -1 : w_guess_kgkg);
+	return (counter_NRM == 50 ? -1 : X_guess_kgkg);
 
 }		
 
  
 /*
- * absorption_duehring_p_wT:
+ * absorption_duehring_p_XT:
  * -------------------------
  *
- * Calculates equilibrium pressure p in Pa depending on equilibrium loading w
- * in kg/kg and equilibrium temperature T in K.
+ * Calculates equilibrium pressure p in Pa depending on equilibrium 
+ * concentration X in kg/kg and equilibrium temperature T in K.
  *
  * Parameters:
  * -----------
- *	double w_kgkg:
- *		Equilibrium loading in kg/kg.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double isotherm_par[]:
@@ -149,15 +149,15 @@ double absorption_duehring_w_pT(double p_Pa, double T_K,
  *		First implementation.
  *
  */
-double absorption_duehring_p_wT(double w_kgkg, double T_K,
+double absorption_duehring_p_XT(double X_kgkg, double T_K,
 	double isotherm_par[]) {
-	// Calculate loading-dependent coefficients
+	// Calculate concentration-dependent coefficients
 	//
-	double w_cor = w_kgkg * 100;	
-	double A = isotherm_par[0] + isotherm_par[1] * w_cor +
-		isotherm_par[2] * pow(w_cor, 2) + isotherm_par[3] * pow(w_cor, 3);
-	double B = isotherm_par[4] + isotherm_par[5] * w_cor +
-		isotherm_par[6] * pow(w_cor, 2) + isotherm_par[7] * pow(w_cor, 3);
+	double X_cor = X_kgkg * 100;	
+	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
+		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
+	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
+		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
 
 	// Calculate temperature-dependent coefficients
 	//		
@@ -173,18 +173,18 @@ double absorption_duehring_p_wT(double w_kgkg, double T_K,
 
 
 /*
- * absorption_duehring_T_pw:
+ * absorption_duehring_T_pX:
  * -------------------------
  *
  * Calculates equilibrium temperature in K depending on equilibrium pressure p
- * in Pa and equilibrium loading w in kg/kg.
+ * in Pa and equilibrium concentration X in kg/kg.
  *
  * Parameters:
  * -----------
  *	double p_Pa:
  *		Equilibrium pressure in Pa.
- *	double w_kgkg:
- *		Equilibrium loading in kg/kg.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
  *	double isotherm_par[]:
  *		Array of doubles that contains coefficients of Duehring equation.
  *
@@ -195,7 +195,7 @@ double absorption_duehring_p_wT(double w_kgkg, double T_K,
  *
  * Remarks:
  * --------
- *	Uses reduced quadratic equation for calculating equlibrium temperature.
+ *	Uses reduced quadratic equation for calculating equilibrium temperature.
  *
  * History:
  * --------
@@ -203,15 +203,15 @@ double absorption_duehring_p_wT(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-double absorption_duehring_T_pw(double p_Pa, double w_kgkg,
+double absorption_duehring_T_pX(double p_Pa, double X_kgkg,
 	double isotherm_par[]) {
-	// Calculate loading-dependent coefficients
+	// Calculate concentration-dependent coefficients
 	//
-	double w_cor = w_kgkg * 100;	
-	double A = isotherm_par[0] + isotherm_par[1] * w_cor +
-		isotherm_par[2] * pow(w_cor, 2) + isotherm_par[3] * pow(w_cor, 3);
-	double B = isotherm_par[4] + isotherm_par[5] * w_cor +
-		isotherm_par[6] * pow(w_cor, 2) + isotherm_par[7] * pow(w_cor, 3);
+	double X_cor = X_kgkg * 100;	
+	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
+		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
+	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
+		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
 
 	// Calculate pressure-dependent coefficients
 	//
@@ -227,11 +227,11 @@ double absorption_duehring_T_pw(double p_Pa, double w_kgkg,
 
 
 /*
- * absorption_duehring_dw_dp_pT:
+ * absorption_duehring_dX_dp_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to pressure p 
- * in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium concentration X with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
  * temperature T in K.
  *
  * Parameters:
@@ -246,12 +246,12 @@ double absorption_duehring_T_pw(double p_Pa, double w_kgkg,
  * Returns:
  * --------
  *	double:
- *		Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+ *		Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
  *
  * Remarks:
  * --------
- *	Derivative is calculated numerically by the symmetric derivative using
- *  h = 0.001 Pa as small change.
+ *	Derivative is calculated numerically by the symmetric derivative appraoch 
+ *  using h = 0.001 Pa as small change.
  *
  * History:
  * --------
@@ -259,30 +259,30 @@ double absorption_duehring_T_pw(double p_Pa, double w_kgkg,
  *		First implementation.
  *
  */
-double absorption_duehring_dw_dp_pT(double p_Pa, double T_K,
+double absorption_duehring_dX_dp_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
-	// Calculate loadings
+	// Calculate concentrations
 	//
 	const double dp_Pa = 0.001;
 	
-	double w_plus_kgkg = absorption_duehring_w_pT(p_Pa + dp_Pa, T_K,
+	double X_plus_kgkg = absorption_duehring_X_pT(p_Pa + dp_Pa, T_K,
 		isotherm_par);
-	double w_minus_kgkg = absorption_duehring_w_pT(p_Pa - dp_Pa, T_K,
+	double X_minus_kgkg = absorption_duehring_X_pT(p_Pa - dp_Pa, T_K,
 		isotherm_par);
 	
-	// Calculate derivative of loading wrt temperature
+	// Calculate derivative of concentration wrt temperature
 	//
-	return (w_plus_kgkg - w_minus_kgkg) / (2 * dp_Pa);
+	return (X_plus_kgkg - X_minus_kgkg) / (2 * dp_Pa);
 }
 
 
 /*
- * absorption_duehring_dw_dT_pT:
+ * absorption_duehring_dX_dT_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to temperature T
- * in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
- * temperature T in K.
+ * Calculates derivative of equilibrium concentration X with respect to 
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * equilibrium temperature T in K.
  *
  * Parameters:
  * -----------
@@ -296,12 +296,12 @@ double absorption_duehring_dw_dp_pT(double p_Pa, double T_K,
  * Returns:
  * --------
  *	double:
- *		Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+ *		Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
  *
  * Remarks:
  * --------
- *	Derivative is calculated numerically by the symmetric derivative using
- *  h = 0.001 K as small change.
+ *	Derivative is calculated numerically by the symmetric derivative appraoch 
+ *  using h = 0.001 K as small change.
  *
  * History:
  * --------
@@ -309,35 +309,35 @@ double absorption_duehring_dw_dp_pT(double p_Pa, double T_K,
  *		First implementation.
  *
  */
-double absorption_duehring_dw_dT_pT(double p_Pa, double T_K,
+double absorption_duehring_dX_dT_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
-	// Calculate loadings
+	// Calculate concentrations
 	//
 	const double dT_K = 0.001;
 	
-	double w_plus_kgkg = absorption_duehring_w_pT(p_Pa, T_K + dT_K,
+	double X_plus_kgkg = absorption_duehring_X_pT(p_Pa, T_K + dT_K,
 		isotherm_par);
-	double w_minus_kgkg = absorption_duehring_w_pT(p_Pa, T_K - dT_K,
+	double X_minus_kgkg = absorption_duehring_X_pT(p_Pa, T_K - dT_K,
 		isotherm_par);
 	
-	// Calculate derivative of loading wrt temperature
+	// Calculate derivative of concentration wrt temperature
 	//
-	return (w_plus_kgkg - w_minus_kgkg) / (2 * dT_K);
+	return (X_plus_kgkg - X_minus_kgkg) / (2 * dT_K);
 }
 
 
 /*
- * absorption_duehring_dp_dw_wT:
+ * absorption_duehring_dp_dX_XT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to loading 
- * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
- * temperature T in K.
+ * Calculates derivative of equilibrium pressure p with respect to concentration 
+ * X in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
  *
  * Parameters:
  * -----------
- *	double w_kgkg:
- *		Equilibrium loading in kg/kg.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double isotherm_par[]:
@@ -346,7 +346,7 @@ double absorption_duehring_dw_dT_pT(double p_Pa, double T_K,
  * Returns:
  * --------
  *	double:
- *		Derivative of equilibrium pressure wrt. loading in kgPa/kg.
+ *		Derivative of equilibrium pressure wrt. concentration in kgPa/kg.
  *
  * History:
  * --------
@@ -354,17 +354,17 @@ double absorption_duehring_dw_dT_pT(double p_Pa, double T_K,
  *		First implementation.
  *
  */
-double absorption_duehring_dp_dw_wT(double w_kgkg, double T_K,
+double absorption_duehring_dp_dX_XT(double X_kgkg, double T_K,
 	double isotherm_par[]) {
 	// Calculate pressure:
-	// We do not use function absorption_duehring_p_wT because we need T_ref and
-	// A for furhter calculations
+	// We do not use function absorption_duehring_p_XT because we need T_ref and
+	// A for further calculations
 	//
-	double w_cor = w_kgkg * 100;	
-	double A = isotherm_par[0] + isotherm_par[1] * w_cor +
-		isotherm_par[2] * pow(w_cor, 2) + isotherm_par[3] * pow(w_cor, 3);
-	double B = isotherm_par[4] + isotherm_par[5] * w_cor +
-		isotherm_par[6] * pow(w_cor, 2) + isotherm_par[7] * pow(w_cor, 3);
+	double X_cor = X_kgkg * 100;	
+	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
+		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
+	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
+		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
 		
 	double T_cor = T_K - 273.15;	
 	double T_ref = (isotherm_par[12] * T_cor + isotherm_par[11] - B) / A +
@@ -375,35 +375,35 @@ double absorption_duehring_dp_dw_wT(double w_kgkg, double T_K,
 
 	// Calculate partial derivatives
 	//
-	double dA_dw_cor = isotherm_par[1] + 2 * isotherm_par[2] * w_cor + 
-		3 * isotherm_par[3] * pow(w_cor, 2);
-	double dB_dw_cor = isotherm_par[5] + 2 * isotherm_par[6] * w_cor + 
-		3 * isotherm_par[7] * pow(w_cor, 2);
-	double dw_cor_dw = 100;
+	double dA_dX_cor = isotherm_par[1] + 2 * isotherm_par[2] * X_cor + 
+		3 * isotherm_par[3] * pow(X_cor, 2);
+	double dB_dX_cor = isotherm_par[5] + 2 * isotherm_par[6] * X_cor + 
+		3 * isotherm_par[7] * pow(X_cor, 2);
+	double dX_cor_dX = 100;
 	
 	double dp_dT_ref = -p_Pa * (isotherm_par[9] * T_ref + 2 * 
 		isotherm_par[10]) / pow(T_ref, 3);
-	double dT_ref_dw = -dw_cor_dw * (dA_dw_cor * (isotherm_par[12] * T_cor + 
-		isotherm_par[11] - B) + A * dB_dw_cor) / pow(A, 2);
+	double dT_ref_dX = -dX_cor_dX * (dA_dX_cor * (isotherm_par[12] * T_cor + 
+		isotherm_par[11] - B) + A * dB_dX_cor) / pow(A, 2);
 	
-	// Calculate derivative of pressure wrt loading
+	// Calculate derivative of pressure wrt concentration
 	//
-	return dp_dT_ref * dT_ref_dw;
+	return dp_dT_ref * dT_ref_dX;
 }
 
 
 /*
- * absorption_duehring_dp_dT_wT:
+ * absorption_duehring_dp_dT_XT:
  * -----------------------------
  *
  * Calculates derivative of equilibrium pressure p with respect to temperature 
- * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * T in Pa/K depending on equilibrium concentration X in kg/kg and equilibrium 
  * temperature T in K.
  *
  * Parameters:
  * -----------
- *	double w_kgkg:
- *		Equilibrium loading in kg/kg.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double isotherm_par[]:
@@ -420,17 +420,17 @@ double absorption_duehring_dp_dw_wT(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-double absorption_duehring_dp_dT_wT(double w_kgkg, double T_K,
+double absorption_duehring_dp_dT_XT(double X_kgkg, double T_K,
 	double isotherm_par[]) {
 	// Calculate pressure:
-	// We do not use function absorption_duehring_p_wT because we need T_ref and
-	// A for furhter calculations
+	// We do not use function absorption_duehring_p_XT because we need T_ref and
+	// A for further calculations
 	//
-	double w_cor = w_kgkg * 100;	
-	double A = isotherm_par[0] + isotherm_par[1] * w_cor +
-		isotherm_par[2] * pow(w_cor, 2) + isotherm_par[3] * pow(w_cor, 3);
-	double B = isotherm_par[4] + isotherm_par[5] * w_cor +
-		isotherm_par[6] * pow(w_cor, 2) + isotherm_par[7] * pow(w_cor, 3);
+	double X_cor = X_kgkg * 100;	
+	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
+		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
+	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
+		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
 		
 	double T_cor = T_K - 273.15;	
 	double T_ref = (isotherm_par[12] * T_cor + isotherm_par[11] - B) / A +

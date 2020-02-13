@@ -39,7 +39,7 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\absorption_activity_floryhuggins.c\
 	$(DIR_SRC)\absorption_activity_heil.c\
 	$(DIR_SRC)\absorption_activity_tsubokakatayama.c\
-	$(DIR_SRC)\absorption_mixing_1pvdw\
+	$(DIR_SRC)\absorption_mixing_1pvdw.c\
 	$(DIR_SRC)\refrigerant.c\
 	$(DIR_SRC)\refrigerant_vapourPressure.c\
 	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
@@ -173,7 +173,6 @@ test_adsorption: test_adsorption_dualSiteSips.exe\
 	$(DIR_TEST)\test_adsorption_toth.exe
 	$(DIR_TEST)\test_adsorption_dubininAstakhov.exe
 	$(DIR_TEST)\test_adsorption.exe
-	$(DIR_TEST)\test_refrigerant.exe
 
 
 # Execute test scripts for absorption
@@ -241,6 +240,7 @@ $(DIR_LIB)\lib$(PROJECT).dll: $(OBJECTS_LIB)
 	
 	copy lib$(PROJECT).lib $(DIR_LIB)\lib$(PROJECT).lib
 	copy lib$(PROJECT).dll $(DIR_LIB)\lib$(PROJECT).dll
+	del $(DIR_OBJ)\lib$(PROJECT).lib
 	del lib$(PROJECT).lib
 	del lib$(PROJECT).dll
 	del lib$(PROJECT).exp

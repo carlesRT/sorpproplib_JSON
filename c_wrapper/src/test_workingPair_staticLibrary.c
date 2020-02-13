@@ -45,6 +45,8 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		// Calculate equilibrium properties with functions that are always defined
 		//
 		double w_kgkg_sur = iso_w_pT(p_Pa, T_K, workingPair);
+		double w_kgkg_sur_direct = direct_iso_w_pT_workingPair(p_Pa, T_K, 
+			path_db, wp_as, wp_st, wp_rf, wp_iso, rf_psat, rf_rhol, rf_ac);
 		double p_Pa_sur_inv = iso_p_wT(w_kgkg_sur, T_K, workingPair);
 		double T_K_sur_inv = iso_T_pw(p_Pa, w_kgkg_sur, workingPair);	
 		double dw_dp_kgkgPa_sur = iso_dw_dp_pT(p_Pa, T_K, workingPair);
@@ -166,6 +168,11 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		
 		printf("\n\nFor p = %f Pa, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, reduced spreading pressure results in piStart = %f mol/kg.",
 			p_Pa, T_K, p_sat_Pa, rho_kgm3, piStar_molkg_vol);
+
+		printf("\n\nResults of isotherm functions that are always defined using direct approach:");
+		printf("\n----------------------------------------------------------------------------");
+		printf("\nFor T = %f K and p = %f Pa, loading results in w = %f kg/kg.",
+			T_K, p_Pa, w_kgkg_sur_direct);
 
 		// Free allocated memory
 		//	
