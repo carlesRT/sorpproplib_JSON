@@ -157,8 +157,8 @@ void delAbsorption(void *absorption);
  *	double v2_m3mol:
  *		Equilibrium molar volume of second component in m³/mol.
  *	double isotherm_par[]:
- *		Array of doubles that contains coefficients of Wilson equation.
- *	struct *Adsorption:
+ *		Array of doubles that contains coefficients of isotherm equation.
+ *	struct *Absorption:
  *		Pointer to Absorption-struct that contains pointer of isotherm
  *		functions.
  *
@@ -180,5 +180,203 @@ void delAbsorption(void *absorption);
  */
 double act_g_Txv1v2_wo_v(double T_K, double x_molmol,
 	double v1_m3mol, double v2_m3mol, double isotherm_par[], void *absorption);
+	
+	
+/*
+ * act_g_Txv1v2_w_v:
+ * -----------------
+ *
+ * Calculates activity coefficient of first component depending on temperature 
+ * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+ * first component in m³/mol, and molar volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of isotherm equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Activity coefficient of first component.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes as input. Here, molar volumes may are required.
+ *
+ * History:
+ * --------
+ *	02/13/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_g_Txv1v2_w_v(double T_K, double x_molmol,
+	double v1_m3mol, double v2_m3mol, double isotherm_par[], void *absorption);
 
+
+/*
+ * act_p_Txgv1v2psat_wo_v:
+ * -----------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, and
+ * saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
+ *		Function pointer for calculation approach of activity coefficient
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes or a function pointer for the activity coefficient as 
+ *	inputs. Here, neither molar volumes nor a function pointer are required.
+ *
+ * History:
+ * --------
+ *	02/13/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
+	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * act_p_Txgv1v2psat_w_v:
+ * ----------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, molar volume of second component
+ * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
+ *		Function pointer for calculation approach of activity coefficient
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes or a function pointer for the activity coefficient as 
+ *	inputs. Here, molar volumes are required but no function pointer is 
+ *	required.
+ *
+ * History:
+ * --------
+ *	02/13/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
+	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * act_p_Txgv1v2psat_w_gf:
+ * -----------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * saturation pressure of first component p_sat_Pa in Pa, and function pointer 
+ * for activity coefficient of first component.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
+ *		Function pointer for calculation approach of activity coefficient
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes or a function pointer for the activity coefficient as 
+ *	inputs. Here, no molar volumes are required but a function pointer is 
+ *	required.
+ *
+ * History:
+ * --------
+ *	02/13/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
+	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double p_sat_Pa, double isotherm_par[], void *absorption);
+	
 #endif

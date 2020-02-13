@@ -22,6 +22,8 @@ typedef double (*genFunc_1_1_0)(double, double[]);
 typedef double (*genFunc_2_1_0)(double, double, double[]);
 typedef double (*genFunc_3_1_0)(double, double, double, double[]);
 typedef double (*genFunc_4_1_0)(double, double, double, double, double[]);
+typedef double (*genFunc_4_1_1)(double, double, double, double, double[],
+	void*);
 typedef double (*genFunc_5_1_0)(double, double, double, double, double,
 	double[]);
 typedef double (*genFunc_6_1_0)(double, double, double, double, double, double, 
@@ -358,12 +360,19 @@ struct Absorption {
 	// Pointers for isotherm functions that are only defined for isotherm types
 	// based on activity coefficients (e.g. Wilson, NRTL, UNIQUAC, ...)
 	//
-	genFunc_2_1_0 act_g_Tx;
-	genFunc_4_1_0 act_g_Txv1v2;
+	genFunc_2_1_0 act_g_Tx_wo_v;
+	genFunc_4_1_0 act_g_Txv1v2_w_v;
 	
-	genFunc_3_1_0 act_p_Txpsat;
-	genFunc_5_1_0 act_p_Txv1v2psat;
-    double (*act_p_Txgpsat)(double, double, genFunc_2_1_0, double, double[]);
+	genFunc_3_1_0 act_p_Txpsat_wo_v;
+	genFunc_5_1_0 act_p_Txv1v2psat_w_v;
+    double (*act_p_Txgpsat_w_gf)(double, double, genFunc_2_1_0, double, 
+		double[]);
+		
+	genFunc_4_1_1 act_g_Txv1v2;
+	double (*act_p_Txgv1v2psat)(double, double, genFunc_2_1_0, double, double,
+		double,	double[], void*);
+	double (*act_p_Txgv1v2)(double, double, genFunc_2_1_0, double, double,
+		double[], double[], void*, void*);
 			
 	// Pointers for isotherm functions that are only defined for isotherm types
 	// based on mixing rules (e.g. 1PVDW, ...)

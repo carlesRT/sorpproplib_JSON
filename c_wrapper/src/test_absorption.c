@@ -103,9 +103,9 @@ int main() {
 	//
 	Absorption *isotherm_wilson = newAbsorption("wilson");
 	
-	double gamma_1 = isotherm_wilson->act_g_Txv1v2(T_K , x_molmol, -1,
+	double gamma_1 = isotherm_wilson->act_g_Txv1v2_w_v(T_K , x_molmol, -1,
 		-1, par_wilson);
-	p_Pa = isotherm_wilson->act_p_Txv1v2psat(T_K , x_molmol, -1, 
+	p_Pa = isotherm_wilson->act_p_Txv1v2psat_w_v(T_K , x_molmol, -1, 
 		-1, psat_Pa, par_wilson);
 		
 	
@@ -118,8 +118,7 @@ int main() {
 		T_K, x_molmol, gamma_1);
 	printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
 		T_K, x_molmol, p_Pa);
-	
-	
+		
 	
 	// Define parameter record for executing NRTL-FDG equation. Data for working
 	// pair "[BMIM]+[(CF3SO2)2N]-(2) / H2O" is taken from:
@@ -141,9 +140,9 @@ int main() {
 	//
 	Absorption *isotherm_nrtl_fdg = newAbsorption("nrtl-fixeddg");
 	
-	gamma_1 = isotherm_nrtl_fdg->act_g_Tx(T_K , x_molmol, par_nrtl_fdg);
-	p_Pa = isotherm_nrtl_fdg->act_p_Txgpsat(T_K , x_molmol, 
-		isotherm_nrtl_fdg->act_g_Tx , psat_Pa, par_nrtl_fdg);
+	gamma_1 = isotherm_nrtl_fdg->act_g_Tx_wo_v(T_K , x_molmol, par_nrtl_fdg);
+	p_Pa = isotherm_nrtl_fdg->act_p_Txgpsat_w_gf(T_K , x_molmol, 
+		isotherm_nrtl_fdg->act_g_Tx_wo_v , psat_Pa, par_nrtl_fdg);
 	
 	
 	// Print calculated values
@@ -187,9 +186,9 @@ int main() {
 	//
 	Absorption *isotherm_nrtl_dgt = newAbsorption("nrtl-dg-t");
 	
-	gamma_1 = isotherm_nrtl_dgt->act_g_Tx(T_K , x_molmol, par_nrtl_dgt);
-	p_Pa = isotherm_nrtl_dgt->act_p_Txgpsat(T_K , x_molmol, 
-		isotherm_nrtl_dgt->act_g_Tx , psat_Pa, par_nrtl_dgt);
+	gamma_1 = isotherm_nrtl_dgt->act_g_Tx_wo_v(T_K , x_molmol, par_nrtl_dgt);
+	p_Pa = isotherm_nrtl_dgt->act_p_Txgpsat_w_gf(T_K , x_molmol, 
+		isotherm_nrtl_dgt->act_g_Tx_wo_v , psat_Pa, par_nrtl_dgt);
 	
 	
 	// Print calculated values
@@ -224,9 +223,10 @@ int main() {
 	//
 	Absorption *isotherm_uniquac_fdu = newAbsorption("uniquac-fixeddu");
 	
-	gamma_1 = isotherm_uniquac_fdu->act_g_Tx(T_K , x_molmol, par_uniquac_fdu);
-	p_Pa = isotherm_uniquac_fdu->act_p_Txgpsat(T_K , x_molmol, 
-		isotherm_uniquac_fdu->act_g_Tx , psat_Pa, par_uniquac_fdu);
+	gamma_1 = isotherm_uniquac_fdu->act_g_Tx_wo_v(T_K , x_molmol, 
+		par_uniquac_fdu);
+	p_Pa = isotherm_uniquac_fdu->act_p_Txgpsat_w_gf(T_K , x_molmol, 
+		isotherm_uniquac_fdu->act_g_Tx_wo_v , psat_Pa, par_uniquac_fdu);
 	
 	
 	// Print calculated values
@@ -263,9 +263,10 @@ int main() {
 	//
 	Absorption *isotherm_uniquac_dut = newAbsorption("uniquac-du-t");
 	
-	gamma_1 = isotherm_uniquac_dut->act_g_Tx(T_K , x_molmol, par_uniquac_dut);
-	p_Pa = isotherm_uniquac_dut->act_p_Txgpsat(T_K , x_molmol, 
-		isotherm_uniquac_dut->act_g_Tx , psat_Pa, par_uniquac_dut);
+	gamma_1 = isotherm_uniquac_dut->act_g_Tx_wo_v(T_K , x_molmol, 
+		par_uniquac_dut);
+	p_Pa = isotherm_uniquac_dut->act_p_Txgpsat_w_gf(T_K , x_molmol, 
+		isotherm_uniquac_dut->act_g_Tx_wo_v , psat_Pa, par_uniquac_dut);
 	
 	
 	// Print calculated values
@@ -310,8 +311,9 @@ int main() {
 	//
 	Absorption *isotherm_flory_huggins = newAbsorption("flory-huggins");
 	
-	gamma_1 = isotherm_flory_huggins->act_g_Tx(T_K , x_molmol, par_flory_huggins);
-	p_Pa = isotherm_flory_huggins->act_p_Txpsat(T_K , x_molmol, psat_Pa, 
+	gamma_1 = isotherm_flory_huggins->act_g_Tx_wo_v(T_K , x_molmol, 
+		par_flory_huggins);
+	p_Pa = isotherm_flory_huggins->act_p_Txpsat_wo_v(T_K , x_molmol, psat_Pa, 
 		par_flory_huggins);
 	
 	
@@ -346,9 +348,9 @@ int main() {
 	//
 	Absorption *isotherm_heil = newAbsorption("heil");
 	
-	gamma_1 = isotherm_heil->act_g_Txv1v2(T_K , x_molmol, -1, -1,
+	gamma_1 = isotherm_heil->act_g_Txv1v2_w_v(T_K , x_molmol, -1, -1,
 		par_heil);
-	p_Pa = isotherm_heil->act_p_Txv1v2psat(T_K , x_molmol, -1, -1, psat_Pa, 
+	p_Pa = isotherm_heil->act_p_Txv1v2psat_w_v(T_K , x_molmol, -1, -1, psat_Pa, 
 		par_heil);
 	
 	
@@ -384,10 +386,10 @@ int main() {
 	//
 	Absorption *isotherm_tsuboka_katayama = newAbsorption("tsuboka-katayama");
 	
-	gamma_1 = isotherm_tsuboka_katayama->act_g_Txv1v2(T_K , x_molmol, -1, -1,
-		par_tsuboka_katayama);
-	p_Pa = isotherm_tsuboka_katayama->act_p_Txv1v2psat(T_K , x_molmol, -1, -1,
-		psat_Pa, par_tsuboka_katayama);
+	gamma_1 = isotherm_tsuboka_katayama->act_g_Txv1v2_w_v(T_K , x_molmol, -1, 
+		-1, par_tsuboka_katayama);
+	p_Pa = isotherm_tsuboka_katayama->act_p_Txv1v2psat_w_v(T_K , x_molmol, -1, 
+		-1, psat_Pa, par_tsuboka_katayama);
 	
 	
 	// Print calculated values
