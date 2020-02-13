@@ -39,10 +39,10 @@ int main() {
 	
 	// Calculate equilibrium data
 	//
-	double gamma_1 = absorption_activity_heil_g1_Tx(T_K , x_molmol,
+	double gamma_1 = absorption_activity_heil_g1_Txv1v2(T_K , x_molmol, -1, -1,
 		isotherm_par);
-	double p_Pa = absorption_activity_heil_p_Txpsat(T_K , x_molmol, psat_Pa,
-		isotherm_par);
+	double p_Pa = absorption_activity_heil_p_Txv1v2psat(T_K , x_molmol, -1, -1,
+		psat_Pa, isotherm_par);
 		
 	
 	// Print calculated values

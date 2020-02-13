@@ -15,7 +15,7 @@ int main() {
 	//	equilibria of ternary systems containing ionic liquids. Fluid phase 
 	//	equilibria 2005. 227(2): p. 255-266.
 	//
-	double isotherm_par[] = {7985.164, 16736};
+	double isotherm_par[] = {7985.164, 16736, 0, 0, 0, 0};
 	
 	// Define parameter record for executing vapour pressure equation. Data for
 	// refrigerant "H2O" is taken from:
@@ -38,10 +38,10 @@ int main() {
 	
 	// Calculate equilibrium data
 	//
-	double gamma_1 = absorption_activity_wilson_g1_Tx(T_K , x_molmol,
-		isotherm_par);
-	double p_Pa = absorption_activity_wilson_p_Txpsat(T_K , x_molmol, psat_Pa,
-		isotherm_par);
+	double gamma_1 = absorption_activity_wilson_g1_Txv1v2(T_K , x_molmol, -1,
+		-1, isotherm_par);
+	double p_Pa = absorption_activity_wilson_p_Txv1v2psat(T_K , x_molmol, -1, 
+		-1, psat_Pa, isotherm_par);
 		
 	
 	// Print calculated values

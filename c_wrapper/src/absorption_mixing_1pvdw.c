@@ -70,17 +70,17 @@
  * ------------------------------
  *
  * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
- * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, and
- * saturation pressure of first component p_sat_Pa in Pa.
+ * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * fraction in liquid phase x_molmol in mol/mol
  *
  * Parameters:
  * -----------
  *	double T_K:
  *		Equilibrium temperature in K.
+ *	double v_m3mol:
+ *		Molar mixing volume in m³/mol.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double p_sat_Pa:
- *		Saturation pressure of first component in Pa.
  *	double isotherm_par[]:
  *		Array of doubles that contains coefficients of Tsubo & Kakatayama
  *		equation.
