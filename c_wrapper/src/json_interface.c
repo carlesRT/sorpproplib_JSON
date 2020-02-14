@@ -282,6 +282,8 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  * -----------
  * 	const char *equation:
  *		Name of equation.
+ *	int no_equ:
+ *		Numer of equation (i.e. when more than one equation is available)
  *	cJSON *json:
  *		Tree of JSON-structs that represent equations of a working pair.
  *
@@ -296,62 +298,102 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  *		First implementation.
  *
  */
-double *json_search_parameters(const char *equation, cJSON *json) { 
-	// Search workingpair for equation type
-	//	
+double *json_search_parameters(const char *equation, int no_equ, cJSON *json) { 
+	// Get correct equation
+	//
     cJSON *json_equation = cJSON_GetObjectItemCaseSensitive(json, equation);
 	
-    if (cJSON_IsObject(json_equation)) {
-		// Equation type exists and therefore parameters are searched next
+    if (cJSON_IsArray(json_equation)) {
+		// Equation type exists and therefore correct ID is searched next
 		//		
-		cJSON *json_equation_parameters_single = NULL;
-		cJSON *json_equation_parameters = 
-			cJSON_GetObjectItemCaseSensitive(json_equation, "_p_");
-			
-		// Allocate memory to save coefficients of equation
-		//
-		int no_coef = cJSON_GetArraySize(json_equation_parameters);
-		double *coefficients = (double *) malloc(no_coef * sizeof(double));
+		cJSON *json_equation_ID = NULL;
+		int ID = 0;
 		
-		if (coefficients == NULL) {
-			// Not enough memory available for coefficients
+		cJSON_ArrayForEach(json_equation_ID, json_equation) {
+			// Check for correct ID:
+			// If ID is correct, proceed with extracting coefficients
+			// Otherwise, get next item until ID is correct
 			//
-			printf("\n\n###########\n# Warning #\n###########");
-			printf("\nCannot allocate memory for coefficients of equation \" %s \".",
-				equation);
-			return NULL;
+			ID++;
+			if (ID == no_equ) {				
+				// Search workingpair for equation type
+				//	
+				if (cJSON_IsObject(json_equation_ID)) {
+					// Equation type exists and parameters are searched next
+					//		
+					cJSON *json_equation_parameters_single = NULL;
+					cJSON *json_equation_parameters = 
+						cJSON_GetObjectItemCaseSensitive(json_equation_ID, 
+						"_p_");
+						
+					// Allocate memory to save coefficients of equation
+					//
+					int no_coef = cJSON_GetArraySize(json_equation_parameters);
+					double *coefficients = (double *) malloc(no_coef * 
+						sizeof(double));
+					
+					if (coefficients == NULL) {
+						// Not enough memory available for coefficients
+						//
+						printf("\n\n###########\n# Warning #\n###########");
+						printf("\nCannot allocate memory for coefficients of equation \" %s \".",
+							equation);
+						return NULL;
+						
+					}
+					
+					// Read coefficients from parameter-struct element for 
+					// element
+					//
+					int tmp_counter = 0;
+					
+					cJSON_ArrayForEach(json_equation_parameters_single,
+						json_equation_parameters) {
+						// Save parameters to allocated array
+						//			
+						cJSON *json_equation_parameters_single_values = 
+							cJSON_GetObjectItemCaseSensitive(
+								json_equation_parameters, 
+								json_equation_parameters_single->string);
+								
+						coefficients[tmp_counter] =
+							json_equation_parameters_single_values->valuedouble;
+						tmp_counter++;
+										
+					}	
+					
+					// Return coefficients
+					//
+					return coefficients;
+					
+				} else {
+					// Equation does not saved as object
+					//
+					printf("\n\n###########\n# Warning #\n###########");
+					printf("\nEquation \" %s \" is not saved as object.",
+						equation);
+					return NULL;
+
+				}		
+				
+			}
 			
 		}
-		
-		// Read coefficients from parameter-struct element for element
-		//
-		int tmp_counter = 0;
-		
-		cJSON_ArrayForEach(json_equation_parameters_single,
-			json_equation_parameters) {
-			// Save parameters to allocated array
-			//			
-			cJSON *json_equation_parameters_single_values = 
-				cJSON_GetObjectItemCaseSensitive(json_equation_parameters, 
-					json_equation_parameters_single->string);
-					
-			coefficients[tmp_counter] =
-				json_equation_parameters_single_values->valuedouble;
-			tmp_counter++;
-							
-		}	
-		
-		// Return coefficients
-		//
-		return coefficients;
-		
-    } else {
-		// Equation does not exist for selected working pair
+		// Equation ID does not exist for selected working pair
 		//
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nEquation \" %s \" does not exist for selected working pair.",
+		printf("\nEquation ID \" %i \" does not exist for selected working pair.",
+			no_equ);
+		return NULL;
+
+	} else {
+		// Equation is not saved as array
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nEquation \" %s \"  is not saved as array or does not exist.",
 			equation);
 		return NULL;
 
 	}
+
 }

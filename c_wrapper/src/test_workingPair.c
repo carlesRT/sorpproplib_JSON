@@ -13,8 +13,8 @@
 // Definition of functions //
 /////////////////////////////
 void testWorkingPair(const char *path_db, const char *wp_as, 
-	const char *wp_st, const char *wp_rf, const char *wp_iso, 
-	const char *rf_psat, const char *rf_rhol, const char *rf_ac) {
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
 	// Initiate working pair
 	//
 	WorkingPair *workingPair = newWorkingPair(
@@ -23,9 +23,11 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		wp_st,
 		wp_rf,
 		wp_iso,
+		no_iso,
 		rf_psat,
+		no_p_sat,
 		rf_rhol,
-		rf_ac);
+		no_rhol);
 
 	if (workingPair != NULL) {
 		// Define some parameters to calculate equilibrium properties
@@ -45,9 +47,16 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		//
 		double w_kgkg_sur = iso_w_pT(p_Pa, T_K, workingPair);
 		double w_kgkg_sur_direct = direct_iso_w_pT_workingPair(p_Pa, T_K, 
-			path_db, wp_as, wp_st, wp_rf, wp_iso, rf_psat, rf_rhol, rf_ac);
+			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+			rf_rhol, no_rhol);
 		double p_Pa_sur_inv = iso_p_wT(w_kgkg_sur, T_K, workingPair);
+		double p_Pa_sur_inv_direct = direct_iso_p_wT_workingPair(w_kgkg_sur, 
+			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double T_K_sur_inv = iso_T_pw(p_Pa, w_kgkg_sur, workingPair);	
+		double T_K_sur_inv_direct = direct_iso_T_pw_workingPair(p_Pa, 
+			w_kgkg_sur, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double dw_dp_kgkgPa_sur = iso_dw_dp_pT(p_Pa, T_K, workingPair);
 		double dw_dT_kgkgK_sur = iso_dw_dT_pT(p_Pa, T_K, workingPair);
 		double dp_dw_Pakgkg_sur = iso_dp_dw_wT(w_kgkg_sur, T_K, workingPair);
@@ -104,13 +113,12 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		printf("\nSelected sorbent is: %s.", workingPair->wp_as);
 		printf("\nSelected sub-type of sorbent is: %s.", workingPair->wp_st);
 		printf("\nSelected refrigerant is: %s.", workingPair->wp_rf);
-		printf("\nSelected isotherm is: %s.", workingPair->wp_iso);
-		printf("\nSelected calculation approach for vapour pressure is: %s.",
-			workingPair->rf_psat);
-		printf("\nSelected calculation approach for vsaturated liquid density is: %s.",
-			workingPair->rf_rhol);
-		printf("\nSelected calculation approach for activity coefficients is: %s.",
-			workingPair->rf_ac);
+		printf("\nSelected isotherm is: %s - %i.", workingPair->wp_iso,
+			workingPair->no_iso);
+		printf("\nSelected calculation approach for vapour pressure is: %s - %i.",
+			workingPair->rf_psat, workingPair->no_p_sat);
+		printf("\nSelected calculation approach for vsaturated liquid density is: %s - %i.",
+			workingPair->rf_rhol, workingPair->no_rhol);
 			
 		// Print calculated values
 		//
@@ -169,6 +177,10 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		printf("\n----------------------------------------------------------------------------");
 		printf("\nFor T = %f K and p = %f Pa, loading results in w = %f kg/kg.",
 			T_K, p_Pa, w_kgkg_sur_direct);
+		printf("\nFor T = %f K and w = %f kg/kg, pressure results in p = %f Pa.",
+			T_K, w_kgkg_sur, p_Pa_sur_inv_direct);
+		printf("\nFor p = %f Pa and w = %f kg/kg, temperature results in T = %f K.",
+			p_Pa, w_kgkg_sur, T_K_sur_inv_direct);
 			
 		// Free allocated memory
 		//	
@@ -190,9 +202,11 @@ int main() {
 		"maxsorb-iii",
 		"r-134a",
 		"dubinin-astakov",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 		
 	// Test working pair: Carbon Acf-a-20 / R-134a
 	//	
@@ -202,9 +216,11 @@ int main() {
 		"acf-a-20",
 		"r-134a",
 		"dubinin-astakov",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 		
 	// Test working pair: Carbon Acf-a-20 / R507a
 	//	
@@ -214,9 +230,11 @@ int main() {
 		"acf-a-20",
 		"r507a",
 		"dubinin-astakov",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 		
 	// Test working pair: Carbon Maxsorb-III / R-410a
 	//	
@@ -226,9 +244,11 @@ int main() {
 		"maxsorb-iii",
 		"r-410a",
 		"dubinin-astakov",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Carbon Maxsorb-III / Propane
 	//	
@@ -238,9 +258,11 @@ int main() {
 		"maxsorb-iii",
 		"propane",
 		"dubinin-astakov",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Carbon Norit-rb1 / CO2
 	//	
@@ -250,9 +272,11 @@ int main() {
 		"norit-rb1",
 		"co2",
 		"langmuir",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Carbon Norit-rb1 / Methane
 	//	
@@ -262,9 +286,11 @@ int main() {
 		"norit-rb1",
 		"methane",
 		"langmuir",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Zeolite 5A / Water
 	//	
@@ -274,9 +300,11 @@ int main() {
 		"5a",
 		"water",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Zeolite 13X / Water
 	//	
@@ -286,9 +314,11 @@ int main() {
 		"13x",
 		"water",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Silicagel / Water
 	//	
@@ -298,9 +328,11 @@ int main() {
 		"",
 		"water",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Zeolite 5A / CO2
 	//	
@@ -310,9 +342,11 @@ int main() {
 		"5a",
 		"co2",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Zeolite 13X / CO2
 	//	
@@ -322,9 +356,11 @@ int main() {
 		"13x",
 		"co2",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: Silicagel / CO2
 	//	
@@ -334,9 +370,11 @@ int main() {
 		"",
 		"co2",
 		"toth",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: MOF CuBtC / Propane
 	//	
@@ -346,9 +384,11 @@ int main() {
 		"cubtc",
 		"propane",
 		"dss",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: MOF CuBtC / Isobutane
 	//	
@@ -358,9 +398,11 @@ int main() {
 		"cubtc",
 		"isobutane",
 		"dss",
+		1,
 		"EoS_vapourPressure",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 
 	// Test working pair: MOF CuBtC / Propylene
 	//	
@@ -370,9 +412,11 @@ int main() {
 		"cubtc",
 		"propylene",
 		"dss",
-		"EoS_vapourPressure",
+		1,
+		"Antoine",
+		1,
 		"EoS_saturatedLiquidDensity",
-		"NoActivityCoefficients");
+		1);
 	
 	return EXIT_SUCCESS;	
 }

@@ -118,6 +118,8 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  * -----------
  * 	const char *equation:
  *		Name of equation.
+ *	int no_equ:
+ *		Numer of equation (i.e. when more than one equation is available)
  *	cJSON *json:
  *		Tree of JSON-structs that represent equations of a working pair.
  *
@@ -132,6 +134,6 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  *		First implementation.
  *
  */
-double *json_search_parameters(const char *equation, cJSON *json);
+double *json_search_parameters(const char *equation, int no_equ, cJSON *json);
 
 #endif

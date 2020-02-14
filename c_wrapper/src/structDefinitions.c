@@ -305,17 +305,48 @@ struct Adsorption {
  *
  * Attributes for isotherms based on activity coefficients:
  * --------------------------------------------------------
- * 	function act_g_Txv1v2:
+ * 	function act_g_Tx_wo_v:
+ *		Returns activity coefficient of first component depending on temperature 
+ * 		T_K in K, and mole fraction in liquid phase x_molmol in mol/mol.
+ * 	function act_g_Txv1v2_w_v:
  *		Returns activity coefficient of first component depending on temperature 
  * 		T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar
  *  	volume of first component in m³/mol, and molar volume of second 
  *		component in m³/mol.
+ * 	function act_p_Txpsat_wo_v:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * 		and saturation pressure of first component p_sat_Pa in Pa.
+ * 	function act_p_Txv1v2psat_w_v:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * 		molar  volume of first component in m³/mol, molar volume of second 
+ *		component in m³/mol, and saturation pressure of first component p_sat_Pa
+ *		in Pa.
+ * 	function act_p_Txgpsat_w_gf:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * 		function pointer for activity coefficient of first component, and 
+ *		saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * 	function act_g_Txv1v2:
+ *		Returns activity coefficient of first component depending on temperature 
+ * 		T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar
+ *  	volume of first component in m³/mol, molar volume of second component
+ *		in m³/mol, and pointer to Absorption-struct.
  * 	function act_p_Txgv1v2psat:
  *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
  * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
  * 		function pointer for activity coefficient of first component, molar 
- *		volume of first component in m³/mol, molar volume of second component in
- *		m³/mol, and saturation pressure of first component p_sat_Pa in Pa.
+ *		olume of first component in m³/mol, molar volume of second component in
+ *		m³/mol, saturation pressure of first component p_sat_Pa in Pa, and 
+ *		pointer to Absorption-struct.
+ * 	function act_p_Txgv1v2:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * 		function pointer for activity coefficient of first component, molar 
+ *		olume of first component in m³/mol, molar volume of second component in
+ *		m³/mol, pointer to Refrigerant-struct, and pointer to Absorption-struct.
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
@@ -447,8 +478,14 @@ struct Refrigerant {
  *		Name of calculation approach for vapour pressure.
  * 	const char *rf_rhol:
  *		Name of calculation approach for liquid density.
- * 	const char *rf_ac:
- *		Name of calculation approach for activity coefficients.
+ *	int no_iso:
+ *		Numer of isotherm (i.e. when more than one isotherm is available)
+ *	int no_p_sat:
+ *		Numer of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ *	int no_rhol:
+ *		Numer of liquid density equation (i.e. when more than one equation is 
+ *		available)
  *
  * 	double *iso_par:
  *		Array containing coefficients of isotherm.
@@ -456,8 +493,6 @@ struct Refrigerant {
  *		Array containing coefficients of vapour pressure equation.
  * 	double *rhol_par:
  *		Array containing coefficients of saturated liquid density equation.
- * 	double *ac_par:
- *		Array containing coefficients of activity coefficent equation.
  *
  *	Adsorption *adsorption:
  *		Struct containing function pointers for isotherm functions.
@@ -479,14 +514,15 @@ struct WorkingPair {
 	const char *wp_iso;	
 	const char *rf_psat;	
 	const char *rf_rhol;	
-	const char *rf_ac;	
+	int no_iso;	
+	int no_p_sat;	
+	int no_rhol;	
 	
-	// Arraies containing coefficients of functions
+	// Arrays containing coefficients of functions
 	//
 	double *iso_par;
 	double *psat_par;	
 	double *rhol_par;	
-	double *ac_par;
 	
 	// Structs containing function pointers of isotherm and refrigerant
 	// functions
