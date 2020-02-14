@@ -1574,4 +1574,1927 @@ DLL_API double direct_ads_T_pw_workingPair(double p_Pa, double w_kgkg,
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol);
 
+
+/*
+ * direct_ads_dw_dp_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium loading w with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dp_pT_workingPair(double p_Pa, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dw_dT_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium loading w with respect to temperature 
+ * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dT_pT_workingPair(double p_Pa, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dp_dw_wT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to loading 
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dw_wT_workingPair(double w_kgkg, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dp_dT_wT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dT_wT_workingPair(double w_kgkg, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_w_piStar_pyxgTM_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates reduced spreading pressure piStar in kg/mol depending on 
+ * equilibrium pressure p in Pa, molar fraction of refrigerant in vapour phase 
+ * in mol/mol, molar fraction of refrigerant in adsorbed phase in mol/mol, 
+ * activity coefficient of refrigerant in adsorbed phase, equilibrium 
+ * temperature T in K and molar mass of refrigerant M in kg/mol. The reduced 
+ * spreading pressure is defined as follows:
+ *
+ * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
+ *		Integral_0^p0{w(p,T) / p * dp}
+ *
+ *	where p0 = p_total*y / (gamma*x)
+ *
+ * Parameters:
+ * -----------
+ *	double p_total_Pa:
+ *		Total pressure of vapour phase in Pa.
+ *	double y_molmol:
+ *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *	double x_molmol:
+ *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
+ *	double gamma:
+ *		Activity coefficent of refrigerant in adsorbed phase.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double M_kgmol:
+ *		Molar mass of refrigerant M in kg/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Reduced spreading pressure in kg/mol.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_w_piStar_pyxgTM_workingPair(double p_total_Pa,
+	double y_molmol, double x_molmol, double gamma, double T_K, double M_kgmol, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_W_ARho_workingPair:
+ * ------------------------------
+ *
+ * Calculates equilibrium volumetric loading W in m³/kg depending on equilibrium
+ * adsorption potential A in J/mol and saturated liquid density of adsorpt rho_l
+ * in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double A_Jmol:
+ *		Equilibrium adsorption potential A in J/mol.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium volumetric loading W in m³/kg.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg. Therefore, function checks unit of coefficents
+ *	by checking isotherm coefficients.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_W_ARho_workingPair(double A_Jmol, double rho_l_kgm3, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_A_WRho_workingPair:
+ * ------------------------------
+ *
+ * Calculates equilibrium adsorption potential A in J/mol depending on 
+ * equilibrium volumetric loading W in m³/kg and saturated liquid density of
+ * adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double W_m3kg:
+ *		Equilibrium volumetric loading W in m³/kg.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium adsorption potential A in J/mol.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_A_WRho_workingPair(double W_m3kg, double rho_l_kgm3, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_w_pTpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
+ * p in Pa, equilibrium temperature T in K, saturation pressure p_Sat in Pa and 
+ * saturated liquid density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium loading in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_w_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_p_wTpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium loading w in
+ * kg/kg, equilibrium temperature T in K, saturation pressure p_Sat in Pa and 
+ * density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_p_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_T_pwpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium temperature T in K depending on equilibrium pressure
+ * in Pa, equilibrium loading w in kg/kg, saturation pressure p_Sat in Pa and 
+ * density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ * 	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium temperature in K.
+ *
+ * Remarks:
+ * --------
+ *	Uses internal euqation of states to calculate vapour pressure, saturated
+ *	liquid density of adsorpt, derivative of vapour pressure wrt. temperature
+ *	and derivative of saturated liquid density of adsorpt wrt. temperature. If
+ *	equation of states are not implemented for refrigerant, function returns -1
+ *  and throws warning. If user want to use his own equation of states, this
+ *  function cannot be used and determination of root to calculate T must
+ *  be implemented by user.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_T_pwpsatRho_workingPair(double p_Pa, double w_kgkg, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dW_dA_ARho_workingPair:
+ * ----------------------------------
+ *
+ * Calculates derivative of equilibrium volumetric loading dW_dA in m³mol/kg/J
+ * depending on equilibrium adsorption potential A in J/mol and saturated liquid
+ * density of adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double A_Jmol:
+ *		Equilibrium adsorption potential A in J/mol.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of volumetric loading wrt. adsorption potential in
+ *		m³mol/kg/J.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dW_dA_ARho_workingPair(double A_Jmol, 
+	double rho_l_kgm3, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso, 
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dA_dW_WRho_workingPair:
+ * ----------------------------------
+ *
+ * Calculates derivative of equilibrium adsorption potential dA_dW in kgJ/mol/m³
+ * depending on equilibrium volumetric loading W in m³/kg and saturated liquid
+ * density of adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double W_m3kg:
+ *		Equilibrium volumetric loading W in m³/kg.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of adsorption potential wrt. volumetric loading in
+ *		kgJ/mol/m³.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dA_dW_WRho_workingPair(double W_m3kg,
+	double rho_l_kgm3, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso, 
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dw_dp_pTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium loading dw_dp with respect to pressure
+ * in kg/kg/Pa depending on equilibrium pressure p in Pa, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dp_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dw_dT_pTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium loading dw_dp with respect to
+ * temperature in kg/kg/K depending on equilibrium pressure p in Pa, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa, density of adsorpt 
+ * rho in kg/m³, derivative of saturation pressure with respect to temperature
+ * dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+ * temperature drho_dT in kg/m³/K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ * 	double dp_sat_dT_PaK:
+ *		Derivative of saturation pressure wrt. temperature in Pa/K.
+ *	double drho_dT_kgm3K:
+ *		Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dT_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dp_dw_wTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to loading 
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dw_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_dp_dT_wTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium loading w in kg/kg, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³, derivative of saturation pressure with respect to temperature
+ * dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+ * temperature drho_dT in kg/m³/K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ * 	double dp_sat_dT_PaK:
+ *		Derivative of saturation pressure wrt. temperature in Pa/K.
+ *	double drho_dT_kgm3K:
+ *		Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dT_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ads_piStar_pyxgTpsatRhoM_workingPair:
+ * --------------------------------------------
+ *
+ * Calculates reduced spreading pressure in kg/mol depending on equilibrium
+ * pressure p in Pa, molar fraction of refrigerant in vapour phase in mol/mol,
+ * molar fraction of refrigerant in adsorbed phase in mol/mol, activity
+ * coefficient of refrigerant in adsorbed phase, equilibrium temperature T in K,
+ * saturation pressure p_Sat in Pa and density of adsorpt rho in kg/m³ and molar
+ * mass of refrigerant M in kg/mol. The reduced spreading pressure is defined as 
+ * follows:
+ *
+ * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
+ *		Integral_0^p0{w(p,T) / p * dp}
+ *
+ *	where p0 = p_total*y / (gamma*x)
+ *
+ * Parameters:
+ * -----------
+ *	double p_total_Pa:
+ *		Total pressure of vapour phase in Pa.
+ *	double y_molmol:
+ *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *	double x_molmol:
+ *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
+ *	double gamma:
+ *		Activity coefficent of refrigerant in adsorbed phase.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *	double M_kgmol:
+ *		Molar mass of refrigerant M in kg/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Reduced spreading pressure in kg/mol.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_piStar_pyxgTpsatRhoM_workingPair(double p_total_Pa,
+	double y_molmol, double x_molmol, double gamma, double T_K, double p_sat_Pa, 
+	double rho_kgm3, double M_kgmol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding absorption working wo struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_abs_X_pT_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * pressure p in Pa and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium concentration in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_X_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_p_XT_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium
+ * concentration X in kg/kg and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_T_pX_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium temperature in K depending on equilibrium pressure p
+ * in Pa and equilibrium concentration X in kg/kg.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium temperature in K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_T_pX_workingPair(double p_Pa, double X_kgkg,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_dX_dp_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dX_dp_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_dX_dT_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to  
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dX_dT_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_dp_dX_XT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to concentration 
+ * w in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. concentration in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dp_dX_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_dp_dT_XT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dp_dT_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_g_Txv1v2_workingPair:
+ * --------------------------------
+ *
+ * Calculates activity coefficient of first component depending on temperature 
+ * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+ * first component in m³/mol, and molar volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Activity coefficient of first component.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_g_Txv1v2_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_p_Txv1v2psat_workingPair:
+ * ------------------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, molar volume of second component
+ * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Txv1v2psat_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_p_Txv1v2_workingPair:
+ * --------------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, and molar volume of second 
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1. Uses refrigerant function to calculate saturation pressure.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Txv1v2_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+	
+
+/*
+ * direct_abs_p_Tvx_workingPair:
+ * -----------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * fraction in liquid phase x_molmol in mol/mol
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v_m3mol:
+ *		Molar mixing volume in m³/mol.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Tvx_workingPair(double T_K, double v_m3mol, 
+	double x_molmol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding refrigerant working w struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_ref_p_sat_T_workingPair:
+ * -------------------------------
+ *
+ * Calculates saturation pressure in Pa depending on equilibrium temperature T 
+ * in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_p_sat_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ref_dp_sat_dT_T_workingPair:
+ * -----------------------------------
+ *
+ * Calculates derivative of saturation pressure in Pa/K wrt to temperature
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturation pressure wrt temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_dp_sat_dT_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ref_rho_l_T_workingPair:
+ * -------------------------------
+ *
+ * Calculates saturated liquid density in kg/m³ depending on equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturated liquid density in kg/m³.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_rho_l_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_ref_drho_l_dT_T_workingPair:
+ * -----------------------------------
+ *
+ * Calculates derivative of saturated liquid density wrt temperature in kg/m³/K
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturated liquid density wrt temperature in kg/m³/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_drho_l_dT_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
 #endif

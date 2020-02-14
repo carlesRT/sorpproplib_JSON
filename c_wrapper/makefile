@@ -20,7 +20,7 @@ PROJECT = sorpPropLib
 # YES: Disable debugging information
 # NO: Debugging information
 #
-BUILD_RELEASE = NO
+BUILD_RELEASE = YES
 
 
 # Names of sources
