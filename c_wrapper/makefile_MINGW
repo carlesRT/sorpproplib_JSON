@@ -24,6 +24,7 @@ SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
 	adsorption_dualSiteSips.c\
 	adsorption_langmuir.c\
 	adsorption_toth.c\
+	absorption.c\
 	adsorption_dubininAstakhov.c\
 	absorption_duehring.c\
 	absorption_activity_wilson.c\
@@ -169,7 +170,8 @@ test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_floryhuggins.exe\
 	test_absorption_activity_heil.exe\
 	test_absorption_activity_tsubokakatayama.exe\
-	test_absorption_mixing_1pvdw.exe
+	test_absorption_mixing_1pvdw.exe\
+	test_absorption.exe
 
 	$(DIR_TEST)/test_absorption_duehring.exe
 	$(DIR_TEST)/test_absorption_activity_wilson.exe
@@ -179,6 +181,7 @@ test_absorption: test_absorption_duehring.exe\
 	$(DIR_TEST)/test_absorption_activity_heil.exe
 	$(DIR_TEST)/test_absorption_activity_tsubokakatayama.exe
 	$(DIR_TEST)/test_absorption_mixing_1pvdw.exe
+	$(DIR_TEST)/test_absorption.exe
 	
 	
 # Execute test scripts for refrigerants
@@ -308,6 +311,14 @@ test_absorption_activity_tsubokakatayama.exe: $(addprefix $(DIR_OBJ)/,\
 
 test_absorption_mixing_1pvdw.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_mixing_1pvdw.o absorption_mixing_1pvdw.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F)
+
+test_absorption.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption.o absorption.o absorption_duehring.o\
+	absorption_activity_wilson.o absorption_activity_nrtl.o\
+	absorption_activity_uniquac.o absorption_activity_floryhuggins.o\
+	absorption_activity_heil.o absorption_activity_tsubokakatayama.o\
+	absorption_mixing_1pvdw.o refrigerant_vapourPressure.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 

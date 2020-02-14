@@ -182,6 +182,226 @@ void testWorkingPair_ads(const char *path_db, const char *wp_as,
 }
 
 
+void testWorkingPair_abs_con(const char *path_db, const char *wp_as, 
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Initiate working pair
+	//
+	WorkingPair *workingPair = newWorkingPair(
+		path_db,
+		wp_as,
+		wp_st,
+		wp_rf,
+		wp_iso,
+		no_iso,
+		rf_psat,
+		no_p_sat,
+		rf_rhol,
+		no_rhol);
+
+	if (workingPair != NULL) {
+		// Define some parameters to calculate equilibrium properties
+		//		
+		double p_Pa = 724.659957;
+		double T_K = 323.15;
+
+		// Calculate equilibrium properties
+		//
+		double X_kgkg = abs_X_pT(p_Pa, T_K, workingPair);
+		double p_Pa_inv = abs_p_XT(X_kgkg, T_K, workingPair);
+		double T_K_inv = abs_T_pX(p_Pa, X_kgkg, workingPair);
+		double dX_dp_kgkgPa = abs_dX_dp_pT(p_Pa, T_K, workingPair);	
+		double dX_dT_kgkgK = abs_dX_dT_pT(p_Pa, T_K, workingPair);
+		double dp_dX_Pakgkg = abs_dp_dX_XT(X_kgkg, T_K, workingPair);
+		double dp_dT_Pakgkg = abs_dp_dT_XT(X_kgkg, T_K, workingPair);
+			
+		
+		// Print general information of selected working pair
+		//
+		printf("\n\n#############################");
+		printf("\n#############################");
+		printf("\n## Test WorkingPair-struct ##");
+		printf("\n#############################");
+		printf("\n#############################");
+
+		printf("\n\nGeneral information of working pair:");
+		printf("\n------------------------------------");
+		printf("\nSelected sorbent is: %s.", workingPair->wp_as);
+		printf("\nSelected sub-type of sorbent is: %s.", workingPair->wp_st);
+		printf("\nSelected refrigerant is: %s.", workingPair->wp_rf);
+		printf("\nSelected isotherm is: %s - %i.", workingPair->wp_iso,
+			workingPair->no_iso);
+		printf("\nSelected calculation approach for vapour pressure is: %s - %i.",
+			workingPair->rf_psat, workingPair->no_p_sat);
+		printf("\nSelected calculation approach for saturated liquid density is: %s - %i.",
+			workingPair->rf_rhol, workingPair->no_rhol);
+			
+		// Print calculated values
+		//
+		printf("\n\nResults of conventional absorption functions:");
+		printf("\n---------------------------------------------");
+		printf("\nFor T = %f K and p = %f Pa, equilibrium concentration results in X = %f kg/kg.", 
+			T_K, p_Pa, X_kgkg);
+		printf("\nFor T = %f K and X = %f kg/kg, equilibrium pressure results in p = %f Pa.", 
+			T_K, X_kgkg, p_Pa_inv);
+		printf("\nFor p = %f Pa and X = %f kg/kg equilibrium temperature results in T = %f K.", 
+			p_Pa, X_kgkg, T_K_inv);
+			
+		printf("\n\nFor T = %f K and p = %f Pa, analytical derivative of X with respect to p results in dX_dp = %f kg/kg/Pa.",
+			T_K, p_Pa, dX_dp_kgkgPa);
+		printf("\nFor T = %f K and p = %f Pa, analytical derivative of X with respect to T results in dX_dT = %f kg/kg/K.",
+			T_K, p_Pa, dX_dT_kgkgK);		
+		printf("\n\nFor T = %f K and X = %f kg/kg, analytical derivative of p with respect to X results in dp_dX = %f Pakg/kg.", 
+			T_K, X_kgkg, dp_dX_Pakgkg);
+		printf("\nFor T = %f K and X = %f kg/kg, analytical derivative of p with respect to T results in dp_dT = %f Pa/K.", 
+			T_K, X_kgkg, dp_dT_Pakgkg);
+			
+			
+		// Free allocated memory
+		//	
+		delWorkingPair(workingPair);
+	
+	}
+}
+
+
+void testWorkingPair_abs_act(double T_K, double x_molmol,
+	const char *path_db, const char *wp_as, 
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Initiate working pair
+	//
+	WorkingPair *workingPair = newWorkingPair(
+		path_db,
+		wp_as,
+		wp_st,
+		wp_rf,
+		wp_iso,
+		no_iso,
+		rf_psat,
+		no_p_sat,
+		rf_rhol,
+		no_rhol);
+
+	if (workingPair != NULL) {
+		// Define some parameters to calculate equilibrium properties
+		//		
+		double psat_Pa = ref_p_sat_T(T_K, workingPair);
+
+		// Calculate equilibrium properties
+		//
+		double gamma_1 = abs_g_Txv1v2(T_K , x_molmol, -1, -1, workingPair);
+		double p_Pa = abs_p_Txv1v2psat(T_K , x_molmol, -1, -1, psat_Pa, 
+			workingPair);
+		double p_Pa_ref = abs_p_Txv1v2(T_K , x_molmol, -1, -1, workingPair);
+			
+		
+		// Print general information of selected working pair
+		//
+		printf("\n\n#############################");
+		printf("\n#############################");
+		printf("\n## Test WorkingPair-struct ##");
+		printf("\n#############################");
+		printf("\n#############################");
+
+		printf("\n\nGeneral information of working pair:");
+		printf("\n------------------------------------");
+		printf("\nSelected sorbent is: %s.", workingPair->wp_as);
+		printf("\nSelected sub-type of sorbent is: %s.", workingPair->wp_st);
+		printf("\nSelected refrigerant is: %s.", workingPair->wp_rf);
+		printf("\nSelected isotherm is: %s - %i.", workingPair->wp_iso,
+			workingPair->no_iso);
+		printf("\nSelected calculation approach for vapour pressure is: %s - %i.",
+			workingPair->rf_psat, workingPair->no_p_sat);
+		printf("\nSelected calculation approach for saturated liquid density is: %s - %i.",
+			workingPair->rf_rhol, workingPair->no_rhol);
+			
+		// Print calculated values
+		//
+		printf("\n\nResults of activity-based absorption functions:");
+		printf("\n-----------------------------------------------");
+		printf("\nFor T = %f K and x = %f mol/mol, activity coefficient results in gamma_1 = %f.", 
+			T_K, x_molmol, gamma_1);
+		printf("\nFor T = %f K, saturation pressure results in p = %f Pa.", 
+			T_K, psat_Pa);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
+			T_K, x_molmol, p_Pa);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
+			T_K, x_molmol, p_Pa_ref);
+			
+			
+		// Free allocated memory
+		//	
+		delWorkingPair(workingPair);
+	
+	}
+}
+
+
+void testWorkingPair_abs_mix(const char *path_db, const char *wp_as, 
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Initiate working pair
+	//
+	WorkingPair *workingPair = newWorkingPair(
+		path_db,
+		wp_as,
+		wp_st,
+		wp_rf,
+		wp_iso,
+		no_iso,
+		rf_psat,
+		no_p_sat,
+		rf_rhol,
+		no_rhol);
+
+	if (workingPair != NULL) {
+		// Define some parameters to calculate equilibrium properties
+		//		
+		double T_K = 313.2;
+		double x_molmol = 0.769;	
+
+		// Calculate equilibrium properties
+		//
+		double p_Pa = abs_p_Tvx(T_K, 0.5/1237.1, x_molmol, workingPair);
+			
+		
+		// Print general information of selected working pair
+		//
+		printf("\n\n#############################");
+		printf("\n#############################");
+		printf("\n## Test WorkingPair-struct ##");
+		printf("\n#############################");
+		printf("\n#############################");
+
+		printf("\n\nGeneral information of working pair:");
+		printf("\n------------------------------------");
+		printf("\nSelected sorbent is: %s.", workingPair->wp_as);
+		printf("\nSelected sub-type of sorbent is: %s.", workingPair->wp_st);
+		printf("\nSelected refrigerant is: %s.", workingPair->wp_rf);
+		printf("\nSelected isotherm is: %s - %i.", workingPair->wp_iso,
+			workingPair->no_iso);
+		printf("\nSelected calculation approach for vapour pressure is: %s - %i.",
+			workingPair->rf_psat, workingPair->no_p_sat);
+		printf("\nSelected calculation approach for saturated liquid density is: %s - %i.",
+			workingPair->rf_rhol, workingPair->no_rhol);
+			
+		// Print calculated values
+		//
+		printf("\n\nResults of mixing-based absorption functions:");
+		printf("\n---------------------------------------------");
+		printf("\nFor T = %f K,  x = %f mol/mol and PRE, equilibrium pressure results in p = %f Pa.", 
+		T_K, x_molmol, p_Pa);
+			
+			
+		// Free allocated memory
+		//	
+		delWorkingPair(workingPair);
+	
+	}
+}
+
+
 /////////////////////////////////
 // Definition of main function //
 /////////////////////////////////
@@ -200,5 +420,49 @@ int main() {
 		"EoS_saturatedLiquidDensity",
 		1);
 	
+	// Test working pair: NaOH-KOH-CsOH / H2O
+	//	
+	testWorkingPair_abs_con(
+		".\\data\\sorpproplib_ValidationCInterface.json",
+		"naoh-koh-csoh",
+		"",
+		"water",
+		"duhring",
+		1,
+		"EoS_vapourPressure",
+		1,
+		"EoS_saturatedLiquidDensity",
+		1);
+			
+	// Test working pair: [BMIM]+[(CF3SO2)2N]-(2)  / H2O
+	//	
+	testWorkingPair_abs_act(
+		353.15,
+		0.9386,
+		".\\data\\sorpproplib_ValidationCInterface.json",
+		"il",
+		"[bmim][(cf3so2)2n]",
+		"water",
+		"nrtl-fixeddg",
+		1,
+		"EoS_vapourPressure",
+		1,
+		"EoS_saturatedLiquidDensity",
+		1);
+		
+	// Test working pair: IL [c10mim][ntf2] / CO2
+	//	
+	testWorkingPair_abs_mix(
+		".\\data\\sorpproplib_ValidationCInterface.json",
+		"il",
+		"[c10mim][ntf2]",
+		"co2",
+		"mixingrule-1pvdw",
+		1,
+		"EoS_vapourPressure",
+		1,
+		"EoS_saturatedLiquidDensity",
+		1);
+		
 	return EXIT_SUCCESS;	
 }

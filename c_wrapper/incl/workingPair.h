@@ -906,6 +906,382 @@ DLL_API double ads_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 ////////////////////////////////////////////////////////////////////////////
 // Definition of function prototypes regarding absorption working w struct//
 ////////////////////////////////////////////////////////////////////////////
+/*
+ * abs_X_pT:
+ * ---------
+ *
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * pressure p in Pa and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium concentration in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_X_pT(double p_Pa, double T_K, void *workingPair);
+
+
+/*
+ * abs_p_XT:
+ * ---------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium
+ * concentration X in kg/kg and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_XT(double X_kgkg, double T_K, void *workingPair);
+
+
+/*
+ * abs_T_pX:
+ * ---------
+ *
+ * Calculates equilibrium temperature in K depending on equilibrium pressure p
+ * in Pa and equilibrium concentration X in kg/kg.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium temperature in K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_T_pX(double p_Pa, double X_kgkg, void *workingPair);
+
+
+/*
+ * abs_dX_dp_pT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dX_dp_pT(double p_Pa, double T_K, void *workingPair);
+
+
+/*
+ * abs_dX_dT_pT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to  
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dX_dT_pT(double p_Pa, double T_K, void *workingPair);
+
+
+/*
+ * abs_dp_dX_XT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to concentration 
+ * w in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. concentration in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dp_dX_XT(double X_kgkg, double T_K, void *workingPair);
+
+
+/*
+ * abs_dp_dT_XT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dp_dT_XT(double X_kgkg, double T_K, void *workingPair);
+
+
+/*
+ * abs_g_Txv1v2:
+ * -------------
+ *
+ * Calculates activity coefficient of first component depending on temperature 
+ * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+ * first component in m³/mol, and molar volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Activity coefficient of first component.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_g_Txv1v2(double T_K, double x_molmol, double v1_m3mol,
+	double v2_m3mol, void *workingPair);
+
+
+/*
+ * abs_p_Txv1v2psat:
+ * -----------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, molar volume of second component
+ * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Txv1v2psat(double T_K, double x_molmol, double v1_m3mol, 
+	double v2_m3mol, double p_sat_Pa, void *workingPair);
+
+
+/*
+ * abs_p_Txv1v2:
+ * -------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, and molar volume of second 
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1. Uses refrigerant function to calculate saturation pressure.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Txv1v2(double T_K, double x_molmol, double v1_m3mol, 
+	double v2_m3mol, void *workingPair);
+	
+
+/*
+ * abs_p_Tvx:
+ * ----------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * fraction in liquid phase x_molmol in mol/mol
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v_m3mol:
+ *		Molar mixing volume in m³/mol.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Tvx(double T_K, double v_m3mol, double x_molmol, 
+	void *workingPair);
 
 
 /////////////////////////////////////////////////////////////////////////////

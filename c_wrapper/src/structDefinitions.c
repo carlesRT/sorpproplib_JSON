@@ -337,16 +337,9 @@ struct Adsorption {
  * 	function act_p_Txgv1v2psat:
  *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
  * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		function pointer for activity coefficient of first component, molar 
- *		olume of first component in m³/mol, molar volume of second component in
- *		m³/mol, saturation pressure of first component p_sat_Pa in Pa, and 
- *		pointer to Absorption-struct.
- * 	function act_p_Txgv1v2:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		function pointer for activity coefficient of first component, molar 
- *		olume of first component in m³/mol, molar volume of second component in
- *		m³/mol, pointer to Refrigerant-struct, and pointer to Absorption-struct.
+ * 		, molar volume of first component in m³/mol, molar volume of second 
+ *		component in m³/mol, saturation pressure of first component p_sat_Pa in
+ *		Pa, and pointer to Absorption-struct.
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
@@ -400,10 +393,8 @@ struct Absorption {
 		double[]);
 		
 	genFunc_4_1_1 act_g_Txv1v2;
-	double (*act_p_Txgv1v2psat)(double, double, genFunc_2_1_0, double, double,
-		double,	double[], void*);
-	double (*act_p_Txgv1v2)(double, double, genFunc_2_1_0, double, double,
-		double[], double[], void*, void*);
+	double (*act_p_Txgv1v2psat)(double, double, double, double,	double,	
+		double[], void*);
 			
 	// Pointers for isotherm functions that are only defined for isotherm types
 	// based on mixing rules (e.g. 1PVDW, ...)

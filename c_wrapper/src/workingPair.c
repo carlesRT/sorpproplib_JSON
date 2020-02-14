@@ -1682,6 +1682,688 @@ DLL_API double ads_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 ////////////////////////////////////////////////////////////////////////////
 // Definition of function prototypes regarding absorption working w struct//
 ////////////////////////////////////////////////////////////////////////////
+/*
+ * abs_X_pT:
+ * ---------
+ *
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * pressure p in Pa and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium concentration in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_X_pT(double p_Pa, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_X_pT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_X_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_X_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_X_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_p_XT:
+ * ---------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium
+ * concentration X in kg/kg and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_XT(double X_kgkg, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_p_XT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_p_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_p_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_p_XT(X_kgkg, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_T_pX:
+ * ---------
+ *
+ * Calculates equilibrium temperature in K depending on equilibrium pressure p
+ * in Pa and equilibrium concentration X in kg/kg.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium temperature in K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_T_pX(double p_Pa, double X_kgkg, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_T_pX\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_T_pX==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_T_pX\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_T_pX(p_Pa, X_kgkg,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_dX_dp_pT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dX_dp_pT(double p_Pa, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_dX_dp_pT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dX_dp_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dX_dp_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_dX_dp_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_dX_dT_pT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to  
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dX_dT_pT(double p_Pa, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_dX_dT_pT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dX_dT_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dX_dT_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_dX_dT_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_dp_dX_XT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to concentration 
+ * w in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. concentration in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dp_dX_XT(double X_kgkg, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_dp_dX_XT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dp_dX_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dp_dX_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_dp_dX_XT(X_kgkg, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_dp_dT_XT:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_dp_dT_XT(double X_kgkg, double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_dp_dT_XT\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dp_dT_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dp_dT_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->con_dp_dT_XT(X_kgkg, T_K,
+			retWorkingPair->iso_par);
+		
+	}
+}
+
+
+/*
+ * abs_g_Txv1v2:
+ * -------------
+ *
+ * Calculates activity coefficient of first component depending on temperature 
+ * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+ * first component in m³/mol, and molar volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Activity coefficient of first component.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_g_Txv1v2(double T_K, double x_molmol, double v1_m3mol,
+	double v2_m3mol, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_g_Txv1v2\".");
+		return -1;
+	}
+	
+	// Check if absorption function exists for chosen working pair
+	//
+	if (retWorkingPair->absorption->act_g_Txv1v2==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_g_Txv1v2\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->act_g_Txv1v2(T_K, x_molmol, v1_m3mol,
+			v2_m3mol, retWorkingPair->iso_par, retWorkingPair->absorption);
+		
+	}
+}
+
+
+/*
+ * abs_p_Txv1v2psat:
+ * -----------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, molar volume of second component
+ * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Txv1v2psat(double T_K, double x_molmol, double v1_m3mol, 
+	double v2_m3mol, double p_sat_Pa, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_p_Txv1v2psat\".");
+		return -1;
+	}
+	
+	// Check if absorption function exists for chosen working pair
+	//
+	if (retWorkingPair->absorption->act_p_Txgv1v2psat==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_p_Txgv1v2psat\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->act_p_Txgv1v2psat(T_K, x_molmol, 
+			v1_m3mol, v2_m3mol, p_sat_Pa, retWorkingPair->iso_par,
+			retWorkingPair->absorption);
+		
+	}
+}
+
+
+/*
+ * abs_p_Txv1v2:
+ * -------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, and molar volume of second 
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1. Uses refrigerant function to calculate saturation pressure.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Txv1v2(double T_K, double x_molmol, double v1_m3mol, 
+	double v2_m3mol, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_p_Txv1v2\".");
+		return -1;
+	}
+	
+	// Check if absorption function exists for chosen working pair
+	//
+	if (retWorkingPair->refrigerant->psat_T==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"psat_T\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else 	if (retWorkingPair->absorption->act_p_Txgv1v2psat==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_p_Txgv1v2psat\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->act_p_Txgv1v2psat(T_K, x_molmol, 
+			v1_m3mol, v2_m3mol, retWorkingPair->refrigerant->psat_T(T_K, 
+			retWorkingPair->psat_par), retWorkingPair->iso_par, 
+			retWorkingPair->absorption);
+		
+	}
+}
+
+
+/*
+ * abs_p_Tvx:
+ * ----------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * fraction in liquid phase x_molmol in mol/mol
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v_m3mol:
+ *		Molar mixing volume in m³/mol.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_p_Tvx(double T_K, double v_m3mol, double x_molmol, 
+	void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"abs_p_Tvx\".");
+		return -1;
+	}
+	
+	// Check if absorption function exists for chosen working pair
+	//
+	if (retWorkingPair->absorption->mix_p_Tvx==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"mix_p_Tvx\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->absorption->mix_p_Tvx(T_K, v_m3mol, x_molmol, 
+			retWorkingPair->iso_par);
+		
+	}
+}
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -426,9 +426,9 @@ int main() {
 	//
 	Absorption *isotherm_mixing_1pvdw = newAbsorption("mixingrule-1pvdw");
 	
-	p_Pa = isotherm_mixing_1pvdw->mix_p_Tvx(T_K , x_molmol, 0.5/1237.1,
+	p_Pa = isotherm_mixing_1pvdw->mix_p_Tvx(T_K, 0.5/1237.1, x_molmol,
 		par_mixing_1pvdw_PR);
-	double p_Pa_1 = isotherm_mixing_1pvdw->mix_p_Tvx(T_K , x_molmol, 0.5/1237.1,
+	double p_Pa_1 = isotherm_mixing_1pvdw->mix_p_Tvx(T_K, 0.5/1237.1, x_molmol,
 		par_mixing_1pvdw_SRK);
 	
 	

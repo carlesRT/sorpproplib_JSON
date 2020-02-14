@@ -86,7 +86,6 @@ Absorption *newAbsorption(const char *isotherm_type) {
 	
 	retAbsorption->act_g_Txv1v2 = NULL;
 	retAbsorption->act_p_Txgv1v2psat = NULL;
-	retAbsorption->act_p_Txgv1v2 = NULL;
 	
 	
 	retAbsorption->mix_p_Tvx = NULL;
@@ -504,8 +503,6 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -526,8 +523,7 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, neither molar volumes nor a function pointer are required.
+ *	need molar volumes as inputs. Here, molar volumes are not required
  *
  * History:
  * --------
@@ -536,8 +532,8 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption) {
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[], 
+	void *absorption) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Absorption *retAbsorption = (Absorption *) absorption;
@@ -562,8 +558,6 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimised out by compiler
 	//
-	double doNoth = gamma(T_K, x_molmol, isotherm_par);
-	(doNoth) = (doNoth);
 	(v1_m3mol) = (v1_m3mol);
 	(v2_m3mol) = (v2_m3mol);
 	
@@ -589,8 +583,6 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -611,9 +603,7 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, molar volumes are required but no function pointer is 
- *	required.
+ *	need molar volumes as inputs. Here, molar volumes are required.
  *
  * History:
  * --------
@@ -622,8 +612,8 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption) {
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[], 
+	void *absorption) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Absorption *retAbsorption = (Absorption *) absorption;
@@ -644,12 +634,6 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
 		printf("\nReturn -1 for function call \"act_p_Txv1v2psat_w_v\".");
 		return -1;
 	}
-	
-	// Avoid compiler warning C4100 by adding "do nothing" expression
-	// "Do nothing" expression will be optimised out by compiler
-	//
-	double doNoth = gamma(T_K, x_molmol, isotherm_par);
-	(doNoth) = (doNoth);
 	
 	// Return directly result of isotherm function
 	//
@@ -673,8 +657,6 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -695,9 +677,9 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, no molar volumes are required but a function pointer is 
- *	required.
+ *	need molar volumes. Here,  molar volumes are not required but a function 
+ *  pointer is given internally to calculate the activity coefficient of the
+ *	first component.
  *
  * History:
  * --------
@@ -706,8 +688,8 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption) {
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[], 
+	void *absorption) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Absorption *retAbsorption = (Absorption *) absorption;
@@ -722,6 +704,12 @@ double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
 		printf("\nReturn -1 for function call \"act_p_Txgv1v2psat_w_gf\".");
 		return -1;
 	}	
+	if (retAbsorption->act_g_Tx_wo_v == NULL || isotherm_par == NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nFunction for act_p_Txgv1v2psat_w_gf or its coefficients do not exist.");
+		printf("\nReturn -1 for function call \"act_g_Tx_wo_v\".");
+		return -1;
+	}
 	if (retAbsorption->act_p_Txgpsat_w_gf == NULL || isotherm_par == NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nFunction for act_p_Txgv1v2psat_w_gf or its coefficients do not exist.");
@@ -737,7 +725,7 @@ double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
 	
 	// Return directly result of isotherm function
 	//
-	return retAbsorption->act_p_Txgpsat_w_gf(T_K, x_molmol, gamma, p_sat_Pa,
-		isotherm_par);
+	return retAbsorption->act_p_Txgpsat_w_gf(T_K, x_molmol, 
+		retAbsorption->act_g_Tx_wo_v, p_sat_Pa, isotherm_par);
 }
 	

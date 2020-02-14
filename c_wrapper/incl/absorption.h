@@ -83,16 +83,9 @@
  * 	function act_p_Txgv1v2psat:
  *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
  * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		function pointer for activity coefficient of first component, molar 
- *		olume of first component in m³/mol, molar volume of second component in
- *		m³/mol, saturation pressure of first component p_sat_Pa in Pa, and 
- *		pointer to Absorption-struct.
- * 	function act_p_Txgv1v2:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		function pointer for activity coefficient of first component, molar 
- *		olume of first component in m³/mol, molar volume of second component in
- *		m³/mol, pointer to Refrigerant-struct, and pointer to Absorption-struct.
+ * 		, molar volume of first component in m³/mol, molar volume of second 
+ *		component in m³/mol, saturation pressure of first component p_sat_Pa in
+ *		Pa, and pointer to Absorption-struct.
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
@@ -271,8 +264,6 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -293,8 +284,7 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, neither molar volumes nor a function pointer are required.
+ *	need molar volumes as inputs. Here, molar volumes are not required
  *
  * History:
  * --------
@@ -303,7 +293,7 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double v1_m3mol, double v2_m3mol, 
 	double p_sat_Pa, double isotherm_par[], void *absorption);
 
 
@@ -322,8 +312,6 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -344,9 +332,7 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, molar volumes are required but no function pointer is 
- *	required.
+ *	need molar volumes as inputs. Here, molar volumes are required.
  *
  * History:
  * --------
@@ -355,7 +341,7 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double v1_m3mol, double v2_m3mol, 
 	double p_sat_Pa, double isotherm_par[], void *absorption);
 
 
@@ -374,8 +360,6 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  *		Equilibrium temperature in K.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- *	double (*gamma)(double T_K, double x_molmol, double isotherm_par[]):
- *		Function pointer for calculation approach of activity coefficient
  *	double v1_m3mol:
  *		Equilibrium molar volume of first component in m³/mol.
  *	double v2_m3mol:
@@ -396,9 +380,9 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes or a function pointer for the activity coefficient as 
- *	inputs. Here, no molar volumes are required but a function pointer is 
- *	required.
+ *	need molar volumes. Here,  molar volumes are not required but a function 
+ *  pointer is given internally to calculate the activity coefficient of the
+ *	first component.
  *
  * History:
  * --------
@@ -407,7 +391,7 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
-	double (*gamma)(double, double, double[]), double v1_m3mol, double v2_m3mol, 
+	double v1_m3mol, double v2_m3mol, 
 	double p_sat_Pa, double isotherm_par[], void *absorption);
 	
 #endif
