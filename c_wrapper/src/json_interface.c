@@ -183,6 +183,8 @@ cJSON *json_parse_file(const char *content) {
  *		Name of sub-type of sorbent.
  * 	const char *wp_rf:
  *		Name of refrigerant.
+ * 	int *wp_tp:
+ *		Type of equation.
  *	cJSON *json:
  *		Tree of JSON-structs that represent content of JSON-file.
  *
@@ -199,7 +201,7 @@ cJSON *json_parse_file(const char *content) {
  *
  */
 cJSON *json_search_equation(const char *wp_as, const char *wp_st,
-	const char *wp_rf, cJSON *json) {
+	const char *wp_rf, int *wp_tp, cJSON *json) {
 	// Search all entries (i.e. rows) of tree of JSON-structs for working pair
 	//	
     cJSON *json_workingPair = NULL;
@@ -228,6 +230,8 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_st_");
 		cJSON *json_workingPair_rf = 
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_rf_");
+		cJSON *json_workingPair_tp = 
+			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_tp_");
 		
 		// Compare current working pair to working pair defined by input to
 		// identify correct element of JSON-struct json and thus to return
@@ -251,7 +255,31 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
 							(json_workingPair_rf->valuestring != NULL)) {					
 							if (strcmp(wp_rf, json_workingPair_rf->valuestring) == 0) {	
 								// Working pair defined by input is identified
-								//																
+								// First, set equation type: 1 == ads, 2 == abs, 
+								// 3 == refrig, -1 == else
+								//		
+								if (cJSON_IsString(json_workingPair_tp) &&
+									(json_workingPair_tp->valuestring != NULL)) {
+										if (strcmp("ads", 
+											json_workingPair_tp->valuestring) == 0) {	
+											*wp_tp =  1;
+										
+										} else if (strcmp("abs", 
+											json_workingPair_tp->valuestring) == 0) {	
+											*wp_tp =  2;
+										
+										} else if (strcmp("refrig", 
+											json_workingPair_tp->valuestring) == 0) {	
+											*wp_tp =  3;
+										
+										} else {
+											*wp_tp =  -1;
+											
+										}
+								}
+								// Second, return cJSON-struct containing
+								// equation parameters
+								//
 								return cJSON_GetObjectItemCaseSensitive(json_workingPair_equation, "_ep_");
 								
 							}

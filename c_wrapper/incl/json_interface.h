@@ -88,6 +88,8 @@ cJSON *json_parse_file(const char *content);
  *		Name of sub-type of sorbent.
  * 	const char *wp_rf:
  *		Name of refrigerant.
+ * 	int *wp_tp:
+ *		Type of equation.
  *	cJSON *json:
  *		Tree of JSON-structs that represent content of JSON-file.
  *
@@ -104,7 +106,7 @@ cJSON *json_parse_file(const char *content);
  *
  */
 cJSON *json_search_equation(const char *wp_as, const char *wp_st,
-	const char *wp_rf, cJSON *json);
+	const char *wp_rf, int *wp_tp, cJSON *json);
 
 
 /*

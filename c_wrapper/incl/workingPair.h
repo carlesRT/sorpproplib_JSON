@@ -58,6 +58,8 @@
  *
  *	Adsorption *adsorption:
  *		Struct containing function pointers for isotherm functions.
+ *	Absorption *absorption:
+ *		Struct containing function pointers for isotherm functions.
  *	Refrigerant *refrigerant:
  *		Struct containing function pointers for refrigerant functions.
  *
@@ -145,13 +147,11 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
 DLL_API void delWorkingPair(void *workingPair);
 
 
-////////////////////////////////////////////////////////////
-// Definition of function prototypes regarding adsorption //
-////////////////////////////////////////////////////////////
-
-
+////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding adsorption working w struct//
+////////////////////////////////////////////////////////////////////////////
 /*
- * iso_w_pT:
+ * ads_w_pT:
  * ---------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -177,11 +177,11 @@ DLL_API void delWorkingPair(void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair);
+DLL_API double ads_w_pT(double p_Pa, double T_K, void *workingPair);
 
 
 /*
- * iso_p_wT:
+ * ads_p_wT:
  * ---------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium loading w
@@ -207,11 +207,11 @@ DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair);
+DLL_API double ads_p_wT(double w_kgkg, double T_K, void *workingPair);
 
 
 /*
- * iso_T_pw:
+ * ads_T_pw:
  * ---------
  *
  * Calculates equilibrium temperature in K depending on equilibrium pressure p
@@ -245,11 +245,11 @@ DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair);
+DLL_API double ads_T_pw(double p_Pa, double w_kgkg, void *workingPair);
 
 
 /*
- * iso_dw_dp_pT:
+ * ads_dw_dp_pT:
  * -------------
  *
  * Calculates derivative of equilibrium loading w with respect to pressure 
@@ -276,11 +276,11 @@ DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair);
+DLL_API double ads_dw_dp_pT(double p_Pa, double T_K, void *workingPair);
 
 
 /*
- * iso_dw_dT_pT:
+ * ads_dw_dT_pT:
  * -------------
  *
  * Calculates derivative of equilibrium loading w with respect to temperature 
@@ -307,11 +307,11 @@ DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair);
+DLL_API double ads_dw_dT_pT(double p_Pa, double T_K, void *workingPair);
 
 
 /*
- * iso_dp_dw_wT:
+ * ads_dp_dw_wT:
  * -------------
  *
  * Calculates derivative of equilibrium pressure p with respect to loading 
@@ -338,11 +338,11 @@ DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair);
+DLL_API double ads_dp_dw_wT(double w_kgkg, double T_K, void *workingPair);
 
 
 /*
- * iso_dp_dT_wT:
+ * ads_dp_dT_wT:
  * -------------
  *
  * Calculates derivative of equilibrium pressure p with respect to temperature 
@@ -369,11 +369,11 @@ DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair);
+DLL_API double ads_dp_dT_wT(double w_kgkg, double T_K, void *workingPair);
 
 
 /*
- * iso_piStar_pyxgTM:
+ * ads_piStar_pyxgTM:
  * ------------------
  *
  * Calculates reduced spreading pressure piStar in kg/mol depending on 
@@ -411,13 +411,13 @@ DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair);
  *		Reduced spreading pressure in kg/mol.
  *
  */
-DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
+DLL_API double ads_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double M_kgmol, 
 	void *workingPair);
 
 
 /*
- * iso_W_ARho:
+ * ads_W_ARho:
  * -----------
  *
  * Calculates equilibrium volumetric loading W in m³/kg depending on equilibrium
@@ -451,11 +451,11 @@ DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
  *		First implementation.
  *
  */
-DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair);
+DLL_API double ads_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair);
 
 
 /*
- * iso_A_WRho:
+ * ads_A_WRho:
  * -----------
  *
  * Calculates equilibrium adsorption potential A in J/mol depending on 
@@ -488,11 +488,11 @@ DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair);
+DLL_API double ads_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair);
 
 
 /*
- * iso_w_pTpsatRho:
+ * ads_w_pTpsatRho:
  * ----------------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -523,12 +523,12 @@ DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair);
  *		First implementation.
  *
  */
-DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
+DLL_API double ads_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 	double rho_kgm3, void *workingPair);
 
 
 /*
- * iso_p_wTpsatRho:
+ * ads_p_wTpsatRho:
  * ----------------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium loading w in
@@ -559,12 +559,12 @@ DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
+DLL_API double ads_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 	double rho_kgm3, void *workingPair);
 
 
 /*
- * iso_T_pwpsatRho:
+ * ads_T_pwpsatRho:
  * ----------------
  *
  * Calculates equilibrium temperature T in K depending on equilibrium pressure
@@ -605,12 +605,12 @@ DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
+DLL_API double ads_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
 	double rho_kgm3, void *workingPair);
  
 
 /*
- * iso_dW_dA_ARho:
+ * ads_dW_dA_ARho:
  * ---------------
  *
  * Calculates derivative of equilibrium volumetric loading dW_dA in m³mol/kg/J
@@ -644,12 +644,12 @@ DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3, 
+DLL_API double ads_dW_dA_ARho(double A_Jmol, double rho_l_kgm3, 
 	void *workingPair);
 
 
 /*
- * iso_dA_dW_WRho:
+ * ads_dA_dW_WRho:
  * ---------------
  *
  * Calculates derivative of equilibrium adsorption potential dA_dW in kgJ/mol/m³
@@ -683,12 +683,12 @@ DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3,
  *		First implementation.
  *
  */
-DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3, 
+DLL_API double ads_dA_dW_WRho(double W_m3kg, double rho_l_kgm3, 
 	void *workingPair);
 
 
 /*
- * iso_dw_dp_pTpsatRho:
+ * ads_dw_dp_pTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium loading dw_dp with respect to pressure
@@ -720,12 +720,12 @@ DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3,
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
+DLL_API double ads_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
 	double rho_kgm3, void *workingPair);
 
 
 /*
- * iso_dw_dT_pTpsatRho:
+ * ads_dw_dT_pTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium loading dw_dp with respect to
@@ -763,13 +763,13 @@ DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
+DLL_API double ads_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
 	void *workingPair);
 
 
 /*
- * iso_dp_dw_wTpsatRho:
+ * ads_dp_dw_wTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium pressure p with respect to loading 
@@ -801,12 +801,12 @@ DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
+DLL_API double ads_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
 	double rho_kgm3, void *workingPair);
 
 
 /*
- * iso_dp_dT_wTpsatRho:
+ * ads_dp_dT_wTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium pressure p with respect to temperature 
@@ -844,13 +844,13 @@ DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
+DLL_API double ads_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
 	void *workingPair);
 
 
 /*
- * iso_piStar_pyxgTpsatRhoM:
+ * ads_piStar_pyxgTpsatRhoM:
  * -------------------------
  *
  * Calculates reduced spreading pressure in kg/mol depending on equilibrium
@@ -898,13 +898,136 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
+DLL_API double ads_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double M_kgmol, void *workingPair);
 
 
+////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding absorption working w struct//
+////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding refrigerant working w struct//
+/////////////////////////////////////////////////////////////////////////////
 /*
- * direct_iso_w_pT_workingPair:
+ * ref_p_sat_T:
+ * ------------
+ *
+ * Calculates saturation pressure in Pa depending on equilibrium temperature T 
+ * in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_p_sat_T(double T_K, void *workingPair);
+
+
+/*
+ * ref_dp_sat_dT_T:
+ * ----------------
+ *
+ * Calculates derivative of saturation pressure in Pa/K wrt to temperature
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturation pressure wrt temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_dp_sat_dT_T(double T_K, void *workingPair);
+
+
+/*
+ * ref_rho_l_T:
+ * ------------
+ *
+ * Calculates saturated liquid density in kg/m³ depending on equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturated liquid density in kg/m³.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_rho_l_T(double T_K, void *workingPair);
+
+
+/*
+ * ref_drho_l_dT_T:
+ * ----------------
+ *
+ * Calculates derivative of saturated liquid density wrt temperature in kg/m³/K
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturated liquid density wrt temperature in kg/m³/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_drho_l_dT_T(double T_K, void *workingPair);
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding adsorption working wo struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_ads_w_pT_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -928,16 +1051,16 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
  * 	const char *wp_iso:
  *		Name of isotherm.
  *	int no_iso:
- *		Numer of isotherm (i.e. when more than one isotherm is available)
+ *		Number of isotherm (i.e. when more than one isotherm is available)
  * 	const char *rf_psat:
  *		Name of calculation approach for vapour pressure.
  *	int no_p_sat:
- *		Numer of vapour pressure equation (i.e. when more than one equation is 
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
  *		available)
  * 	const char *rf_rhol:
  *		Name of calculation approach for liquid density.
  *	int no_rhol:
- *		Numer of liquid density equation (i.e. when more than one equation is 
+ *		Number of liquid density equation (i.e. when more than one equation is 
  *		available)
  *
  * Returns:
@@ -951,13 +1074,14 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K, 
+DLL_API double direct_ads_w_pT_workingPair(double p_Pa, double T_K, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol);
 
+
 /*
- * direct_iso_p_wT_workingPair:
+ * direct_ads_p_wT_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium temperature
@@ -982,16 +1106,16 @@ DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K,
  * 	const char *wp_iso:
  *		Name of isotherm.
  *	int no_iso:
- *		Numer of isotherm (i.e. when more than one isotherm is available)
+ *		Number of isotherm (i.e. when more than one isotherm is available)
  * 	const char *rf_psat:
  *		Name of calculation approach for vapour pressure.
  *	int no_p_sat:
- *		Numer of vapour pressure equation (i.e. when more than one equation is 
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
  *		available)
  * 	const char *rf_rhol:
  *		Name of calculation approach for liquid density.
  *	int no_rhol:
- *		Numer of liquid density equation (i.e. when more than one equation is 
+ *		Number of liquid density equation (i.e. when more than one equation is 
  *		available)
  *		Name of calculation approach for liquid density.
  *
@@ -1006,14 +1130,14 @@ DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K, 
+DLL_API double direct_ads_p_wT_workingPair(double w_kgkg, double T_K, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol);
 
 
 /*
- * direct_iso_T_pw_workingPair:
+ * direct_ads_T_pw_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium temperature in K depending on equilibrium pressure p
@@ -1037,16 +1161,16 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
  * 	const char *wp_iso:
  *		Name of isotherm.
  *	int no_iso:
- *		Numer of isotherm (i.e. when more than one isotherm is available)
+ *		Number of isotherm (i.e. when more than one isotherm is available)
  * 	const char *rf_psat:
  *		Name of calculation approach for vapour pressure.
  *	int no_p_sat:
- *		Numer of vapour pressure equation (i.e. when more than one equation is 
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
  *		available)
  * 	const char *rf_rhol:
  *		Name of calculation approach for liquid density.
  *	int no_rhol:
- *		Numer of liquid density equation (i.e. when more than one equation is 
+ *		Number of liquid density equation (i.e. when more than one equation is 
  *		available)
  *		Name of calculation approach for liquid density.
  *
@@ -1060,7 +1184,7 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
  *	Function uses equation of states implemented for calculation of vapour
  *	pressure, saturated liquid density, derivative of vapour pressure wrt.
  *	temperature, and derivative of saturated liquid density wrt. temperature
- *	when isothem of working pair is based on volumetric approach (e.g.
+ *	when isotherm of working pair is based on volumetric approach (e.g.
  *	Dubinin theory). 
  *
  * History:
@@ -1069,7 +1193,7 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_T_pw_workingPair(double p_Pa, double w_kgkg, 
+DLL_API double direct_ads_T_pw_workingPair(double p_Pa, double w_kgkg, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol);

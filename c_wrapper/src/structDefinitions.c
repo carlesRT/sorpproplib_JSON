@@ -496,6 +496,8 @@ struct Refrigerant {
  *
  *	Adsorption *adsorption:
  *		Struct containing function pointers for isotherm functions.
+ *	Absorption *absorption:
+ *		Struct containing function pointers for isotherm functions.
  *	Refrigerant *refrigerant:
  *		Struct containing function pointers for refrigerant functions.
  *
@@ -528,6 +530,7 @@ struct WorkingPair {
 	// functions
 	//
 	struct Adsorption *adsorption;
+	struct Absorption *absorption;
 	struct Refrigerant *refrigerant;	
 };
 #endif

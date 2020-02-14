@@ -12,7 +12,7 @@
 /////////////////////////////
 // Definition of functions //
 /////////////////////////////
-void testWorkingPair(const char *path_db, const char *wp_as, 
+void testWorkingPair_ads(const char *path_db, const char *wp_as, 
 	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
 	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
 	// Initiate working pair
@@ -38,30 +38,28 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 
 		// Check if refrigerant functions exist to avoid errors
 		//
-		double p_sat_Pa = (workingPair->refrigerant->psat_T==NULL) ? -1 :
-			workingPair->refrigerant->psat_T(T_K, workingPair->psat_par);
-		double rho_kgm3 = (workingPair->refrigerant->rho_l_T==NULL) ? -1 :
-			workingPair->refrigerant->rho_l_T(T_K, workingPair->rhol_par);
+		double p_sat_Pa = ref_p_sat_T(T_K, workingPair);
+		double rho_kgm3 = ref_rho_l_T(T_K, workingPair);
 
 		// Calculate equilibrium properties with functions that are always defined
 		//
-		double w_kgkg_sur = iso_w_pT(p_Pa, T_K, workingPair);
-		double w_kgkg_sur_direct = direct_iso_w_pT_workingPair(p_Pa, T_K, 
+		double w_kgkg_sur = ads_w_pT(p_Pa, T_K, workingPair);
+		double w_kgkg_sur_direct = direct_ads_w_pT_workingPair(p_Pa, T_K, 
 			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
 			rf_rhol, no_rhol);
-		double p_Pa_sur_inv = iso_p_wT(w_kgkg_sur, T_K, workingPair);
-		double p_Pa_sur_inv_direct = direct_iso_p_wT_workingPair(w_kgkg_sur, 
+		double p_Pa_sur_inv = ads_p_wT(w_kgkg_sur, T_K, workingPair);
+		double p_Pa_sur_inv_direct = direct_ads_p_wT_workingPair(w_kgkg_sur, 
 			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
 			no_p_sat, rf_rhol, no_rhol);
-		double T_K_sur_inv = iso_T_pw(p_Pa, w_kgkg_sur, workingPair);	
-		double T_K_sur_inv_direct = direct_iso_T_pw_workingPair(p_Pa, 
+		double T_K_sur_inv = ads_T_pw(p_Pa, w_kgkg_sur, workingPair);	
+		double T_K_sur_inv_direct = direct_ads_T_pw_workingPair(p_Pa, 
 			w_kgkg_sur, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
 			no_p_sat, rf_rhol, no_rhol);
-		double dw_dp_kgkgPa_sur = iso_dw_dp_pT(p_Pa, T_K, workingPair);
-		double dw_dT_kgkgK_sur = iso_dw_dT_pT(p_Pa, T_K, workingPair);
-		double dp_dw_Pakgkg_sur = iso_dp_dw_wT(w_kgkg_sur, T_K, workingPair);
-		double dp_dT_PaK_sur = iso_dp_dT_wT(w_kgkg_sur, T_K, workingPair);
-		double piStar_molkg_sur = iso_piStar_pyxgTM(p_Pa, 1, 1, 1, T_K, 
+		double dw_dp_kgkgPa_sur = ads_dw_dp_pT(p_Pa, T_K, workingPair);
+		double dw_dT_kgkgK_sur = ads_dw_dT_pT(p_Pa, T_K, workingPair);
+		double dp_dw_Pakgkg_sur = ads_dp_dw_wT(w_kgkg_sur, T_K, workingPair);
+		double dp_dT_PaK_sur = ads_dp_dT_wT(w_kgkg_sur, T_K, workingPair);
+		double piStar_molkg_sur = ads_piStar_pyxgTM(p_Pa, 1, 1, 1, T_K, 
 			0.04401, workingPair);
 
 
@@ -70,34 +68,28 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 		//
 		double A_Jmol = 8.314462618 * T_K * log(p_sat_Pa/p_Pa);
 		
-		double W_m3kg = iso_W_ARho(A_Jmol, rho_kgm3, workingPair);
-		double A_Jmol_inv = iso_A_WRho(W_m3kg, rho_kgm3, workingPair);
-		double dW_dA_m3molkgJ = iso_dW_dA_ARho(A_Jmol, rho_kgm3, workingPair);
-		double dA_dW_Jkgkgmol = iso_dA_dW_WRho(W_m3kg, rho_kgm3, workingPair);
+		double W_m3kg = ads_W_ARho(A_Jmol, rho_kgm3, workingPair);
+		double A_Jmol_inv = ads_A_WRho(W_m3kg, rho_kgm3, workingPair);
+		double dW_dA_m3molkgJ = ads_dW_dA_ARho(A_Jmol, rho_kgm3, workingPair);
+		double dA_dW_Jkgkgmol = ads_dA_dW_WRho(W_m3kg, rho_kgm3, workingPair);
 		
-		double w_kgkg_vol = iso_w_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
+		double w_kgkg_vol = ads_w_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
 			workingPair);
-		double p_Pa_vol_inv = iso_p_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, 
+		double p_Pa_vol_inv = ads_p_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, 
 			workingPair);
-		double T_K_vol_inv = iso_T_pwpsatRho(p_Pa, w_kgkg_vol, p_sat_Pa, rho_kgm3, 
+		double T_K_vol_inv = ads_T_pwpsatRho(p_Pa, w_kgkg_vol, p_sat_Pa, rho_kgm3, 
 			workingPair);
-		double dw_dp_kgkgPa_vol = iso_dw_dp_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
+		double dw_dp_kgkgPa_vol = ads_dw_dp_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
 			workingPair);			
-		double dw_dT_kgkgK_vol = (workingPair->refrigerant->dpsat_dT == NULL ||
-			workingPair->refrigerant->drho_l_dT == NULL) ? -1 : 
-			iso_dw_dT_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
-			workingPair->refrigerant->dpsat_dT(T_K, workingPair->psat_par), 
-			workingPair->refrigerant->drho_l_dT(T_K, workingPair->rhol_par), 
-			workingPair);			
-		double dp_dw_Pakgkg_vol = iso_dp_dw_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa,
+		double dw_dT_kgkgK_vol = ads_dw_dT_pTpsatRho(p_Pa, T_K, p_sat_Pa, 
+			rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
+			ref_drho_l_dT_T(T_K, workingPair), workingPair);			
+		double dp_dw_Pakgkg_vol = ads_dp_dw_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa,
 			rho_kgm3, workingPair);			
-		double dp_dT_PaK_vol = (workingPair->refrigerant->dpsat_dT == NULL ||
-			workingPair->refrigerant->drho_l_dT == NULL) ? -1 : 
-			iso_dp_dT_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, 
-			workingPair->refrigerant->dpsat_dT(T_K, workingPair->psat_par), 
-			workingPair->refrigerant->drho_l_dT(T_K, workingPair->rhol_par), 
-			workingPair);
-		double piStar_molkg_vol = iso_piStar_pyxgTpsatRhoM(p_Pa, 1, 1, 1, T_K, 
+		double dp_dT_PaK_vol = ads_dp_dT_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, 
+			rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
+			ref_drho_l_dT_T(T_K, workingPair), workingPair);
+		double piStar_molkg_vol = ads_piStar_pyxgTpsatRhoM(p_Pa, 1, 1, 1, T_K, 
 			p_sat_Pa, rho_kgm3, 0.04401, workingPair);
 		
 		// Print general information of selected working pair
@@ -196,7 +188,7 @@ void testWorkingPair(const char *path_db, const char *wp_as,
 int main() {
 	// Test working pair: Carbon Maxsorb-III / R-134a
 	//	
-	testWorkingPair(
+	testWorkingPair_ads(
 		".\\data\\sorpproplib_ValidationCInterface.json",
 		"carbon",
 		"maxsorb-iii",

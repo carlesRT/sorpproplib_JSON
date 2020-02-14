@@ -3,6 +3,7 @@
 ///////////////////
 #include <stdio.h>
 #include <stdlib.h>
+#include "absorption.h"
 #include "adsorption.h"
 #include "cJSON.h"
 #include "json_interface.h"
@@ -60,7 +61,6 @@
  *		First implementation.
  *
  */
-
 
 
 /////////////////////////////
@@ -163,9 +163,12 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
         return NULL;
 	}
 
-	// First, read coefficients for isotherm
+	// First, read coefficients for isotherm equation
 	//
-	cJSON *json_isotherm = json_search_equation(wp_as, wp_st, wp_rf, json_file);
+	int wp_tp;
+	cJSON *json_isotherm = json_search_equation(wp_as, wp_st, 
+		wp_rf, &wp_tp, json_file);
+
     if (json_isotherm == NULL) {
 		// Cannot select isotherm, free memory
 		//
@@ -190,11 +193,13 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
         return NULL;
 	}
 	
-	// Second, read coefficients for refrigerant
+	// Second, read coefficients for refrigerant equations
 	// If equations are not implemented, throw warning but do not fail
 	//
+	int rf_tp;
 	cJSON *json_refrigerant = json_search_equation("dum_sorb", "dum_subtype",
-		wp_rf, json_file);
+		wp_rf, &rf_tp, json_file);
+		
     if (json_refrigerant == NULL) {
 		// Cannot select refrigerant, free memory
 		//
@@ -205,9 +210,9 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
 		retWorkingPair->rhol_par = NULL;
 		
 	} else {
-		// Select coefficients for vapour pressure, saturated liquid density
-		// and activity coefficients: If function and thus coefficients are not
-		// implemented, pointer is set to NULL
+		// Select coefficients for vapour pressure and saturated liquid density:
+		// If function and thus coefficients are not implemented, pointer is 
+		// set to NULL
 		//
 		retWorkingPair->psat_par = json_search_parameters(rf_psat, no_p_sat,
 			json_refrigerant);
@@ -220,26 +225,55 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
 	free(json_file);
 	free(json_content);
 	
-	// Check which equations of state existing for initialization of
+	// Check which equations of states exists for initialization of
 	// "Refrigerant"-struct
 	//
 	const char *rf_psat_int = (retWorkingPair->psat_par == NULL) ?
 		"NoVapourPressure" : rf_psat;
 	const char *rf_rhol_int= (retWorkingPair->rhol_par == NULL) ?
 		"NoSaturatedLiquidDensity" : rf_rhol;
-	
-			
-	// Initialise structs containing functions
+				
+	// Initialise structs containing isotherm functions
 	//
-	retWorkingPair->adsorption = newAdsorption(wp_iso);
-    if (retWorkingPair->adsorption == NULL) {
-		// Cannot create "Isotherm"-struct, free memory
+	if (wp_tp == 1) {
+		// Adsorption equations
+		//
+		retWorkingPair->adsorption = newAdsorption(wp_iso);
+		retWorkingPair->absorption = NULL;
+		if (retWorkingPair->adsorption == NULL) {
+			// Cannot create Adsorption-struct, free memory
+			//
+			printf("\n\n###########\n# Error #\n###########");
+			printf("\nCannot create Adsorption-struct within WorkingPair-struct!");
+			printf("\nTherefore, cannot execute isotherm functions!");
+			free(retWorkingPair);
+			return NULL;
+		}
+		
+	} else if (wp_tp == 2) {
+		// Absorption equations
+		//
+		retWorkingPair->absorption = newAbsorption(wp_iso);
+		retWorkingPair->adsorption = NULL;
+		if (retWorkingPair->absorption == NULL) {
+			// Cannot create Absorption-struct, free memory
+			//
+			printf("\n\n###########\n# Error #\n###########");
+			printf("\nCannot create Absorption-struct within WorkingPair-struct!");
+			printf("\nTherefore, cannot execute isotherm functions!");
+			free(retWorkingPair);
+			return NULL;
+		}
+		
+	} else {
+		// Neither adsorption nor absorption: Somethin went wrong!
 		//
 		printf("\n\n###########\n# Error #\n###########");
-		printf("\nCannot create Adsorption-struct within WorkingPair-struct!");
+		printf("\nDo not know whether to create Adsorption- or Absorption-struct!");
 		printf("\nTherefore, cannot execute isotherm functions!");
 		free(retWorkingPair);
-        return NULL;
+		return NULL;
+		
 	}
 	
 	retWorkingPair->refrigerant = newRefrigerant(rf_psat_int, rf_rhol_int);
@@ -252,6 +286,11 @@ DLL_API WorkingPair *newWorkingPair(const char *path_db, const char *wp_as,
 		free(retWorkingPair);
         return NULL;
 	}
+		
+	// Avoid compiler warning C4100 by adding "do nothing" expression
+	// "Do nothing" expression will be optimised out by compiler
+	//
+	(rf_tp) = (rf_tp);
 		
 	// Return structure
 	//
@@ -287,9 +326,15 @@ DLL_API void delWorkingPair(void *workingPair) {
 		// Free allocated memory of structs containing function pointers
 		//
 		delRefrigerant(retWorkingPair->refrigerant);
-		delAdsorption(retWorkingPair->adsorption);
 		
-		// Free allocated memory of coefficients of functions if memeory is
+		if (retWorkingPair->absorption != NULL) {
+			delAdsorption(retWorkingPair->absorption);
+		}	
+		if (retWorkingPair->adsorption != NULL) {
+			delAdsorption(retWorkingPair->adsorption);
+		}			
+		
+		// Free allocated memory of coefficients of functions if memory is
 		// allocated
 		//		
 		if (retWorkingPair->rhol_par != NULL) {
@@ -308,13 +353,11 @@ DLL_API void delWorkingPair(void *workingPair) {
 }
 
 
-/////////////////////////////////////////////////
-// Definition of function regarding adsorption //
-/////////////////////////////////////////////////
-
-
+////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding adsorption working w struct//
+////////////////////////////////////////////////////////////////////////////
 /*
- * iso_w_pT:
+ * ads_w_pT:
  * ---------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -340,7 +383,7 @@ DLL_API void delWorkingPair(void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair) {
+DLL_API double ads_w_pT(double p_Pa, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -350,7 +393,7 @@ DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_w_pT\".");
+		printf("\nReturn -1 for function call \"ads_w_pT\".");
 		return -1;
 	}
 	
@@ -358,7 +401,7 @@ DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->w_pT==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_w_pT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_w_pT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -373,7 +416,7 @@ DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair) {
 
 
 /*
- * iso_p_wT:
+ * ads_p_wT:
  * ---------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium loading w
@@ -399,7 +442,7 @@ DLL_API double iso_w_pT(double p_Pa, double T_K, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair) {
+DLL_API double ads_p_wT(double w_kgkg, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -409,7 +452,7 @@ DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_p_wT\".");
+		printf("\nReturn -1 for function call \"ads_p_wT\".");
 		return -1;
 	}
 	
@@ -417,7 +460,7 @@ DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->p_wT==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_p_wT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_p_wT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -432,7 +475,7 @@ DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair) {
 
 
 /*
- * iso_T_pw:
+ * ads_T_pw:
  * ---------
  *
  * Calculates equilibrium temperature in K depending on equilibrium pressure p
@@ -466,7 +509,7 @@ DLL_API double iso_p_wT(double w_kgkg, double T_K, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
+DLL_API double ads_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -476,7 +519,7 @@ DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_T_pw\".");
+		printf("\nReturn -1 for function call \"ads_T_pw\".");
 		return -1;
 	}
 	
@@ -484,7 +527,7 @@ DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->T_pw==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_T_pw\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_T_pw\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -499,7 +542,7 @@ DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
 
 
 /*
- * iso_dw_dp_pT:
+ * ads_dw_dp_pT:
  * -------------
  *
  * Calculates derivative of equilibrium loading w with respect to pressure 
@@ -526,7 +569,7 @@ DLL_API double iso_T_pw(double p_Pa, double w_kgkg, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
+DLL_API double ads_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -536,7 +579,7 @@ DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dw_dp_pT\".");
+		printf("\nReturn -1 for function call \"ads_dw_dp_pT\".");
 		return -1;
 	}
 	
@@ -544,7 +587,7 @@ DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->dw_dp_pT==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dw_dp_pT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dw_dp_pT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -559,7 +602,7 @@ DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
 
 
 /*
- * iso_dw_dT_pT:
+ * ads_dw_dT_pT:
  * -------------
  *
  * Calculates derivative of equilibrium loading w with respect to temperature 
@@ -586,7 +629,7 @@ DLL_API double iso_dw_dp_pT(double p_Pa, double T_K, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
+DLL_API double ads_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -596,7 +639,7 @@ DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dw_dT_pT\".");
+		printf("\nReturn -1 for function call \"ads_dw_dT_pT\".");
 		return -1;
 	}
 	
@@ -604,7 +647,7 @@ DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->dw_dT_pT==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dw_dT_pT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dw_dT_pT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -619,7 +662,7 @@ DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
 
 
 /*
- * iso_dp_dw_wT:
+ * ads_dp_dw_wT:
  * -------------
  *
  * Calculates derivative of equilibrium pressure p with respect to loading 
@@ -646,7 +689,7 @@ DLL_API double iso_dw_dT_pT(double p_Pa, double T_K, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
+DLL_API double ads_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -656,7 +699,7 @@ DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dp_dw_wT\".");
+		printf("\nReturn -1 for function call \"ads_dp_dw_wT\".");
 		return -1;
 	}
 	
@@ -664,7 +707,7 @@ DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->dp_dw_wT==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dp_dw_wT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dp_dw_wT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -679,7 +722,7 @@ DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
 
 
 /*
- * iso_dp_dT_wT:
+ * ads_dp_dT_wT:
  * -------------
  *
  * Calculates derivative of equilibrium pressure p with respect to temperature 
@@ -706,7 +749,7 @@ DLL_API double iso_dp_dw_wT(double w_kgkg, double T_K, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
+DLL_API double ads_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -716,7 +759,7 @@ DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dp_dT_wT\".");
+		printf("\nReturn -1 for function call \"ads_dp_dT_wT\".");
 		return -1;
 	}
 	
@@ -724,7 +767,7 @@ DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->dp_dw_wT==NULL) {
 		printf("\n\n###########\n# dp_dT_wT #\n###########");
-		printf("\nChosen isotherm function \"iso_dp_dT_wT\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dp_dT_wT\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -739,7 +782,7 @@ DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
 
 
 /*
- * iso_piStar_pyxgTM:
+ * ads_piStar_pyxgTM:
  * ------------------
  *
  * Calculates reduced spreading pressure piStar in kg/mol depending on 
@@ -777,7 +820,7 @@ DLL_API double iso_dp_dT_wT(double w_kgkg, double T_K, void *workingPair) {
  *		Reduced spreading pressure in kg/mol.
  *
  */
-DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
+DLL_API double ads_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double M_kgmol, 
 	void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
@@ -789,7 +832,7 @@ DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_piStar_pyxgTM\".");
+		printf("\nReturn -1 for function call \"ads_piStar_pyxgTM\".");
 		return -1;
 	}
 	
@@ -797,7 +840,7 @@ DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	//
 	if (retWorkingPair->adsorption->piStar_pyxgTM==NULL) {
 		printf("\n\n###########\n# dp_dT_wT #\n###########");
-		printf("\nChosen isotherm function \"iso_piStar_pyxgTM\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_piStar_pyxgTM\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -812,7 +855,7 @@ DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 
 
 /*
- * iso_W_ARho:
+ * ads_W_ARho:
  * -----------
  *
  * Calculates equilibrium volumetric loading W in m³/kg depending on equilibrium
@@ -846,7 +889,7 @@ DLL_API double iso_piStar_pyxgTM(double p_total_Pa, double y_molmol,
  *		First implementation.
  *
  */
-DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
+DLL_API double ads_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -856,7 +899,7 @@ DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_W_ARho\".");
+		printf("\nReturn -1 for function call \"ads_W_ARho\".");
 		return -1;
 	}
 	
@@ -864,7 +907,7 @@ DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->vol_W_ARho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_W_ARho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_W_ARho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -877,7 +920,7 @@ DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
 
 
 /*
- * iso_A_WRho:
+ * ads_A_WRho:
  * -----------
  *
  * Calculates equilibrium adsorption potential A in J/mol depending on 
@@ -910,7 +953,7 @@ DLL_API double iso_W_ARho(double A_Jmol, double rho_l_kgm3, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
+DLL_API double ads_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
 	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
@@ -920,7 +963,7 @@ DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_A_WRho\".");
+		printf("\nReturn -1 for function call \"ads_A_WRho\".");
 		return -1;
 	}
 	
@@ -928,7 +971,7 @@ DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
 	//
 	if (retWorkingPair->adsorption->vol_A_WRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_A_WRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_A_WRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -941,7 +984,7 @@ DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
 
 
 /*
- * iso_w_pTpsatRho:
+ * ads_w_pTpsatRho:
  * ----------------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -972,7 +1015,7 @@ DLL_API double iso_A_WRho(double W_m3kg, double rho_l_kgm3, void *workingPair) {
  *		First implementation.
  *
  */
-DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
+DLL_API double ads_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 	double rho_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -983,7 +1026,7 @@ DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_w_pTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_w_pTpsatRho\".");
 		return -1;
 	}
 	
@@ -991,7 +1034,7 @@ DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_w_pTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_w_pTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_w_pTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1004,7 +1047,7 @@ DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_p_wTpsatRho:
+ * ads_p_wTpsatRho:
  * ----------------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium loading w in
@@ -1035,7 +1078,7 @@ DLL_API double iso_w_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
+DLL_API double ads_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 	double rho_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1046,7 +1089,7 @@ DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_p_wTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_p_wTpsatRho\".");
 		return -1;
 	}
 	
@@ -1054,7 +1097,7 @@ DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_p_wTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_p_wTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_p_wTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1067,7 +1110,7 @@ DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_T_pwpsatRho:
+ * ads_T_pwpsatRho:
  * ----------------
  *
  * Calculates equilibrium temperature T in K depending on equilibrium pressure
@@ -1108,7 +1151,7 @@ DLL_API double iso_p_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
+DLL_API double ads_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
 	double rho_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1119,7 +1162,7 @@ DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_T_pwpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_T_pwpsatRho\".");
 		return -1;
 	}
 	
@@ -1127,7 +1170,7 @@ DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_T_pwpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_T_pwpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_T_pwpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1151,7 +1194,7 @@ DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
  
 
 /*
- * iso_dW_dA_ARho:
+ * ads_dW_dA_ARho:
  * ---------------
  *
  * Calculates derivative of equilibrium volumetric loading dW_dA in m³mol/kg/J
@@ -1185,7 +1228,7 @@ DLL_API double iso_T_pwpsatRho(double p_Pa, double w_kgkg, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3, 
+DLL_API double ads_dW_dA_ARho(double A_Jmol, double rho_l_kgm3, 
 	void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1196,7 +1239,7 @@ DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dW_dA_ARho\".");
+		printf("\nReturn -1 for function call \"ads_dW_dA_ARho\".");
 		return -1;
 	}
 	
@@ -1204,7 +1247,7 @@ DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3,
 	//
 	if (retWorkingPair->adsorption->vol_dW_dA_ARho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dW_dA_ARho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dW_dA_ARho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1217,7 +1260,7 @@ DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3,
 
 
 /*
- * iso_dA_dW_WRho:
+ * ads_dA_dW_WRho:
  * ---------------
  *
  * Calculates derivative of equilibrium adsorption potential dA_dW in kgJ/mol/m³
@@ -1251,7 +1294,7 @@ DLL_API double iso_dW_dA_ARho(double A_Jmol, double rho_l_kgm3,
  *		First implementation.
  *
  */
-DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3, 
+DLL_API double ads_dA_dW_WRho(double W_m3kg, double rho_l_kgm3, 
 	void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1262,7 +1305,7 @@ DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dA_dW_WRho\".");
+		printf("\nReturn -1 for function call \"ads_dA_dW_WRho\".");
 		return -1;
 	}
 	
@@ -1270,7 +1313,7 @@ DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3,
 	//
 	if (retWorkingPair->adsorption->vol_dA_dW_WRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dA_dW_WRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dA_dW_WRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1283,7 +1326,7 @@ DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3,
 
 
 /*
- * iso_dw_dp_pTpsatRho:
+ * ads_dw_dp_pTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium loading dw_dp with respect to pressure
@@ -1315,7 +1358,7 @@ DLL_API double iso_dA_dW_WRho(double W_m3kg, double rho_l_kgm3,
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
+DLL_API double ads_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
 	double rho_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1326,7 +1369,7 @@ DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dw_dp_pTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_dw_dp_pTpsatRho\".");
 		return -1;
 	}
 	
@@ -1334,7 +1377,7 @@ DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_dw_dp_pTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dw_dp_pTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dw_dp_pTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1347,7 +1390,7 @@ DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_dw_dT_pTpsatRho:
+ * ads_dw_dT_pTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium loading dw_dp with respect to
@@ -1385,7 +1428,7 @@ DLL_API double iso_dw_dp_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
+DLL_API double ads_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
 	void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
@@ -1397,7 +1440,7 @@ DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dw_dT_pTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_dw_dT_pTpsatRho\".");
 		return -1;
 	}
 	
@@ -1405,7 +1448,7 @@ DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_dw_dT_pTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dw_dT_pTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dw_dT_pTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1419,7 +1462,7 @@ DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_dp_dw_wTpsatRho:
+ * ads_dp_dw_wTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium pressure p with respect to loading 
@@ -1451,7 +1494,7 @@ DLL_API double iso_dw_dT_pTpsatRho(double p_Pa, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
+DLL_API double ads_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
 	double rho_kgm3, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
 	//
@@ -1462,7 +1505,7 @@ DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dp_dw_wTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_dp_dw_wTpsatRho\".");
 		return -1;
 	}
 	
@@ -1470,7 +1513,7 @@ DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_dp_dw_wTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dp_dw_wTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dp_dw_wTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1483,7 +1526,7 @@ DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_dp_dT_wTpsatRho:
+ * ads_dp_dT_wTpsatRho:
  * --------------------
  *
  * Calculates derivative of equilibrium pressure p with respect to temperature 
@@ -1521,7 +1564,7 @@ DLL_API double iso_dp_dw_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
+DLL_API double ads_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
 	void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
@@ -1533,7 +1576,7 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_dp_dT_wTpsatRho\".");
+		printf("\nReturn -1 for function call \"ads_dp_dT_wTpsatRho\".");
 		return -1;
 	}
 	
@@ -1541,7 +1584,7 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 	//
 	if (retWorkingPair->adsorption->vol_dp_dT_wTpsatRho==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_dp_dT_wTpsatRho\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_dp_dT_wTpsatRho\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1555,7 +1598,7 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
 
 
 /*
- * iso_piStar_pyxgTpsatRhoM:
+ * ads_piStar_pyxgTpsatRhoM:
  * -------------------------
  *
  * Calculates reduced spreading pressure in kg/mol depending on equilibrium
@@ -1603,7 +1646,7 @@ DLL_API double iso_dp_dT_wTpsatRho(double w_kgkg, double T_K, double p_sat_Pa,
  *		First implementation.
  *
  */
-DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
+DLL_API double ads_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double p_sat_Pa, 
 	double rho_kgm3, double M_kgmol, void *workingPair) {
 	// Typecast void pointers given as inputs to correct structs
@@ -1615,7 +1658,7 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"iso_piStar_pyxgTpsatRhoM\".");
+		printf("\nReturn -1 for function call \"ads_piStar_pyxgTpsatRhoM\".");
 		return -1;
 	}
 	
@@ -1623,7 +1666,7 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 	//
 	if (retWorkingPair->adsorption->vol_piStar_pyxgTpsatRhoM==NULL) {
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen isotherm function \"iso_piStar_pyxgTpsatRhoM\" is not implemented.");
+		printf("\nChosen isotherm function \"ads_piStar_pyxgTpsatRhoM\" is not implemented.");
 		printf("\nReturn -1 for function call.");
 		return -1;
 		
@@ -1636,8 +1679,239 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
 }
 
 
+////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding absorption working w struct//
+////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding refrigerant working w struct//
+/////////////////////////////////////////////////////////////////////////////
 /*
- * direct_iso_w_pT_workingPair:
+ * ref_p_sat_T:
+ * ------------
+ *
+ * Calculates saturation pressure in Pa depending on equilibrium temperature T 
+ * in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_p_sat_T(double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"ref_p_sat_T\".");
+		return -1;
+	}
+	
+	// Check if refrigerant function exists for chosen working pair
+	//
+	if (retWorkingPair->refrigerant->psat_T==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"psat_T\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->refrigerant->psat_T(T_K, 
+			retWorkingPair->psat_par);
+		
+	}
+}
+
+
+/*
+ * ref_dp_sat_dT_T:
+ * ----------------
+ *
+ * Calculates derivative of saturation pressure in Pa/K wrt to temperature
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturation pressure wrt temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_dp_sat_dT_T(double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"ref_dp_sat_dT_T\".");
+		return -1;
+	}
+	
+	// Check if refrigerant function exists for chosen working pair
+	//
+	if (retWorkingPair->refrigerant->dpsat_dT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dpsat_dT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->refrigerant->dpsat_dT(T_K, 
+			retWorkingPair->psat_par);
+		
+	}
+}
+
+
+/*
+ * ref_rho_l_T:
+ * ------------
+ *
+ * Calculates saturated liquid density in kg/m³ depending on equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturated liquid density in kg/m³.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_rho_l_T(double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"ref_rho_l_T\".");
+		return -1;
+	}
+	
+	// Check if refrigerant function exists for chosen working pair
+	//
+	if (retWorkingPair->refrigerant->rho_l_T==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"rho_l_T\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->refrigerant->rho_l_T(T_K, 
+			retWorkingPair->rhol_par);
+		
+	}
+}
+
+
+/*
+ * ref_drho_l_dT_T:
+ * ----------------
+ *
+ * Calculates derivative of saturated liquid density wrt temperature in kg/m³/K
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturated liquid density wrt temperature in kg/m³/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double ref_drho_l_dT_T(double T_K, void *workingPair) {
+	// Typecast void pointers given as inputs to correct structs
+	//
+	WorkingPair *retWorkingPair = (WorkingPair *) workingPair;
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"ref_drho_l_dT_T\".");
+		return -1;
+	}
+	
+	// Check if refrigerant function exists for chosen working pair
+	//
+	if (retWorkingPair->refrigerant->drho_l_dT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"drho_l_dT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		return -1;
+		
+	} else {
+		return retWorkingPair->refrigerant->drho_l_dT(T_K, 
+			retWorkingPair->rhol_par);
+		
+	}
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding adsorption working wo struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_ads_w_pT_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
@@ -1684,7 +1958,7 @@ DLL_API double iso_piStar_pyxgTpsatRhoM(double p_total_Pa, double y_molmol,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K, 
+DLL_API double direct_ads_w_pT_workingPair(double p_Pa, double T_K, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol) {
@@ -1699,7 +1973,7 @@ DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"direct_iso_w_pT_workingPair\".");
+		printf("\nReturn -1 for function call \"direct_ads_w_pT_workingPair\".");
 		return 0;
 	}
 	
@@ -1725,7 +1999,7 @@ DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K,
 
 
 /*
- * direct_iso_p_wT_workingPair:
+ * direct_ads_p_wT_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium pressure p in Pa depending on equilibrium temperature
@@ -1774,7 +2048,7 @@ DLL_API double direct_iso_w_pT_workingPair(double p_Pa, double T_K,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K, 
+DLL_API double direct_ads_p_wT_workingPair(double w_kgkg, double T_K, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol) {
@@ -1789,7 +2063,7 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"direct_iso_p_wT_workingPair\".");
+		printf("\nReturn -1 for function call \"direct_ads_p_wT_workingPair\".");
 		return -1;
 	}
 	
@@ -1815,7 +2089,7 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
 
 
 /*
- * direct_iso_T_pw_workingPair:
+ * direct_ads_T_pw_workingPair:
  * ----------------------------
  *
  * Calculates equilibrium temperature in K depending on equilibrium pressure p
@@ -1871,7 +2145,7 @@ DLL_API double direct_iso_p_wT_workingPair(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-DLL_API double direct_iso_T_pw_workingPair(double p_Pa, double w_kgkg, 
+DLL_API double direct_ads_T_pw_workingPair(double p_Pa, double w_kgkg, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
 	int no_p_sat, const char *rf_rhol, int no_rhol) {
@@ -1886,7 +2160,7 @@ DLL_API double direct_iso_T_pw_workingPair(double p_Pa, double w_kgkg,
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nWorkingPair-struct does not exist.");
-		printf("\nReturn -1 for function call \"direct_iso_T_pw_workingPair\".");
+		printf("\nReturn -1 for function call \"direct_ads_T_pw_workingPair\".");
 		return -1;
 	}
 	
