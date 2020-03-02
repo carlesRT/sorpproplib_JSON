@@ -56,11 +56,26 @@ void testWorkingPair_ads(const char *path_db, const char *wp_as,
 			w_kgkg_sur, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
 			no_p_sat, rf_rhol, no_rhol);
 		double dw_dp_kgkgPa_sur = ads_dw_dp_pT(p_Pa, T_K, workingPair);
+		double dw_dp_kgkgPa_sur_direct = direct_ads_dw_dp_pT_workingPair(p_Pa,
+			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double dw_dT_kgkgK_sur = ads_dw_dT_pT(p_Pa, T_K, workingPair);
+		double dw_dT_kgkgK_sur_direct = direct_ads_dw_dT_pT_workingPair(p_Pa,
+			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double dp_dw_Pakgkg_sur = ads_dp_dw_wT(w_kgkg_sur, T_K, workingPair);
+		double dp_dw_Pakgkg_sur_direct = direct_ads_dp_dw_wT_workingPair(
+			w_kgkg_sur, T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double dp_dT_PaK_sur = ads_dp_dT_wT(w_kgkg_sur, T_K, workingPair);
+		double dp_dT_PaK_sur_direct = direct_ads_dp_dT_wT_workingPair(
+			w_kgkg_sur, T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double piStar_molkg_sur = ads_piStar_pyxgTM(p_Pa, 1, 1, 1, T_K, 
 			0.04401, workingPair);
+		double piStar_molkg_sur_direct = direct_ads_piStar_pyxgTM_workingPair(
+			p_Pa, 1, 1, 1, T_K, 0.04401, path_db, wp_as, wp_st, wp_rf, wp_iso,
+			no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
 
 
 		// Calculate equilibrium properties with functions that are only defined for
@@ -69,28 +84,67 @@ void testWorkingPair_ads(const char *path_db, const char *wp_as,
 		double A_Jmol = 8.314462618 * T_K * log(p_sat_Pa/p_Pa);
 		
 		double W_m3kg = ads_W_ARho(A_Jmol, rho_kgm3, workingPair);
+		double W_m3kg_direct = direct_ads_W_ARho_workingPair(
+			A_Jmol, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double A_Jmol_inv = ads_A_WRho(W_m3kg, rho_kgm3, workingPair);
+		double A_Jmol_inv_direct = direct_ads_A_WRho_workingPair(
+			W_m3kg, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double dW_dA_m3molkgJ = ads_dW_dA_ARho(A_Jmol, rho_kgm3, workingPair);
+		double dW_dA_m3molkgJ_direct = direct_ads_dW_dA_ARho_workingPair(
+			A_Jmol, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double dA_dW_Jkgkgmol = ads_dA_dW_WRho(W_m3kg, rho_kgm3, workingPair);
+		double dA_dW_Jkgkgmol_direct = direct_ads_dA_dW_WRho_workingPair(
+			W_m3kg, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		
 		double w_kgkg_vol = ads_w_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
 			workingPair);
-		double p_Pa_vol_inv = ads_p_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, 
-			workingPair);
-		double T_K_vol_inv = ads_T_pwpsatRho(p_Pa, w_kgkg_vol, p_sat_Pa, rho_kgm3, 
-			workingPair);
+		double w_kgkg_vol_direct = direct_ads_w_pTpsatRho_workingPair(
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso,
+			no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+		double p_Pa_vol_inv = ads_p_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, 
+			rho_kgm3, workingPair);
+		double p_Pa_vol_inv_direct = direct_ads_p_wTpsatRho_workingPair(
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, path_db, wp_as, wp_st, wp_rf, 
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+		double T_K_vol_inv = ads_T_pwpsatRho(p_Pa, w_kgkg_vol, p_sat_Pa, 
+			rho_kgm3, workingPair);
+		double T_K_vol_inv_direct = direct_ads_T_pwpsatRho_workingPair(
+			p_Pa, w_kgkg_vol, p_sat_Pa, rho_kgm3, path_db, wp_as, wp_st, wp_rf,
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double dw_dp_kgkgPa_vol = ads_dw_dp_pTpsatRho(p_Pa, T_K, p_sat_Pa, rho_kgm3, 
-			workingPair);			
+			workingPair);	
+		double dw_dp_kgkgPa_vol_direct = direct_ads_dw_dp_pTpsatRho_workingPair(
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, path_db, wp_as, wp_st, wp_rf, wp_iso,
+			no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);		
 		double dw_dT_kgkgK_vol = ads_dw_dT_pTpsatRho(p_Pa, T_K, p_sat_Pa, 
 			rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
-			ref_drho_l_dT_T(T_K, workingPair), workingPair);			
+			ref_drho_l_dT_T(T_K, workingPair), workingPair);
+		double dw_dT_kgkgK_vol_direct = direct_ads_dw_dT_pTpsatRho_workingPair(
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
+			ref_drho_l_dT_T(T_K, workingPair), path_db, wp_as, wp_st, wp_rf, 
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);			
 		double dp_dw_Pakgkg_vol = ads_dp_dw_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa,
-			rho_kgm3, workingPair);			
+			rho_kgm3, workingPair);	
+		double dp_dw_Pakgkg_vol_direct = direct_ads_dp_dw_wTpsatRho_workingPair(
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, path_db, wp_as, wp_st, wp_rf, 
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);			
 		double dp_dT_PaK_vol = ads_dp_dT_wTpsatRho(w_kgkg_vol, T_K, p_sat_Pa, 
 			rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
 			ref_drho_l_dT_T(T_K, workingPair), workingPair);
+		double dp_dT_PaK_vol_direct = direct_ads_dp_dT_wTpsatRho_workingPair(
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, ref_dp_sat_dT_T(T_K, workingPair), 
+			ref_drho_l_dT_T(T_K, workingPair), path_db, wp_as, wp_st, wp_rf, 
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);		
 		double piStar_molkg_vol = ads_piStar_pyxgTpsatRhoM(p_Pa, 1, 1, 1, T_K, 
-			p_sat_Pa, rho_kgm3, 0.04401, workingPair);
+			p_sat_Pa, rho_kgm3, 0.04401, workingPair);	
+		double piStar_molkg_vol_direct = 
+			direct_ads_piStar_pyxgTpsatRhoM_workingPair(p_Pa, 1, 1, 1, T_K, 
+			p_sat_Pa, rho_kgm3, 0.04401, path_db, wp_as, wp_st, wp_rf, 
+			wp_iso,	no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);	
 		
 		// Print general information of selected working pair
 		//
@@ -173,6 +227,49 @@ void testWorkingPair_ads(const char *path_db, const char *wp_as,
 			T_K, w_kgkg_sur, p_Pa_sur_inv_direct);
 		printf("\nFor p = %f Pa and w = %f kg/kg, temperature results in T = %f K.",
 			p_Pa, w_kgkg_sur, T_K_sur_inv_direct);
+			
+		printf("\n\nFor T = %f K and p = %f Pa, derivative of loading wrt. pressure results in dwdp = %f kg/kg/Pa.",
+			T_K, p_Pa, dw_dp_kgkgPa_sur_direct);
+		printf("\nFor T = %f K and p = %f Pa, derivative of loading wrt. temperature results in dwdT = %f kg/kg/K.",
+			T_K, p_Pa, dw_dT_kgkgK_sur_direct);	
+		printf("\nFor T = %f K and w = %f kg/kg, derivative of p with respect to w results in dp_dw = %f Pakg/kg.", 
+			T_K, w_kgkg_sur, dp_dw_Pakgkg_sur_direct);
+		printf("\nFor T = %f K and w = %f kg/kg, derivative of p with respect to T results in dp_dT = %f Pa/K.", 
+			T_K, w_kgkg_sur, dp_dT_PaK_sur_direct);
+			
+		printf("\n\nFor T = %f K and p = %f Pa, reduced spreading pressure results in piStar = %f mol/kg.",
+			T_K, p_Pa, piStar_molkg_sur_direct);
+
+		printf("\n\nResults of isotherm functions that are only defined for volumetric approach using direct approach:");
+		printf("\n--------------------------------------------------------------------------------------------------");
+		printf("\nFor A = %f J/mol, volumetric loading results in W = %f m3/kg.",
+			A_Jmol, W_m3kg_direct);
+		printf("\nFor W = %f m3/kg, adsorption potential results in A = %f J/mol.",
+			W_m3kg, A_Jmol_inv_direct);
+		printf("\n\nFor A = %f J/mol, derivative of volumetric loading wrt. of adsorption potential results in dW_dA = %f m3mol/kg/J.",
+			A_Jmol, dW_dA_m3molkgJ_direct);
+		printf("\nFor W = %f m3/kg, derivative of adsorption potential wrt. volumetric loading results in dA_dW = %f Jkg/mol/kg.",
+			W_m3kg, dA_dW_Jkgkgmol_direct);
+			
+		printf("\n\nFor p = %f Pa, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, loading results in w = %f kg/kg.",
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, w_kgkg_vol_direct);
+		printf("\nFor w = %f kg/kg, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, pressure results in p = %f Pa.",
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, p_Pa_vol_inv_direct);
+		printf("\nFor p = %f Pa, w = %f kg/kg, p_sat = %f Pa and rho_l = %f kg/m3, temperature results in T = %f K.",
+			p_Pa, w_kgkg_vol, p_sat_Pa, rho_kgm3, T_K_vol_inv_direct);
+		
+		printf("\n\nFor p = %f Pa, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, derivative of loading wrt. pressure results in dw_dp = %f kg/kg/Pa.",
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, dw_dp_kgkgPa_vol_direct);
+		printf("\nFor p = %f Pa, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, derivative of loading wrt. temperature results in dw_dT = %f kg/kg/K.",
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, dw_dT_kgkgK_vol_direct);			
+		printf("\nFor w = %f kg/kg, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, derivative of loading wrt. pressure results in dp_dw = %f Pakg/kg.",
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, dp_dw_Pakgkg_vol_direct);
+		printf("\nFor w = %f kg/kg, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, derivative of loading wrt. temperature results in dp_dT = %f Pa/K.",
+			w_kgkg_vol, T_K, p_sat_Pa, rho_kgm3, dp_dT_PaK_vol_direct);
+		
+		printf("\n\nFor p = %f Pa, T = %f K, p_sat = %f Pa and rho_l = %f kg/m3, reduced spreading pressure results in piStart = %f mol/kg.",
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, piStar_molkg_vol_direct);
+
 			
 		// Free allocated memory
 		//	

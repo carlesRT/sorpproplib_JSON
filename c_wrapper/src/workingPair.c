@@ -2865,3 +2865,1977 @@ DLL_API double direct_ads_T_pw_workingPair(double p_Pa, double w_kgkg,
 		
 	}	
 }
+
+
+/*
+ * direct_ads_dw_dp_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium loading w with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dp_pT_workingPair(double p_Pa, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dw_dp_pT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->dw_dp_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dw_dp_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->dw_dp_pT(p_Pa, T_K,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par, retWorkingPair->adsorption, 
+			retWorkingPair->refrigerant);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dw_dT_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium loading w with respect to temperature 
+ * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dT_pT_workingPair(double p_Pa, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dw_dT_pT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->dw_dT_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dw_dT_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->dw_dT_pT(p_Pa, T_K,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par, retWorkingPair->adsorption, 
+			retWorkingPair->refrigerant);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dp_dw_wT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to loading 
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dw_wT_workingPair(double w_kgkg, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dp_dw_wT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->dp_dw_wT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dp_dw_wT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->dp_dw_wT(w_kgkg, T_K,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par, retWorkingPair->adsorption, 
+			retWorkingPair->refrigerant);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dp_dT_wT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dT_wT_workingPair(double w_kgkg, double T_K, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dp_dT_wT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->dp_dT_wT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dp_dT_wT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->dp_dT_wT(w_kgkg, T_K,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par, retWorkingPair->adsorption, 
+			retWorkingPair->refrigerant);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_piStar_pyxgTM_workingPair:
+ * -------------------------------------
+ *
+ * Calculates reduced spreading pressure piStar in kg/mol depending on 
+ * equilibrium pressure p in Pa, molar fraction of refrigerant in vapour phase 
+ * in mol/mol, molar fraction of refrigerant in adsorbed phase in mol/mol, 
+ * activity coefficient of refrigerant in adsorbed phase, equilibrium 
+ * temperature T in K and molar mass of refrigerant M in kg/mol. The reduced 
+ * spreading pressure is defined as follows:
+ *
+ * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
+ *		Integral_0^p0{w(p,T) / p * dp}
+ *
+ *	where p0 = p_total*y / (gamma*x)
+ *
+ * Parameters:
+ * -----------
+ *	double p_total_Pa:
+ *		Total pressure of vapour phase in Pa.
+ *	double y_molmol:
+ *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *	double x_molmol:
+ *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
+ *	double gamma:
+ *		Activity coefficent of refrigerant in adsorbed phase.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double M_kgmol:
+ *		Molar mass of refrigerant M in kg/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Reduced spreading pressure in kg/mol.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_piStar_pyxgTM_workingPair(double p_total_Pa,
+	double y_molmol, double x_molmol, double gamma, double T_K, double M_kgmol, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_piStar_pyxgTM_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->piStar_pyxgTM==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"piStar_pyxgTM\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->piStar_pyxgTM(
+			p_total_Pa, y_molmol, x_molmol, gamma, T_K, M_kgmol,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par, retWorkingPair->adsorption, 
+			retWorkingPair->refrigerant);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_W_ARho_workingPair:
+ * ------------------------------
+ *
+ * Calculates equilibrium volumetric loading W in m³/kg depending on equilibrium
+ * adsorption potential A in J/mol and saturated liquid density of adsorpt rho_l
+ * in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double A_Jmol:
+ *		Equilibrium adsorption potential A in J/mol.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium volumetric loading W in m³/kg.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg. Therefore, function checks unit of coefficents
+ *	by checking isotherm coefficients.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_W_ARho_workingPair(double A_Jmol, double rho_l_kgm3, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_W_ARho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_W_ARho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_W_ARho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_W_ARho(A_Jmol,
+			rho_l_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_A_WRho_workingPair:
+ * ------------------------------
+ *
+ * Calculates equilibrium adsorption potential A in J/mol depending on 
+ * equilibrium volumetric loading W in m³/kg and saturated liquid density of
+ * adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double W_m3kg:
+ *		Equilibrium volumetric loading W in m³/kg.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium adsorption potential A in J/mol.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_A_WRho_workingPair(double W_m3kg, double rho_l_kgm3, 
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_A_WRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_A_WRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_A_WRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_A_WRho(W_m3kg,
+			rho_l_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_w_pTpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
+ * p in Pa, equilibrium temperature T in K, saturation pressure p_Sat in Pa and 
+ * saturated liquid density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium loading in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_w_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_w_pTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_w_pTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_w_pTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_w_pTpsatRho(p_Pa,
+			T_K, p_sat_Pa, rho_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_p_wTpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium loading w in
+ * kg/kg, equilibrium temperature T in K, saturation pressure p_Sat in Pa and 
+ * density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_p_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_p_wTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_p_wTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_p_wTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_p_wTpsatRho(w_kgkg,
+			T_K, p_sat_Pa, rho_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_T_pwpsatRho_workingPair:
+ * -----------------------------------
+ *
+ * Calculates equilibrium temperature T in K depending on equilibrium pressure
+ * in Pa, equilibrium loading w in kg/kg, saturation pressure p_Sat in Pa and 
+ * density of adsorpt rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ * 	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium temperature in K.
+ *
+ * Remarks:
+ * --------
+ *	Uses internal euqation of states to calculate vapour pressure, saturated
+ *	liquid density of adsorpt, derivative of vapour pressure wrt. temperature
+ *	and derivative of saturated liquid density of adsorpt wrt. temperature. If
+ *	equation of states are not implemented for refrigerant, function returns -1
+ *  and throws warning. If user want to use his own equation of states, this
+ *  function cannot be used and determination of root to calculate T must
+ *  be implemented by user.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_T_pwpsatRho_workingPair(double p_Pa, double w_kgkg, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_T_pwpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_T_pwpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_T_pwpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		// Avoid compiler warning C4100 by adding "do nothing" expression
+		// "Do nothing" expression will be optimised out by compiler
+		//
+		(p_sat_Pa) = (p_sat_Pa);
+		(rho_kgm3) = (rho_kgm3);
+		
+		double returnValue = retWorkingPair->adsorption->vol_T_pwpsatRho(p_Pa,
+			w_kgkg, retWorkingPair->refrigerant->psat_T,
+			retWorkingPair->refrigerant->rho_l_T,
+			retWorkingPair->refrigerant->dpsat_dT,
+			retWorkingPair->refrigerant->drho_l_dT,
+			retWorkingPair->iso_par, retWorkingPair->psat_par, 
+			retWorkingPair->rhol_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dW_dA_ARho_workingPair:
+ * ----------------------------------
+ *
+ * Calculates derivative of equilibrium volumetric loading dW_dA in m³mol/kg/J
+ * depending on equilibrium adsorption potential A in J/mol and saturated liquid
+ * density of adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double A_Jmol:
+ *		Equilibrium adsorption potential A in J/mol.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of volumetric loading wrt. adsorption potential in
+ *		m³mol/kg/J.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dW_dA_ARho_workingPair(double A_Jmol, 
+	double rho_l_kgm3, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso, 
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dW_dA_ARho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dW_dA_ARho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dW_dA_ARho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dW_dA_ARho(A_Jmol,
+			rho_l_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dA_dW_WRho_workingPair:
+ * ----------------------------------
+ *
+ * Calculates derivative of equilibrium adsorption potential dA_dW in kgJ/mol/m³
+ * depending on equilibrium volumetric loading W in m³/kg and saturated liquid
+ * density of adsorpt rho_l in kg/m3.
+ *
+ * Parameters:
+ * -----------
+ * 	double W_m3kg:
+ *		Equilibrium volumetric loading W in m³/kg.
+ * 	double rho_l_kgm3:
+ *		Saturated liquid density of adsorpt rho_l in kg/m3.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of adsorption potential wrt. volumetric loading in
+ *		kgJ/mol/m³.
+ *
+ * Remarks:
+ * --------
+ *	Saturated liquid density of adsorpt is requird to calculate volumetric
+ *	loading from characteristic curve in m3/kg when coefficients would directly
+ *	return loading w in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dA_dW_WRho_workingPair(double W_m3kg,
+	double rho_l_kgm3, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso, 
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dA_dW_WRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dA_dW_WRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dA_dW_WRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dA_dW_WRho(W_m3kg,
+			rho_l_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dw_dp_pTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium loading dw_dp with respect to pressure
+ * in kg/kg/Pa depending on equilibrium pressure p in Pa, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dp_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dw_dp_pTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dw_dp_pTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dw_dp_pTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dw_dp_pTpsatRho(
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dw_dT_pTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium loading dw_dp with respect to
+ * temperature in kg/kg/K depending on equilibrium pressure p in Pa, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa, density of adsorpt 
+ * rho in kg/m³, derivative of saturation pressure with respect to temperature
+ * dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+ * temperature drho_dT in kg/m³/K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ * 	double dp_sat_dT_PaK:
+ *		Derivative of saturation pressure wrt. temperature in Pa/K.
+ *	double drho_dT_kgm3K:
+ *		Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dw_dT_pTpsatRho_workingPair(double p_Pa, double T_K, 
+	double p_sat_Pa, double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dw_dT_pTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dw_dT_pTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dw_dT_pTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dw_dT_pTpsatRho(
+			p_Pa, T_K, p_sat_Pa, rho_kgm3, dp_sat_dT_PaK,
+			drho_dT_kgm3K, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dp_dw_wTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to loading 
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dw_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dp_dw_wTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dp_dw_wTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dp_dw_wTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dp_dw_wTpsatRho(
+			w_kgkg,	T_K, p_sat_Pa, rho_kgm3, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_dp_dT_wTpsatRho_workingPair:
+ * ---------------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium loading w in kg/kg, equilibrium 
+ * temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt 
+ * rho in kg/m³, derivative of saturation pressure with respect to temperature
+ * dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+ * temperature drho_dT in kg/m³/K.
+ *
+ * Parameters:
+ * -----------
+ *	double w_kgkg:
+ *		Equilibrium loading in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ * 	double dp_sat_dT_PaK:
+ *		Derivative of saturation pressure wrt. temperature in Pa/K.
+ *	double drho_dT_kgm3K:
+ *		Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_dp_dT_wTpsatRho_workingPair(double w_kgkg, double T_K, 
+	double p_sat_Pa, double rho_kgm3, double dp_sat_dT_PaK, double drho_dT_kgm3K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dp_dT_wTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_dp_dT_wTpsatRho==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_dp_dT_wTpsatRho\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->adsorption->vol_dp_dT_wTpsatRho(
+			w_kgkg,	T_K, p_sat_Pa, rho_kgm3, dp_sat_dT_PaK,
+			drho_dT_kgm3K, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ads_piStar_pyxgTpsatRhoM_workingPair:
+ * --------------------------------------------
+ *
+ * Calculates reduced spreading pressure in kg/mol depending on equilibrium
+ * pressure p in Pa, molar fraction of refrigerant in vapour phase in mol/mol,
+ * molar fraction of refrigerant in adsorbed phase in mol/mol, activity
+ * coefficient of refrigerant in adsorbed phase, equilibrium temperature T in K,
+ * saturation pressure p_Sat in Pa and density of adsorpt rho in kg/m³ and molar
+ * mass of refrigerant M in kg/mol. The reduced spreading pressure is defined as 
+ * follows:
+ *
+ * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
+ *		Integral_0^p0{w(p,T) / p * dp}
+ *
+ *	where p0 = p_total*y / (gamma*x)
+ *
+ * Parameters:
+ * -----------
+ *	double p_total_Pa:
+ *		Total pressure of vapour phase in Pa.
+ *	double y_molmol:
+ *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *	double x_molmol:
+ *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
+ *	double gamma:
+ *		Activity coefficent of refrigerant in adsorbed phase.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	double p_sat_Pa:
+ *		Saturation pressure in Pa.
+ *	double rho_kgm3:
+ *		Density of adsorpt in kg/m³.
+ *	double M_kgmol:
+ *		Molar mass of refrigerant M in kg/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Reduced spreading pressure in kg/mol.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ads_piStar_pyxgTpsatRhoM_workingPair(double p_total_Pa,
+	double y_molmol, double x_molmol, double gamma, double T_K, double p_sat_Pa, 
+	double rho_kgm3, double M_kgmol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ads_dp_dT_wTpsatRho_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->adsorption->vol_piStar_pyxgTpsatRhoM==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"vol_piStar_pyxgTpsatRhoM\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = 
+			retWorkingPair->adsorption->vol_piStar_pyxgTpsatRhoM(p_total_Pa,
+			y_molmol, x_molmol, gamma, T_K, p_sat_Pa, rho_kgm3,
+			M_kgmol, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding refrigerant working w struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_ref_p_sat_T_workingPair:
+ * -------------------------------
+ *
+ * Calculates saturation pressure in Pa depending on equilibrium temperature T 
+ * in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_p_sat_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ref_p_sat_T_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->refrigerant->psat_T==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"psat_T\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->refrigerant->psat_T(T_K,
+			retWorkingPair->psat_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ref_dp_sat_dT_T_workingPair:
+ * -----------------------------------
+ *
+ * Calculates derivative of saturation pressure in Pa/K wrt to temperature
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturation pressure wrt temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_dp_sat_dT_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ref_dp_sat_dT_T_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->refrigerant->dpsat_dT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"dpsat_dT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->refrigerant->dpsat_dT(T_K,
+			retWorkingPair->psat_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ref_rho_l_T_workingPair:
+ * -------------------------------
+ *
+ * Calculates saturated liquid density in kg/m³ depending on equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturated liquid density in kg/m³.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_rho_l_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ref_rho_l_T_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->refrigerant->rho_l_T==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"rho_l_T\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->refrigerant->rho_l_T(T_K,
+			retWorkingPair->rhol_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_ref_drho_l_dT_T_workingPair:
+ * -----------------------------------
+ *
+ * Calculates derivative of saturated liquid density wrt temperature in kg/m³/K
+ * depending on equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of saturated liquid density wrt temperature in kg/m³/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_ref_drho_l_dT_T_workingPair(double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_ref_drho_l_dT_T_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->refrigerant->drho_l_dT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"drho_l_dT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->refrigerant->drho_l_dT(T_K,
+			retWorkingPair->rhol_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}

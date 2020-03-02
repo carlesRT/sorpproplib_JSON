@@ -1796,8 +1796,8 @@ DLL_API double direct_ads_dp_dT_wT_workingPair(double w_kgkg, double T_K,
 
 
 /*
- * direct_ads_w_piStar_pyxgTM_workingPair:
- * ---------------------------------------
+ * direct_ads_piStar_pyxgTM_workingPair:
+ * -------------------------------------
  *
  * Calculates reduced spreading pressure piStar in kg/mol depending on 
  * equilibrium pressure p in Pa, molar fraction of refrigerant in vapour phase 
@@ -1860,7 +1860,7 @@ DLL_API double direct_ads_dp_dT_wT_workingPair(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-DLL_API double direct_ads_w_piStar_pyxgTM_workingPair(double p_total_Pa,
+DLL_API double direct_ads_piStar_pyxgTM_workingPair(double p_total_Pa,
 	double y_molmol, double x_molmol, double gamma, double T_K, double M_kgmol, 
 	const char *path_db, const char *wp_as, const char *wp_st, 
 	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
