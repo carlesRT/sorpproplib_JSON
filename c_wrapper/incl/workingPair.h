@@ -1498,7 +1498,7 @@ DLL_API double direct_ads_w_pT_workingPair(double p_Pa, double T_K,
  * Returns:
  * --------
  *	double:
- *		Equilibrium prssure in Pa.
+ *		Equilibrium pressure in Pa.
  *
  * History:
  * --------
@@ -3299,8 +3299,6 @@ DLL_API double direct_abs_p_Tvx_workingPair(double T_K, double v_m3mol,
  * -----------
  *	double T_K:
  *		Equilibrium temperature in K.
- * 	struct *WorkingPair:
- *		Pointer of WorkingPair-struct.
  *
  *	const char *path_db:
  *		Path to database.

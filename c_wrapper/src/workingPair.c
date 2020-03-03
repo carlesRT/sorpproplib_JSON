@@ -4501,6 +4501,1008 @@ DLL_API double direct_ads_piStar_pyxgTpsatRhoM_workingPair(double p_total_Pa,
 
 
 /////////////////////////////////////////////////////////////////////////////
+// Definition of function prototypes regarding absorption working wo struct//
+/////////////////////////////////////////////////////////////////////////////
+/*
+ * direct_abs_X_pT_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * pressure p in Pa and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium concentration in kg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_X_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_X_pT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_X_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_X_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_X_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_p_XT_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium pressure p in Pa depending on equilibrium
+ * concentration X in kg/kg and equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_p_XT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_p_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_p_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_p_XT(X_kgkg, T_K,
+			retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_T_pX_workingPair:
+ * ----------------------------
+ *
+ * Calculates equilibrium temperature in K depending on equilibrium pressure p
+ * in Pa and equilibrium concentration X in kg/kg.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ * 	double:
+ *		Equilibrium temperature in K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_T_pX_workingPair(double p_Pa, double X_kgkg,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_T_pX_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_T_pX==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_T_pX\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_T_pX(p_Pa, X_kgkg,
+			retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_dX_dp_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to pressure 
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dX_dp_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_dX_dp_pT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dX_dp_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dX_dp_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_dX_dp_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_dX_dT_pT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium concentration X with respect to  
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ * 	double p_Pa:
+ *		Equilibrium pressure in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dX_dT_pT_workingPair(double p_Pa, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_dX_dT_pT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dX_dT_pT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dX_dT_pT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_dX_dT_pT(p_Pa, T_K,
+			retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_dp_dX_XT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to concentration 
+ * w in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. concentration in Pakg/kg.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dp_dX_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_dp_dX_XT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dp_dX_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dp_dX_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_dp_dX_XT(X_kgkg, 
+			T_K, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_dp_dT_XT_workingPair:
+ * --------------------------------
+ *
+ * Calculates derivative of equilibrium pressure p with respect to temperature 
+ * T in kg/kg/K depending on equilibrium concentration X in kg/kg and  
+ * equilibrium temperature T in K.
+ *
+ * Parameters:
+ * -----------
+ *	double X_kgkg:
+ *		Equilibrium concentration in kg/kg.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt. temperature in Pa/K.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_dp_dT_XT_workingPair(double X_kgkg, double T_K,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_dp_dT_XT_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->con_dp_dT_XT==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"con_dp_dT_XT\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->con_dp_dT_XT(X_kgkg, 
+			T_K, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_g_Txv1v2_workingPair:
+ * --------------------------------
+ *
+ * Calculates activity coefficient of first component depending on temperature 
+ * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+ * first component in m³/mol, and molar volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Activity coefficient of first component.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_g_Txv1v2_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_g_Txv1v2_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->act_g_Txv1v2==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_g_Txv1v2\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->act_g_Txv1v2(T_K, 
+			x_molmol, v1_m3mol, v2_m3mol, retWorkingPair->iso_par, 
+			retWorkingPair->absorption);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_p_Txv1v2psat_workingPair:
+ * ------------------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, molar volume of second component
+ * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Txv1v2psat_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_p_Txv1v2psat_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->act_p_Txgv1v2psat==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_p_Txgv1v2psat\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->act_p_Txgv1v2psat(T_K, 
+			x_molmol, v1_m3mol, v2_m3mol, p_sat_Pa, retWorkingPair->iso_par, 
+			retWorkingPair->absorption);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/*
+ * direct_abs_p_Txv1v2_workingPair:
+ * --------------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * molar volume of first component in m³/mol, and molar volume of second 
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, uses molar volumes stored in JSON file when input v1_m3mol or 
+ * 	v2_m3mol is -1. Uses refrigerant function to calculate saturation pressure.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Txv1v2_workingPair(double T_K, double x_molmol, 
+	double v1_m3mol, double v2_m3mol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_p_Txv1v2_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->act_p_Txgv1v2psat==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"act_p_Txgv1v2psat\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->act_p_Txgv1v2psat(T_K, 
+			x_molmol, v1_m3mol, v2_m3mol, 
+			retWorkingPair->refrigerant->psat_T(T_K, retWorkingPair->psat_par), 
+			retWorkingPair->iso_par, retWorkingPair->absorption);
+		return returnValue;
+		
+	}	
+}
+	
+
+/*
+ * direct_abs_p_Tvx_workingPair:
+ * -----------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
+ * fraction in liquid phase x_molmol in mol/mol
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v_m3mol:
+ *		Molar mixing volume in m³/mol.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		Number of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapour pressure.
+ *	int no_p_sat:
+ *		Number of vapour pressure equation (i.e. when more than one equation is 
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		Number of liquid density equation (i.e. when more than one equation is 
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_p_Tvx_workingPair(double T_K, double v_m3mol, 
+	double x_molmol,
+	const char *path_db, const char *wp_as, const char *wp_st, 
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat, 
+	int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Create workingPair-struct to execute function
+	//
+	WorkingPair *retWorkingPair = newWorkingPair(
+		path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+		rf_rhol, no_rhol);
+	
+	if (retWorkingPair == NULL) {
+		// WorkingPair-struct does not exists
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nWorkingPair-struct does not exist.");
+		printf("\nReturn -1 for function call \"direct_abs_p_Tvx_workingPair\".");
+		return -1;
+	}
+	
+	// Check if isotherm function exists for chosen isotherm type
+	//
+	if (retWorkingPair->absorption->mix_p_Tvx==NULL) {
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nChosen isotherm function \"mix_p_Tvx\" is not implemented.");
+		printf("\nReturn -1 for function call.");
+		delWorkingPair(retWorkingPair);
+		return -1;
+		
+	} else {
+		double returnValue = retWorkingPair->absorption->mix_p_Tvx(T_K, 
+			v_m3mol, x_molmol, retWorkingPair->iso_par);
+		delWorkingPair(retWorkingPair);
+		return returnValue;
+		
+	}	
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
 // Definition of function prototypes regarding refrigerant working w struct//
 /////////////////////////////////////////////////////////////////////////////
 /*
@@ -4514,8 +5516,6 @@ DLL_API double direct_ads_piStar_pyxgTpsatRhoM_workingPair(double p_total_Pa,
  * -----------
  *	double T_K:
  *		Equilibrium temperature in K.
- * 	struct *WorkingPair:
- *		Pointer of WorkingPair-struct.
  *
  *	const char *path_db:
  *		Path to database.

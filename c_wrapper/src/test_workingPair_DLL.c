@@ -305,12 +305,33 @@ void testWorkingPair_abs_con(const char *path_db, const char *wp_as,
 		// Calculate equilibrium properties
 		//
 		double X_kgkg = abs_X_pT(p_Pa, T_K, workingPair);
+		double X_kgkg_direct = direct_abs_X_pT_workingPair(p_Pa, T_K, path_db, 
+			wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, 
+			no_rhol);
 		double p_Pa_inv = abs_p_XT(X_kgkg, T_K, workingPair);
+		double p_Pa_inv_direct = direct_abs_p_XT_workingPair(X_kgkg, T_K, 
+			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, 
+			rf_rhol, no_rhol);
 		double T_K_inv = abs_T_pX(p_Pa, X_kgkg, workingPair);
+		double T_K_inv_direct = direct_abs_T_pX_workingPair(p_Pa, X_kgkg, 
+			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, 
+			rf_rhol, no_rhol);
 		double dX_dp_kgkgPa = abs_dX_dp_pT(p_Pa, T_K, workingPair);	
+		double dX_dp_kgkgPa_direct = direct_abs_dX_dp_pT_workingPair(p_Pa, T_K, 
+			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, 
+			rf_rhol, no_rhol);
 		double dX_dT_kgkgK = abs_dX_dT_pT(p_Pa, T_K, workingPair);
+		double dX_dT_kgkgK_direct = direct_abs_dX_dT_pT_workingPair(p_Pa, T_K, 
+			path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat,
+			rf_rhol, no_rhol);
 		double dp_dX_Pakgkg = abs_dp_dX_XT(X_kgkg, T_K, workingPair);
+		double dp_dX_Pakgkg_direct = direct_abs_dp_dX_XT_workingPair(X_kgkg, 
+			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double dp_dT_Pakgkg = abs_dp_dT_XT(X_kgkg, T_K, workingPair);
+		double dp_dT_Pakgkg_direct = direct_abs_dp_dT_XT_workingPair(X_kgkg, 
+			T_K, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 			
 		
 		// Print general information of selected working pair
@@ -353,6 +374,24 @@ void testWorkingPair_abs_con(const char *path_db, const char *wp_as,
 		printf("\nFor T = %f K and X = %f kg/kg, analytical derivative of p with respect to T results in dp_dT = %f Pa/K.", 
 			T_K, X_kgkg, dp_dT_Pakgkg);
 			
+		printf("\n\nResults of conventional absorption functions using direct approach:");
+		printf("\n-------------------------------------------------------------------");
+		printf("\nFor T = %f K and p = %f Pa, equilibrium concentration results in X = %f kg/kg.", 
+			T_K, p_Pa, X_kgkg_direct);
+		printf("\nFor T = %f K and X = %f kg/kg, equilibrium pressure results in p = %f Pa.", 
+			T_K, X_kgkg, p_Pa_inv_direct);
+		printf("\nFor p = %f Pa and X = %f kg/kg equilibrium temperature results in T = %f K.", 
+			p_Pa, X_kgkg, T_K_inv_direct);
+			
+		printf("\n\nFor T = %f K and p = %f Pa, analytical derivative of X with respect to p results in dX_dp = %f kg/kg/Pa.",
+			T_K, p_Pa, dX_dp_kgkgPa_direct);
+		printf("\nFor T = %f K and p = %f Pa, analytical derivative of X with respect to T results in dX_dT = %f kg/kg/K.",
+			T_K, p_Pa, dX_dT_kgkgK_direct);		
+		printf("\n\nFor T = %f K and X = %f kg/kg, analytical derivative of p with respect to X results in dp_dX = %f Pakg/kg.", 
+			T_K, X_kgkg, dp_dX_Pakgkg_direct);
+		printf("\nFor T = %f K and X = %f kg/kg, analytical derivative of p with respect to T results in dp_dT = %f Pa/K.", 
+			T_K, X_kgkg, dp_dT_Pakgkg_direct);
+			
 			
 		// Free allocated memory
 		//	
@@ -388,9 +427,18 @@ void testWorkingPair_abs_act(double T_K, double x_molmol,
 		// Calculate equilibrium properties
 		//
 		double gamma_1 = abs_g_Txv1v2(T_K , x_molmol, -1, -1, workingPair);
+		double gamma_1_direct = direct_abs_g_Txv1v2_workingPair(T_K , x_molmol,
+			-1, -1, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 		double p_Pa = abs_p_Txv1v2psat(T_K , x_molmol, -1, -1, psat_Pa, 
 			workingPair);
+		double p_Pa_direct = direct_abs_p_Txv1v2psat_workingPair(T_K , x_molmol, 
+			-1, -1, psat_Pa, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, 
+			rf_psat, no_p_sat, rf_rhol, no_rhol);
 		double p_Pa_ref = abs_p_Txv1v2(T_K , x_molmol, -1, -1, workingPair);
+		double p_Pa_ref_direct = direct_abs_p_Txv1v2_workingPair(T_K , x_molmol, 
+			-1, -1, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 			
 		
 		// Print general information of selected working pair
@@ -425,6 +473,15 @@ void testWorkingPair_abs_act(double T_K, double x_molmol,
 			T_K, x_molmol, p_Pa);
 		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
 			T_K, x_molmol, p_Pa_ref);
+			
+		printf("\n\nResults of activity-based absorption functions using direct approach:");
+		printf("\n---------------------------------------------------------------------");
+		printf("\nFor T = %f K and x = %f mol/mol, activity coefficient results in gamma_1 = %f.", 
+			T_K, x_molmol, gamma_1_direct);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
+			T_K, x_molmol, p_Pa_direct);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results in p = %f Pa.", 
+			T_K, x_molmol, p_Pa_ref_direct);
 			
 			
 		// Free allocated memory
@@ -461,6 +518,9 @@ void testWorkingPair_abs_mix(const char *path_db, const char *wp_as,
 		// Calculate equilibrium properties
 		//
 		double p_Pa = abs_p_Tvx(T_K, 0.5/1237.1, x_molmol, workingPair);
+		double p_Pa_direct = direct_abs_p_Tvx_workingPair(T_K, 0.5/1237.1, 
+			x_molmol, path_db, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, 
+			no_p_sat, rf_rhol, no_rhol);
 			
 		
 		// Print general information of selected working pair
@@ -489,6 +549,11 @@ void testWorkingPair_abs_mix(const char *path_db, const char *wp_as,
 		printf("\n---------------------------------------------");
 		printf("\nFor T = %f K,  x = %f mol/mol and PRE, equilibrium pressure results in p = %f Pa.", 
 		T_K, x_molmol, p_Pa);
+			
+		printf("\n\nResults of mixing-based absorption functions using direct approach:");
+		printf("\n-------------------------------------------------------------------");
+		printf("\nFor T = %f K,  x = %f mol/mol and PRE, equilibrium pressure results in p = %f Pa.", 
+		T_K, x_molmol, p_Pa_direct);
 			
 			
 		// Free allocated memory
