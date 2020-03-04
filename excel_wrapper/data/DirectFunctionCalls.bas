@@ -736,8 +736,540 @@ Private Declare PtrSafe Function direct_ads_dA_dW_WRho_workingPair Lib "libsorpP
  ByVal rf_psat As String, ByVal no_p_sat As Integer, _
  ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
 
+'
+' direct_ads_w_pTpsatRho_workingPair:
+' -----------------------------------
+'
+' Calculates equilibrium loading w in kg/kg depending on equilibrium pressure
+' p in Pa, equilibrium temperature T in K, saturation pressure p_Sat in Pa and
+' saturated liquid density of adsorpt rho in kg/m³.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium loading in kg/kg.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_w_pTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_p_wTpsatRho_workingPair:
+' -----------------------------------
+'
+' Calculates equilibrium pressure p in Pa depending on equilibrium loading w in
+' kg/kg, equilibrium temperature T in K, saturation pressure p_Sat in Pa and
+' density of adsorpt rho in kg/m³.
+'
+' Parameters:
+' -----------
+'  double w_kgkg:
+'      Equilibrium loading in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'      Name of calculation approach for liquid density.
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium pressure in Pa.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_p_wTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_T_pwpsatRho_workingPair:
+' -----------------------------------
+'
+' Calculates equilibrium temperature T in K depending on equilibrium pressure
+' in Pa, equilibrium loading w in kg/kg, saturation pressure p_Sat in Pa and
+' density of adsorpt rho in kg/m³.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double w_kgkg:
+'      Equilibrium loading in kg/kg.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'      Name of calculation approach for liquid density.
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium temperature in K.
+'
+' Remarks:
+' --------
+'  Uses internal euqation of states to calculate vapour pressure, saturated
+'  liquid density of adsorpt, derivative of vapour pressure wrt. temperature
+'  and derivative of saturated liquid density of adsorpt wrt. temperature. If
+'  equation of states are not implemented for refrigerant, function returns -1
+'  and throws warning. If user want to use his own equation of states, this
+'  function cannot be used and determination of root to calculate T must
+'  be implemented by user.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_T_pwpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal w_kgkg As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+ 
+
+'
+' direct_ads_dw_dp_pTpsatRho_workingPair:
+' ---------------------------------------
+'
+' Calculates derivative of equilibrium loading dw_dp with respect to pressure
+' in kg/kg/Pa depending on equilibrium pressure p in Pa, equilibrium
+' temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt
+' rho in kg/m³.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium loading wrt. pressure in kg/kg/Pa.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_dw_dp_pTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_dw_dT_pTpsatRho_workingPair:
+' ---------------------------------------
+'
+' Calculates derivative of equilibrium loading dw_dp with respect to
+' temperature in kg/kg/K depending on equilibrium pressure p in Pa, equilibrium
+' temperature T in K, saturation pressure p_Sat in Pa, density of adsorpt
+' rho in kg/m³, derivative of saturation pressure with respect to temperature
+' dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+' temperature drho_dT in kg/m³/K.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'  double dp_sat_dT_PaK:
+'      Derivative of saturation pressure wrt. temperature in Pa/K.
+'  double drho_dT_kgm3K:
+'      Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium loading wrt. temperature in kg/kg/K.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_dw_dT_pTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal dp_sat_dT_PaK As Double, ByVal drho_dT_kgm3K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_dp_dw_wTpsatRho_workingPair:
+' ---------------------------------------
+'
+' Calculates derivative of equilibrium pressure p with respect to loading
+' w in kgPa/kg depending on equilibrium loading w in kg/kg, equilibrium
+' temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt
+' rho in kg/m³.
+'
+' Parameters:
+' -----------
+'  double w_kgkg:
+'      Equilibrium loading in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'      Name of calculation approach for liquid density.
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_dp_dw_wTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_dp_dT_wTpsatRho_workingPair:
+' ---------------------------------------
+'
+' Calculates derivative of equilibrium pressure p with respect to temperature
+' T in kg/kg/K depending on equilibrium loading w in kg/kg, equilibrium
+' temperature T in K, saturation pressure p_Sat in Pa and density of adsorpt
+' rho in kg/m³, derivative of saturation pressure with respect to temperature
+' dp_sat_dT in Pa/K and derivative of density of adsorpt with respect to
+' temperature drho_dT in kg/m³/K.
+'
+' Parameters:
+' -----------
+'  double w_kgkg:
+'      Equilibrium loading in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'  double dp_sat_dT_PaK:
+'      Derivative of saturation pressure wrt. temperature in Pa/K.
+'  double drho_dT_kgm3K:
+'      Derivative of density of adsorpt wrt. temperature in kg/m³/K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'      Name of calculation approach for liquid density.
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_dp_dT_wTpsatRho_workingPair Lib "libsorpPropLib.dll" _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal dp_sat_dT_PaK As Double, ByVal drho_dT_kgm3K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_ads_piStar_pyxgTpsatRhoM_workingPair:
+' --------------------------------------------
+'
+' Calculates reduced spreading pressure in kg/mol depending on equilibrium
+' pressure p in Pa, molar fraction of refrigerant in vapour phase in mol/mol,
+' molar fraction of refrigerant in adsorbed phase in mol/mol, activity
+' coefficient of refrigerant in adsorbed phase, equilibrium temperature T in K,
+' saturation pressure p_Sat in Pa and density of adsorpt rho in kg/m³ and molar
+' mass of refrigerant M in kg/mol. The reduced spreading pressure is defined as
+' follows:
+'
+'  piStar = A * pi / (R * T * m_sorbent) = 1 / M *
+'      Integral_0^p0{w(p,T) / p * dp}
+'
+'  where p0 = p_total*y / (gamma*x)
+'
+' Parameters:
+' -----------
+'  double p_total_Pa:
+'      Total pressure of vapour phase in Pa.
+'  double y_molmol:
+'      Molar fraction of refrigerant in vapour phase in mol/mol.
+'  double x_molmol:
+'      Molar fraction of refrigerant in adsorbed phase in mol/mol.
+'  double gamma:
+'      Activity coefficent of refrigerant in adsorbed phase.
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double p_sat_Pa:
+'      Saturation pressure in Pa.
+'  double rho_l_kgm3:
+'      Saturated liquid density of adsorpt in kg/m³.
+'  double M_kgmol:
+'      Molar mass of refrigerant M in kg/mol.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'      Name of calculation approach for liquid density.
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium pressure wrt. loading in Pakg/kg.
+'
+' History:
+' --------
+'  03/02/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_ads_piStar_pyxgTpsatRhoM_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_total_Pa As Double, ByVal y_molmol As Double, ByVal x_molmol As Double, ByVal gamma As Double, _
+ ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, ByVal M_kgmol As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
 '''''''''''''''''''''''''''''''''''
 '''''''''''''''''''''''''''''''''''
+
 
 '
 ' direct_ref_p_sat_T_workingPair:
@@ -1180,6 +1712,156 @@ Function ws_direct_ads_dA_dW_WRho _
         path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
         
 End Function
+
+' ws_direct_ads_w_pTpsatRho
+'
+Function ws_direct_ads_w_pTpsatRho _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_w_pTpsatRho = direct_ads_w_pTpsatRho_workingPair(p_Pa, T_K, p_sat_Pa, rho_l_kgm3, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_p_wTpsatRho
+'
+Function ws_direct_ads_p_wTpsatRho _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_p_wTpsatRho = direct_ads_p_wTpsatRho_workingPair(w_kgkg, T_K, p_sat_Pa, rho_l_kgm3, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_T_pwpsatRho
+'
+Function ws_direct_ads_T_pwpsatRho _
+(ByVal p_Pa As Double, ByVal w_kgkg As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_T_pwpsatRho = direct_ads_T_pwpsatRho_workingPair(p_Pa, w_kgkg, p_sat_Pa, rho_l_kgm3, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_dw_dp_pTpsatRho
+'
+Function ws_direct_ads_dw_dp_pTpsatRho _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_dw_dp_pTpsatRho = direct_ads_dw_dp_pTpsatRho_workingPair(p_Pa, T_K, p_sat_Pa, rho_l_kgm3, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_dw_dT_pTpsatRho
+'
+Function ws_direct_ads_dw_dT_pTpsatRho _
+(ByVal p_Pa As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal dp_sat_dT_PaK As Double, ByVal drho_dT_kgm3K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_dw_dT_pTpsatRho = direct_ads_dw_dT_pTpsatRho_workingPair(p_Pa, T_K, p_sat_Pa, rho_l_kgm3, _
+        dp_sat_dT_PaK, drho_dT_kgm3K, path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_dp_dw_wTpsatRho
+'
+Function ws_direct_ads_dp_dw_wTpsatRho _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_dp_dw_wTpsatRho = direct_ads_dp_dw_wTpsatRho_workingPair(w_kgkg, T_K, p_sat_Pa, rho_l_kgm3, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_dp_dT_wTpsatRho
+'
+Function ws_direct_ads_dp_dT_wTpsatRho _
+(ByVal w_kgkg As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, ByVal rho_l_kgm3 As Double, _
+ ByVal dp_sat_dT_PaK As Double, ByVal drho_dT_kgm3K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_dp_dT_wTpsatRho = direct_ads_dp_dT_wTpsatRho_workingPair(w_kgkg, T_K, p_sat_Pa, rho_l_kgm3, _
+        dp_sat_dT_PaK, drho_dT_kgm3K, path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_ads_piStar_pyxgTpsatRhoM
+'
+Function ws_direct_ads_piStar_pyxgTpsatRhoM _
+(ByVal p_total_Pa As Double, ByVal y_molmol As Double, ByVal x_molmol As Double, _
+ ByVal gamma As Double, ByVal T_K As Double, ByVal p_sat_Pa As Double, _
+ ByVal rho_l_kgm3 As Double, ByVal M_kgmol As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_ads_piStar_pyxgTpsatRhoM = direct_ads_piStar_pyxgTpsatRhoM_workingPair(p_total_Pa, y_molmol, x_molmol, _
+        gamma, T_K, p_sat_Pa, rho_l_kgm3, M_kgmol, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+        
 
 ''''''''''''''''''''''''''''''''''''''''
 
