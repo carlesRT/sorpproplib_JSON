@@ -1267,6 +1267,395 @@ Private Declare PtrSafe Function direct_ads_piStar_pyxgTpsatRhoM_workingPair Lib
  ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
 
 
+'
+' direct_abs_X_pT_workingPair:
+' ----------------------------
+'
+' Calculates equilibrium concentration X in kg/kg depending on equilibrium
+' pressure p in Pa and equilibrium temperature T in K.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium concentration in kg/kg.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_X_pT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_p_XT_workingPair:
+' ----------------------------
+'
+' Calculates equilibrium pressure p in Pa depending on equilibrium
+' concentration X in kg/kg and equilibrium temperature T in K.
+'
+' Parameters:
+' -----------
+'  double X_kgkg:
+'      Equilibrium concentration in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium pressure in Pa.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_p_XT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_T_pX_workingPair:
+' ----------------------------
+'
+' Calculates equilibrium temperature in K depending on equilibrium pressure p
+' in Pa and equilibrium concentration X in kg/kg.
+'
+' Parameters:
+' -----------
+'  double X_kgkg:
+'      Equilibrium concentration in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium temperature in K.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_T_pX_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_dX_dp_pT_workingPair:
+' --------------------------------
+'
+' Calculates derivative of equilibrium concentration X with respect to pressure
+' p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium
+' temperature T in K.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium concentration wrt. pressure in kg/kg/Pa.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_dX_dp_pT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_dX_dT_pT_workingPair:
+' --------------------------------
+'
+' Calculates derivative of equilibrium concentration X with respect to
+' temperature T in kg/kg/K depending on equilibrium pressure p in Pa and
+' equilibrium temperature T in K.
+'
+' Parameters:
+' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium concentration wrt. temperature in kg/kg/K.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_dX_dT_pT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_dp_dX_XT_workingPair:
+' --------------------------------
+'
+' Calculates derivative of equilibrium pressure p with respect to concentration
+' w in kgPa/kg depending on equilibrium concentration X in kg/kg and
+' equilibrium temperature T in K.
+'
+' Parameters:
+' -----------
+'  double X_kgkg:
+'      Equilibrium concentration in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium pressure wrt. concentration in Pakg/kg.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_dp_dX_XT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_dp_dT_XT_workingPair:
+' --------------------------------
+'
+' Calculates derivative of equilibrium pressure p with respect to temperature
+' T in kg/kg/K depending on equilibrium concentration X in kg/kg and
+' equilibrium temperature T in K.
+'
+' Parameters:
+' -----------
+'  double X_kgkg:
+'      Equilibrium concentration in kg/kg.
+'  double T_K:
+'      Equilibrium temperature in K.
+'
+'  string path_db:
+'      Path to database.
+'  string wp_as:
+'      Name of sorbent.
+'  string wp_st:
+'      Name of sub-type of sorbent.
+'  string wp_rf:
+'      Name of refrigerant.
+'  string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Derivative of equilibrium pressure wrt. temperature in Pa/K.
+'
+' History:
+' --------
+'  03/04/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_dp_dT_XT_workingPair Lib "libsorpPropLib.dll" _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
 '''''''''''''''''''''''''''''''''''
 '''''''''''''''''''''''''''''''''''
 
@@ -1858,6 +2247,24 @@ Function ws_direct_ads_piStar_pyxgTpsatRhoM _
     
     ws_direct_ads_piStar_pyxgTpsatRhoM = direct_ads_piStar_pyxgTpsatRhoM_workingPair(p_total_Pa, y_molmol, x_molmol, _
         gamma, T_K, p_sat_Pa, rho_l_kgm3, M_kgmol, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_X_pT
+'
+Function ws_direct_abs_X_pT _
+(ByVal p_Pa As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_X_pT = direct_abs_X_pT_workingPair(p_Pa, T_K, _
         path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
         
 End Function
