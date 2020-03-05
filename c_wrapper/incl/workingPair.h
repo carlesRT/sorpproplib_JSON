@@ -3241,8 +3241,6 @@ DLL_API double direct_abs_p_Txv1v2_workingPair(double T_K, double x_molmol,
  *		Molar mixing volume in m³/mol.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
- * 	struct *WorkingPair:
- *		Pointer of WorkingPair-struct.
  *
  *	const char *path_db:
  *		Path to database.

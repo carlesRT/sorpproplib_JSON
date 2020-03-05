@@ -1370,7 +1370,7 @@ Private Declare PtrSafe Function direct_abs_X_pT_workingPair Lib "libsorpPropLib
 '      First implementation.
 '
 Private Declare PtrSafe Function direct_abs_p_XT_workingPair Lib "libsorpPropLib.dll" _
-(ByVal p_Pa As Double, ByVal T_K As Double, _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
  ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
  ByVal wp_iso As String, ByVal no_iso As Integer, _
  ByVal rf_psat As String, ByVal no_p_sat As Integer, _
@@ -1386,10 +1386,10 @@ Private Declare PtrSafe Function direct_abs_p_XT_workingPair Lib "libsorpPropLib
 '
 ' Parameters:
 ' -----------
+'  double p_Pa:
+'      Equilibrium pressure in Pa.
 '  double X_kgkg:
 '      Equilibrium concentration in kg/kg.
-'  double T_K:
-'      Equilibrium temperature in K.
 '
 '  string path_db:
 '      Path to database.
@@ -1425,7 +1425,7 @@ Private Declare PtrSafe Function direct_abs_p_XT_workingPair Lib "libsorpPropLib
 '      First implementation.
 '
 Private Declare PtrSafe Function direct_abs_T_pX_workingPair Lib "libsorpPropLib.dll" _
-(ByVal p_Pa As Double, ByVal T_K As Double, _
+(ByVal p_Pa As Double, ByVal X_kgkg As Double, _
  ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
  ByVal wp_iso As String, ByVal no_iso As Integer, _
  ByVal rf_psat As String, ByVal no_p_sat As Integer, _
@@ -1593,7 +1593,7 @@ Private Declare PtrSafe Function direct_abs_dX_dT_pT_workingPair Lib "libsorpPro
 '      First implementation.
 '
 Private Declare PtrSafe Function direct_abs_dp_dX_XT_workingPair Lib "libsorpPropLib.dll" _
-(ByVal p_Pa As Double, ByVal T_K As Double, _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
  ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
  ByVal wp_iso As String, ByVal no_iso As Integer, _
  ByVal rf_psat As String, ByVal no_p_sat As Integer, _
@@ -1649,15 +1649,269 @@ Private Declare PtrSafe Function direct_abs_dp_dX_XT_workingPair Lib "libsorpPro
 '      First implementation.
 '
 Private Declare PtrSafe Function direct_abs_dp_dT_XT_workingPair Lib "libsorpPropLib.dll" _
-(ByVal p_Pa As Double, ByVal T_K As Double, _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
  ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
  ByVal wp_iso As String, ByVal no_iso As Integer, _
  ByVal rf_psat As String, ByVal no_p_sat As Integer, _
  ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
 
 
-'''''''''''''''''''''''''''''''''''
-'''''''''''''''''''''''''''''''''''
+'
+' direct_abs_g_Txv1v2_workingPair:
+' --------------------------------
+'
+' Calculates activity coefficient of first component depending on temperature
+' T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
+' first component in m³/mol, and molar volume of second component in m³/mol.
+'
+' Parameters:
+' -----------
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double x_molmol:
+'      Equilibrium mole fraction in liquid phase in mol/mol.
+'  double v1_m3mol:
+'      Equilibrium molar volume of first component in m³/mol.
+'  double v2_m3mol:
+'      Equilibrium molar volume of second component in m³/mol.
+'
+'  const string path_db:
+'      Path to database.
+'  const string wp_as:
+'      Name of sorbent.
+'  const string wp_st:
+'      Name of sub-type of sorbent.
+'  const string wp_rf:
+'      Name of refrigerant.
+'  const string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  const string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  const string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Activity coefficient of first component.
+'
+' Remarks:
+' --------
+'  Molar volumes may are not required and ignored. When molar volumes are
+'  required, uses molar volumes stored in JSON file when input v1_m3mol or
+'  v2_m3mol is -1.
+'
+' History:
+' --------
+'  03/05/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_g_Txv1v2_workingPair Lib "libsorpPropLib.dll" _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_p_Txv1v2psat_workingPair:
+' ------------------------------------
+'
+' Calculates equilibrium pressure p_Pa in Pa of first component depending on
+' temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+' molar volume of first component in m³/mol, molar volume of second component
+' in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
+'
+' Parameters:
+' -----------
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double x_molmol:
+'      Equilibrium mole fraction in liquid phase in mol/mol.
+'  double v1_m3mol:
+'      Equilibrium molar volume of first component in m³/mol.
+'  double v2_m3mol:
+'      Equilibrium molar volume of second component in m³/mol.
+'
+'  const string path_db:
+'      Path to database.
+'  const string wp_as:
+'      Name of sorbent.
+'  const string wp_st:
+'      Name of sub-type of sorbent.
+'  const string wp_rf:
+'      Name of refrigerant.
+'  const string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  const string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  const string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium pressure p_Pa in Pa.
+'
+' Remarks:
+' --------
+'  Molar volumes may are not required and ignored. When molar volumes are
+'  required, uses molar volumes stored in JSON file when input v1_m3mol or
+'  v2_m3mol is -1.
+'
+' History:
+' --------
+'  03/05/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_p_Txv1v2psat_workingPair Lib "libsorpPropLib.dll" _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, ByVal p_sat_Pa As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_p_Txv1v2_workingPair:
+' --------------------------------
+'
+' Calculates equilibrium pressure p_Pa in Pa of first component depending on
+' temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+' molar volume of first component in m³/mol and molar volume of second component
+' in m³/mol.
+'
+' Parameters:
+' -----------
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double x_molmol:
+'      Equilibrium mole fraction in liquid phase in mol/mol.
+'  double v1_m3mol:
+'      Equilibrium molar volume of first component in m³/mol.
+'  double v2_m3mol:
+'      Equilibrium molar volume of second component in m³/mol.
+'
+'  const string path_db:
+'      Path to database.
+'  const string wp_as:
+'      Name of sorbent.
+'  const string wp_st:
+'      Name of sub-type of sorbent.
+'  const string wp_rf:
+'      Name of refrigerant.
+'  const string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  const string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  const string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium pressure p_Pa in Pa.
+'
+' Remarks:
+' --------
+'  Molar volumes may are not required and ignored. When molar volumes are
+'  required, uses molar volumes stored in JSON file when input v1_m3mol or
+'  v2_m3mol is -1.
+'
+' History:
+' --------
+'  03/05/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_p_Txv1v2_workingPair Lib "libsorpPropLib.dll" _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+
+
+'
+' direct_abs_p_Tvx_workingPair:
+' -----------------------------
+'
+' Calculates equilibrium pressure p_Pa in Pa of first component depending on
+' temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole
+' fraction in liquid phase x_molmol in mol/mol
+'
+' Parameters:
+' -----------
+'  double T_K:
+'      Equilibrium temperature in K.
+'  double v_m3mol:
+'      Molar mixing volume in m³/mol.
+'  double x_molmol:
+'      Equilibrium mole fraction in liquid phase in mol/mol.
+'
+'  const string path_db:
+'      Path to database.
+'  const string wp_as:
+'      Name of sorbent.
+'  const string wp_st:
+'      Name of sub-type of sorbent.
+'  const string wp_rf:
+'      Name of refrigerant.
+'  const string wp_iso:
+'      Name of isotherm.
+'  int no_iso:
+'      Number of isotherm (i.e. when more than one isotherm is available)
+'  const string rf_psat:
+'      Name of calculation approach for vapour pressure.
+'  int no_p_sat:
+'      Number of vapour pressure equation (i.e. when more than one equation is
+'      available)
+'  const string rf_rhol:
+'      Name of calculation approach for liquid density.
+'  int no_rhol:
+'      Number of liquid density equation (i.e. when more than one equation is
+'      available)
+'
+' Returns:
+' --------
+'  double:
+'      Equilibrium pressure p_Pa in Pa.
+'
+' History:
+' --------
+'  03/05/2020, by Mirko Engelpracht:
+'      First implementation.
+'
+Private Declare PtrSafe Function direct_abs_p_Tvx_workingPair Lib "libsorpPropLib.dll" _
+(ByVal T_K As Double, ByVal v_m3mol As Double, ByVal x_molmol As Double, _
+ ByVal path_db As String, ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
 
 
 '
@@ -2268,9 +2522,186 @@ Function ws_direct_abs_X_pT _
         path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
         
 End Function
-        
 
-''''''''''''''''''''''''''''''''''''''''
+' ws_direct_abs_p_XT
+'
+Function ws_direct_abs_p_XT _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_p_XT = direct_abs_p_XT_workingPair(X_kgkg, T_K, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_T_pX
+'
+Function ws_direct_abs_T_pX _
+(ByVal p_Pa As Double, ByVal X_kgkg As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_T_pX = direct_abs_T_pX_workingPair(p_Pa, X_kgkg, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_dX_dp_pT
+'
+Function ws_direct_abs_dX_dp_pT _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_dX_dp_pT = direct_abs_dX_dp_pT_workingPair(X_kgkg, T_K, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_dX_dT_pT
+'
+Function ws_direct_abs_dX_dT_pT _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_dX_dT_pT = direct_abs_dX_dT_pT_workingPair(X_kgkg, T_K, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_dp_dX_XT
+'
+Function ws_direct_abs_dp_dX_XT _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_dp_dX_XT = direct_abs_dp_dX_XT_workingPair(X_kgkg, T_K, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_dp_dT_XT
+'
+Function ws_direct_abs_dp_dT_XT _
+(ByVal X_kgkg As Double, ByVal T_K As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_dp_dT_XT = direct_abs_dp_dT_XT_workingPair(X_kgkg, T_K, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_g_Txv1v2
+'
+Function ws_direct_abs_g_Txv1v2 _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_g_Txv1v2 = direct_abs_g_Txv1v2_workingPair(T_K, x_molmol, v1_m3mol, v2_m3mol, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_p_Txv1v2psat
+'
+Function ws_direct_abs_p_Txv1v2psat _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, ByVal p_sat_Pa As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_p_Txv1v2psat = direct_abs_p_Txv1v2psat_workingPair(T_K, x_molmol, v1_m3mol, v2_m3mol, p_sat_Pa, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_p_Txv1v2
+'
+Function ws_direct_abs_p_Txv1v2 _
+(ByVal T_K As Double, ByVal x_molmol As Double, ByVal v1_m3mol As Double, ByVal v2_m3mol As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_p_Txv1v2 = direct_abs_p_Txv1v2_workingPair(T_K, x_molmol, v1_m3mol, v2_m3mol, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
+
+' ws_direct_abs_p_Tvx
+'
+Function ws_direct_abs_p_Tvx _
+(ByVal T_K As Double, ByVal v_m3mol As Double, ByVal x_molmol As Double, _
+ ByVal wp_as As String, ByVal wp_st As String, ByVal wp_rf As String, _
+ ByVal wp_iso As String, ByVal no_iso As Integer, _
+ ByVal rf_psat As String, ByVal no_p_sat As Integer, _
+ ByVal rf_rhol As String, ByVal no_rhol As Integer) As Double
+    ' Call function wrapper to access DLL function
+    '
+    Dim path_JSON As String
+    path_JSON = ThisWorkbook.Path & "\data\sorpproplib_ValidationCInterface.json"
+    
+    ws_direct_abs_p_Tvx = direct_abs_p_Tvx_workingPair(T_K, v_m3mol, x_molmol, _
+        path_JSON, wp_as, wp_st, wp_rf, wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol)
+        
+End Function
 
 ' ws_direct_ref_p_sat_T
 '
