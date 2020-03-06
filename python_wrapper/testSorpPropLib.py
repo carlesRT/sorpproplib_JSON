@@ -8,30 +8,36 @@ Created on Wed Feb 12 08:19:25 2020
 #
 # Import relevant libraries
 #
-from ctypes import c_double, c_char_p, c_wchar_p, cdll
+from ctypes import c_int, c_double, c_char_p, cdll
 
 #
 # Import DLL and set information about inputs and outputs of functions
 #
-basic_function_lib = cdll.LoadLibrary('64bit\libsorpPropLib.dll')
+basic_function_lib = cdll.LoadLibrary('data\\64bit\\libsorpPropLib.dll')
 
-basic_function_lib.direct_iso_w_pT_workingPair.restype = c_double
-basic_function_lib.direct_iso_w_pT_workingPair.argtypes = [c_double, c_double, c_char_p, c_char_p, c_char_p, c_char_p, c_char_p, c_char_p, c_char_p, c_char_p]
+basic_function_lib.direct_ads_w_pT_workingPair.restype = c_double
+basic_function_lib.direct_ads_w_pT_workingPair.argtypes = [c_double, c_double, c_char_p, c_char_p, c_char_p, c_char_p, c_char_p, c_int, c_char_p, c_int, c_char_p, c_int]
 
 
 #
 # Define parameters
 #
-path = b"D:\\Engelpracht\\04-C\\sorpproplib_JSON\\python_wrapper\\64bit\\sorpproplib_ValidationCInterface.json"
-ads =  b"carbon"
-x =  b"maxsorb-iii"
-KM =  b"r-134a"
-Iso =  b"dubinin-astakov"
-Pd =  b"EoS_vapourPressure"
-roh =  b"EoS_saturatedLiquidDensity"
-koef =  b"NoActivityCoefficients"
-
-
-p = c_double(1e5)
+p = c_double(5000)
 T = c_double(303.15)
-w = basic_function_lib.direct_iso_w_pT_workingPair(p, T, path, ads, x, KM, Iso, Pd, roh, koef)
+
+path_db = b"D:\\Engelpracht\\04-C\\sorpproplib_JSON\\python_wrapper\\data\\64bit\\sorpproplib.json"
+wp_as =  b"zeolite"
+wp_st =  b"5a"
+wp_rf =  b"water"
+wp_iso =  b"toth"
+no_iso = c_int(1)
+rf_psat =  b"EoS_vapourPressure"
+no_p_sat = c_int(1)
+rf_rhol =  b"EoS_saturatedLiquidDensity"
+no_rhol =  c_int(1)
+
+
+w = basic_function_lib.direct_ads_w_pT_workingPair(p, T, path_db, wp_as, wp_st,
+                                                   wp_rf, wp_iso, no_iso, 
+                                                   rf_psat, no_p_sat,
+                                                   rf_rhol, no_rhol)

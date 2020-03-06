@@ -20,32 +20,29 @@ path_coefficients = 'data\\JSON\\data_coefficients\\'
 path_experiments = 'data\\JSON\\data_experiments\\'
 path_json = 'data\\JSON\\'
 
-df_ref_wpair_columns = ['refrigerant', 'sorbent', 'sorbent-subtype', 'type']
+df_ref_wpair_columns = [ 'sorbent', 'refrigerant', 'sorbent-subtype', 'type']
+df_equation_columns = ['literature']
+df_prop_columns = ['prop-diameter-crystal', 'prop-diameter-pellet', 
+                   'prop-diameter-extrudate', 'prop-length-extrudate', 
+                   'props-porosity-pellet', 'props-density-bulk', 
+                   'props-density-pellet', 'props-density-solid']
+df_validity_columns = ['validity-pressure-min', 'validity-pressure-max',
+                      'validity-temperature-min', 'validity-temperature-max',
+                      'validity-loading-min', 'validity-loading-max']
+df_error_columns = ['error-are', 'error-rmse']
 
 dict_base_keys = ['k', 'v']
 dict_k_keys = ['_as_', '_rf_', '_st_', '_tp_']
 dict_v_keys = ['_ep_', '_ed_', '_r_', '_s_', '_t_']
-dict_equations_keys = ['_c_', '_e_', '_p_']
-
-df_equation_columns = ['literature', 'refrigerant', 'sorbent', 
-                       'sorbent-subtype', 'type',
-                       'prop-diameter-crystal', 'prop-diameter-pellet', 
-                   'prop-diameter-extrudate', 'prop-length-extrudate', 
-                   'props-porosity-pellet', 'props-density-bulk', 
-                   'props-density-pellet', 'props-density-solid',
-                   'validity-pressure-min', 'validity-pressure-max',
-                      'validity-temperature-min', 'validity-temperature-max',
-                      'validity-loading-min', 'validity-loading-max',
-                      'error-are', 'error-rmse']
-
-dict_prop_keys = ['prop-diameter-crystal', 'prop-diameter-pellet', 
-                   'prop-diameter-extrudate', 'prop-length-extrudate', 
-                   'props-porosity-pellet', 'props-density-bulk', 
-                   'props-density-pellet', 'props-density-solid']
-dict_validity_keys = ['validity-pressure-min', 'validity-pressure-max',
-                      'validity-temperature-min', 'validity-temperature-max',
-                      'validity-loading-min', 'validity-loading-max']
-dict_error_keys = ['error-are', 'error-rmse']
+dict_equations_keys = ['_c_', '_e_', '_pr_', '_va_', '_er_', '_p_']
+dict_prop_keys = ['diameter-crystal', 'diameter-pellet', 
+                   'diameter-extrudate', 'length-extrudate', 
+                   'porosity-pellet', 'density-bulk', 
+                   'density-pellet', 'density-solid']
+dict_validity_keys = ['pressure-min', 'pressure-max',
+                      'temperature-min', 'temperature-max',
+                      'loading-min', 'loading-max']
+dict_error_keys = ['are', 'rmse']
 
 
 #%% Load *.csv-files
@@ -60,8 +57,8 @@ files_coefficients = [file for file in listdir(path_coefficients)
 
 # 2.) Get all files that include experimental data
 #
-#files_experiments = [file for file in listdir(path_experiments)
-#    if isfile(join(path_experiments, file))]
+files_experiments = [file for file in listdir(path_experiments)
+    if isfile(join(path_experiments, file))]
 
 # Save all *.csv-files as pandas data frames into lists
 #
@@ -69,19 +66,21 @@ list_coefficients = []
 for _, val in enumerate(files_coefficients):
     tmp_df = pandas.read_csv(path_coefficients + val, 
                              sep = ';',
+                             encoding = 'utf_8',
                              keep_default_na = False)
     tmp_df = tmp_df.drop(0)
     tmp_df = tmp_df.reset_index(drop = True)
     list_coefficients.append(tmp_df)
 
 list_experiments = []
-#for _, val in enumerate(files_experiments):
-#    tmp_df = pandas.read_csv(path_coefficients + val, 
-#                             sep = ';',
-#                             keep_default_na = False)
-#    tmp_df = tmp_df.drop(0)
-#    tmp_df = tmp_df.reset_index(drop = True)
-#    list_experiments.append(tmp_df)
+for _, val in enumerate(files_experiments):
+    tmp_df = pandas.read_csv(path_experiments + val, 
+                             sep = ';',
+                             encoding = 'utf_8',
+                             keep_default_na = False)
+    tmp_df = tmp_df.drop(0)
+    tmp_df = tmp_df.reset_index(drop = True)
+    list_experiments.append(tmp_df)
 
 
 #%% Create JSON-file
@@ -129,8 +128,8 @@ list_dict_v = []
 for _, row in df_ref_wpair.iterrows():
     values = [[], 
               [], 
-              row[df_ref_wpair_columns[0]], 
               row[df_ref_wpair_columns[1]], 
+              row[df_ref_wpair_columns[0]], 
               row[df_ref_wpair_columns[2]]]
     list_dict_v.append(dict(zip(dict_v_keys, values)))
 
@@ -204,10 +203,60 @@ for ind_ref_wpair, _ in enumerate(list_dict_v):
             
             # Read coefficients and further information for *.csv-files
             #
+            #   1) Literature
+            #
             tmp_dict[dict_equations_keys[0]] = equ_set[df_equation_columns[0]]
+            
+            #   2) Name of equation
+            #
             tmp_dict[dict_equations_keys[1]] = name_equ.capitalize()
             
-            equ_set = equ_set.drop(df_equation_columns)
+            #   3) Further properties of sorbent
+            #          
+            tmp_dict_prop = equ_set[df_prop_columns]
+            tmp_name_par = tmp_dict_prop.index            
+            tmp_value = []
+            for ind in range(len(tmp_name_par)):
+                tmp_value.append(tmp_dict_prop[tmp_name_par[ind]])       
+                
+            tmp_dict[dict_equations_keys[2]] = dict(zip(dict_prop_keys, 
+                                                        tmp_value))         
+            
+            #   4) Valid range
+            #
+            tmp_dict_valid = equ_set[df_validity_columns]
+            tmp_name_par = tmp_dict_valid.index            
+            tmp_value = []
+            for ind in range(len(tmp_name_par)):
+                if tmp_dict_valid[tmp_name_par[ind]] == '':
+                    tmp_value.append(tmp_dict_valid[tmp_name_par[ind]])
+                else:
+                    tmp_value.append(float(tmp_dict_valid[tmp_name_par[ind]]))    
+                
+            tmp_dict[dict_equations_keys[3]] = dict(zip(dict_validity_keys, 
+                                                        tmp_value))     
+            
+            #   5) Error
+            #
+            tmp_dict_error = equ_set[df_error_columns]
+            tmp_name_par = tmp_dict_error.index            
+            tmp_value = []
+            for ind in range(len(tmp_name_par)):
+                if tmp_dict_error[tmp_name_par[ind]] == '':
+                    tmp_value.append(tmp_dict_error[tmp_name_par[ind]])
+                else:
+                    tmp_value.append(float(tmp_dict_error[tmp_name_par[ind]]))   
+            
+            tmp_dict[dict_equations_keys[4]] = dict(zip(dict_error_keys, 
+                                                        tmp_value))
+            
+            #   6) Coefficients
+            #
+            equ_set = equ_set.drop(df_ref_wpair_columns +
+                                   df_equation_columns +
+                                   df_prop_columns +
+                                   df_validity_columns +
+                                   df_error_columns)
             
             tmp_name_par = equ_set.index
             tmp_no_par = len(tmp_name_par)
@@ -216,9 +265,9 @@ for ind_ref_wpair, _ in enumerate(list_dict_v):
             tmp_value = []
             for ind in range(tmp_no_par):
                 tmp_name.append(tmp_name_par[ind])
-                tmp_value.append(equ_set[tmp_name_par[ind]])
+                tmp_value.append(float(equ_set[tmp_name_par[ind]]))
                 
-            tmp_dict[dict_equations_keys[2]] = dict(zip(tmp_name,tmp_value))
+            tmp_dict[dict_equations_keys[5]] = dict(zip(tmp_name,tmp_value))
                         
             # Update list that contains all sets of coefficients
             #
@@ -231,6 +280,34 @@ for ind_ref_wpair, _ in enumerate(list_dict_v):
     # Update dict 'v' by adding coefficients of equations
     #
     list_dict_v[ind_ref_wpair][dict_v_keys[0]] = tmp_dict_equ
+
+# g) Create dict '_ed_' to save experimental data:
+#
+#       - Create dict that contains names of all equations as keys and empty
+#         lists as attirbutes
+#       - Create list for all refrigerants and working pairs wither former
+#         created dict as attribute
+#       - For each refrigerant and working pair, count how often an equation
+#         occurs --> iterate over refrigerants and working pairs first and
+#         over equations second
+#       - For each equation, iterate over available sets of coefficients -->
+#         for each set of coefficient, save coefficients as dict
+#
+    
+df_exp_data = pandas.DataFrame(columns = df_ref_wpair_columns)
+
+for _, val in enumerate(list_experiments):
+    df_exp_data = df_exp_data.append(val[df_ref_wpair_columns], 
+                                       ignore_index = True)
+df_exp_data = df_exp_data.drop_duplicates()
+df_exp_data = df_exp_data.reset_index(drop = True)
+no_ref_wpair_exp_data = len(df_exp_data) + 1
+    
+    
+for ind_ref_wpair, _ in enumerate(list_dict_v):
+    tmp_list_exp_data = []
+    
+    print(list_dict_v[ind_ref_wpair]['_ed_'])
 
 # 6) Create base dict that containts dicts 'k' and 'v':
 #
