@@ -1,9 +1,9 @@
 [
     {
         "k": {
-            "_as_": "Propane ",
-            "_rf_": "MOF",
-            "_st_": "CuBTC",
+            "_as_": "propane ",
+            "_rf_": "mof",
+            "_st_": "cubtc",
             "_tp_": "ads"
         },
         "v": {
@@ -13,29 +13,29 @@
                         "_c_": "Lamia, N., et al., Adsorption of propane, propylene and isobutane on a metal\u2013organic framework: Molecular simulation and experiment. Chemical Engineering Science, 2009. 64(14): p. 3246-3259.",
                         "_e_": "Dss",
                         "_p_": {
-                            "YA": 273.24,
-                            "b0A": 0.07,
-                            "dHA": 28.7,
-                            "etaA": 0.82,
-                            "YB": 50.16,
-                            "b0B": 0.16,
-                            "dHB": 34.1,
-                            "etaB": 0.32
+                            "YA": "273.24",
+                            "b0A": "0.07",
+                            "dHA": "28.7",
+                            "etaA": "0.82",
+                            "YB": "50.16",
+                            "b0B": "0.16",
+                            "dHB": "34.1",
+                            "etaB": "0.32"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
-            "_s_": "MOF",
-            "_t_": "CuBTC"
+            "_r_": "propane ",
+            "_s_": "mof",
+            "_t_": "cubtc"
         }
     },
     {
         "k": {
-            "_as_": "Propylene ",
-            "_rf_": "MOF",
-            "_st_": "CuBTC",
+            "_as_": "propylene ",
+            "_rf_": "mof",
+            "_st_": "cubtc",
             "_tp_": "ads"
         },
         "v": {
@@ -45,29 +45,29 @@
                         "_c_": "Lamia, N., et al., Adsorption of propane, propylene and isobutane on a metal\u2013organic framework: Molecular simulation and experiment. Chemical Engineering Science, 2009. 64(14): p. 3246-3259.",
                         "_e_": "Dss",
                         "_p_": {
-                            "YA": 297.78,
-                            "b0A": 0.42,
-                            "dHA": 41.9,
-                            "etaA": 1.0,
-                            "YB": 51.24,
-                            "b0B": 0.06,
-                            "dHB": 47.0,
-                            "etaB": 0.8
+                            "YA": "297.78",
+                            "b0A": "0.42",
+                            "dHA": "41.9",
+                            "etaA": "1",
+                            "YB": "51.24",
+                            "b0B": "0.06",
+                            "dHB": "47",
+                            "etaB": "0.8"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propylene ",
-            "_s_": "MOF",
-            "_t_": "CuBTC"
+            "_r_": "propylene ",
+            "_s_": "mof",
+            "_t_": "cubtc"
         }
     },
     {
         "k": {
-            "_as_": "Isobutane",
-            "_rf_": "MOF",
-            "_st_": "CuBTC",
+            "_as_": "isobutane",
+            "_rf_": "mof",
+            "_st_": "cubtc",
             "_tp_": "ads"
         },
         "v": {
@@ -77,29 +77,29 @@
                         "_c_": "Lamia, N., et al., Adsorption of propane, propylene and isobutane on a metal\u2013organic framework: Molecular simulation and experiment. Chemical Engineering Science, 2009. 64(14): p. 3246-3259.",
                         "_e_": "Dss",
                         "_p_": {
-                            "YA": 296.96,
-                            "b0A": 0.82,
-                            "dHA": 37.9,
-                            "etaA": 0.55,
-                            "YB": 63.8,
-                            "b0B": 0.06,
-                            "dHB": 40.8,
-                            "etaB": 1.0
+                            "YA": "296.96",
+                            "b0A": "0.82",
+                            "dHA": "37.9",
+                            "etaA": "0.55",
+                            "YB": "63.8",
+                            "b0B": "0.06",
+                            "dHB": "40.8",
+                            "etaB": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Isobutane",
-            "_s_": "MOF",
-            "_t_": "CuBTC"
+            "_r_": "isobutane",
+            "_s_": "mof",
+            "_t_": "cubtc"
         }
     },
     {
         "k": {
-            "_as_": "CO2",
-            "_rf_": "Carbon",
-            "_st_": "ACF-20",
+            "_as_": "co2",
+            "_rf_": "carbon",
+            "_st_": "acf-20",
             "_tp_": "ads"
         },
         "v": {
@@ -109,25 +109,25 @@
                         "_c_": "Saha, B. B., Jribi, S., Koyama, S., & El-Sharkawy, I. I. (2011). Carbon dioxide adsorption isotherms on activated carbons. Journal of Chemical & Engineering Data,56(5), 1974-1981.",
                         "_e_": "Langmuir",
                         "_p_": {
-                            "Y0": 1220,
-                            "alpha": 0,
-                            "K0": 0.000221,
-                            "dH": 19.41
+                            "Y0": "1220",
+                            "alpha": "0",
+                            "K0": "2.21E-04",
+                            "dH": "19.41"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "CO2",
-            "_s_": "Carbon",
-            "_t_": "ACF-20"
+            "_r_": "co2",
+            "_s_": "carbon",
+            "_t_": "acf-20"
         }
     },
     {
         "k": {
-            "_as_": "CO2",
-            "_rf_": "Carbon",
-            "_st_": "Maxsorb-III",
+            "_as_": "co2",
+            "_rf_": "carbon",
+            "_st_": "maxsorb-iii",
             "_tp_": "ads"
         },
         "v": {
@@ -137,18 +137,33 @@
                         "_c_": "Saha, B. B., Jribi, S., Koyama, S., & El-Sharkawy, I. I. (2011). Carbon dioxide adsorption isotherms on activated carbons.Journal of Chemical & Engineering Data,56(5), 1974-1981.",
                         "_e_": "Langmuir",
                         "_p_": {
-                            "Y0": 2210,
-                            "alpha": 0,
-                            "K0": 0.000106,
-                            "dH": 20.56
+                            "Y0": "2210",
+                            "alpha": "0",
+                            "K0": "1.06E-04",
+                            "dH": "20.56"
+                        }
+                    }
+                ],
+                "toth": [
+                    {
+                        "_c_": "Saha, B.B., et al., Carbon dioxide adsorption isotherms on activated carbons. Journal of Chemical & Engineering Data, 2011. 56(5): p. 1974-1981.",
+                        "_e_": "Toth",
+                        "_p_": {
+                            "Y0": "3.06E+03",
+                            "b_0": "1.17E-01",
+                            "qstar_r": "2.45E+03",
+                            "n_0": "6.64E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "CO2",
-            "_s_": "Carbon",
-            "_t_": "Maxsorb-III"
+            "_r_": "co2",
+            "_s_": "carbon",
+            "_t_": "maxsorb-iii"
         }
     },
     {
@@ -165,13 +180,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 642.4,
-                            "b_0": 0.0676,
-                            "qstar_r": 5630.0,
-                            "n_0": 0.27,
-                            "c": -20.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "642.4",
+                            "b_0": "6.76E-02",
+                            "qstar_r": "5.63E+03",
+                            "n_0": "2.70E-01",
+                            "c": "-2.00E+01",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -196,13 +211,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 585.2,
-                            "b_0": 488.0,
-                            "qstar_r": 2990.0,
-                            "n_0": 0.0749,
-                            "c": 38.1,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "585.2",
+                            "b_0": "4.88E+02",
+                            "qstar_r": "2.99E+03",
+                            "n_0": "7.49E-02",
+                            "c": "3.81E+01",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -227,13 +242,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 655.6,
-                            "b_0": 0.516,
-                            "qstar_r": 2330.0,
-                            "n_0": -0.305,
-                            "c": 239.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "655.6",
+                            "b_0": "5.16E-01",
+                            "qstar_r": "2.33E+03",
+                            "n_0": "-3.05E-01",
+                            "c": "2.39E+02",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -248,7 +263,7 @@
         "k": {
             "_as_": "co2",
             "_rf_": "carbon",
-            "_st_": "ACF-A-20",
+            "_st_": "acf-a-20",
             "_tp_": "ads"
         },
         "v": {
@@ -258,13 +273,13 @@
                         "_c_": "Saha, B.B., et al., Carbon dioxide adsorption isotherms on activated carbons. Journal of Chemical & Engineering Data, 2011. 56(5): p. 1974-1981.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 1560.0,
-                            "b_0": 0.255,
-                            "qstar_r": 2310.0,
-                            "n_0": 0.696,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "1.56E+03",
+                            "b_0": "2.55E-01",
+                            "qstar_r": "2.31E+03",
+                            "n_0": "6.96E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -272,38 +287,7 @@
             "_ed_": [],
             "_r_": "co2",
             "_s_": "carbon",
-            "_t_": "ACF-A-20"
-        }
-    },
-    {
-        "k": {
-            "_as_": "co2",
-            "_rf_": "carbon",
-            "_st_": "AC-Maxsorb-III",
-            "_tp_": "ads"
-        },
-        "v": {
-            "_ep_": {
-                "toth": [
-                    {
-                        "_c_": "Saha, B.B., et al., Carbon dioxide adsorption isotherms on activated carbons. Journal of Chemical & Engineering Data, 2011. 56(5): p. 1974-1981.",
-                        "_e_": "Toth",
-                        "_p_": {
-                            "Y0": 3060.0,
-                            "b_0": 0.11699999999999999,
-                            "qstar_r": 2450.0,
-                            "n_0": 0.664,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
-                        }
-                    }
-                ]
-            },
-            "_ed_": [],
-            "_r_": "co2",
-            "_s_": "carbon",
-            "_t_": "AC-Maxsorb-III"
+            "_t_": "acf-a-20"
         }
     },
     {
@@ -320,13 +304,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 422.0,
-                            "b_0": 0.000471,
-                            "qstar_r": 9960.0,
-                            "n_0": 0.355,
-                            "c": -51.1,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "422",
+                            "b_0": "4.71E-04",
+                            "qstar_r": "9.96E+03",
+                            "n_0": "3.55E-01",
+                            "c": "-5.11E+01",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -351,13 +335,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 271.8,
-                            "b_0": 0.24100000000000002,
-                            "qstar_r": 6850.0,
-                            "n_0": 0.397,
-                            "c": -4.2,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "271.8",
+                            "b_0": "2.41E-01",
+                            "qstar_r": "6.85E+03",
+                            "n_0": "3.97E-01",
+                            "c": "-4.20E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -382,13 +366,13 @@
                         "_c_": "Wang, Y. and M.D. LeVan, Adsorption equilibrium of carbon dioxide and water vapor on zeolites 5A and 13X and silica gel: pure components. Journal of Chemical & Engineering Data, 2009. 54(10): p. 2839-2844.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 114000000.0,
-                            "b_0": 27.9,
-                            "qstar_r": 1090.0,
-                            "n_0": -0.00119,
-                            "c": 22.1,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "1.14E+08",
+                            "b_0": "2.79E+01",
+                            "qstar_r": "1.09E+03",
+                            "n_0": "-1.19E-03",
+                            "c": "2.21E+01",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -413,26 +397,26 @@
                         "_c_": "Da Silva, F.A. and A.E. Rodrigues, Adsorption equilibria and kinetics for propylene and propane over 13X and 4A zeolite pellets. Industrial & engineering chemistry research, 1999. 38(5): p. 2051-2057.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 113.0,
-                            "b_0": 0.35,
-                            "qstar_r": 5100.0,
-                            "n_0": 0.608,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "1.13E+02",
+                            "b_0": "3.50E-01",
+                            "qstar_r": "5.10E+03",
+                            "n_0": "6.08E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     },
                     {
                         "_c_": "Lamia, N., et al., Equilibrium and Fixed Bed Adsorption of 1-Butene, Propylene and Propane Over 13X Zeolite Pellets. Separation Science and Technology, 2008. 43(5): p. 1124-1156.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 109.0,
-                            "b_0": 0.25,
-                            "qstar_r": 5100.0,
-                            "n_0": 0.6579999999999999,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "1.09E+02",
+                            "b_0": "2.50E-01",
+                            "qstar_r": "5.10E+03",
+                            "n_0": "6.58E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -447,7 +431,7 @@
         "k": {
             "_as_": "propylene",
             "_rf_": "zeolite",
-            "_st_": "4A",
+            "_st_": "4a",
             "_tp_": "ads"
         },
         "v": {
@@ -457,13 +441,13 @@
                         "_c_": "Da Silva, F.A. and A.E. Rodrigues, Adsorption equilibria and kinetics for propylene and propane over 13X and 4A zeolite pellets. Industrial & engineering chemistry research, 1999. 38(5): p. 2051-2057.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 85.3,
-                            "b_0": 7.4,
-                            "qstar_r": 3600.0,
-                            "n_0": 0.6659999999999999,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "8.53E+01",
+                            "b_0": "7.40E+00",
+                            "qstar_r": "3.60E+03",
+                            "n_0": "6.66E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -471,14 +455,14 @@
             "_ed_": [],
             "_r_": "propylene",
             "_s_": "zeolite",
-            "_t_": "4A"
+            "_t_": "4a"
         }
     },
     {
         "k": {
             "_as_": "propylene",
             "_rf_": "zeolite",
-            "_st_": "5A crystal",
+            "_st_": "5a crystal",
             "_tp_": "ads"
         },
         "v": {
@@ -488,13 +472,13 @@
                         "_c_": "Grande, C.A., C. Gigola, and A.E. Rodrigues, Adsorption of propane and propylene in pellets and crystals of 5A zeolite. Industrial & engineering chemistry research, 2002. 41(1): p. 85-92.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 169.0,
-                            "b_0": 13300.0,
-                            "qstar_r": 1680.0,
-                            "n_0": 0.4,
-                            "c": 0.0,
-                            "m": 2.5,
-                            "r": 1
+                            "Y0": "1.69E+02",
+                            "b_0": "1.33E+04",
+                            "qstar_r": "1.68E+03",
+                            "n_0": "4.00E-01",
+                            "c": "0.00E+00",
+                            "m": "2.5",
+                            "r": "1"
                         }
                     }
                 ]
@@ -502,14 +486,14 @@
             "_ed_": [],
             "_r_": "propylene",
             "_s_": "zeolite",
-            "_t_": "5A crystal"
+            "_t_": "5a crystal"
         }
     },
     {
         "k": {
             "_as_": "propylene",
             "_rf_": "zeolite",
-            "_st_": "5A pellets",
+            "_st_": "5a pellets",
             "_tp_": "ads"
         },
         "v": {
@@ -519,13 +503,13 @@
                         "_c_": "Grande, C.A., C. Gigola, and A.E. Rodrigues, Adsorption of propane and propylene in pellets and crystals of 5A zeolite. Industrial & engineering chemistry research, 2002. 41(1): p. 85-92.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 123.0,
-                            "b_0": 20200.0,
-                            "qstar_r": 1610.0,
-                            "n_0": 0.36,
-                            "c": 0.0,
-                            "m": 2.78,
-                            "r": 1
+                            "Y0": "1.23E+02",
+                            "b_0": "2.02E+04",
+                            "qstar_r": "1.61E+03",
+                            "n_0": "3.60E-01",
+                            "c": "0.00E+00",
+                            "m": "2.78",
+                            "r": "1"
                         }
                     }
                 ]
@@ -533,7 +517,7 @@
             "_ed_": [],
             "_r_": "propylene",
             "_s_": "zeolite",
-            "_t_": "5A pellets"
+            "_t_": "5a pellets"
         }
     },
     {
@@ -550,13 +534,13 @@
                         "_c_": "Grande, C.A., et al., Adsorption of propane and propylene onto carbon molecular sieve. Carbon, 2003. 41(13): p. 2533-2545.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 80.9,
-                            "b_0": 13200.0,
-                            "qstar_r": 1730.0,
-                            "n_0": 0.325,
-                            "c": 0.0,
-                            "m": 3.08,
-                            "r": 1
+                            "Y0": "8.09E+01",
+                            "b_0": "1.32E+04",
+                            "qstar_r": "1.73E+03",
+                            "n_0": "3.25E-01",
+                            "c": "0.00E+00",
+                            "m": "3.08",
+                            "r": "1"
                         }
                     }
                 ]
@@ -569,9 +553,9 @@
     },
     {
         "k": {
-            "_as_": "Propane ",
-            "_rf_": "Zeolite",
-            "_st_": "13X",
+            "_as_": "propane ",
+            "_rf_": "zeolite",
+            "_st_": "13x",
             "_tp_": "ads"
         },
         "v": {
@@ -581,41 +565,41 @@
                         "_c_": "Da Silva, F.A. and A.E. Rodrigues, Adsorption equilibria and kinetics for propylene and propane over 13X and 4A zeolite pellets. Industrial & engineering chemistry research, 1999. 38(5): p. 2051-2057.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 118.0,
-                            "b_0": 0.35,
-                            "qstar_r": 4300.0,
-                            "n_0": 0.58,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "1.18E+02",
+                            "b_0": "3.50E-01",
+                            "qstar_r": "4.30E+03",
+                            "n_0": "5.80E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     },
                     {
                         "_c_": "Lamia, N., et al., Equilibrium and Fixed Bed Adsorption of 1-Butene, Propylene and Propane Over 13X Zeolite Pellets. Separation Science and Technology, 2008. 43(5): p. 1124-1156.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 96.8,
-                            "b_0": 0.25,
-                            "qstar_r": 4440.0,
-                            "n_0": 0.892,
-                            "c": 0.0,
-                            "m": 1.12,
-                            "r": 1
+                            "Y0": "9.68E+01",
+                            "b_0": "2.50E-01",
+                            "qstar_r": "4.44E+03",
+                            "n_0": "8.92E-01",
+                            "c": "0.00E+00",
+                            "m": "1.12",
+                            "r": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
-            "_s_": "Zeolite",
-            "_t_": "13X"
+            "_r_": "propane ",
+            "_s_": "zeolite",
+            "_t_": "13x"
         }
     },
     {
         "k": {
-            "_as_": "Propane ",
-            "_rf_": "Zeolite",
-            "_st_": "4A",
+            "_as_": "propane ",
+            "_rf_": "zeolite",
+            "_st_": "4a",
             "_tp_": "ads"
         },
         "v": {
@@ -625,28 +609,28 @@
                         "_c_": "Da Silva, F.A. and A.E. Rodrigues, Adsorption equilibria and kinetics for propylene and propane over 13X and 4A zeolite pellets. Industrial & engineering chemistry research, 1999. 38(5): p. 2051-2057.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 89.3,
-                            "b_0": 600.0,
-                            "qstar_r": 0.0,
-                            "n_0": 1.0,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "8.93E+01",
+                            "b_0": "6.00E+02",
+                            "qstar_r": "0.00E+00",
+                            "n_0": "1.00E+00",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
-            "_s_": "Zeolite",
-            "_t_": "4A"
+            "_r_": "propane ",
+            "_s_": "zeolite",
+            "_t_": "4a"
         }
     },
     {
         "k": {
-            "_as_": "Propane ",
-            "_rf_": "Zeolite",
-            "_st_": "5A-crystal",
+            "_as_": "propane ",
+            "_rf_": "zeolite",
+            "_st_": "5a crystal",
             "_tp_": "ads"
         },
         "v": {
@@ -656,28 +640,28 @@
                         "_c_": "Grande, C.A., C. Gigola, and A.E. Rodrigues, Adsorption of propane and propylene in pellets and crystals of 5A zeolite. Industrial & engineering chemistry research, 2002. 41(1): p. 85-92.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 160.0,
-                            "b_0": 4300.0,
-                            "qstar_r": 1830.0,
-                            "n_0": 0.46,
-                            "c": 0.0,
-                            "m": 2.17,
-                            "r": 1
+                            "Y0": "1.60E+02",
+                            "b_0": "4.30E+03",
+                            "qstar_r": "1.83E+03",
+                            "n_0": "4.60E-01",
+                            "c": "0.00E+00",
+                            "m": "2.17",
+                            "r": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
-            "_s_": "Zeolite",
-            "_t_": "5A-crystal"
+            "_r_": "propane ",
+            "_s_": "zeolite",
+            "_t_": "5a crystal"
         }
     },
     {
         "k": {
-            "_as_": "Propane ",
-            "_rf_": "Zeolite",
-            "_st_": "5A-pellets",
+            "_as_": "propane ",
+            "_rf_": "zeolite",
+            "_st_": "5a pellets",
             "_tp_": "ads"
         },
         "v": {
@@ -687,26 +671,26 @@
                         "_c_": "Grande, C.A., C. Gigola, and A.E. Rodrigues, Adsorption of propane and propylene in pellets and crystals of 5A zeolite. Industrial & engineering chemistry research, 2002. 41(1): p. 85-92.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 115.0,
-                            "b_0": 494.0,
-                            "qstar_r": 2390.0,
-                            "n_0": 0.58,
-                            "c": 0.0,
-                            "m": 1.72,
-                            "r": 1
+                            "Y0": "1.15E+02",
+                            "b_0": "4.94E+02",
+                            "qstar_r": "2.39E+03",
+                            "n_0": "5.80E-01",
+                            "c": "0.00E+00",
+                            "m": "1.72",
+                            "r": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
-            "_s_": "Zeolite",
-            "_t_": "5A-pellets"
+            "_r_": "propane ",
+            "_s_": "zeolite",
+            "_t_": "5a pellets"
         }
     },
     {
         "k": {
-            "_as_": "Propane ",
+            "_as_": "propane ",
             "_rf_": "carbon",
             "_st_": "molecularsieve",
             "_tp_": "ads"
@@ -718,28 +702,28 @@
                         "_c_": "Grande, C.A., et al., Adsorption of propane and propylene onto carbon molecular sieve. Carbon, 2003. 41(13): p. 2533-2545.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 77.3,
-                            "b_0": 18100.0,
-                            "qstar_r": 1380.0,
-                            "n_0": 0.35600000000000004,
-                            "c": 0.0,
-                            "m": 2.81,
-                            "r": 1
+                            "Y0": "7.73E+01",
+                            "b_0": "1.81E+04",
+                            "qstar_r": "1.38E+03",
+                            "n_0": "3.56E-01",
+                            "c": "0.00E+00",
+                            "m": "2.81",
+                            "r": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "Propane ",
+            "_r_": "propane ",
             "_s_": "carbon",
             "_t_": "molecularsieve"
         }
     },
     {
         "k": {
-            "_as_": "1-Butene",
-            "_rf_": "Zeolite",
-            "_st_": "13X",
+            "_as_": "1-butene",
+            "_rf_": "zeolite",
+            "_st_": "13x",
             "_tp_": "ads"
         },
         "v": {
@@ -749,28 +733,28 @@
                         "_c_": "Lamia, N., et al., Equilibrium and Fixed Bed Adsorption of 1-Butene, Propylene and Propane Over 13X Zeolite Pellets. Separation Science and Technology, 2008. 43(5): p. 1124-1156.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 122.0,
-                            "b_0": 0.25,
-                            "qstar_r": 6540.0,
-                            "n_0": 0.452,
-                            "c": 0.0,
-                            "m": 2.21,
-                            "r": 1
+                            "Y0": "1.22E+02",
+                            "b_0": "2.50E-01",
+                            "qstar_r": "6.54E+03",
+                            "n_0": "4.52E-01",
+                            "c": "0.00E+00",
+                            "m": "2.21",
+                            "r": "1"
                         }
                     }
                 ]
             },
             "_ed_": [],
-            "_r_": "1-Butene",
-            "_s_": "Zeolite",
-            "_t_": "13X"
+            "_r_": "1-butene",
+            "_s_": "zeolite",
+            "_t_": "13x"
         }
     },
     {
         "k": {
             "_as_": "HFO-1234ze(E)",
             "_rf_": "carbon",
-            "_st_": "AC-Maxsorb-III",
+            "_st_": "maxsorb-iii",
             "_tp_": "ads"
         },
         "v": {
@@ -780,13 +764,13 @@
                         "_c_": "Jribi, S., et al., Study on activated carbon/HFO-1234ze (E) based adsorption cooling cycle. Applied Thermal Engineering, 2013. 50(2): p. 1570-1575.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 3740.0,
-                            "b_0": 1.3,
-                            "qstar_r": 3690.0,
-                            "n_0": 0.295,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "3.74E+03",
+                            "b_0": "1.30E+00",
+                            "qstar_r": "3.69E+03",
+                            "n_0": "2.95E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -794,14 +778,14 @@
             "_ed_": [],
             "_r_": "HFO-1234ze(E)",
             "_s_": "carbon",
-            "_t_": "AC-Maxsorb-III"
+            "_t_": "maxsorb-iii"
         }
     },
     {
         "k": {
             "_as_": "R-134a",
             "_rf_": "carbon",
-            "_st_": "AC-Maxsorb-III",
+            "_st_": "maxsorb-iii",
             "_tp_": "ads"
         },
         "v": {
@@ -811,13 +795,13 @@
                         "_c_": "Jribi, S., et al., Study on activated carbon/HFO-1234ze (E) based adsorption cooling cycle. Applied Thermal Engineering, 2013. 50(2): p. 1570-1575.",
                         "_e_": "Toth",
                         "_p_": {
-                            "Y0": 4320.0,
-                            "b_0": 3.51,
-                            "qstar_r": 3030000.0,
-                            "n_0": 0.321,
-                            "c": 0.0,
-                            "m": 1.0,
-                            "r": -1
+                            "Y0": "4.32E+03",
+                            "b_0": "3.51E+00",
+                            "qstar_r": "3.03E+06",
+                            "n_0": "3.21E-01",
+                            "c": "0.00E+00",
+                            "m": "1",
+                            "r": "-1"
                         }
                     }
                 ]
@@ -825,7 +809,7 @@
             "_ed_": [],
             "_r_": "R-134a",
             "_s_": "carbon",
-            "_t_": "AC-Maxsorb-III"
+            "_t_": "maxsorb-iii"
         }
     }
 ]

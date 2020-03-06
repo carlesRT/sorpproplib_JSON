@@ -28,7 +28,24 @@ dict_v_keys = ['_ep_', '_ed_', '_r_', '_s_', '_t_']
 dict_equations_keys = ['_c_', '_e_', '_p_']
 
 df_equation_columns = ['literature', 'refrigerant', 'sorbent', 
-                       'sorbent-subtype', 'type']
+                       'sorbent-subtype', 'type',
+                       'prop-diameter-crystal', 'prop-diameter-pellet', 
+                   'prop-diameter-extrudate', 'prop-length-extrudate', 
+                   'props-porosity-pellet', 'props-density-bulk', 
+                   'props-density-pellet', 'props-density-solid',
+                   'validity-pressure-min', 'validity-pressure-max',
+                      'validity-temperature-min', 'validity-temperature-max',
+                      'validity-loading-min', 'validity-loading-max',
+                      'error-are', 'error-rmse']
+
+dict_prop_keys = ['prop-diameter-crystal', 'prop-diameter-pellet', 
+                   'prop-diameter-extrudate', 'prop-length-extrudate', 
+                   'props-porosity-pellet', 'props-density-bulk', 
+                   'props-density-pellet', 'props-density-solid']
+dict_validity_keys = ['validity-pressure-min', 'validity-pressure-max',
+                      'validity-temperature-min', 'validity-temperature-max',
+                      'validity-loading-min', 'validity-loading-max']
+dict_error_keys = ['error-are', 'error-rmse']
 
 
 #%% Load *.csv-files
@@ -50,15 +67,21 @@ files_coefficients = [file for file in listdir(path_coefficients)
 #
 list_coefficients = []
 for _, val in enumerate(files_coefficients):
-    list_coefficients.append(pandas.read_csv(path_coefficients + val, 
-                                             sep = ';',
-                                             keep_default_na = False))
+    tmp_df = pandas.read_csv(path_coefficients + val, 
+                             sep = ';',
+                             keep_default_na = False)
+    tmp_df = tmp_df.drop(0)
+    tmp_df = tmp_df.reset_index(drop = True)
+    list_coefficients.append(tmp_df)
 
 list_experiments = []
 #for _, val in enumerate(files_experiments):
-#    list_experiments.append(pandas.read_csv(path_experiments + val, 
-#                                            sep = ';',
-#                                            keep_default_na = False))
+#    tmp_df = pandas.read_csv(path_coefficients + val, 
+#                             sep = ';',
+#                             keep_default_na = False)
+#    tmp_df = tmp_df.drop(0)
+#    tmp_df = tmp_df.reset_index(drop = True)
+#    list_experiments.append(tmp_df)
 
 
 #%% Create JSON-file
