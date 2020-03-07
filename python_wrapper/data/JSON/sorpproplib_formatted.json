@@ -365,8 +365,8 @@
                     },
                     "_u_": {
                         "pressure-abs": "",
-                        "pressure-rel": "0.25",
-                        "temperature-abs": "0.3",
+                        "pressure-rel": 0.25,
+                        "temperature-abs": 0.3,
                         "temperature-rel": "",
                         "loading-abs": "",
                         "loading-rel": "",
