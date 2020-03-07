@@ -30,11 +30,23 @@ df_validity_columns = ['validity-pressure-min', 'validity-pressure-max',
                       'validity-temperature-min', 'validity-temperature-max',
                       'validity-loading-min', 'validity-loading-max']
 df_error_columns = ['error-are', 'error-rmse']
+df_measurement_columns = ['measurements-procedure', 'measurements-type']
+df_uncertainty_columns = ['uncertainty-pressure-abs', 
+                          'uncertainty-pressure-rel',
+                          'uncertainty-temperature-abs',
+                          'uncertainty-temperature-rel',
+                          'uncertainty-loading-abs',
+                          'uncertainty-loading-rel',
+                          'uncertainty-adsorptionPotential-abs',
+                          'uncertainty-adsorptionPotential-rel',
+                          'uncertainty-volumetricLoading-abs',
+                          'uncertainty-volumetricLoading-rel']
 
 dict_base_keys = ['k', 'v']
 dict_k_keys = ['_as_', '_rf_', '_st_', '_tp_']
 dict_v_keys = ['_ep_', '_ed_', '_r_', '_s_', '_t_']
 dict_equations_keys = ['_c_', '_e_', '_pr_', '_va_', '_er_', '_p_']
+dict_ed_keys = ['_c_', '_pr_', '_m_', '_u_', '_d_']
 dict_prop_keys = ['diameter-crystal', 'diameter-pellet', 
                    'diameter-extrudate', 'length-extrudate', 
                    'porosity-pellet', 'density-bulk', 
@@ -43,6 +55,11 @@ dict_validity_keys = ['pressure-min', 'pressure-max',
                       'temperature-min', 'temperature-max',
                       'loading-min', 'loading-max']
 dict_error_keys = ['are', 'rmse']
+dict_measurement_keys = ['procedure', 'type']
+dict_uncertainty_keys =['pressure-abs', 'pressure-rel', 'temperature-abs',
+                        'temperature-rel', 'loading-abs', 'loading-rel',
+                        'adsorptionPotential-abs', 'adsorptionPotential-rel',
+                        'volumetricLoading-abs', 'volumetricLoading-rel']
 
 
 #%% Load *.csv-files
@@ -307,8 +324,122 @@ no_ref_wpair_exp_data = len(df_exp_data) + 1
 for ind_ref_wpair, _ in enumerate(list_dict_v):
     tmp_list_exp_data = []
     
-    print(list_dict_v[ind_ref_wpair]['_ed_'])
-
+    # Check if experimental data exists for current working pair
+    # Thus save time and skip iterations that are not necessary
+    #
+    tmp_df_cur_ref_wpair = df_ref_wpair.loc[ind_ref_wpair, :]
+    tmp_cur_ref_wpair = tmp_df_cur_ref_wpair.tolist()
+    
+    tmp_df_Res = df_exp_data.loc[(df_exp_data[df_ref_wpair_columns[0]] == 
+                                  tmp_cur_ref_wpair[0]) &
+                                 (df_exp_data[df_ref_wpair_columns[1]] == 
+                                  tmp_cur_ref_wpair[1]) &
+                                 (df_exp_data[df_ref_wpair_columns[2]] == 
+                                  tmp_cur_ref_wpair[2]) &
+                                 (df_exp_data[df_ref_wpair_columns[3]] == 
+                                  tmp_cur_ref_wpair[3])]
+    
+    # Exists
+    #
+    if not tmp_df_Res.empty:
+        
+        for _, df_exp in enumerate(list_experiments):
+            tmp_df_exp = df_exp.loc[(df_exp[df_ref_wpair_columns[0]] == 
+                                     tmp_cur_ref_wpair[0]) &
+                                    (df_exp[df_ref_wpair_columns[1]] == 
+                                     tmp_cur_ref_wpair[1]) &
+                                    (df_exp[df_ref_wpair_columns[2]] == 
+                                     tmp_cur_ref_wpair[2]) &
+                                    (df_exp[df_ref_wpair_columns[3]] == 
+                                     tmp_cur_ref_wpair[3])]
+            
+            # Found experimental data set: Only exists within one data frame!
+            # Start to save data
+            #
+            if not tmp_df_exp.empty:
+                
+                # For each source saved
+                #
+                for _, exp_set in tmp_df_exp.iterrows():
+                
+                    # Dummy dict to save
+                    #
+                    tmp_list = [ [] for i in range(len(dict_ed_keys))]
+                    tmp_dict = dict(zip(dict_ed_keys, 
+                                        tmp_list))
+                    
+                    # 1) Source
+                    #
+                    tmp_dict[dict_ed_keys[0]] = exp_set[df_equation_columns[0]]
+                    
+                    # 2) Sorbent properties
+                    #
+                    tmp_series_prop = exp_set[df_prop_columns]
+                    tmp_name_par = tmp_series_prop.index            
+                    tmp_value = []
+                    for ind in range(len(tmp_name_par)):
+                        tmp_value.append(tmp_series_prop[tmp_name_par[ind]])       
+                        
+                    tmp_dict[dict_ed_keys[1]] = dict(zip(dict_prop_keys, 
+                                                         tmp_value))
+                    
+                    # 3) Measurement information
+                    #
+                    tmp_series_measure = exp_set[df_measurement_columns]
+                    tmp_name_par = tmp_series_measure.index      
+                    tmp_value = []
+                    for ind in range(len(tmp_name_par)):
+                        tmp_value.append(tmp_series_measure[tmp_name_par[ind]])   
+                        
+                    tmp_dict[dict_ed_keys[2]] = dict(zip(dict_measurement_keys, 
+                                                         tmp_value))
+                    
+                    # 4) Uncertainty information
+                    #
+                    tmp_series_unc = exp_set[df_uncertainty_columns]
+                    tmp_name_par = tmp_series_unc.index      
+                    tmp_value = []
+                    for ind in range(len(tmp_name_par)):
+                        tmp_value.append(tmp_series_unc[tmp_name_par[ind]])  
+                        
+                    tmp_dict[dict_ed_keys[3]] = dict(zip(dict_uncertainty_keys, 
+                                                         tmp_value))
+                    
+                    # 5) Measurements
+                    #
+                    mea_set = exp_set.drop(df_ref_wpair_columns +
+                                           df_equation_columns +
+                                           df_prop_columns +
+                                           df_measurement_columns +
+                                           df_uncertainty_columns)
+                    
+                    tmp_name_par = mea_set.index
+                    tmp_no_par = len(tmp_name_par)
+                    
+                    tmp_value = []
+                    for ind in range(tmp_no_par):                        
+                        # Split string and ensure empty lists
+                        #
+                        tmp_data = mea_set[tmp_name_par[ind]].split(',')
+                        if tmp_data[0] == '':
+                            tmp_data = []
+                        else:
+                            tmp_data = [float(item) for item in tmp_data]
+                        
+                        
+                        tmp_value.append(tmp_data)
+                        
+                    tmp_dict[dict_ed_keys[4]] = dict(zip(tmp_name_par.to_list(),
+                                                         tmp_value))
+                                
+                    # Updata list
+                    #
+                    tmp_list_exp_data.append(tmp_dict)  
+            
+                # Updata v dict
+                #
+                list_dict_v[ind_ref_wpair]['_ed_'] = tmp_list_exp_data
+            
 # 6) Create base dict that containts dicts 'k' and 'v':
 #
 #       - Iterate over all refrigerants and working pairs

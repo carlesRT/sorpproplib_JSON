@@ -25,7 +25,7 @@ basic_function_lib.direct_ads_w_pT_workingPair.argtypes = [c_double, c_double, c
 p = c_double(5000)
 T = c_double(303.15)
 
-path_db = b"D:\\Engelpracht\\04-C\\sorpproplib_JSON\\python_wrapper\\data\\64bit\\sorpproplib.json"
+path_db = b"C:\\Users\\Mirko\\OneDrive\\Dokumente\\Git_Projects\\sorpproplib_JSON\\python_wrapper\\data\\64bit\\sorpproplib.json"
 wp_as =  b"zeolite"
 wp_st =  b"5a"
 wp_rf =  b"water"
