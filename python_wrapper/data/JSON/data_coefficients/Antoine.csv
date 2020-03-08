@@ -1,0 +1,14 @@
+refrigerant;sorbent;sorbent-subtype;type;prop-diameter-crystal;prop-diameter-pore;prop-diameter-pellet;prop-diameter-extrudate;prop-length-extrudate;prop-area-surface;prop-volume-pore;props-porosity-pellet;props-density-bulk;props-density-pellet;props-density-solid;a;b;c;validity-pressure-min;validity-pressure-max;validity-temperature-min;validity-temperature-max;validity-loading-min;validity-loading-max;error-are;error-rmse;literature
+-;-;-;-;in mm;in mm;in mm;in mm;in mm;in m2/g;in cm3/g;in -;in kg/m3;in kg/m3;in kg/m3;in -;in -;in -;in Pa;in Pa;in K;in K;in kg/kg;in kg/kg;in %;in kg/kg;-
+co2;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;6.8122800000E+00;1.3016790000E+03;-3.4940000000E+00;;;;;;;;;To be added.
+co2;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;8.8122800000E+00;-1.3016790000E+00;-3.4940000000E+00;;;;;;;;;To be added.
+methane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;3.9895000000E+00;4.4302800000E+02;-4.9000000000E-01;;;;;;;;;To be added.
+methane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;5.9895000000E+00;-4.3302800000E-01;-4.9000000000E-01;;;;;;;;;To be added.
+water;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;4.6543000000E+00;1.4352640000E+03;-6.4848000000E+01;;;;;;;;;To be added.
+isobutane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;4.3281000000E+00;1.1321080000E+03;9.1800000000E-01;;;;;;;;;To be added.
+isobutane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;6.3281000000E+00;-1.1321080000E+00;9.1800000000E-01;;;;;;;;;To be added.
+propane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;4.5367800000E+00;1.1493600000E+03;2.4906000000E+01;;;;;;;;;To be added.
+propane;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;6.5367800000E+00;-1.1493600000E+00;2.4906000000E+01;;;;;;;;;To be added.
+propylene;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;3.9748800000E+00;7.9581900000E+02;-2.4884000000E+01;;;;;;;;;To be added.
+propylene;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;5.9748800000E+00;-7.9581900000E-01;-2.4884000000E+01;;;;;;;;;To be added.
+benzene;dum_sorb;dum_subtype;refrig;;;;;;;;;;;;4.7258300000E+00;1.6606520000E+03;-1.4610000000E+00;;;;;;;;;To be added.

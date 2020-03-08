@@ -22,6 +22,7 @@ from pandas import read_csv, DataFrame, Series
 PATH_COEFFICIENTS = 'data\\JSON\\data_coefficients\\'
 PATH_EXPERIMENTS = 'data\\JSON\\data_experiments\\'
 PATH_JSON = 'data\\JSON\\'
+PATH_PYTHON = 'data\\64bit\\'
 
 
 # Definition of names of columns of data frames
@@ -30,10 +31,12 @@ PATH_JSON = 'data\\JSON\\'
 #
 DF_REF_WPAIR_COLUMNS = ['sorbent', 'refrigerant', 'sorbent-subtype', 'type']
 DF_EQUATION_COLUMNS = ['literature']
-DF_PROP_COLUMNS = ['prop-diameter-crystal', 'prop-diameter-pellet',
-                   'prop-diameter-extrudate', 'prop-length-extrudate',
-                   'props-porosity-pellet', 'props-density-bulk',
-                   'props-density-pellet', 'props-density-solid']
+DF_PROP_COLUMNS = ['prop-diameter-crystal', 'prop-diameter-pore',
+                   'prop-diameter-pellet', 'prop-diameter-extrudate',
+                   'prop-length-extrudate', 'prop-area-surface',
+                   'prop-volume-pore', 'props-porosity-pellet',
+                   'props-density-bulk', 'props-density-pellet',
+                   'props-density-solid']
 
 # b) Names that are required for entries of coefficient
 #
@@ -69,9 +72,9 @@ DICT_V_KEYS = ['_ep_', '_ed_', '_r_', '_s_', '_t_']
 DICT_EQUATIONS_KEYS = ['_c_', '_e_', '_pr_', '_va_', '_er_', '_p_']
 DICT_ED_KEYS = ['_c_', '_pr_', '_m_', '_u_', '_d_']
 
-DICT_PROP_KEYS = ['diameter-crystal', 'diameter-pellet',
-                  'diameter-extrudate', 'length-extrudate',
-                  'porosity-pellet', 'density-bulk',
+DICT_PROP_KEYS = ['diameter-crystal', 'diameter-pore', 'diameter-pellet',
+                  'diameter-extrudate', 'length-extrudate', 'area-surface',
+                  'volume-pore', 'porosity-pellet', 'density-bulk',
                   'density-pellet', 'density-solid']
 
 # b) Keys that are required for entries of coefficients
@@ -532,7 +535,7 @@ def create_json_file(path_coef: str, path_exp: str) -> Union[list, str, str]:
                         #
                         dict_exp_data[DICT_ED_KEYS[3]] = \
                             create_dict(exp_set[DF_UNCERTAINTY_COLUMNS],
-                                        DICT_UNCERTAINTY_KEYS, True)
+                                        DICT_UNCERTAINTY_KEYS)
 
                         # Update dummy dict: Measurements
                         #
@@ -579,6 +582,10 @@ def create_json_file(path_coef: str, path_exp: str) -> Union[list, str, str]:
         json_compact = dumps(list_json)
         text_file.write(json_compact)
 
+    with open(join(PATH_PYTHON, "sorpproplib.json"), "w") as text_file:
+        json_compact = dumps(list_json)
+        text_file.write(json_compact)
+
     with open(join(PATH_JSON, "sorpproplib_formatted.json"), "w") as text_file:
         json_formatted = dumps(list_json, indent=4)
         text_file.write(json_formatted)
@@ -591,4 +598,5 @@ def create_json_file(path_coef: str, path_exp: str) -> Union[list, str, str]:
 #%% Execute main-function
 #
 if __name__ == "__main__":
-    create_json_file(PATH_COEFFICIENTS, PATH_EXPERIMENTS)
+    json_file, str_comp, str_form = \
+        create_json_file(PATH_COEFFICIENTS, PATH_EXPERIMENTS)
