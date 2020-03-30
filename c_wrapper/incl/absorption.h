@@ -13,7 +13,7 @@
  * -----------
  *
  * Contains function pointers for functions of a specific isotherm type.
- * Function pointers are set during initialisation of Absorption-struct.
+ * Function pointers are set during initialization of Absorption-struct.
  *
  * General attributes:
  * -------------------
@@ -23,76 +23,111 @@
  * Attributes for conventional isotherms:
  * --------------------------------------
  * 	function con_X_pT:
- *		Returns equilibrium concentration X in kg/kg depending on equilibrium 
+ *		Returns equilibrium concentration X in kg/kg depending on equilibrium
  * 		pressure p in Pa, and equilibrium temperature T in K.
  * 	function con_p_XT:
- *		Returns equilibrium pressure p in Pa depending on equilibrium 
+ *		Returns equilibrium pressure p in Pa depending on equilibrium
  * 		concentration X in kg/kg, and equilibrium temperature T in K.
  * 	function con_T_pX:
  *		Returns equilibrium temperature in K depending on equilibrium pressure p
  * 		in Pa, and equilibrium concentration X in kg/kg.
  *
  * 	function con_dX_dp_pT:
- *		Returns derivative of equilibrium concentration X with respect to  
- * 		pressure p in kg/kg/Pa depending on equilibrium pressure p in Pa and  
+ *		Returns derivative of equilibrium concentration X with respect to
+ * 		pressure p in kg/kg/Pa depending on equilibrium pressure p in Pa and
  * 		equilibrium temperature T in K.
  * 	function con_dX_dT_pT:
- *		Returns derivative of equilibrium concentration X with respect to 
- * 		temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ *		Returns derivative of equilibrium concentration X with respect to
+ * 		temperature T in kg/kg/K depending on equilibrium pressure p in Pa and
  * 		equilibrium temperature T in K.
  * 	function con_dp_dX_XT:
- *		Returns derivative of equilibrium pressure p with respect to  
- * 		concentration X in kgPa/kg depending on equilibrium concentration X in  
+ *		Returns derivative of equilibrium pressure p with respect to
+ * 		concentration X in kgPa/kg depending on equilibrium concentration X in
  * 		kg/kg and  equilibrium temperature T in K.
  * 	function con_dp_dT_XT:
- *		Returns derivative of equilibrium pressure p with respect to temperature 
- * 		T in Pa/K depending on equilibrium concentration X in kg/kg and  
+ *		Returns derivative of equilibrium pressure p with respect to temperature
+ * 		T in Pa/K depending on equilibrium concentration X in kg/kg and
  * 		equilibrium temperature T in K.
  *
  * Attributes for isotherms based on activity coefficients:
  * --------------------------------------------------------
  * 	function act_g_Tx_wo_v:
- *		Returns activity coefficient of first component depending on temperature 
+ *		Returns activity coefficient of first component depending on temperature
  * 		T_K in K, and mole fraction in liquid phase x_molmol in mol/mol.
  * 	function act_g_Txv1v2_w_v:
- *		Returns activity coefficient of first component depending on temperature 
+ *		Returns activity coefficient of first component depending on temperature
  * 		T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar
- *  	volume of first component in m³/mol, and molar volume of second 
+ *  	volume of first component in m³/mol, and molar volume of second
  *		component in m³/mol.
  * 	function act_p_Txpsat_wo_v:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
  * 		and saturation pressure of first component p_sat_Pa in Pa.
  * 	function act_p_Txv1v2psat_w_v:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		molar  volume of first component in m³/mol, molar volume of second 
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * 		molar  volume of first component in m³/mol, molar volume of second
  *		component in m³/mol, and saturation pressure of first component p_sat_Pa
  *		in Pa.
+ * 	function act_p_Txv1v2gpsat_w_v_gf:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * 		molar  volume of first component in m³/mol, molar volume of second
+ *		component in m³/mol, function pointer for activity coefficient of first
+ *		component, and saturation pressure of first component p_sat_Pa in Pa.
  * 	function act_p_Txgpsat_w_gf:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		function pointer for activity coefficient of first component, and 
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * 		function pointer for activity coefficient of first component, and
  *		saturation pressure of first component p_sat_Pa in Pa.
+ * 	function act_x_pTpsat_wo_v:
+ *		Returns mole fraction of first component in liquid phase x_molmol in
+ * 		mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * 		temperature T_K in K, and saturation pressure of first component
+ *		p_sat_Pa in Pa.
+ * 	function act_x_pTv1v2psat_w_v:
+ *		Returns mole fraction of first component in liquid phase x_molmol in
+ * 		mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * 		temperature T_K in K, molar volume of first component in m³/mol, molar
+ *		volume of second component in m³/mol, and saturation pressure of first
+ *		component p_sat_Pa in Pa.
+ * 	function act_x_pTv1v2gpsat_w_v_gf:
+ *		Returns mole fraction of first component in liquid phase x_molmol in
+ * 		mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * 		temperature T_K in K, molar volume of first component in m³/mol, molar
+ *		volume of second component in m³/mol, function pointer for activity
+ *		coefficient of first component, and saturation pressure of first
+ *		component p_sat_Pa in Pa.
+ * 	function act_x_pTgpsat_w_gf:
+ *		Returns mole fraction of first component in liquid phase x_molmol in
+ * 		mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * 		temperature T_K in K, function pointer for activity coefficient of first
+ *		component, and saturation pressure of first component p_sat_Pa in Pa.
  *
  * 	function act_g_Txv1v2:
- *		Returns activity coefficient of first component depending on temperature 
+ *		Returns activity coefficient of first component depending on temperature
  * 		T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar
  *  	volume of first component in m³/mol, molar volume of second component
  *		in m³/mol, and pointer to Absorption-struct.
  * 	function act_p_Txgv1v2psat:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * 		, molar volume of first component in m³/mol, molar volume of second 
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * 		,molar volume of first component in m³/mol, molar volume of second
  *		component in m³/mol, saturation pressure of first component p_sat_Pa in
  *		Pa, and pointer to Absorption-struct.
+ * 	function act_x_pTgv1v2psat:
+ *		Returns mole fraction of first component in liquid phase x_molmol in
+ * 		mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * 		temperature T_K in K, molar volume of first component in m³/mol, molar
+ *		volume of second component in m³/mol, saturation pressure of first
+ *		component p_sat_Pa in Pa, and pointer to Absorption-struct.
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
- * 	function mix_p_Tvx:
- *		Returns equilibrium pressure p_Pa in Pa of first component depending on 
- * 		temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
- * 		fraction in liquid phase x_molmol in mol/mol
+ * 	function mix_p_Tx:
+ *		Returns equilibrium pressure p_Pa in Pa of first component depending on
+ * 		temperature T_K in K and mole fraction in liquid phase x_molmol in
+ *		mol/mol.
  *
  *
  * Remarks:
@@ -116,10 +151,10 @@ typedef struct Absorption Absorption;
  * newAbsorption:
  * --------------
  *
- * Initialisation function to create a new Absorption-struct. Therefore,
- * function checks first if enough memory available to allocate absorption 
- * struct and then set function pointers within the struct depending on the 
- * isotherm type that is given as input. If memory allocation fails, functions 
+ * Initialization function to create a new Absorption-struct. Therefore,
+ * function checks first if enough memory is available to allocate absorption
+ * struct and then sets function pointers within the struct depending on the
+ * isotherm type that is given as input. If memory allocation fails, functions
  * returns NULL and prints a warning.
  *
  * Parameters:
@@ -167,7 +202,7 @@ void delAbsorption(void *absorption);
  * act_g_Txv1v2_wo_v:
  * ------------------
  *
- * Calculates activity coefficient of first component depending on temperature 
+ * Calculates activity coefficient of first component depending on temperature
  * T_K in K and mole fraction in liquid phase x_molmol in mol/mol.
  *
  * Parameters:
@@ -204,13 +239,13 @@ void delAbsorption(void *absorption);
  */
 double act_g_Txv1v2_wo_v(double T_K, double x_molmol,
 	double v1_m3mol, double v2_m3mol, double isotherm_par[], void *absorption);
-	
-	
+
+
 /*
  * act_g_Txv1v2_w_v:
  * -----------------
  *
- * Calculates activity coefficient of first component depending on temperature 
+ * Calculates activity coefficient of first component depending on temperature
  * T_K in K, mole fraction in liquid phase x_molmol in mol/mol, molar volume of
  * first component in m³/mol, and molar volume of second component in m³/mol.
  *
@@ -254,7 +289,7 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  * act_p_Txgv1v2psat_wo_v:
  * -----------------------
  *
- * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
  * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, and
  * saturation pressure of first component p_sat_Pa in Pa.
  *
@@ -293,16 +328,16 @@ double act_g_Txv1v2_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
-	double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption);
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[],
+	void *absorption);
 
 
 /*
  * act_p_Txgv1v2psat_w_v:
  * ----------------------
  *
- * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
- * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
  * molar volume of first component in m³/mol, molar volume of second component
  * in m³/mol,and saturation pressure of first component p_sat_Pa in Pa.
  *
@@ -341,17 +376,18 @@ double act_p_Txgv1v2psat_wo_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
-	double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption);
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[],
+	void *absorption);
 
 
 /*
- * act_p_Txgv1v2psat_w_gf:
- * -----------------------
+ * act_p_Txgv1v2psat_w_v_gf:
+ * -------------------------
  *
- * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
- * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * saturation pressure of first component p_sat_Pa in Pa, and function pointer 
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * molar volume of first component in m³/mol, molar volume of second component,
+ * saturation pressure of first component p_sat_Pa in Pa, and function pointer
  * for activity coefficient of first component.
  *
  * Parameters:
@@ -380,7 +416,57 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  * Remarks:
  * --------
  *	Wrapper function is required to calculate activity coefficients that may
- *	need molar volumes. Here,  molar volumes are not required but a function 
+ *	need molar volumes. Here,  molar volumes are required. Moreover, a function
+ *  pointer is given internally to calculate the activity coefficient of the
+ *	first component.
+ *
+ * History:
+ * --------
+ *	03/25/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_p_Txgv1v2psat_w_v_gf(double T_K, double x_molmol,
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[],
+	void *absorption);
+
+
+/*
+ * act_p_Txgv1v2psat_w_gf:
+ * -----------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * saturation pressure of first component p_sat_Pa in Pa, and function pointer
+ * for activity coefficient of first component.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes. Here,  molar volumes are not required but a function
  *  pointer is given internally to calculate the activity coefficient of the
  *	first component.
  *
@@ -391,7 +477,202 @@ double act_p_Txgv1v2psat_w_v(double T_K, double x_molmol,
  *
  */
 double act_p_Txgv1v2psat_w_gf(double T_K, double x_molmol,
-	double v1_m3mol, double v2_m3mol, 
-	double p_sat_Pa, double isotherm_par[], void *absorption);
-	
+	double v1_m3mol, double v2_m3mol, double p_sat_Pa, double isotherm_par[],
+	void *absorption);
+
+
+/*
+ * act_x_pTgv1v2psat_wo_v:
+ * -----------------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, and saturation pressure of first component p_sat_Pa in
+ * Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure of first component in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction of first component in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes as inputs. Here, molar volumes are not required
+ *
+ * History:
+ * --------
+ *	03/26/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_x_pTgv1v2psat_wo_v(double p_Pa, double T_K, double v1_m3mol,
+	double v2_m3mol, double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * act_x_pTgv1v2psat_w_v:
+ * ----------------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, molar volume of first component in m³/mol, molar volume
+ * of second component in m³/mol,and saturation pressure of first component
+ * p_sat_Pa in Pa.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure of first component in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction of first component in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes as inputs. Here, molar volumes are required.
+ *
+ * History:
+ * --------
+ *	03/26/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_x_pTgv1v2psat_w_v(double p_Pa, double T_K, double v1_m3mol,
+	double v2_m3mol, double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * act_x_pTgv1v2psat_w_v_gf:
+ * -------------------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, molar volume of first component in m³/mol, molar volume
+ * of second component in m³/mol,and saturation pressure of first component
+ * p_sat_Pa in Pa, and function pointer for activity coefficient of first
+ * component.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure of first component in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction of first component in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes as inputs. Here, molar volumes are required. Moreover, a
+ *  function pointer is given internally to calculate the activity coefficient
+ * 	of the first component.
+ *
+ * History:
+ * --------
+ *	03/27/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_x_pTgv1v2psat_w_v_gf(double p_Pa, double T_K, double v1_m3mol,
+	double v2_m3mol, double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * act_x_pTgv1v2psat_w_gf:
+ * -----------------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, and saturation pressure of first component p_sat_Pa in
+ * Pa, and function pointer for activity coefficient of first component.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure of first component in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *	double p_sat_Pa:
+ *		Saturation pressure on Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of Wilson equation.
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction of first component in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	Wrapper function is required to calculate activity coefficients that may
+ *	need molar volumes as inputs. Here, molar volumes are not required. However,
+ *  a function pointer is given internally to calculate the activity coefficient
+ * 	of the first component.
+ *
+ * History:
+ * --------
+ *	03/27/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double act_x_pTgv1v2psat_w_gf(double p_Pa, double T_K, double v1_m3mol,
+	double v2_m3mol, double p_sat_Pa, double isotherm_par[], void *absorption);
+
 #endif

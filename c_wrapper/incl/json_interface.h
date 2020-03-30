@@ -33,7 +33,7 @@
  *
  * Remarks:
  * --------
- *	Currently, function uses subfunction "fread()" that does not work on all
+ *	Currently, function uses sub-function "fread()" that does not work on all
  *	platforms. Thus, "fread()" should be replaced by platform-independent
  *	functions as fscanf().
  *
@@ -50,7 +50,7 @@ char *json_read_file(const char *path);
  * json_parse_file:
  * ----------------
  *
- * Parses content of JSON-file and creates mallo-ed tree of JSON-structs that
+ * Parses content of JSON-file and creates malloc-ed tree of JSON-structs that
  * represents content of JSON-file.
  *
  * Parameters:
@@ -121,7 +121,7 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  * 	const char *equation:
  *		Name of equation.
  *	int no_equ:
- *		Numer of equation (i.e. when more than one equation is available)
+ *		ID of equation (i.e. when more than one equation is available)
  *	cJSON *json:
  *		Tree of JSON-structs that represent equations of a working pair.
  *

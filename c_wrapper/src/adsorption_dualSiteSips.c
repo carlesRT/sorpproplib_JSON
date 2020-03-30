@@ -45,7 +45,7 @@
  * 	isotherm_par[8]	-> T_0		-> in K
  *
  */
- 
+
 
 /*
  * adsorption_dualSiteSips_w_pT:
@@ -74,15 +74,15 @@
  *		First implementation.
  *
  */
-double adsorption_dualSiteSips_w_pT(double p_Pa, double T_K, 
+double adsorption_dualSiteSips_w_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
 	//
 	double b_A = isotherm_par[0] * exp(isotherm_par[2] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT * 
+	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-	
+
 	// Calculate loading
 	//
 	double w_A = isotherm_par[6] * pow((b_A * p_Pa), 1/isotherm_par[4]) /
@@ -92,8 +92,8 @@ double adsorption_dualSiteSips_w_pT(double p_Pa, double T_K,
 
 	return w_A + w_B;
 }
- 
- 
+
+
 /*
  * adsorption_dualSiteSips_p_wT:
  * -----------------------------
@@ -117,7 +117,7 @@ double adsorption_dualSiteSips_w_pT(double p_Pa, double T_K,
  *
  * Remarks:
  * --------
- *	Uses Newton-Raphson method for calculating equlibrium pressure.
+ *	Uses Newton-Raphson method for calculating equilibrium pressure.
  *
  * History:
  * --------
@@ -127,7 +127,7 @@ double adsorption_dualSiteSips_w_pT(double p_Pa, double T_K,
  */
 double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
 	double isotherm_par[]) {
-	// Initialise variables for using Newton-Raphson method
+	// Initialize variables for using Newton-Raphson method
 	//
 	double p_guess_Pa = 10000;
 	double w_guess_kgkg = w_kgkg;
@@ -140,9 +140,9 @@ double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
 	//
 	for (w_guess_kgkg = adsorption_dualSiteSips_w_pT(p_guess_Pa, T_K,
 		 isotherm_par);
-	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50; 
+	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
-		// Calculate loading depending on guess value for pressure and 
+		// Calculate loading depending on guess value for pressure and
 		// temperature
 		//
 		w_guess_kgkg = adsorption_dualSiteSips_w_pT(p_guess_Pa, T_K,
@@ -150,7 +150,7 @@ double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
 
 		// Calculate derivative of the loading with respect to pressure
 		//
-		dw_guess_dp_kgkgPa = 
+		dw_guess_dp_kgkgPa =
 			adsorption_dualSiteSips_dw_dp_pT(p_guess_Pa, T_K, isotherm_par);
 
 		// Update guess value for pressure
@@ -160,7 +160,7 @@ double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
 		p_guess_Pa = p_guess_Pa < 0 ? 1000 : p_guess_Pa;
 	}
 
-	// Return -1 when number of iteratoons exceeds 50
+	// Return -1 when number of iterations exceeds 50
 	//
 	return (counter_NRM == 50 ? -1 : p_guess_Pa);
 }
@@ -189,7 +189,7 @@ double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
  *
  * Remarks:
  * --------
- *	Uses Newton-Raphson method for calculating equlibrium temperature.
+ *	Uses Newton-Raphson method for calculating equilibrium temperature.
  *
  * History:
  * --------
@@ -199,9 +199,9 @@ double adsorption_dualSiteSips_p_wT(double w_kgkg, double T_K,
  */
 double adsorption_dualSiteSips_T_pw(double p_Pa, double w_kgkg,
 	double isotherm_par[]) {
-	// Initialise variables for using Newton-Raphson method
+	// Initialize variables for using Newton-Raphson method
 	//
-	double T_guess_K = 303.15;
+	double T_guess_K = 353.15;
 	double w_guess_kgkg = w_kgkg;
 	double dw_guess_dT_kgkgK = w_kgkg/T_guess_K;
 
@@ -212,15 +212,15 @@ double adsorption_dualSiteSips_T_pw(double p_Pa, double w_kgkg,
 	//
 	for (w_guess_kgkg = adsorption_dualSiteSips_w_pT(p_Pa, T_guess_K,
 		 isotherm_par);
-	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50; 
+	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
-		// Calculate loading depending on pressure and guess values for 
+		// Calculate loading depending on pressure and guess values for
 		// temperature
 		//
 		w_guess_kgkg = adsorption_dualSiteSips_w_pT(p_Pa, T_guess_K,
 			isotherm_par);
 
-		// Calculate the first derivative of the loading with respect to 
+		// Calculate the first derivative of the loading with respect to
 		// temperature
 		//
 		dw_guess_dT_kgkgK =
@@ -237,14 +237,14 @@ double adsorption_dualSiteSips_T_pw(double p_Pa, double w_kgkg,
 	//
 	return (counter_NRM == 50 ? -1 : T_guess_K);
 }
- 
+
 
 /*
  * adsorption_dualSiteSips_dw_dp_pT:
  * ---------------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to pressure p 
- * in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium loading w with respect to pressure p
+ * in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -267,15 +267,15 @@ double adsorption_dualSiteSips_T_pw(double p_Pa, double w_kgkg,
  *		First implementation.
  *
  */
-double adsorption_dualSiteSips_dw_dp_pT(double p_Pa, double T_K, 
+double adsorption_dualSiteSips_dw_dp_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
 	//
 	double b_A = isotherm_par[0] * exp(isotherm_par[2] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT * 
+	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-	
+
 	// Calculate derivative of loading wrt. to pressure
 	//
 	double dw_A_dp = isotherm_par[6] * pow((b_A * p_Pa), 1/isotherm_par[4]) /
@@ -294,7 +294,7 @@ double adsorption_dualSiteSips_dw_dp_pT(double p_Pa, double T_K,
  * ---------------------------------
  *
  * Calculates derivative of equilibrium loading w with respect to temperature T
- * in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
+ * in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -325,12 +325,12 @@ double adsorption_dualSiteSips_dw_dT_pT(double p_Pa, double T_K,
 		T_K) * (1 - T_K / isotherm_par[8]));
 	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-		
+
 	double db_A_dT = -(isotherm_par[2] / (IDEAL_GAS_CONSTANT * pow(T_K, 2))) *
 		b_A;
 	double db_B_dT = -(isotherm_par[3] / (IDEAL_GAS_CONSTANT * pow(T_K, 2))) *
 		b_B;
-	
+
 	// Calculate derivative of loading wrt. to temperature
 	//
 	double dw_A_db_A = isotherm_par[6] * pow((b_A * p_Pa), 1/isotherm_par[4]) /
@@ -339,17 +339,17 @@ double adsorption_dualSiteSips_dw_dT_pT(double p_Pa, double T_K,
 	double dw_B_db_B = isotherm_par[7] * pow((b_B * p_Pa), 1/isotherm_par[5]) /
 		(isotherm_par[5] * b_B * pow(1 + pow((b_B * p_Pa), 1/isotherm_par[5]),
 		2));
-	
+
 	return dw_A_db_A*db_A_dT + dw_B_db_B*db_B_dT;
 }
-	
-	
+
+
 /*
  * adsorption_dualSiteSips_dp_dw_wT:
  * ---------------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to loading 
- * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to loading
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -382,24 +382,24 @@ double adsorption_dualSiteSips_dp_dw_wT(double w_kgkg, double T_K,
 	// Calculate temperature-dependent variables
 	//
 	const double dw_kgkg = 0.00001;
-	
+
 	double p_plus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg + dw_kgkg, T_K,
 		isotherm_par);
 	double p_minus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg - dw_kgkg, T_K,
 		isotherm_par);
-	
+
 	// Calculate derivative of pressure wrt loading
 	//
 	return (p_plus_Pa - p_minus_Pa) / (2*dw_kgkg);
 }
- 
+
 
 /*
  * adsorption_dualSiteSips_dp_dT_wT:
  * ---------------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to temperature 
- * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to temperature
+ * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -432,28 +432,28 @@ double adsorption_dualSiteSips_dp_dT_wT(double w_kgkg, double T_K,
 	// Calculate temperature-dependent variables
 	//
 	const double dT_K = 0.001;
-	
+
 	double p_plus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg, T_K + dT_K,
 		isotherm_par);
 	double p_minus_Pa = adsorption_dualSiteSips_p_wT(w_kgkg, T_K - dT_K,
 		isotherm_par);
-	
+
 	// Calculate derivative of pressure wrt loading
 	//
 	return (p_plus_Pa - p_minus_Pa) / (2*dT_K);
 }
- 
+
 
 /*
  * adsorption_dualSiteSips_piStar_pyxgTM:
  * --------------------------------------
  *
  * Calculates reduced spreading pressure in kg/mol depending on total pressure
- * of vapour phase p_total in Pa, molar fraction of refrigerant in vapour phase
+ * of vapor phase p_total in Pa, molar fraction of refrigerant in vapor phase
  * y in mol/mol, molar fraction of refrigerant in adsorbed phase in mol/mol,
- * activity coefficent of refrigerant in adsorbed phase, equilibrium temperature
- * T in K and molar mass of refrigerant M in kg/mol. The reduced spreading 
- * pressure is defined as follows:
+ * activity coefficient of refrigerant in adsorbed phase, equilibrium
+ * temperature T in K and molar mass of refrigerant M in kg/mol. The reduced
+ * spreading pressure is defined as follows:
  *
  * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
  *		Integral_0^p0{w(p,T) / p * dp}
@@ -463,13 +463,13 @@ double adsorption_dualSiteSips_dp_dT_wT(double w_kgkg, double T_K,
  * Parameters:
  * -----------
  *	double p_total_Pa:
- *		Total pressure of vapour phase in Pa.
+ *		Total pressure of vapor phase in Pa.
  *	double y_molmol:
- *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *		Molar fraction of refrigerant in vapor phase in mol/mol.
  *	double x_molmol:
  *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
  *	double gamma:
- *		Activity coefficent of refrigerant in adsorbed phase.
+ *		Activity coefficient of refrigerant in adsorbed phase.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double M_kgmol:
@@ -493,21 +493,21 @@ double adsorption_dualSiteSips_dp_dT_wT(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-double adsorption_dualSiteSips_piStar_pyxgTM(double p_total_Pa, double y_molmol, 
+double adsorption_dualSiteSips_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double M_kgmol,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
 	//
 	double b_A = isotherm_par[0] * exp(isotherm_par[2] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT * 
+	double b_B = isotherm_par[1] * exp(isotherm_par[3] / (IDEAL_GAS_CONSTANT *
 		T_K) * (1 - T_K / isotherm_par[8]));
-		
+
 	// Calculate reduced spreading pressure
 	//
 	double p0_Pa = p_total_Pa * y_molmol / x_molmol / gamma;
-	
-	return 1/ M_kgmol * (isotherm_par[4] * isotherm_par[6] * log(1 + 
-		pow(b_A * p0_Pa, 1 / isotherm_par[4])) + isotherm_par[5] * 
+
+	return 1/ M_kgmol * (isotherm_par[4] * isotherm_par[6] * log(1 +
+		pow(b_A * p0_Pa, 1 / isotherm_par[4])) + isotherm_par[5] *
 		isotherm_par[7] * log(1 + pow(b_B * p0_Pa, 1 / isotherm_par[5])));
 }

@@ -15,7 +15,7 @@ int main() {
 	//	for Temperatures from 170 K to 455 K and Pressures up to 70 MPa. Journal
 	//	of Physical and Chemical Reference Data 1994. 23: p. 657-729.
 	//
-	double refrigerant_par[] = {374.18, 1, 1, 518.20, 0, 884.13, 
+	double refrigerant_par[] = {374.18, 1, 1, 518.20, 0, 884.13,
 		0.333333333333333, 485.84, 0.666666666666666, 193.29,
 		3.333333333333333, 0, 0, 0, 0, 0, 0};
 
@@ -23,8 +23,8 @@ int main() {
 	// Define some input values for calculating saturated liquid density
 	//
 	double T_K = 246.78;
-	
-	
+
+
 	// Calculate saturated liquid density
 	//
 	double rho_l_kgm3 = refrigerant_rho_l(T_K, refrigerant_par);
@@ -36,13 +36,15 @@ int main() {
 
 	// Print calculated values
 	//
-	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");		
-	printf("\n\nFor T = %f K, saturated liquid density results in rho_l = %f kg/m3.", 
-		T_K, rho_l_kgm3);
-	printf("\nFor T = %f K, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
-		T_K, drho_l_dT_kgm3K);
-	printf("\nFor T = %f K, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
-		T_K, drho_l_dT_kgm3K_num);
+	printf("\n\n##\n##\nSelected refrigerant: \"R-134a\".");
+	printf("\n\nFor T = %f K, saturated liquid density results in rho_l = %f "
+		"kg/m3.", T_K, rho_l_kgm3);
+	printf("\nFor T = %f K, analytical derivative of saturated liquid density "
+		"wrt. temperature results in drho_l_dT = %f kg/m3/K.", T_K,
+		drho_l_dT_kgm3K);
+	printf("\nFor T = %f K, numerical derivative of saturated liquid density "
+		"wrt. temperature results in drho_l_dT = %f kg/m3/K.", T_K,
+		drho_l_dT_kgm3K_num);
 
-    return EXIT_SUCCESS;	
+    return EXIT_SUCCESS;
 }

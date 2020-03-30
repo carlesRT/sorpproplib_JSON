@@ -27,32 +27,32 @@
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------
- *	isotherm_par[0]		-> Tcrit	-> in K
- *	isotherm_par[1]		-> rhocrit	-> in kg/m3
- *	isotherm_par[2]		-> flag		-> in -
- * 	isotherm_par[3] 	-> fac1		-> in -
- * 	isotherm_par[4] 	-> exp1		-> in -
- * 	isotherm_par[5] 	-> fac2		-> in -
- * 	isotherm_par[6] 	-> exp2		-> in -
- * 	isotherm_par[7] 	-> fac3		-> in -
- * 	isotherm_par[8] 	-> exp3		-> in -
- * 	isotherm_par[9] 	-> fac4		-> in -
- * 	isotherm_par[10] 	-> exp4		-> in -
- * 	isotherm_par[11] 	-> fac5		-> in -
- * 	isotherm_par[12] 	-> exp5		-> in -
- * 	isotherm_par[13] 	-> fac6		-> in -
- * 	isotherm_par[14] 	-> exp6		-> in -
- * 	isotherm_par[15] 	-> fac7		-> in -
- * 	isotherm_par[16] 	-> exp7		-> in -
+ *	refrigerant_par[0]	-> Tcrit	-> in K
+ *	refrigerant_par[1]	-> rhocrit	-> in kg/m3
+ *	refrigerant_par[2]	-> flag		-> in -
+ * 	refrigerant_par[3] 	-> fac1		-> in -
+ * 	refrigerant_par[4] 	-> exp1		-> in -
+ * 	refrigerant_par[5] 	-> fac2		-> in -
+ * 	refrigerant_par[6] 	-> exp2		-> in -
+ * 	refrigerant_par[7] 	-> fac3		-> in -
+ * 	refrigerant_par[8] 	-> exp3		-> in -
+ * 	refrigerant_par[9] 	-> fac4		-> in -
+ * 	refrigerant_par[10] -> exp4		-> in -
+ * 	refrigerant_par[11] -> fac5		-> in -
+ * 	refrigerant_par[12] -> exp5		-> in -
+ * 	refrigerant_par[13] -> fac6		-> in -
+ * 	refrigerant_par[14] -> exp6		-> in -
+ * 	refrigerant_par[15] -> fac7		-> in -
+ * 	refrigerant_par[16] -> exp7		-> in -
  *
  */
- 
+
 
 /*
  * refrigerant_rho_l:
  * ------------------
  *
- * Calculates saturated liquid density in kg/m³ depending on saturation 
+ * Calculates saturated liquid density in kg/m³ depending on saturation
  * temperature T in K.
  *
  * Parameters:
@@ -80,16 +80,16 @@ double refrigerant_rho_l(double T_K,
 	//
 	double theta = T_K/refrigerant_par[0];
 	double THETA = 1 - theta;
-	
-	double X = refrigerant_par[3] * pow(THETA, refrigerant_par[4]) + 
-		refrigerant_par[5] * pow(THETA, refrigerant_par[6]) + 
-		refrigerant_par[7] * pow(THETA, refrigerant_par[8]) + 
-		refrigerant_par[9] * pow(THETA, refrigerant_par[10]) + 
-		refrigerant_par[11] * pow(THETA, refrigerant_par[12]) + 
-		refrigerant_par[13] * pow(THETA, refrigerant_par[14]) + 
+
+	double X = refrigerant_par[3] * pow(THETA, refrigerant_par[4]) +
+		refrigerant_par[5] * pow(THETA, refrigerant_par[6]) +
+		refrigerant_par[7] * pow(THETA, refrigerant_par[8]) +
+		refrigerant_par[9] * pow(THETA, refrigerant_par[10]) +
+		refrigerant_par[11] * pow(THETA, refrigerant_par[12]) +
+		refrigerant_par[13] * pow(THETA, refrigerant_par[14]) +
 		refrigerant_par[15] * pow(THETA, refrigerant_par[16]);
- 
-	// Calculate vapour pressure
+
+	// Calculate saturated liquid density
 	//
 	return (refrigerant_par[2] < 0 ? exp(X)*refrigerant_par[1] :
 		X*refrigerant_par[1]);
@@ -127,35 +127,35 @@ double refrigerant_drho_l_dT(double T_K, double refrigerant_par[]) {
 	//
 	double theta = T_K/refrigerant_par[0];
 	double THETA = 1 - theta;
-	
-	double dX_dTHETA = refrigerant_par[4] * refrigerant_par[3] * 
-			pow(THETA, refrigerant_par[4] - 1) + 
-		refrigerant_par[6] * refrigerant_par[5] * 
-			pow(THETA, refrigerant_par[6] - 1) + 
-		refrigerant_par[8] * refrigerant_par[7] * 
-			pow(THETA, refrigerant_par[8] - 1) + 
-		refrigerant_par[10] * refrigerant_par[9] * 
-			pow(THETA, refrigerant_par[10] - 1) + 
-		refrigerant_par[12] * refrigerant_par[11] * 
-			pow(THETA, refrigerant_par[12] - 1) + 
-		refrigerant_par[14] * refrigerant_par[13] * 
-			pow(THETA, refrigerant_par[14] - 1) + 
-		refrigerant_par[16] * refrigerant_par[15] * 
+
+	double dX_dTHETA = refrigerant_par[4] * refrigerant_par[3] *
+			pow(THETA, refrigerant_par[4] - 1) +
+		refrigerant_par[6] * refrigerant_par[5] *
+			pow(THETA, refrigerant_par[6] - 1) +
+		refrigerant_par[8] * refrigerant_par[7] *
+			pow(THETA, refrigerant_par[8] - 1) +
+		refrigerant_par[10] * refrigerant_par[9] *
+			pow(THETA, refrigerant_par[10] - 1) +
+		refrigerant_par[12] * refrigerant_par[11] *
+			pow(THETA, refrigerant_par[12] - 1) +
+		refrigerant_par[14] * refrigerant_par[13] *
+			pow(THETA, refrigerant_par[14] - 1) +
+		refrigerant_par[16] * refrigerant_par[15] *
 			pow(THETA, refrigerant_par[16] - 1);
-	double dTHETA_dT = -1 / refrigerant_par[0];	
- 
-	// Calculate vapour pressure 
+	double dTHETA_dT = -1 / refrigerant_par[0];
+
+	// Calculate derivative of saturated liquid density wrt. temperature
 	//
 	if (refrigerant_par[2] < 0) {
 		// Calculate temperature-dependent coefficients
 		//
-		double rho_l = refrigerant_rho_l(T_K, refrigerant_par);		
+		double rho_l = refrigerant_rho_l(T_K, refrigerant_par);
 		return rho_l * dX_dTHETA * dTHETA_dT;
-		
+
 	} else {
 		// Calculate temperature-dependent coefficients
-		//	
+		//
 		return refrigerant_par[1]*dX_dTHETA*dTHETA_dT;
-			
+
 	}
 }

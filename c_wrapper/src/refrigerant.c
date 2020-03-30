@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include "refrigerant.h"
 #include "refrigerant_saturatedLiquidDensity.h"
-#include "refrigerant_vapourPressure.h"
-
+#include "refrigerant_vaporPressure.h"
 #include "structDefinitions.c"
 
 
@@ -26,8 +25,8 @@
  *
  * Parameters:
  * -----------
- * 	const char *vapourPressure_approach:
- *		Calculation approach for vapour pressure.
+ * 	const char *vaporPressure_approach:
+ *		Calculation approach for vapor pressure.
  * 	const char *saturatedLiquidDensity_approach:
  *		Calculation approach for saturated liquid density.
  *
@@ -35,7 +34,7 @@
  * --------
  *	struct *Refrigerant:
  *		Returns malloc-ed Refrigerant-struct that contains function pointers
- *		reffering to functions of refrigerant.
+ *		referring to functions of refrigerant.
  *
  * History:
  * --------
@@ -43,12 +42,12 @@
  *		First implementation.
  *
  */
-Refrigerant *newRefrigerant(const char *vapourPressure_approach,
+Refrigerant *newRefrigerant(const char *vaporPressure_approach,
 	const char *saturatedLiquidDensity_approach) {
     // Try to allocate memory for vector structure
 	//
     Refrigerant *retRefrigerant = (Refrigerant *) malloc(sizeof(Refrigerant));
-	
+
     if (retRefrigerant == NULL) {
 		// Not enough memory available for vector structure
 		//
@@ -57,50 +56,53 @@ Refrigerant *newRefrigerant(const char *vapourPressure_approach,
         return NULL;
 	}
 
-	// Initialise all function pointers with NULL because NULL is used by
-	// functions of Adsorption-struct and WorkingPair-struct to check if 
+	// Initialize all function pointers with NULL because NULL is used by
+	// functions of Adsorption-struct and WorkingPair-struct to check if
 	// refrigerant function is implemented or not
 	//
 	retRefrigerant->psat_T = NULL;
+	retRefrigerant->Tsat_p = NULL;
 	retRefrigerant->dpsat_dT = NULL;
 	retRefrigerant->rho_l_T = NULL;
-	retRefrigerant->drho_l_dT = NULL;	
-	
-	// Set function pointers for vapour pressure
+	retRefrigerant->drho_l_dT = NULL;
+
+	// Set function pointers for vapor pressure
 	//
-	if (strcmp(vapourPressure_approach, "EoS_vapourPressure") == 0) {
+	if (strcmp(vaporPressure_approach, "EoS_vaporPressure") == 0) {
 		retRefrigerant->psat_T = &refrigerant_p_sat;
+		retRefrigerant->Tsat_p = &refrigerant_T_sat;
 		retRefrigerant->dpsat_dT = &refrigerant_dp_sat_dT;
-		
-	} else if (strcmp(vapourPressure_approach, "Antoine") == 0) {
+
+	} else if (strcmp(vaporPressure_approach, "Antoine") == 0) {
 		retRefrigerant->psat_T = &refrigerant_p_sat_antoine;
+		retRefrigerant->Tsat_p = &refrigerant_T_sat_antoine;
 		retRefrigerant->dpsat_dT = &refrigerant_dp_sat_dT_antoine;
-		
+
 	} else {
 		// Calculation approach does not exist. Therefore, throw warning.
 		//
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen approach \"%s\" does not exist for vapour pressure.",
-			vapourPressure_approach);
-		
+		printf("\nChosen approach \"%s\" does not exist for vapor pressure.",
+			vaporPressure_approach);
+
 	}
-	
+
 	// Set function pointers for saturated liquid density
 	//
 	if (strcmp(saturatedLiquidDensity_approach,
 		"EoS_saturatedLiquidDensity") == 0) {
 		retRefrigerant->rho_l_T = &refrigerant_rho_l;
 		retRefrigerant->drho_l_dT = &refrigerant_drho_l_dT;
-		
+
 	} else {
 		// Calculation approach does not exist. Therefore, throw warning.
 		//
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nChosen approach \"%s\" does not exist for saturated liquid density.",
-			saturatedLiquidDensity_approach);
-		
+		printf("\nChosen approach \"%s\" does not exist for saturated liquid "
+			"density.", saturatedLiquidDensity_approach);
+
 	}
-	
+
 	// Return structure
 	//
 	return retRefrigerant;
@@ -128,7 +130,7 @@ void delRefrigerant(void *refrigerant) {
 	// Typecast void pointer given as input to pointer of Refrigerant-struct
 	//
 	Refrigerant *retRefrigerant = (Refrigerant *) refrigerant;
-	
+
     // Because of initialization function, refrigerant is NULL or fully built
 	//
     if (retRefrigerant != NULL) {

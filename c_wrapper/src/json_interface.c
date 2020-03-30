@@ -38,7 +38,7 @@
  *
  * Remarks:
  * --------
- *	Currently, function uses subfunction "fread()" that does not work on all
+ *	Currently, function uses sub-function "fread()" that does not work on all
  *	platforms. Thus, "fread()" should be replaced by platform-independent
  *	functions as fscanf().
  *
@@ -63,14 +63,14 @@ char *json_read_file(const char *path) {
 	FILE *fp;
 	char *data;
 	errno_t err;
-	
+
 	if ((err = fopen_s(&fp, path, "rb")) != 0) {
 		// Cannot open JSON-file
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("Cannot open file JSON-file.");
 		return NULL;
-			  
+
 	} else if (fseek(fp, 0, SEEK_END) != 0) {
 		// Cannot set JSON-file position
 		//
@@ -104,14 +104,14 @@ char *json_read_file(const char *path) {
 				data[size] = '\0';
 				fclose(fp);
 				return data;
-				
+
 			}
 
 		} else {
 			// Cannot allocate memory for data
 			//
 			printf("\n\n###########\n# Warning #\n###########");
-			printf("\nCannot allocate memory for content of JSON-file.");
+			printf("\nCannot allocate memory to save content of JSON-file.");
 			fclose(fp);
 			return NULL;
 		}
@@ -123,7 +123,7 @@ char *json_read_file(const char *path) {
  * json_parse_file:
  * ----------------
  *
- * Parses content of JSON-file and creates mallo-ed tree of JSON-structs that
+ * Parses content of JSON-file and creates malloc-ed tree of JSON-structs that
  * represents content of JSON-file.
  *
  * Parameters:
@@ -146,21 +146,21 @@ cJSON *json_parse_file(const char *content) {
 	// Parse content of JSON-file
 	//
 	cJSON*retJson = cJSON_Parse(content);
-	
+
     if (retJson == NULL) {
 		// Not enough memory available for tree of JSON-structs
 		//
 		printf("\n\n###########\n# Warning #\n###########");
 		printf("\nCannot allocate memory for tree of JSON-structs.");
-		
-        const char *error_ptr = cJSON_GetErrorPtr();		
+
+        const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
             fprintf(stderr, "Error before: %s\n\n", error_ptr);
         }
-		
+
 		return NULL;
     }
-	
+
 	// Return tree of JSON-structs
 	//
 	return retJson;
@@ -203,9 +203,9 @@ cJSON *json_parse_file(const char *content) {
 cJSON *json_search_equation(const char *wp_as, const char *wp_st,
 	const char *wp_rf, int *wp_tp, cJSON *json) {
 	// Search all entries (i.e. rows) of tree of JSON-structs for working pair
-	//	
+	//
     cJSON *json_workingPair = NULL;
-	
+
     cJSON_ArrayForEach(json_workingPair, json) {
 		// Performing operation for each element of JSON-struct json and save
 		// current element of json into json_workingPair
@@ -213,81 +213,87 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
 		// Read general information and equations of current element (i.e.
 		// working pair)
 		//
-        cJSON *json_workingPair_info = 
+        cJSON *json_workingPair_info =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair, "k");
-        cJSON *json_workingPair_equation = 
+        cJSON *json_workingPair_equation =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair, "v");
-		
+
 		// Check general information of current element (i.e. working pair) for
 		// the following:
 		// 1.) Name of sorbent (i.e. wp_as)
 		// 2.) Name of sub-type of sorbent (i.e. wp_st)
 		// 3.) Name of refrigerant (i.e. wp_rf)
 		//
-		cJSON *json_workingPair_as = 
+		cJSON *json_workingPair_as =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_as_");
-		cJSON *json_workingPair_st = 
+		cJSON *json_workingPair_st =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_st_");
-		cJSON *json_workingPair_rf = 
+		cJSON *json_workingPair_rf =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_rf_");
-		cJSON *json_workingPair_tp = 
+		cJSON *json_workingPair_tp =
 			cJSON_GetObjectItemCaseSensitive(json_workingPair_info, "_tp_");
-		
+
 		// Compare current working pair to working pair defined by input to
 		// identify correct element of JSON-struct json and thus to return
 		// correct JSON-struct containing equations of the selected working pair
 		//
 		// First, compare name of sorbent
 		//
-		if (cJSON_IsString(json_workingPair_as) && 
+		if (cJSON_IsString(json_workingPair_as) &&
 			(json_workingPair_as->valuestring != NULL)) {
-			if (strcmp(wp_as, json_workingPair_as->valuestring) == 0) {				
-				
+			if (strcmp(wp_as, json_workingPair_as->valuestring) == 0) {
+
 				// Second, compare sub-type of sorbent
 				//
 				if (cJSON_IsString(json_workingPair_st) &&
-					(json_workingPair_st->valuestring != NULL)) {					
-					if (strcmp(wp_st, json_workingPair_st->valuestring) == 0) {						
-					
+					(json_workingPair_st->valuestring != NULL)) {
+					if (strcmp(wp_st, json_workingPair_st->valuestring) == 0) {
+
 						// Third, compare refrigerant
 						//
 						if (cJSON_IsString(json_workingPair_rf) &&
-							(json_workingPair_rf->valuestring != NULL)) {					
-							if (strcmp(wp_rf, json_workingPair_rf->valuestring) == 0) {	
+							(json_workingPair_rf->valuestring != NULL)) {
+							if (strcmp(wp_rf, json_workingPair_rf->valuestring)
+								== 0) {
 								// Working pair defined by input is identified
-								// First, set equation type: 1 == ads, 2 == abs, 
+								// First, set equation type: 1 == ads, 2 == abs,
 								// 3 == refrig, -1 == else
-								//		
+								//
 								if (cJSON_IsString(json_workingPair_tp) &&
-									(json_workingPair_tp->valuestring != NULL)) {
-										if (strcmp("ads", 
-											json_workingPair_tp->valuestring) == 0) {	
+									(json_workingPair_tp->valuestring
+									!= NULL)) {
+										if (strcmp("ads",
+											json_workingPair_tp->valuestring)
+											== 0) {
 											*wp_tp =  1;
-										
-										} else if (strcmp("abs", 
-											json_workingPair_tp->valuestring) == 0) {	
+
+										} else if (strcmp("abs",
+											json_workingPair_tp->valuestring)
+											== 0) {
 											*wp_tp =  2;
-										
-										} else if (strcmp("refrig", 
-											json_workingPair_tp->valuestring) == 0) {	
+
+										} else if (strcmp("refrig",
+											json_workingPair_tp->valuestring)
+											== 0) {
 											*wp_tp =  3;
-										
+
 										} else {
 											*wp_tp =  -1;
-											
+
 										}
 								}
 								// Second, return cJSON-struct containing
 								// equation parameters
 								//
-								return cJSON_GetObjectItemCaseSensitive(json_workingPair_equation, "_ep_");
-								
+								return cJSON_GetObjectItemCaseSensitive(
+									json_workingPair_equation, "_ep_");
+
 							}
-						}	
+						}
 					}
 				}
 			}
-		}	
+		}
 	}
 
 	// Working pair defined by input does not exist in JSON-struct json
@@ -311,7 +317,7 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  * 	const char *equation:
  *		Name of equation.
  *	int no_equ:
- *		Numer of equation (i.e. when more than one equation is available)
+ *		ID of equation (i.e. when more than one equation is available)
  *	cJSON *json:
  *		Tree of JSON-structs that represent equations of a working pair.
  *
@@ -326,74 +332,74 @@ cJSON *json_search_equation(const char *wp_as, const char *wp_st,
  *		First implementation.
  *
  */
-double *json_search_parameters(const char *equation, int no_equ, cJSON *json) { 
+double *json_search_parameters(const char *equation, int no_equ, cJSON *json) {
 	// Get correct equation
 	//
     cJSON *json_equation = cJSON_GetObjectItemCaseSensitive(json, equation);
-	
+
     if (cJSON_IsArray(json_equation)) {
 		// Equation type exists and therefore correct ID is searched next
-		//		
+		//
 		cJSON *json_equation_ID = NULL;
 		int ID = 0;
-		
+
 		cJSON_ArrayForEach(json_equation_ID, json_equation) {
 			// Check for correct ID:
 			// If ID is correct, proceed with extracting coefficients
 			// Otherwise, get next item until ID is correct
 			//
 			ID++;
-			if (ID == no_equ) {				
-				// Search workingpair for equation type
-				//	
+			if (ID == no_equ) {
+				// Search working pair for equation type
+				//
 				if (cJSON_IsObject(json_equation_ID)) {
 					// Equation type exists and parameters are searched next
-					//		
+					//
 					cJSON *json_equation_parameters_single = NULL;
-					cJSON *json_equation_parameters = 
-						cJSON_GetObjectItemCaseSensitive(json_equation_ID, 
+					cJSON *json_equation_parameters =
+						cJSON_GetObjectItemCaseSensitive(json_equation_ID,
 						"_p_");
-						
+
 					// Allocate memory to save coefficients of equation
 					//
 					int no_coef = cJSON_GetArraySize(json_equation_parameters);
-					double *coefficients = (double *) malloc(no_coef * 
+					double *coefficients = (double *) malloc(no_coef *
 						sizeof(double));
-					
+
 					if (coefficients == NULL) {
 						// Not enough memory available for coefficients
 						//
 						printf("\n\n###########\n# Warning #\n###########");
-						printf("\nCannot allocate memory for coefficients of equation \" %s \".",
-							equation);
+						printf("\nCannot allocate memory for coefficients of "
+							"equation \" %s \".", equation);
 						return NULL;
-						
+
 					}
-					
-					// Read coefficients from parameter-struct element for 
+
+					// Read coefficients from parameter-struct element for
 					// element
 					//
 					int tmp_counter = 0;
-					
+
 					cJSON_ArrayForEach(json_equation_parameters_single,
 						json_equation_parameters) {
 						// Save parameters to allocated array
-						//			
-						cJSON *json_equation_parameters_single_values = 
+						//
+						cJSON *json_equation_parameters_single_values =
 							cJSON_GetObjectItemCaseSensitive(
-								json_equation_parameters, 
+								json_equation_parameters,
 								json_equation_parameters_single->string);
-								
+
 						coefficients[tmp_counter] =
 							json_equation_parameters_single_values->valuedouble;
 						tmp_counter++;
-										
-					}	
-					
+
+					}
+
 					// Return coefficients
 					//
 					return coefficients;
-					
+
 				} else {
 					// Equation does not saved as object
 					//
@@ -402,16 +408,16 @@ double *json_search_parameters(const char *equation, int no_equ, cJSON *json) {
 						equation);
 					return NULL;
 
-				}		
-				
+				}
+
 			}
-			
+
 		}
 		// Equation ID does not exist for selected working pair
 		//
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nEquation ID \" %i \" does not exist for selected working pair.",
-			no_equ);
+		printf("\nEquation ID \" %i \" does not exist for selected working "
+			"pair.", no_equ);
 		return NULL;
 
 	} else {

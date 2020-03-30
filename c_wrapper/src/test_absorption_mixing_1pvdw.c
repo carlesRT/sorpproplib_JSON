@@ -14,12 +14,11 @@ int main() {
 	//	liquids based on bis (trifluoromethylsulfonyl) imide and chloride. The 
 	//	Journal of Supercritical Fluids 2012. 65: p. 1-10.
 	//
+/*
 	double isotherm_par_PR[] = {10, 0.2236, 0.5741, 0.0056, 304.2, 800, 
 		7380000, 1867000};
-
 	double isotherm_par_SRK[] = {-10, 0.2236, 0.0625, 0.0056, 304.2, 800, 
 		7380000, 1867000};
-
 
 	// Define some input values for calculating equilibrium data
 	//
@@ -29,9 +28,9 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	double p_Pa_PR = absorption_mixing_1pvdw_p_Tvx(T_K , x_molmol, 0.5/1237.1,
+	double p_Pa_PR = absorption_mixing_1pvdw_p_Tvx(T_K , x_molmol,
 		isotherm_par_PR);
-	double p_Pa_SRK = absorption_mixing_1pvdw_p_Tvx(T_K , x_molmol, 0.5/1237.1,
+	double p_Pa_SRK = absorption_mixing_1pvdw_p_Tvx(T_K , x_molmol,
 		isotherm_par_SRK);
 		
 	
@@ -44,6 +43,7 @@ int main() {
 		T_K, x_molmol, p_Pa_PR);
 	printf("\nFor T = %f K, x = %f mol/mol and SRK, equilibrium pressure results in p = %f Pa.", 
 		T_K, x_molmol, p_Pa_SRK);
+*/
 		
     return EXIT_SUCCESS;	
 }

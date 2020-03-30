@@ -11,12 +11,12 @@
 /*
  * General form of Duehring equation:
  * ----------------------------------
- * 	p = 1/r * exp(C + D/T_ref + E/T_ref^2)
+ * 	p = 1/r * 10^(C + D/T_ref + E/T_ref^2)
  *
  * Temperature-dependent coefficients:
  * -----------------------------------
  * 	T_ref = (n*T_cor + m - B) / A + q
- *	T_cor = T - 273.15
+ *	T_cor = T - q
  *
  *		with: A = a0 + a1*X_cor + a2*X_cor^2 + a3*X_cor^3
  *		----- B = b0 + b1*X_cor + b2*X_cor^2 + b3*X_cor^3
@@ -43,7 +43,7 @@
  * 	isotherm_par[10] -> E	-> in K^2
  * 	isotherm_par[11] -> m	-> in -
  * 	isotherm_par[12] -> n	-> in -
- * 	isotherm_par[13] -> q	-> in - 
+ * 	isotherm_par[13] -> q	-> in -
  * 	isotherm_par[14] -> r	-> in 1/Pa
  *
  */
@@ -53,7 +53,7 @@
  * absorption_duehring_X_pT:
  * -------------------------
  *
- * Calculates equilibrium concentration X in kg/kg depending on equilibrium 
+ * Calculates equilibrium concentration X in kg/kg depending on equilibrium
  * pressure p in Pa and equilibrium temperature T in K.
  *
  * Parameters:
@@ -93,11 +93,10 @@ double absorption_duehring_X_pT(double p_Pa, double T_K,
 
 	// Calculate concentration using Newton-Raphson method
 	//
-	for (p_guess_Pa = absorption_duehring_p_XT(X_guess_kgkg, T_K,
-		 isotherm_par);
-	     fabs(p_guess_Pa - p_Pa)>tolerance && counter_NRM<50; 
+	for (p_guess_Pa = absorption_duehring_p_XT(X_guess_kgkg, T_K, isotherm_par);
+	     fabs(p_guess_Pa - p_Pa)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
-		// Calculate pressure depending on guess value for concentration and 
+		// Calculate pressure depending on guess value for concentration and
 		// temperature
 		//
 		p_guess_Pa = absorption_duehring_p_XT(X_guess_kgkg, T_K,
@@ -112,21 +111,26 @@ double absorption_duehring_X_pT(double p_Pa, double T_K,
 		// Only positive values are allowed
 		//
 		X_guess_kgkg -= (p_guess_Pa - p_Pa) / dp_guess_dX_Pakgkg;
-		X_guess_kgkg = X_guess_kgkg < 0 ? 0.001 : X_guess_kgkg;
+
+		if (X_guess_kgkg < 0) {
+			X_guess_kgkg = 0;
+		} else if (X_guess_kgkg > 1) {
+			X_guess_kgkg = 1;
+		}
 	}
 
-	// Return -1 when number of iteratons exceeds 50
+	// Return -1 when number of iterations exceeds 50
 	//
 	return (counter_NRM == 50 ? -1 : X_guess_kgkg);
 
-}		
+}
 
- 
+
 /*
  * absorption_duehring_p_XT:
  * -------------------------
  *
- * Calculates equilibrium pressure p in Pa depending on equilibrium 
+ * Calculates equilibrium pressure p in Pa depending on equilibrium
  * concentration X in kg/kg and equilibrium temperature T in K.
  *
  * Parameters:
@@ -147,27 +151,29 @@ double absorption_duehring_X_pT(double p_Pa, double T_K,
  * --------
  *	01/26/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	03/23/2020, by Mirko Engelpracht:
+ *		Corrected equation.
  *
  */
 double absorption_duehring_p_XT(double X_kgkg, double T_K,
 	double isotherm_par[]) {
 	// Calculate concentration-dependent coefficients
 	//
-	double X_cor = X_kgkg * 100;	
+	double X_cor = X_kgkg * 100;
 	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
 		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
 	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
 		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
 
 	// Calculate temperature-dependent coefficients
-	//		
-	double T_cor = T_K - 273.15;	
+	//
+	double T_cor = T_K - isotherm_par[13];
 	double T_ref = (isotherm_par[12] * T_cor + isotherm_par[11] - B) / A +
 		isotherm_par[13];
-	
+
 	// Calculate pressure
 	//
-	return 1 / isotherm_par[14] * exp(isotherm_par[8] + 
+	return 1 / isotherm_par[14] * pow(10, isotherm_par[8] +
 		isotherm_par[9] / T_ref + isotherm_par[10] / pow(T_ref, 2));
 }
 
@@ -201,13 +207,15 @@ double absorption_duehring_p_XT(double X_kgkg, double T_K,
  * --------
  *	01/27/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	03/23/2020, by Mirko Engelpracht:
+ *		Corrected equation.
  *
  */
 double absorption_duehring_T_pX(double p_Pa, double X_kgkg,
 	double isotherm_par[]) {
 	// Calculate concentration-dependent coefficients
 	//
-	double X_cor = X_kgkg * 100;	
+	double X_cor = X_kgkg * 100;
 	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
 		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
 	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
@@ -215,14 +223,14 @@ double absorption_duehring_T_pX(double p_Pa, double X_kgkg,
 
 	// Calculate pressure-dependent coefficients
 	//
-	double aux1 = log(p_Pa * isotherm_par[14]) - isotherm_par[8];
-	double aux2 = isotherm_par[9] / aux1;	
+	double aux1 = log10(p_Pa * isotherm_par[14]) - isotherm_par[8];
+	double aux2 = isotherm_par[9] / aux1;
 	double T_ref = aux2 / 2 + sqrt(pow(-aux2 / 2, 2) + isotherm_par[10] / aux1);
-	
+
 	// Calculate temperature
 	//
-	return  ((T_ref - isotherm_par[13]) * A + B - isotherm_par[11]) /
-		isotherm_par[12] + 273.15;
+	return ((T_ref - isotherm_par[13]) * A + B - isotherm_par[11]) /
+		isotherm_par[12] + isotherm_par[13];
 }
 
 
@@ -230,8 +238,8 @@ double absorption_duehring_T_pX(double p_Pa, double X_kgkg,
  * absorption_duehring_dX_dp_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium concentration X with respect to pressure 
- * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium concentration X with respect to pressure
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -250,7 +258,7 @@ double absorption_duehring_T_pX(double p_Pa, double X_kgkg,
  *
  * Remarks:
  * --------
- *	Derivative is calculated numerically by the symmetric derivative appraoch 
+ *	Derivative is calculated numerically by the symmetric derivative approach
  *  using h = 0.001 Pa as small change.
  *
  * History:
@@ -264,12 +272,12 @@ double absorption_duehring_dX_dp_pT(double p_Pa, double T_K,
 	// Calculate concentrations
 	//
 	const double dp_Pa = 0.001;
-	
+
 	double X_plus_kgkg = absorption_duehring_X_pT(p_Pa + dp_Pa, T_K,
 		isotherm_par);
 	double X_minus_kgkg = absorption_duehring_X_pT(p_Pa - dp_Pa, T_K,
 		isotherm_par);
-	
+
 	// Calculate derivative of concentration wrt temperature
 	//
 	return (X_plus_kgkg - X_minus_kgkg) / (2 * dp_Pa);
@@ -280,8 +288,8 @@ double absorption_duehring_dX_dp_pT(double p_Pa, double T_K,
  * absorption_duehring_dX_dT_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium concentration X with respect to 
- * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and  
+ * Calculates derivative of equilibrium concentration X with respect to
+ * temperature T in kg/kg/K depending on equilibrium pressure p in Pa and
  * equilibrium temperature T in K.
  *
  * Parameters:
@@ -300,7 +308,7 @@ double absorption_duehring_dX_dp_pT(double p_Pa, double T_K,
  *
  * Remarks:
  * --------
- *	Derivative is calculated numerically by the symmetric derivative appraoch 
+ *	Derivative is calculated numerically by the symmetric derivative approach
  *  using h = 0.001 K as small change.
  *
  * History:
@@ -314,12 +322,12 @@ double absorption_duehring_dX_dT_pT(double p_Pa, double T_K,
 	// Calculate concentrations
 	//
 	const double dT_K = 0.001;
-	
+
 	double X_plus_kgkg = absorption_duehring_X_pT(p_Pa, T_K + dT_K,
 		isotherm_par);
 	double X_minus_kgkg = absorption_duehring_X_pT(p_Pa, T_K - dT_K,
 		isotherm_par);
-	
+
 	// Calculate derivative of concentration wrt temperature
 	//
 	return (X_plus_kgkg - X_minus_kgkg) / (2 * dT_K);
@@ -330,8 +338,8 @@ double absorption_duehring_dX_dT_pT(double p_Pa, double T_K,
  * absorption_duehring_dp_dX_XT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to concentration 
- * X in kgPa/kg depending on equilibrium concentration X in kg/kg and  
+ * Calculates derivative of equilibrium pressure p with respect to concentration
+ * X in kgPa/kg depending on equilibrium concentration X in kg/kg and
  * equilibrium temperature T in K.
  *
  * Parameters:
@@ -352,6 +360,8 @@ double absorption_duehring_dX_dT_pT(double p_Pa, double T_K,
  * --------
  *	01/27/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	03/23/2020, by Mirko Engelpracht:
+ *		Corrected equation.
  *
  */
 double absorption_duehring_dp_dX_XT(double X_kgkg, double T_K,
@@ -360,32 +370,32 @@ double absorption_duehring_dp_dX_XT(double X_kgkg, double T_K,
 	// We do not use function absorption_duehring_p_XT because we need T_ref and
 	// A for further calculations
 	//
-	double X_cor = X_kgkg * 100;	
+	double X_cor = X_kgkg * 100;
 	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
 		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
 	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
 		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
-		
-	double T_cor = T_K - 273.15;	
+
+	double T_cor = T_K - isotherm_par[13];
 	double T_ref = (isotherm_par[12] * T_cor + isotherm_par[11] - B) / A +
 		isotherm_par[13];
-		
-	double p_Pa = 1 / isotherm_par[14] * exp(isotherm_par[8] + 
+
+	double p_Pa = 1 / isotherm_par[14] * pow(10, isotherm_par[8] +
 		isotherm_par[9] / T_ref + isotherm_par[10] / pow(T_ref, 2));
 
 	// Calculate partial derivatives
 	//
-	double dA_dX_cor = isotherm_par[1] + 2 * isotherm_par[2] * X_cor + 
+	double dA_dX_cor = isotherm_par[1] + 2 * isotherm_par[2] * X_cor +
 		3 * isotherm_par[3] * pow(X_cor, 2);
-	double dB_dX_cor = isotherm_par[5] + 2 * isotherm_par[6] * X_cor + 
+	double dB_dX_cor = isotherm_par[5] + 2 * isotherm_par[6] * X_cor +
 		3 * isotherm_par[7] * pow(X_cor, 2);
 	double dX_cor_dX = 100;
-	
-	double dp_dT_ref = -p_Pa * (isotherm_par[9] * T_ref + 2 * 
+
+	double dp_dT_ref = -p_Pa * log(10) * (isotherm_par[9] * T_ref + 2 *
 		isotherm_par[10]) / pow(T_ref, 3);
-	double dT_ref_dX = -dX_cor_dX * (dA_dX_cor * (isotherm_par[12] * T_cor + 
+	double dT_ref_dX = -dX_cor_dX * (dA_dX_cor * (isotherm_par[12] * T_cor +
 		isotherm_par[11] - B) + A * dB_dX_cor) / pow(A, 2);
-	
+
 	// Calculate derivative of pressure wrt concentration
 	//
 	return dp_dT_ref * dT_ref_dX;
@@ -396,8 +406,8 @@ double absorption_duehring_dp_dX_XT(double X_kgkg, double T_K,
  * absorption_duehring_dp_dT_XT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to temperature 
- * T in Pa/K depending on equilibrium concentration X in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to temperature
+ * T in Pa/K depending on equilibrium concentration X in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -418,6 +428,8 @@ double absorption_duehring_dp_dX_XT(double X_kgkg, double T_K,
  * --------
  *	01/27/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	03/23/2020, by Mirko Engelpracht:
+ *		Corrected equation.
  *
  */
 double absorption_duehring_dp_dT_XT(double X_kgkg, double T_K,
@@ -426,26 +438,26 @@ double absorption_duehring_dp_dT_XT(double X_kgkg, double T_K,
 	// We do not use function absorption_duehring_p_XT because we need T_ref and
 	// A for further calculations
 	//
-	double X_cor = X_kgkg * 100;	
+	double X_cor = X_kgkg * 100;
 	double A = isotherm_par[0] + isotherm_par[1] * X_cor +
 		isotherm_par[2] * pow(X_cor, 2) + isotherm_par[3] * pow(X_cor, 3);
 	double B = isotherm_par[4] + isotherm_par[5] * X_cor +
 		isotherm_par[6] * pow(X_cor, 2) + isotherm_par[7] * pow(X_cor, 3);
-		
-	double T_cor = T_K - 273.15;	
+
+	double T_cor = T_K - isotherm_par[13];
 	double T_ref = (isotherm_par[12] * T_cor + isotherm_par[11] - B) / A +
 		isotherm_par[13];
-		
-	double p_Pa = 1 / isotherm_par[14] * exp(isotherm_par[8] + 
+
+	double p_Pa = 1 / isotherm_par[14] * pow(10, isotherm_par[8] +
 		isotherm_par[9] / T_ref + isotherm_par[10] / pow(T_ref, 2));
 
 	// Calculate partial derivatives
 	//
-	double dp_dT_ref = -p_Pa * (isotherm_par[9] * T_ref + 2 * 
+	double dp_dT_ref = -p_Pa * log(10) * (isotherm_par[9] * T_ref + 2 *
 		isotherm_par[10]) / pow(T_ref, 3);
 	double dT_ref_dT_cor = isotherm_par[12] / A;
 	double dT_cor_dT = 1;
-	
+
 	// Calculate derivative of pressure wrt temperature
 	//
 	return dp_dT_ref * dT_ref_dT_cor * dT_cor_dT;

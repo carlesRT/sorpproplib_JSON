@@ -4,12 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "refrigerant.h"
-
 #include "structDefinitions.c"
 
 
 int main() {
-	// Define parameter record for executing vapour pressure equation and
+	// Define parameter record for executing vapor pressure equation and
 	// saturated liquid density equation. Data for refrigerant "R-134a" is taken
 	// from:
 	//
@@ -20,11 +19,11 @@ int main() {
 	//
 	double vapPre_par[] = {374.18, 4.05629e6, -7.686556, 1, 2.311791,
 		1.5, -2.039554, 2, -3.583758, 4, 0, 0, 0, 0};
-	double satLiqDen_par[] = {374.18, 1, 1, 518.20, 0, 884.13, 
+	double satLiqDen_par[] = {374.18, 1, 1, 518.20, 0, 884.13,
 		0.333333333333333, 485.84, 0.666666666666666, 193.29,
 		3.333333333333333, 0, 0, 0, 0, 0, 0};
-	
-	// Define parameter record for executing vapour pressure equation. Data for
+
+	// Define parameter record for executing vapor pressure equation. Data for
 	// refrigerant "Benzene" is taken from:
 	//
 	// 	NIST Webbook.
@@ -35,15 +34,17 @@ int main() {
 	// Define some input values for calculation of fluid properties
 	//
 	double T_K = 353.15;
-	
-	
+
+
 	// Calculate state values
 	//
 	Refrigerant *refrigerant_r134a = newRefrigerant(
-		"EoS_vapourPressure",
+		"EoS_vaporPressure",
 		"EoS_saturatedLiquidDensity");
-	
+
 	double psat_r134a_Pa = refrigerant_r134a->psat_T(T_K, vapPre_par);
+	double T_r134a_inv_K = refrigerant_r134a->Tsat_p(psat_r134a_Pa,
+		vapPre_par);
 	double psat_r134a_Pa_plus = refrigerant_r134a->psat_T(T_K+0.0001,
 		vapPre_par);
 	double psat_r134a_Pa_minus = refrigerant_r134a->psat_T(T_K-0.0001,
@@ -51,21 +52,24 @@ int main() {
 	double dpsat_dT_r134a_PaK = refrigerant_r134a->dpsat_dT(T_K, vapPre_par);
 	double dpsat_dT_r134a_PaK_num = (psat_r134a_Pa_plus -
 		psat_r134a_Pa_minus) / 0.0002;
-	
+
 	double rho_l_r134a_kgm3 = refrigerant_r134a->rho_l_T(T_K, satLiqDen_par);
 	double rho_l_r134a_kgm3_plus = refrigerant_r134a->rho_l_T(T_K+0.0001,
 		satLiqDen_par);
 	double rho_l_r134a_kgm3_minus = refrigerant_r134a->rho_l_T(T_K-0.0001,
 		satLiqDen_par);
-	double drho_l_dT_r134a_kgm3K = refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par);
+	double drho_l_dT_r134a_kgm3K = refrigerant_r134a->drho_l_dT(T_K,
+		satLiqDen_par);
 	double drho_l_dT_r134a_kgm3K_num = (rho_l_r134a_kgm3_plus -
 		rho_l_r134a_kgm3_minus) / 0.0002;
-	
+
 	Refrigerant *refrigerant_benzene = newRefrigerant(
 		"Antoine",
 		"NoSaturatedLiquidDensity");
-	
+
 	double psat_benzene_Pa = refrigerant_benzene->psat_T(T_K,
+		refrigerant_par_benzene);
+	double T_benzene_inv_K = refrigerant_benzene->Tsat_p(psat_benzene_Pa,
 		refrigerant_par_benzene);
 	double psat_benzene_Pa_plus = refrigerant_benzene->psat_T(T_K+0.0001,
 		refrigerant_par_benzene);
@@ -79,39 +83,46 @@ int main() {
 
 	// Print results of calculations
 	//
-	printf("\n\n##\n##\nCreated structure for refrigerant.");	
-	printf("\nSelected refrigerant is \"R-134a\".");	
-	
-	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
+	printf("\n\n##\n##\nCreated structure for refrigerant.");
+	printf("\nSelected refrigerant is \"R-134a\".");
+
+	printf("\n\nFor T = %f K, vapor pressure results in p = %f Pa.",
 		T_K, psat_r134a_Pa);
-	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_r134a_PaK);
-	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_r134a_PaK_num);	
-		
-	printf("\nFor T = %f K, saturated liquid density results in rho_l = %f kg/m3.", 
-		T_K, rho_l_r134a_kgm3);
-	printf("\nFor T = %f K, analytical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
-		T_K, drho_l_dT_r134a_kgm3K);
-	printf("\nFor T = %f K, numerical derivative of saturated liquid density wrt. temperature results in drho_l_dT = %f kg/m3/K.", 
-		T_K, drho_l_dT_r134a_kgm3K_num);
-		
-		
-	printf("\n\n##\n##\nCreated structure for refrigerant.");	
-	printf("\nSelected refrigerant is \"Benzene\".");	
-	
-	printf("\n\nFor T = %f K, vapour pressure results in p = %f Pa.", 
+	printf("\nFor p = %f Pa, saturation temperature results in T = %f K.",
+		psat_r134a_Pa, T_r134a_inv_K);
+	printf("\nFor T = %f K, analytical derivative of vapor pressure wrt. "
+		"temperature results in dp_dT = %f Pa/K.", T_K, dpsat_dT_r134a_PaK);
+	printf("\nFor T = %f K, numerical derivative of vapor pressure wrt. "
+		"temperature results in dp_dT = %f Pa/K.", T_K, dpsat_dT_r134a_PaK_num);
+
+	printf("\nFor T = %f K, saturated liquid density results in rho_l = %f "
+		"kg/m3.", T_K, rho_l_r134a_kgm3);
+	printf("\nFor T = %f K, analytical derivative of saturated liquid density "
+		"wrt. temperature results in drho_l_dT = %f kg/m3/K.", T_K,
+		drho_l_dT_r134a_kgm3K);
+	printf("\nFor T = %f K, numerical derivative of saturated liquid density "
+		"wrt. temperature results in drho_l_dT = %f kg/m3/K.", T_K,
+		drho_l_dT_r134a_kgm3K_num);
+
+
+	printf("\n\n##\n##\nCreated structure for refrigerant.");
+	printf("\nSelected refrigerant is \"Benzene\".");
+
+	printf("\n\nFor T = %f K, vapor pressure results in p = %f Pa.",
 		T_K, psat_benzene_Pa);
-	printf("\nFor T = %f K, analytical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_benzene_PaK);
-	printf("\nFor T = %f K, numerical derivative of vapour pressure wrt. temperature results in dp_dT = %f Pa/K.", 
-		T_K, dpsat_dT_benzene_PaK_num);	
-		
-		
+	printf("\nFor p = %f Pa, saturation temperature results in T = %f K.",
+		psat_benzene_Pa, T_benzene_inv_K);
+	printf("\nFor T = %f K, analytical derivative of vapor pressure wrt. "
+		"temperature results in dp_dT = %f Pa/K.", T_K, dpsat_dT_benzene_PaK);
+	printf("\nFor T = %f K, numerical derivative of vapor pressure wrt. "
+		"temperature results in dp_dT = %f Pa/K.", T_K,
+		dpsat_dT_benzene_PaK_num);
+
+
 	// Free memory that is allocate for structures
 	//
 	delRefrigerant(refrigerant_r134a);
 	delRefrigerant(refrigerant_benzene);
-	
-    return EXIT_SUCCESS;	
+
+    return EXIT_SUCCESS;
 }

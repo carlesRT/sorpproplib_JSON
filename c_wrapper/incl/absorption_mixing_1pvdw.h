@@ -12,7 +12,7 @@
  * General form of Peng-Robinson or Soave-Redlich-Kwong equation when using
  * one parameter van der Waals mixing rule:
  * ----------------------------------------
- * 	p = R * T / (V_m - b) - a / (V_m^2 + m *b + n * b^2)
+ * 	p = R * T / (V_m - b) - a / (V_m^2 + m * b * V_m + n * b^2)
  *
  *		with: For PR equation, m = 2 and n = -1
  *		----- For SRK equation, m = 1 and n = 0
@@ -34,7 +34,7 @@
  *
  *				with: For PR equation, alpha_0 = 0.45724, c_0 = 0.37464,
  *				----- c_1 = 1.54226, c_2 = -0.26992 and b_0 = 0.077796
- *					  For SRK equation, alpha_0 = 1/(9*(2^(1/3)-1)), 
+ *					  For SRK equation, alpha_0 = 1/(9*(2^(1/3)-1)),
  *					  c_0 = 0.480, c_1 = 1.574, c_2 = -0.176 and b_0 = 0.08664
  *
  * Possible inputs required by user:
@@ -58,24 +58,21 @@
 
 
 /*
- * absorption_mixing_1pvdw_p_Tvx:
- * ------------------------------
+ * absorption_mixing_1pvdw_p_Tx:
+ * -----------------------------
  *
- * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
- * temperature T_K in K, molar mixing volume v_m3mol in m³/mol, and mole 
- * fraction in liquid phase x_molmol in mol/mol
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K and mole fraction in liquid phase x_molmol in mol/mol.
  *
  * Parameters:
  * -----------
  *	double T_K:
  *		Equilibrium temperature in K.
- *	double v_m3mol:
- *		Molar mixing volume in m³/mol.
  *	double x_molmol:
  *		Equilibrium mole fraction in liquid phase in mol/mol.
  *	double isotherm_par[]:
- *		Array of doubles that contains coefficients of Tsubo & Kakatayama
- *		equation.
+ *		Array of doubles that contains coefficients of "one parameter van der
+ *		Waals mixing" equation.
  *
  * Returns:
  * --------
@@ -88,7 +85,7 @@
  *		First implementation.
  *
  */
-double absorption_mixing_1pvdw_p_Tvx(double T_K, double v_m3mol,
-	double x_molmol, double isotherm_par[]);
+double absorption_mixing_1pvdw_p_Tx(double T_K, double x_molmol,
+	double isotherm_par[]);
 
 #endif

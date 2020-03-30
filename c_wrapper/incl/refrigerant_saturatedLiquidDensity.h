@@ -27,32 +27,32 @@
  *
  * Order of coefficients in JSON-file:
  * -----------------------------------
- *	isotherm_par[0]		-> Tcrit	-> in K
- *	isotherm_par[1]		-> rhocrit	-> in kg/m3
- *	isotherm_par[2]		-> flag		-> in -
- * 	isotherm_par[3] 	-> fac1		-> in -
- * 	isotherm_par[4] 	-> exp1		-> in -
- * 	isotherm_par[5] 	-> fac2		-> in -
- * 	isotherm_par[6] 	-> exp2		-> in -
- * 	isotherm_par[7] 	-> fac3		-> in -
- * 	isotherm_par[8] 	-> exp3		-> in -
- * 	isotherm_par[9] 	-> fac4		-> in -
- * 	isotherm_par[10] 	-> exp4		-> in -
- * 	isotherm_par[11] 	-> fac5		-> in -
- * 	isotherm_par[12] 	-> exp5		-> in -
- * 	isotherm_par[13] 	-> fac6		-> in -
- * 	isotherm_par[14] 	-> exp6		-> in -
- * 	isotherm_par[15] 	-> fac7		-> in -
- * 	isotherm_par[16] 	-> exp7		-> in -
+ *	refrigerant_par[0]	-> Tcrit	-> in K
+ *	refrigerant_par[1]	-> rhocrit	-> in kg/m3
+ *	refrigerant_par[2]	-> flag		-> in -
+ * 	refrigerant_par[3] 	-> fac1		-> in -
+ * 	refrigerant_par[4] 	-> exp1		-> in -
+ * 	refrigerant_par[5] 	-> fac2		-> in -
+ * 	refrigerant_par[6] 	-> exp2		-> in -
+ * 	refrigerant_par[7] 	-> fac3		-> in -
+ * 	refrigerant_par[8] 	-> exp3		-> in -
+ * 	refrigerant_par[9] 	-> fac4		-> in -
+ * 	refrigerant_par[10] -> exp4		-> in -
+ * 	refrigerant_par[11] -> fac5		-> in -
+ * 	refrigerant_par[12] -> exp5		-> in -
+ * 	refrigerant_par[13] -> fac6		-> in -
+ * 	refrigerant_par[14] -> exp6		-> in -
+ * 	refrigerant_par[15] -> fac7		-> in -
+ * 	refrigerant_par[16] -> exp7		-> in -
  *
  */
- 
+
 
 /*
  * refrigerant_rho_l:
  * ------------------
  *
- * Calculates saturated liquid density in kg/m³ depending on saturation 
+ * Calculates saturated liquid density in kg/m³ depending on saturation
  * temperature T in K.
  *
  * Parameters:

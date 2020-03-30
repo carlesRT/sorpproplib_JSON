@@ -30,7 +30,7 @@
  * 	isotherm_par[3] -> w_s		-> in kg/kg
  *
  */
- 
+
 
 /*
  * adsorption_langmuir_w_pT:
@@ -53,7 +53,7 @@
  *	double:
  *		Equilibrium loading in kg/kg.
  *
- * History:	
+ * History:
  * --------
  *	10/18/2019, by Mirko Engelpracht:
  *		First implementation.
@@ -93,7 +93,8 @@ double adsorption_langmuir_w_pT(double p_Pa, double T_K, double isotherm_par[]);
  *		Updated units of coefficients to SI-units.
  *
  */
-double adsorption_langmuir_p_wT(double w_kgkg, double T_K, double isotherm_par[]);
+double adsorption_langmuir_p_wT(double w_kgkg, double T_K,
+	double isotherm_par[]);
 
 
 /*
@@ -127,14 +128,14 @@ double adsorption_langmuir_p_wT(double w_kgkg, double T_K, double isotherm_par[]
  */
 double adsorption_langmuir_T_pw(double p_Pa, double w_kgkg,
 	double isotherm_par[]);
- 
+
 
 /*
  * adsorption_langmuir_dw_dp_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to pressure 
- * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium loading w with respect to pressure
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -159,14 +160,14 @@ double adsorption_langmuir_T_pw(double p_Pa, double w_kgkg,
  */
 double adsorption_langmuir_dw_dp_pT(double p_Pa, double T_K,
 	double isotherm_par[]);
- 
+
 
 /*
  * adsorption_langmuir_dw_dT_pT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to temperature 
- * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium loading w with respect to temperature
+ * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -193,14 +194,14 @@ double adsorption_langmuir_dw_dp_pT(double p_Pa, double T_K,
  */
 double adsorption_langmuir_dw_dT_pT(double p_Pa, double T_K,
 	double isotherm_par[]);
- 
+
 
 /*
  * adsorption_langmuir_dp_dw_wT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to loading 
- * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to loading
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -225,14 +226,14 @@ double adsorption_langmuir_dw_dT_pT(double p_Pa, double T_K,
  */
 double adsorption_langmuir_dp_dw_wT(double w_kgkg, double T_K,
 	double isotherm_par[]);
- 
+
 
 /*
  * adsorption_langmuir_dp_dT_wT:
  * -----------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to temperature 
- * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to temperature
+ * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -257,18 +258,18 @@ double adsorption_langmuir_dp_dw_wT(double w_kgkg, double T_K,
  */
 double adsorption_langmuir_dp_dT_wT(double w_kgkg, double T_K,
 	double isotherm_par[]);
- 
+
 
 /*
  * adsorption_langmuir_piStar_pyxgTM:
  * ----------------------------------
  *
  * Calculates reduced spreading pressure in kg/mol depending on total pressure
- * of vapour phase p_total in Pa, molar fraction of refrigerant in vapour phase
+ * of vapor phase p_total in Pa, molar fraction of refrigerant in vapor phase
  * y in mol/mol, molar fraction of refrigerant in adsorbed phase in mol/mol,
- * activity coefficent of refrigerant in adsorbed phase, equilibrium temperature
- * T in K and molar mass of refrigerant M in kg/mol. The reduced spreading 
- * pressure is defined as follows:
+ * activity coefficient of refrigerant in adsorbed phase, equilibrium
+ * temperature T in K and molar mass of refrigerant M in kg/mol. The reduced
+ * spreading pressure is defined as follows:
  *
  * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
  *		Integral_0^p0{w(p,T) / p * dp}
@@ -278,13 +279,13 @@ double adsorption_langmuir_dp_dT_wT(double w_kgkg, double T_K,
  * Parameters:
  * -----------
  *	double p_total_Pa:
- *		Total pressure of vapour phase in Pa.
+ *		Total pressure of vapor phase in Pa.
  *	double y_molmol:
- *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *		Molar fraction of refrigerant in vapor phase in mol/mol.
  *	double x_molmol:
  *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
  *	double gamma:
- *		Activity coefficent of refrigerant in adsorbed phase.
+ *		Activity coefficient of refrigerant in adsorbed phase.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double M_kgmol:
@@ -300,7 +301,7 @@ double adsorption_langmuir_dp_dT_wT(double w_kgkg, double T_K,
  * Remarks:
  * --------
  *	Reduced spreading pressure is needed to solve, for example, the Ideal
- *	Adsorbed Solution (IAST) theory. However, implementeed solution is only
+ *	Adsorbed Solution (IAST) theory. However, implemented solution is only
  *	valid for m=1 and r=n.
  *
  * History:
@@ -309,7 +310,7 @@ double adsorption_langmuir_dp_dT_wT(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-double adsorption_langmuir_piStar_pyxgTM(double p_total_Pa, double y_molmol, 
+double adsorption_langmuir_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double M_kgmol,
 	double isotherm_par[]);
 

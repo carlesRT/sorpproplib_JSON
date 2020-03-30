@@ -69,18 +69,18 @@
  */
 double adsorption_toth_w_pT(double p_Pa, double T_K, double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
 
 	// Calculate loading
 	//
-	return isotherm_par[6] * pow(b, isotherm_par[2]) * p_Pa / 
+	return isotherm_par[6] * pow(b, isotherm_par[2]) * p_Pa /
 		pow(1 + pow(b, r) * pow(p_Pa, n), 1/n);
 }
- 
- 
+
+
 /*
  * adsorption_toth_p_wT:
  * ---------------------
@@ -110,16 +110,16 @@ double adsorption_toth_w_pT(double p_Pa, double T_K, double isotherm_par[]) {
  *		Updated units of coefficients to SI-units.
  *
  */
-double adsorption_toth_p_wT(double w_kgkg, double T_K, double isotherm_par[]) {	
+double adsorption_toth_p_wT(double w_kgkg, double T_K, double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
-	
+
 	// Calculate pressure
 	//
-	return w_kgkg / pow(pow(isotherm_par[6], n) * pow(b, isotherm_par[2] * n) - 
+	return w_kgkg / pow(pow(isotherm_par[6], n) * pow(b, isotherm_par[2] * n) -
 		pow(w_kgkg, n) * pow(b, r), 1 /n);
 }
 
@@ -158,21 +158,21 @@ double adsorption_toth_p_wT(double w_kgkg, double T_K, double isotherm_par[]) {
  *
  */
 double adsorption_toth_T_pw(double p_Pa, double w_kgkg, double isotherm_par[]) {
-	// Initialise variables for using Newton-Raphson method
+	// Initialize variables for using Newton-Raphson method
 	//
-	double T_guess_K = 303.15;
+	double T_guess_K = 353.15;
 	double w_guess_kgkg = w_kgkg;
 	double dw_guess_dT_kgkgK = w_kgkg/T_guess_K;
-	
+
 	int counter_NRM = 0;
 	const double tolerance = 1e-8;
 
 	// Calculate temperature using Newton-Raphson method
 	//
-	for (w_guess_kgkg = adsorption_toth_w_pT(p_Pa, T_guess_K, isotherm_par); 
-	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50; 
+	for (w_guess_kgkg = adsorption_toth_w_pT(p_Pa, T_guess_K, isotherm_par);
+	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
-		// Calculate loading depending on pressure and guess values for 
+		// Calculate loading depending on pressure and guess values for
 		// temperature
 		//
 		w_guess_kgkg = adsorption_toth_w_pT(p_Pa, T_guess_K, isotherm_par);
@@ -200,8 +200,8 @@ double adsorption_toth_T_pw(double p_Pa, double w_kgkg, double isotherm_par[]) {
  * adsorption_toth_dw_dp_pT:
  * -------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to pressure 
- * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium loading w with respect to pressure
+ * p in kg/kg/Pa depending on equilibrium pressure p in Pa and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -227,14 +227,14 @@ double adsorption_toth_T_pw(double p_Pa, double w_kgkg, double isotherm_par[]) {
 double adsorption_toth_dw_dp_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
-	
+
 	// Calculate derivative of loading with respect to pressure
 	//
-	return isotherm_par[6] * pow(b, isotherm_par[2]) * 
+	return isotherm_par[6] * pow(b, isotherm_par[2]) *
 		pow(1 + pow(b, r) * pow(p_Pa, n), -1/n - 1);
 }
 
@@ -243,8 +243,8 @@ double adsorption_toth_dw_dp_pT(double p_Pa, double T_K,
  * adsorption_toth_dw_dT_pT:
  * -------------------------
  *
- * Calculates derivative of equilibrium loading w with respect to temperature 
- * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium 
+ * Calculates derivative of equilibrium loading w with respect to temperature
+ * T in kg/kg/K depending on equilibrium pressure p in Pa and equilibrium
  * temperature in T K.
  *
  * Parameters:
@@ -272,57 +272,57 @@ double adsorption_toth_dw_dp_pT(double p_Pa, double T_K,
 double adsorption_toth_dw_dT_pT(double p_Pa, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
-	
+
 	double db_dT = -isotherm_par[4] / pow(T_K, 2) * b;
 	double dn_dT = -isotherm_par[1] / pow(T_K, 2);
-	
+
 	// Calculate derivative of loading with respect to temperature:
 	//
 	double aux1 = 1 + pow(b, r) * pow(p_Pa, n);
 	double aux2 = 1/n;
 	double aux3 = isotherm_par[6] * pow(b, isotherm_par[2]) * p_Pa;
 	double aux4 = pow(aux1, aux2);
-	
-	double daux1_dT = 1;	
-	
+
+	double daux1_dT = 1;
+
 	if (isotherm_par[5]<0) {
-		// Coefficient b of denomiator has same exponent as pressure p_Pa
+		// Coefficient b of denominator has same exponent as pressure p_Pa
 		//
-		double aux5 = b * p_Pa;		
-		double daux5_dT = p_Pa * db_dT;	
-		
+		double aux5 = b * p_Pa;
+		double daux5_dT = p_Pa * db_dT;
+
 		daux1_dT = pow(aux5, n) * (dn_dT * log(aux5) + n * daux5_dT / aux5);
-		
-	} else {		
-		// Coefficient b of denomiator has own exponent r
+
+	} else {
+		// Coefficient b of denominator has own exponent r
 		//
 		double aux5 = pow(b, r);
-		double aux6 = pow(p_Pa, n);		
+		double aux6 = pow(p_Pa, n);
 		double daux5_dT = r * pow(b, r - 1) * db_dT;
 		double daux6_dT = pow(p_Pa, n) * log(p_Pa) * dn_dT;
-		
+
 		daux1_dT = daux5_dT * aux6 + aux5 * daux6_dT;
 	}
-	
-	double daux2_dT = -1/pow(n, 2) * dn_dT;	
-	double daux3_dT = isotherm_par[6] * p_Pa * isotherm_par[2] * 
+
+	double daux2_dT = -1/pow(n, 2) * dn_dT;
+	double daux3_dT = isotherm_par[6] * p_Pa * isotherm_par[2] *
 		pow(b, isotherm_par[2] - 1) * db_dT;
 	double daux4_dT = aux4 * (daux2_dT * log(aux1) + aux2 * daux1_dT / aux1);
-	
+
 	return (daux3_dT * aux4 - aux3 * daux4_dT) / pow(aux4, 2);
 }
- 
+
 
 /*
  * adsorption_toth_dp_dw_wT:
  * -------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to loading 
- * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to loading
+ * w in kgPa/kg depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -348,30 +348,30 @@ double adsorption_toth_dw_dT_pT(double p_Pa, double T_K,
 double adsorption_toth_dp_dw_wT(double w_kgkg, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
-	
-	// Calculate auxillary variables to short expressions of equatin
+
+	// Calculate auxiliary variables to short expressions of equation
 	//
 	double aux1 = pow(b, isotherm_par[2] * n) * pow(isotherm_par[6], n);
 	double aux2 = pow(b, r) * pow(w_kgkg, n);
-	
+
 	// Calculate derivative of pressure wrt loading
 	//
 	return -aux1 / (pow(aux1 - aux2, 1 / n) * (aux2 - aux1));
-	
-		
+
+
 }
- 
+
 
 /*
  * adsorption_toth_dp_dT_wT:
  * -------------------------
  *
- * Calculates derivative of equilibrium pressure p with respect to temperature 
- * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium 
+ * Calculates derivative of equilibrium pressure p with respect to temperature
+ * T in Pa/K depending on equilibrium loading w in kg/kg and equilibrium
  * temperature T in K.
  *
  * Parameters:
@@ -397,48 +397,48 @@ double adsorption_toth_dp_dw_wT(double w_kgkg, double T_K,
 double adsorption_toth_dp_dT_wT(double w_kgkg, double T_K,
 	double isotherm_par[]) {
 	// Calculate temperature-dependent coefficients
-	//		
+	//
 	double b = isotherm_par[0] * exp(isotherm_par[4] / T_K);
 	double n = isotherm_par[3] + isotherm_par[1] / T_K;
 	double r = isotherm_par[5]<0 ? n : isotherm_par[5];
-	
-	// Calculate auxillary variables to short expressions of equatin
+
+	// Calculate auxiliary variables to short expressions of equation
 	//
 	double aux1 = pow(b, isotherm_par[2] * n) * pow(isotherm_par[6], n);
 	double aux2 = pow(b, r) * pow(w_kgkg, n);
-	
+
 	// Calculate partial derivatives
-	//	
+	//
 	double db_dT = -isotherm_par[4] / pow(T_K, 2) * b;
 	double dn_dT = -isotherm_par[1] / pow(T_K, 2);
 	double dr_dT = isotherm_par[5]<0 ? dn_dT : 0;
-	
-	double dp_db = -w_kgkg * (isotherm_par[2] * n * pow(b, isotherm_par[2] * 
-		n - 1) * pow(isotherm_par[6], n) - r * pow(b, r - 1) *pow(w_kgkg, n)) * 
+
+	double dp_db = -w_kgkg * (isotherm_par[2] * n * pow(b, isotherm_par[2] *
+		n - 1) * pow(isotherm_par[6], n) - r * pow(b, r - 1) *pow(w_kgkg, n)) *
 		pow(aux1 - aux2, -1 / n - 1) / n;
-	double dp_dn = w_kgkg * (log(aux1 - aux2) / pow(n, 2) - (aux1 * log(b) * 
-		isotherm_par[2] + aux1 * log(isotherm_par[6]) - aux2 * log(w_kgkg)) / 
+	double dp_dn = w_kgkg * (log(aux1 - aux2) / pow(n, 2) - (aux1 * log(b) *
+		isotherm_par[2] + aux1 * log(isotherm_par[6]) - aux2 * log(w_kgkg)) /
 		((aux1 - aux2) * n)) / pow(aux1 - aux2, 1 / n);
-	double dp_dr = pow(b, r) * log(b) * pow(w_kgkg, n + 1) * 
+	double dp_dr = pow(b, r) * log(b) * pow(w_kgkg, n + 1) *
 		pow(aux1 - aux2, -1 / n -1) / n;
-	
-	
+
+
 	// Calculate derivative of pressure wrt temperature
 	//
 	return dp_db * db_dT + dp_dn * dn_dT + dp_dr * dr_dT;
 }
- 
+
 
 /*
  * adsorption_toth_piStar_pyxgTM:
  * ------------------------------
  *
  * Calculates reduced spreading pressure in kg/mol depending on total pressure
- * of vapour phase p_total in Pa, molar fraction of refrigerant in vapour phase
+ * of vapor phase p_total in Pa, molar fraction of refrigerant in vapor phase
  * y in mol/mol, molar fraction of refrigerant in adsorbed phase in mol/mol,
- * activity coefficent of refrigerant in adsorbed phase, equilibrium temperature
- * T in K and molar mass of refrigerant M in kg/mol. The reduced spreading 
- * pressure is defined as follows:
+ * activity coefficient of refrigerant in adsorbed phase, equilibrium
+ * temperature T in K and molar mass of refrigerant M in kg/mol. The reduced
+ * spreading pressure is defined as follows:
  *
  * 	piStar = A * pi / (R * T * m_sorbent) = 1 / M *
  *		Integral_0^p0{w(p,T) / p * dp}
@@ -448,13 +448,13 @@ double adsorption_toth_dp_dT_wT(double w_kgkg, double T_K,
  * Parameters:
  * -----------
  *	double p_total_Pa:
- *		Total pressure of vapour phase in Pa.
+ *		Total pressure of vapor phase in Pa.
  *	double y_molmol:
- *		Molar fraction of refrigerant in vapour phase in mol/mol.
+ *		Molar fraction of refrigerant in vapor phase in mol/mol.
  *	double x_molmol:
  *		Molar fraction of refrigerant in adsorbed phase in mol/mol.
  *	double gamma:
- *		Activity coefficent of refrigerant in adsorbed phase.
+ *		Activity coefficient of refrigerant in adsorbed phase.
  *	double T_K:
  *		Equilibrium temperature in K.
  *	double M_kgmol:
@@ -470,8 +470,8 @@ double adsorption_toth_dp_dT_wT(double w_kgkg, double T_K,
  * Remarks:
  * --------
  *	Reduced spreading pressure is needed to solve, for example, the Ideal
- *	Adsorbed Solution (IAST) theory. Implementeed solution is solved
- *	numerically; however, an analyitcal solutions exists for m=1 and r<0 that is
+ *	Adsorbed Solution (IAST) theory. Implemented solution is solved
+ *	numerically; however, an analytical solutions exists for m=1 and r<0 that is
  *	based on an infinite sum.
  *
  * History:
@@ -480,7 +480,7 @@ double adsorption_toth_dp_dT_wT(double w_kgkg, double T_K,
  *		First implementation.
  *
  */
-double adsorption_toth_piStar_pyxgTM(double p_total_Pa, double y_molmol, 
+double adsorption_toth_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double x_molmol, double gamma, double T_K, double M_kgmol,
 	double isotherm_par[]) {
 	// Calculate numerically reduced spreading pressure
@@ -490,7 +490,7 @@ double adsorption_toth_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 	double h = ((p_total_Pa * y_molmol / x_molmol / gamma) - 0) / n_steps;
 	double p_tmp;
 	double piStar_molkg_num = 0;
-	
+
 	for(n_counter=1; n_counter<n_steps; n_counter++) {
 		// Calculate reduced spreading pressure by numerical integration
 		// using the trapezoidal rule
@@ -499,6 +499,6 @@ double adsorption_toth_piStar_pyxgTM(double p_total_Pa, double y_molmol,
 		piStar_molkg_num += (h / M_kgmol) *
 			(adsorption_toth_w_pT(p_tmp, T_K, isotherm_par) / p_tmp);
 	}
-	
+
 	return piStar_molkg_num;
 }

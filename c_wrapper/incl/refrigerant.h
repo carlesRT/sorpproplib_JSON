@@ -19,10 +19,13 @@
  * Attributes:
  * -----------
  * 	function psat_T:
- *		Returns vapour pressure in Pa depending on temperature T in K and
+ *		Returns vapor pressure in Pa depending on temperature T in K and
+ *		coefficients for refrigerant refrigerant_par.
+ * 	function Tsat_p:
+ *		Returns saturation temperature in K depending on pressure p in Pa and
  *		coefficients for refrigerant refrigerant_par.
  * 	function dpsat_dT:
- *		Returns derivative of vapour pressure wrt. temperature in Pa/K depending
+ *		Returns derivative of vapor pressure wrt. temperature in Pa/K depending
  *		on temperature T in K and coefficients for refrigerant refrigerant_par.
  * 	function rho_l_T:
  *		Returns saturated liquid density in kg/m3 depending on temperature T in
@@ -60,8 +63,8 @@ typedef struct Refrigerant Refrigerant;
  *
  * Parameters:
  * -----------
- * 	const char *vapourPressure_approach:
- *		Calculation approach for vapour pressure.
+ * 	const char *vaporPressure_approach:
+ *		Calculation approach for vapor pressure.
  * 	const char *saturatedLiquidDensity_approach:
  *		Calculation approach for saturated liquid density.
  *
@@ -69,7 +72,7 @@ typedef struct Refrigerant Refrigerant;
  * --------
  *	struct *Refrigerant:
  *		Returns malloc-ed Refrigerant-struct that contains function pointers
- *		reffering to functions of refrigerant.
+ *		referring to functions of refrigerant.
  *
  * History:
  * --------
@@ -77,7 +80,7 @@ typedef struct Refrigerant Refrigerant;
  *		First implementation.
  *
  */
-Refrigerant *newRefrigerant(const char *vapourPressure_approach,
+Refrigerant *newRefrigerant(const char *vaporPressure_approach,
 	const char *saturatedLiquidDensity_approach);
 
 
@@ -99,5 +102,5 @@ Refrigerant *newRefrigerant(const char *vapourPressure_approach,
  *
  */
 void delRefrigerant(void *refrigerant);
- 
+
 #endif

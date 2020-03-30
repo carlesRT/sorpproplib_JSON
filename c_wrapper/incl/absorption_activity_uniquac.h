@@ -11,14 +11,17 @@
 /*
  * General form of UNIQUAC equation:
  * ---------------------------------
- * 	gamma_1 = exp(1 - V_1 + ln(V_1) - z / 2 * q_1 * (1 - V_1 / F_1 + ln(V_1 /
- *		F_1)) + q_1 * (1 - ln((q_1 * x_1 + q_2 * x_2 * tau_21) / (q_1 * x_1 +
- *		q_2 * x_2)) - (q_1 * x_1 / (q_1 * x_1 + q_2 * x_2 * tau_21) + q_2 *
- *		x_2 * tau_12 / (q_1 * x_1 * tau_12 + q_2 * x_2))))
+ *	gamma_1 = exp(ln(gamma_1_C) + ln(gamma_1_R))
+ *
+ *	with: ln(gamma_1_C) = (1 - V_1 + ln(V_1)) - z/2 * q_1 * (1 - V_1/F_1 +
+ *	-----  	ln(V_1/F_1))
+ *		  ln(gamma_1_R) = q_1 * (1 - ln((q_1 * x_1 + q_2 * x_2 * tau_21) /
+ *		  	(q_1 * x_1 + q_2 * x_2)) - (q_1 * x_1 / (q_1 * x_1 + q_2 * x_2 *
+ *		  	tau_21) + q_2 * x_2 * tau_12 / (q_1 * x_1 * tau_12 + q_2 * x_2)))
  *
  *	with: V_1 = r_1 / (x_1 * r_1 + x_2 * r_2)
  *	----- F_1 = q_1 / (x_1 * q_1 + x_2 * q_2)
- *		  
+ *
  * Temperature-dependent coefficients:
  * -----------------------------------
  *	tau_12 = -du_12 / (R * T)
@@ -46,7 +49,7 @@
  * 	isotherm_par[5] -> r_2		-> in -
  * 	isotherm_par[6] -> z		-> in -
  *
- * Order of coefficients in JSON-file when modeling du_12 & du_21 
+ * Order of coefficients in JSON-file when modeling du_12 & du_21
  * temperature-dependent:
  * ----------------------
  *	isotherm_par[0]	-> a_12		-> in J/mol
@@ -66,7 +69,7 @@
  * absorption_activity_uniquac_fdu_g1_Tx:
  * --------------------------------------
  *
- * Calculates activity coefficient of first component depending on temperature 
+ * Calculates activity coefficient of first component depending on temperature
  * T_K in K and mole fraction in liquid phase x_molmol in mol/mol. Variables
  * du_12 and du_21 are modeled as constants.
  *
@@ -98,7 +101,7 @@ double absorption_activity_uniquac_fdu_g1_Tx(double T_K, double x_molmol,
  * absorption_activity_uniquac_duT_g1_Tx:
  * --------------------------------------
  *
- * Calculates activity coefficient of first component depending on temperature 
+ * Calculates activity coefficient of first component depending on temperature
  * T_K in K and mole fraction in liquid phase x_molmol in mol/mol. Variables
  * du_12 and du_21 are modeled temperature-dependent.
  *
@@ -130,9 +133,9 @@ double absorption_activity_uniquac_duT_g1_Tx(double T_K, double x_molmol,
  * absorption_activity_uniquac_p_Txgpsat:
  * --------------------------------------
  *
- * Calculates equilibrium pressure p_Pa in Pa of first component depending on 
- * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol, 
- * saturation pressure of first component p_sat_Pa in Pa, and function pointer 
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * saturation pressure of first component p_sat_Pa in Pa, and function pointer
  * for activity coefficient of first component.
  *
  * Parameters:
@@ -146,7 +149,7 @@ double absorption_activity_uniquac_duT_g1_Tx(double T_K, double x_molmol,
  *	double p_sat_Pa:
  *		Saturation pressure of first component in Pa. *
  *	double isotherm_par[]:
- *		Array of doubles that contains coefficients of Wilson equation.
+ *		Array of doubles that contains coefficients of UNIQUAC equation.
  *
  * Returns:
  * --------
@@ -160,7 +163,49 @@ double absorption_activity_uniquac_duT_g1_Tx(double T_K, double x_molmol,
  *
  */
 double absorption_activity_uniquac_p_Txgpsat(double T_K, double x_molmol,
-	double (*func_gamma)(double, double, double[]), double p_sat_Pa, 
+	double (*func_gamma)(double, double, double[]), double p_sat_Pa,
+	double isotherm_par[]);
+
+
+/*
+ * absorption_activity_uniquac_x_pTgpsat:
+ * --------------------------------------
+ *
+ * Calculates equilibrium mole fraction x_molmol in mol/mol of first component
+ * depending on equilibrium pressure p_Pa in Pa of first component, temperature
+ * T_K in K, saturation pressure of first component p_sat_Pa in Pa, and function
+ * pointer for activity coefficient of first component.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa of first component.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double (*func_gamma)(double, double, double[]):
+ *		Function pointer for activity coefficient of first component.
+ *	double p_sat_Pa:
+ *		Saturation pressure of first component in Pa.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of UNIQUAC equation.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction x_molmol in mol/mol of first component.
+ *
+ * Remarks:
+ * --------
+ *	Uses Newton-Raphson method for calculating equilibrium molar fraction.
+ *
+ * History:
+ * --------
+ *	03/23/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double absorption_activity_uniquac_x_pTgpsat(double p_Pa, double T_K,
+	double (*func_gamma)(double, double, double[]), double p_sat_Pa,
 	double isotherm_par[]);
 
 #endif
