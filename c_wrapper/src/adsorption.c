@@ -292,6 +292,12 @@ void delAdsorption(void *adsorption) {
  *		Pointer to Adsorption-struct that contains pointer of isotherm
  *		functions.
  *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *
  * History:
  * --------
  *	01/05/2020, by Mirko Engelpracht:
@@ -303,25 +309,16 @@ void init_surFunctions(void *adsorption) {
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
 
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nCannot run function \"init_surFunctions\".");
-
-	} else {
-		// Set function pointers
-		//
-		retAdsorption->w_pT = w_pT_sur;
-		retAdsorption->p_wT = p_wT_sur;
-		retAdsorption->T_pw = T_pw_sur;
-		retAdsorption->dw_dp_pT = dw_dp_pT_sur;
-		retAdsorption->dw_dT_pT = dw_dT_pT_sur;
-		retAdsorption->dp_dw_wT = dp_dw_wT_sur;
-		retAdsorption->dp_dT_wT = dp_dT_wT_sur;
-		retAdsorption->piStar_pyxgTM = piStar_pyxgTM_sur;
-	}
+	// Set function pointers
+	//
+	retAdsorption->w_pT = w_pT_sur;
+	retAdsorption->p_wT = p_wT_sur;
+	retAdsorption->T_pw = T_pw_sur;
+	retAdsorption->dw_dp_pT = dw_dp_pT_sur;
+	retAdsorption->dw_dT_pT = dw_dT_pT_sur;
+	retAdsorption->dp_dw_wT = dp_dw_wT_sur;
+	retAdsorption->dp_dT_wT = dp_dT_wT_sur;
+	retAdsorption->piStar_pyxgTM = piStar_pyxgTM_sur;
 }
 
 
@@ -339,6 +336,12 @@ void init_surFunctions(void *adsorption) {
  *		Pointer to Adsorption-struct that contains pointer of isotherm
  *		functions.
  *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *
  * History:
  * --------
  *	03/19/2020, by Mirko Engelpracht:
@@ -350,25 +353,16 @@ void init_surPsatFunctions(void *adsorption) {
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
 
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nCannot run function \"init_surPsatFunctions\".");
-
-	} else {
-		// Set function pointers
-		//
-		retAdsorption->w_pT = w_pT_surPsat;
-		retAdsorption->p_wT = p_wT_surPsat;
-		retAdsorption->T_pw = T_pw_surPsat;
-		retAdsorption->dw_dp_pT = dw_dp_pT_surPsat;
-		retAdsorption->dw_dT_pT = dw_dT_pT_surPsat;
-		retAdsorption->dp_dw_wT = dp_dw_wT_surPsat;
-		retAdsorption->dp_dT_wT = dp_dT_wT_surPsat;
-		retAdsorption->piStar_pyxgTM = piStar_pyxgTM_surPsat;
-	}
+	// Set function pointers
+	//
+	retAdsorption->w_pT = w_pT_surPsat;
+	retAdsorption->p_wT = p_wT_surPsat;
+	retAdsorption->T_pw = T_pw_surPsat;
+	retAdsorption->dw_dp_pT = dw_dp_pT_surPsat;
+	retAdsorption->dw_dT_pT = dw_dT_pT_surPsat;
+	retAdsorption->dp_dw_wT = dp_dw_wT_surPsat;
+	retAdsorption->dp_dT_wT = dp_dT_wT_surPsat;
+	retAdsorption->piStar_pyxgTM = piStar_pyxgTM_surPsat;
 }
 
 
@@ -386,6 +380,12 @@ void init_surPsatFunctions(void *adsorption) {
  *		Pointer to "Adsorption-struct that contains pointer of isotherm
  *		functions.
  *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *
  * History:
  * --------
  *	01/05/2020, by Mirko Engelpracht:
@@ -397,25 +397,55 @@ void init_volFunctions(void *adsorption) {
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
 
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nCannot run function \"init_volFunctions\".");
+	// Set function pointers
+	//
+	retAdsorption->w_pT = w_pT_vol;
+	retAdsorption->p_wT = p_wT_vol;
+	retAdsorption->T_pw = T_pw_vol;
+	retAdsorption->dw_dp_pT = dw_dp_pT_vol;
+	retAdsorption->dw_dT_pT = dw_dT_pT_vol;
+	retAdsorption->dp_dw_wT = dp_dw_wT_vol;
+	retAdsorption->dp_dT_wT = dp_dT_wT_vol;
+	retAdsorption->piStar_pyxgTM = piStar_pyxgTM_vol;
+}
 
-	} else {
-		// Set function pointers
-		//
-		retAdsorption->w_pT = w_pT_vol;
-		retAdsorption->p_wT = p_wT_vol;
-		retAdsorption->T_pw = T_pw_vol;
-		retAdsorption->dw_dp_pT = dw_dp_pT_vol;
-		retAdsorption->dw_dT_pT = dw_dT_pT_vol;
-		retAdsorption->dp_dw_wT = dp_dw_wT_vol;
-		retAdsorption->dp_dT_wT = dp_dT_wT_vol;
-		retAdsorption->piStar_pyxgTM = piStar_pyxgTM_vol;
-	}
+
+/*
+ * warning_func_par:
+ * -----------------
+ *
+ * Auxiliary function to throw warning if some function or parameter is missing.
+ *
+ * Parameters:
+ * -----------
+ * 	const char *name_function:
+ *		Name of parameter that is missing.
+ * 	const char *name_ads_function:
+ *		Name of adsorption function that is executed.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
+ * History:
+ * --------
+ *	08/04/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double warning_func_par(const char *name_function,
+	const char *name_ads_function) {
+	// Print warning
+	//
+	printf("\n\n###########\n# Warning #\n###########");
+	printf("\nChosen adsorption function \"%s\" is not implemented or its "
+		"parameter do not exist.", name_function);
+	printf("\nReturn -1 for function call \"%s\".", name_ads_function);
+
+	// Return error indicator
+	//
+	return -1.0;
 }
 
 
@@ -452,6 +482,8 @@ void init_volFunctions(void *adsorption) {
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -469,23 +501,6 @@ double w_pT_sur(double p_Pa, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"w_pT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_w_pT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_w_pT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"w_pT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -533,6 +548,8 @@ double w_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -554,38 +571,13 @@ double w_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"w_pT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"w_pT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_w_pTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_w_pTpsat or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"w_pT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"w_pT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "w_pT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -631,6 +623,8 @@ double w_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -652,45 +646,16 @@ double w_pT_vol(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"w_pT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"w_pT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_w_pTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_w_pTpsatRho or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"w_pT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"w_pT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "w_pT_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"w_pT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "w_pT_vol");
 	}
 
-	// Calculate vapour pressure and saturated liquid of adsorpt
+	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 
 	// Return result of isotherm function
@@ -733,6 +698,8 @@ double w_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -750,23 +717,6 @@ double p_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"p_wT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_p_wT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_p_wT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -814,6 +764,8 @@ double p_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -835,38 +787,13 @@ double p_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"p_wT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"p_wT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_p_wTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_p_wTpsat or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "p_wT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -912,6 +839,8 @@ double p_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -933,44 +862,16 @@ double p_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"p_wT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"p_wT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_p_wTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_p_wTpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "p_wT_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"p_wT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "p_wT_vol");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 
 	// Return result of isotherm function
@@ -1013,6 +914,8 @@ double p_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1030,23 +933,6 @@ double T_pw_sur(double p_Pa, double w_kgkg, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"T_pw_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_T_pw == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_T_pw or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1094,6 +980,8 @@ double T_pw_sur(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1117,39 +1005,11 @@ double T_pw_surPsat(double p_Pa, double w_kgkg, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"T_pw_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"T_pw_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_T_pwpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_T_pwpsat or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "T_pw_surPsat");
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_surPsat\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "T_pw_surPsat");
 	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
@@ -1162,7 +1022,7 @@ double T_pw_surPsat(double p_Pa, double w_kgkg, double isotherm_par[],
 	return retAdsorption->sur_T_pwpsat(p_Pa, w_kgkg,
 		retRefrigerant->psat_T,
 		retRefrigerant->dpsat_dT,
-		isotherm_par, p_sat_par);
+		isotherm_par, p_sat_par, refrigerant);
 }
 
 
@@ -1199,6 +1059,8 @@ double T_pw_surPsat(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1225,51 +1087,17 @@ double T_pw_vol(double p_Pa, double w_kgkg, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_T_pwpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_T_pwpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "T_pw_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "T_pw_vol");
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "T_pw_vol");
 	}
-	if (retRefrigerant->drho_l_dT == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for drho_l_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"T_pw_vol\".");
-		return -1;
+	if (retRefrigerant->drho_l_dT == NULL) {
+		return warning_func_par("drho_l_dT", "T_pw_vol");
 	}
 
 	// Return result of isotherm function
@@ -1279,7 +1107,7 @@ double T_pw_vol(double p_Pa, double w_kgkg, double isotherm_par[],
 		retRefrigerant->rho_l_T,
 		retRefrigerant->dpsat_dT,
 		retRefrigerant->drho_l_dT,
-		isotherm_par, p_sat_par, rho_l_par);
+		isotherm_par, p_sat_par, rho_l_par, refrigerant);
 }
 
 
@@ -1317,6 +1145,8 @@ double T_pw_vol(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1334,23 +1164,6 @@ double dw_dp_pT_sur(double p_Pa, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dw_dp_pT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dw_dp_pT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1399,6 +1212,8 @@ double dw_dp_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1420,39 +1235,13 @@ double dw_dp_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dw_dp_pTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dw_dp_pTpsat or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "dw_dp_pT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1499,6 +1288,8 @@ double dw_dp_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1520,44 +1311,16 @@ double dw_dp_pT_vol(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_dw_dp_pTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_dw_dp_pTpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "dw_dp_pT_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dp_pT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "dw_dp_pT_vol");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 
 	// Return result of isotherm function
@@ -1601,6 +1364,8 @@ double dw_dp_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1618,23 +1383,6 @@ double dw_dT_pT_sur(double p_Pa, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dw_dT_pT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dw_dT_pT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1683,6 +1431,8 @@ double dw_dT_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1706,46 +1456,18 @@ double dw_dT_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dw_dT_pTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dw_dT_pTpsat or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "dw_dT_pT_surPsat");
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_surPsat\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "dw_dT_pT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
-	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
+	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par,
+		refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1793,6 +1515,8 @@ double dw_dT_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1814,57 +1538,28 @@ double dw_dT_pT_vol(double p_Pa, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_dw_dT_pTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_dw_dT_pTpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "dw_dT_pT_vol");
+
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "dw_dT_pT_vol");
+
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "dw_dT_pT_vol");
+
 	}
-	if (retRefrigerant->drho_l_dT == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for drho_l_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dw_dT_pT_vol\".");
-		return -1;
+	if (retRefrigerant->drho_l_dT == NULL) {
+		return warning_func_par("drho_l_dT", "dw_dT_pT_vol");
+
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
-	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
+	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par,
+		refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 	double drho_l_dT_kgm3K = retRefrigerant->drho_l_dT(T_K, rho_l_par);
 
@@ -1909,6 +1604,8 @@ double dw_dT_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1926,23 +1623,6 @@ double dp_dw_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dp_dw_wT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dp_dw_wT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -1991,6 +1671,8 @@ double dp_dw_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -2012,39 +1694,13 @@ double dp_dw_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dp_dw_wTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dp_dw_wTpsat or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "dp_dw_wT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -2092,6 +1748,8 @@ double dp_dw_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -2113,44 +1771,16 @@ double dp_dw_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_dp_dw_wTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_dp_dw_wTpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "dp_dw_wT_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dw_wT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "dp_dw_wT_vol");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 
 	// Return directly result of isotherm function
@@ -2194,6 +1824,8 @@ double dp_dw_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -2211,23 +1843,6 @@ double dp_dT_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dp_dT_wT == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dp_dT_wT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -2276,6 +1891,8 @@ double dp_dT_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -2299,46 +1916,18 @@ double dp_dT_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_dp_dT_wTpsat == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_dp_dT_wTpsat or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_surPsat\".");
-		return -1;
+		return warning_func_par("psat_T", "dp_dT_wT_surPsat");
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_surPsat\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "dp_dT_wT_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
-	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
+	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par,
+		refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -2386,6 +1975,8 @@ double dp_dT_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -2407,57 +1998,24 @@ double dp_dT_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_dp_dT_wTpsatRho == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_dp_dT_wTpsatRho do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for psat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "dp_dT_wT_vol");
 	}
-	if (retRefrigerant->dpsat_dT == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for dpsat_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
+	if (retRefrigerant->dpsat_dT == NULL) {
+		return warning_func_par("dpsat_dT", "dp_dT_wT_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "dp_dT_wT_vol");
 	}
-	if (retRefrigerant->drho_l_dT == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for drho_l_dT or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"dp_dT_wT_vol\".");
-		return -1;
+	if (retRefrigerant->drho_l_dT == NULL) {
+		return warning_func_par("drho_l_dT", "dp_dT_wT_vol");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
-	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
+	double dp_sat_dT_PaK = retRefrigerant->dpsat_dT(T_K, p_sat_par,
+		refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 	double drho_l_dT_kgm3K = retRefrigerant->drho_l_dT(T_K, rho_l_par);
 
@@ -2518,6 +2076,8 @@ double dp_dT_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach, fluid properties
@@ -2536,24 +2096,6 @@ double piStar_pyxgTM_sur(double p_total_Pa, double y_molmol, double x_molmol,
 	// Typecast void pointers given as inputs to correct structs
 	//
 	Adsorption *retAdsorption = (Adsorption *) adsorption;
-
-	// Check if structures do exists and if functions are implemented
-	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_sur\".");
-		return -1;
-	}
-	if (retAdsorption->sur_piStar_pyxgTM == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_piStar_pyxgTM or its coefficients do not "
-			"exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_sur\".");
-		return -1;
-	}
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -2619,6 +2161,8 @@ double piStar_pyxgTM_sur(double p_total_Pa, double y_molmol, double x_molmol,
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach using saturation
@@ -2641,39 +2185,13 @@ double piStar_pyxgTM_surPsat(double p_total_Pa, double y_molmol,
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_surPsat\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_surPsat\".");
-		return -1;
-	}
-	if (retAdsorption->sur_piStar_pyxgTpsatM == NULL || isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for sur_piStar_pyxgTpsatM or its coefficients do "
-			"not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_surPsat\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for p_sat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "piStar_pyxgTM_surPsat");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 
 	// Avoid compiler warning C4100 by adding "do nothing" expression
 	// "Do nothing" expression will be optimized out by compiler
@@ -2737,6 +2255,8 @@ double piStar_pyxgTM_surPsat(double p_total_Pa, double y_molmol,
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach, fluid properties
@@ -2759,46 +2279,16 @@ double piStar_pyxgTM_vol(double p_total_Pa, double y_molmol, double x_molmol,
 
 	// Check if structures do exists and if functions are implemented
 	//
-	if (retAdsorption == NULL) {
-		// Adsorption-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nAdsorption-struct does not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
-	}
-	if (retRefrigerant == NULL) {
-		// Refrigerant-struct does not exists
-		//
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant-struct does not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
-	}
-	if (retAdsorption->vol_piStar_pyxgTpsatRhoM == NULL ||
-		isotherm_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for vol_piStar_pyxgTpsatRhoM or its coefficients do "
-			"not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
-	}
 	if (retRefrigerant->psat_T == NULL || p_sat_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for p_sat_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
+		return warning_func_par("psat_T", "piStar_pyxgTM_vol");
 	}
 	if (retRefrigerant->rho_l_T == NULL || rho_l_par == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nFunction for rho_l_T or its coefficients do not exist.");
-		printf("\nReturn -1 for function call \"piStar_pyxgTM_vol\".");
-		return -1;
+		return warning_func_par("rho_l_T", "piStar_pyxgTM_vol");
 	}
 
 	// Calculate vapor pressure and saturated liquid of adsorpt
 	//
-	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par);
+	double p_sat_Pa = retRefrigerant->psat_T(T_K, p_sat_par, refrigerant);
 	double rho_l_kgm3 = retRefrigerant->rho_l_T(T_K, rho_l_par);
 
 	// Return directly result of isotherm function

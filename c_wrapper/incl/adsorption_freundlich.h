@@ -123,14 +123,16 @@ double adsorption_freundlich_p_wTpsat(double w_kgkg, double T_K,
  *		Equilibrium pressure in Pa.
  *	double w_kgkg:
  *		Equilibrium loading in kg/kg.
- *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[]):
+ *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for vapor pressure wrt. temperature.
- *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]):
+ *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for derivative of vapor pressure wrt. temperature.
  *	double isotherm_par[]:
  *		Array of doubles that contains coefficients of Freundlich equation.
  *	double p_sat_par[]:
  *		Array of doubles that contains coefficients vapor pressure.
+ *	void *refrigerant:
+ *		Pointer to Refrigerant-struct required for refrigerant functions.
  *
  * Returns:
  * --------
@@ -139,18 +141,22 @@ double adsorption_freundlich_p_wTpsat(double w_kgkg, double T_K,
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Uses Newton-Raphson method for calculating equilibrium temperature.
  *
  * History:
  * --------
  *	03/17/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added proper refrigerant functions.
  *
  */
 double adsorption_freundlich_T_pwpsat(double p_Pa, double w_kgkg,
-	double (*p_sat_T_Pa)(double T_K, double p_sat_par[]),
-	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]),
-	double isotherm_par[], double p_sat_par[]);
+	double (*p_sat_T_Pa)(double T_K, double p_sat_par[], void *refrigerant),
+	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant),
+	double isotherm_par[], double p_sat_par[], void *refrigerant);
 
 
 /*

@@ -30,7 +30,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_duehring = newAbsorption("duehring");
+	Absorption *isotherm_duehring = newAbsorption("duehring", par_duehring);
 
 	double X_kgkg = isotherm_duehring->con_X_pT(p_Pa, T_K, par_duehring);
 	double p_Pa_inv = isotherm_duehring->con_p_XT(X_kgkg, T_K, par_duehring);
@@ -86,7 +86,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_antoine = newAbsorption("antoine");
+	Absorption *isotherm_antoine = newAbsorption("antoine", par_antoine);
 
 	X_kgkg = isotherm_antoine->con_X_pT(p_Pa, T_K, par_antoine);
 	p_Pa_inv = isotherm_antoine->con_p_XT(X_kgkg, T_K, par_antoine);
@@ -146,7 +146,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_wilson_fdl = newAbsorption("wilson-fixeddl");
+	Absorption *isotherm_wilson_fdl = newAbsorption("wilson-fixeddl",
+		par_wilson_fdl);
 
 	double gamma_1 = isotherm_wilson_fdl->act_g_Txv1v2_w_v(T_K , x_molmol, -1,
 		-1, par_wilson_fdl);
@@ -200,7 +201,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_wilson_tdl = newAbsorption("wilson-dl-t");
+	Absorption *isotherm_wilson_tdl = newAbsorption("wilson-dl-t",
+		par_wilson_tdl);
 
 	gamma_1 = isotherm_wilson_tdl->act_g_Txv1v2_w_v(T_K , x_molmol, -1,
 		-1, par_wilson_tdl);
@@ -241,7 +243,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_tsuboka_katayama = newAbsorption("tsuboka-katayama");
+	Absorption *isotherm_tsuboka_katayama = newAbsorption("tsuboka-katayama",
+		par_tsuboka_katayama);
 
 	gamma_1 = isotherm_tsuboka_katayama->act_g_Txv1v2_w_v(T_K , x_molmol, -1,
 		-1, par_tsuboka_katayama);
@@ -280,7 +283,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_heil = newAbsorption("heil");
+	Absorption *isotherm_heil = newAbsorption("heil", par_heil);
 
 	gamma_1 = isotherm_heil->act_g_Txv1v2_w_v(T_K , x_molmol, -1, -1,
 		par_heil);
@@ -319,7 +322,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_wangchao = newAbsorption("wang-chao");
+	Absorption *isotherm_wangchao = newAbsorption("wang-chao", par_wangchao);
 
 	gamma_1 = isotherm_wangchao->act_g_Txv1v2_w_v(T_K , x_molmol, -1, -1,
 		par_wangchao);
@@ -358,7 +361,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_nrtl_fdg = newAbsorption("nrtl-fixeddg");
+	Absorption *isotherm_nrtl_fdg = newAbsorption("nrtl-fixeddg", par_nrtl_fdg);
 
 	gamma_1 = isotherm_nrtl_fdg->act_g_Tx_wo_v(T_K , x_molmol, par_nrtl_fdg);
 	p_Pa = isotherm_nrtl_fdg->act_p_Txgpsat_w_gf(T_K , x_molmol,
@@ -406,7 +409,7 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_nrtl_dgt = newAbsorption("nrtl-dg-t");
+	Absorption *isotherm_nrtl_dgt = newAbsorption("nrtl-dg-t", par_nrtl_dgt);
 
 	gamma_1 = isotherm_nrtl_dgt->act_g_Tx_wo_v(T_K , x_molmol, par_nrtl_dgt);
 	p_Pa = isotherm_nrtl_dgt->act_p_Txgpsat_w_gf(T_K , x_molmol,
@@ -445,7 +448,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_uniquac_fdu = newAbsorption("uniquac-fixeddu");
+	Absorption *isotherm_uniquac_fdu = newAbsorption("uniquac-fixeddu",
+		par_uniquac_fdu);
 
 	gamma_1 = isotherm_uniquac_fdu->act_g_Tx_wo_v(T_K, x_molmol,
 		par_uniquac_fdu);
@@ -487,7 +491,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_uniquac_dut = newAbsorption("uniquac-du-t");
+	Absorption *isotherm_uniquac_dut = newAbsorption("uniquac-du-t",
+		par_uniquac_dut);
 
 	gamma_1 = isotherm_uniquac_dut->act_g_Tx_wo_v(T_K, x_molmol,
 		par_uniquac_dut);
@@ -526,7 +531,8 @@ int main() {
 
 	// Calculate equilibrium data
 	//
-	Absorption *isotherm_flory_huggins = newAbsorption("flory-huggins");
+	Absorption *isotherm_flory_huggins = newAbsorption("flory-huggins",
+		par_flory_huggins);
 
 	gamma_1 = isotherm_flory_huggins->act_g_Tx_wo_v(T_K, x_molmol,
 		par_flory_huggins);
@@ -548,8 +554,69 @@ int main() {
 		"x = %f mol/mol.", p_Pa, T_K, x_inv_molmol);
 
 
+	// Define parameter record for executing Wilson equation. Data for working
+	// pair "IL [c10mim][ntf2] / CO2" is taken from:
+	//
+	// 	Manic M.S. et al. High-pressure solubilities of carbon dioxide in ionic
+	//	liquids based on bis (trifluoromethylsulfonyl) imide and chloride. The
+	//	Journal of Supercritical Fluids 2012. 65: p. 1-10.
+	//
+	double par_mixing[] =
+		{10, -5, 3.6290e6, 407.81, 0.183531783208, 0, 0, 0, 0, 0,
+		1.127e6, 743.05, 0.7915, 0, 0, 0, 0, 0,
+		0.01749, 0, 0, 0, 0};
+
+	// Define some inputs
+	//
+	T_K = 313.15;
+	double w_1_kgkg = 0.2;
+	x_molmol =  (w_1_kgkg / 0.0581222) / (w_1_kgkg / 0.0581222 +
+		(1- w_1_kgkg) / 0.350);
+
+	// Calculate equilibrium data
+	//
+	Absorption *isotherm_mixing = newAbsorption("mixingrule", par_mixing);
+
+	double y_1_molmol, y_1_molmol_1, y_1_molmol_2,
+		y_2_molmol, y_2_molmol_1, y_2_molmol_2;
+	p_Pa = isotherm_mixing->mix_p_Tx(&y_1_molmol, &y_2_molmol, T_K, x_molmol,
+		par_mixing, isotherm_mixing);
+	x_inv_molmol = isotherm_mixing->mix_x_pT(&y_1_molmol_1, &y_2_molmol_1,
+		p_Pa, T_K, par_mixing, isotherm_mixing);
+	T_K_inv = isotherm_mixing->mix_T_px(&y_1_molmol_2, &y_2_molmol_2, p_Pa,
+		x_molmol, par_mixing, isotherm_mixing);
+
+	double dp_dx_Pa = isotherm_mixing->mix_dp_dx_Tx(T_K, x_molmol,
+		par_mixing, isotherm_mixing);
+	double dp_dT_PaK = isotherm_mixing->mix_dp_dT_Tx(T_K, x_molmol,
+		par_mixing, isotherm_mixing);
+
+	// Print calculated values
+	//
+	printf("\n\n##\n##\nCreated structure for PRE + Mixing-1PVDW isotherm.");
+	printf("\nSelected working pair is \"R-600a / Oil\".");
+
+	printf("\n\nFor p = %f Pa and T = %f K, equilibrium liquid mole fraction "
+		"results in x = %f mol/mol and vapor mole fraction results in y = %f "
+		"mol/mol.", p_Pa, T_K, x_inv_molmol, y_1_molmol_1);
+	printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure results "
+		"in p = %f Pa and vapor mole fraction results in y = %f mol/mol.",
+		T_K, x_molmol, p_Pa, y_1_molmol);
+	printf("\nFor p = %f Pa and x = %f mol/mol, equilibrium temperature "
+		"results in T = %f K and vapor mole fraction results in y = %f "
+		"mol/mol.", p_Pa, x_molmol, T_K_inv, y_1_molmol_2);
+
+	printf("\n\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+		"p with respect to molar fraction results in dp_dx = %f Pa.",
+		T_K, x_molmol, dp_dx_Pa);
+	printf("\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+		"p with respect to temperature results in dp_dT = %f Pa/K.",
+		T_K, x_molmol, dp_dT_PaK);
+
+
 	// Free memory that is allocated for structures
 	//
+	delAbsorption(isotherm_mixing);
 	delAbsorption(isotherm_flory_huggins);
 	delAbsorption(isotherm_uniquac_dut);
 	delAbsorption(isotherm_uniquac_fdu);

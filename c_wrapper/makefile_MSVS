@@ -43,10 +43,11 @@ SOURCES_LIB = $(DIR_SRC)\json_interface.c\
 	$(DIR_SRC)\absorption_activity_nrtl.c\
 	$(DIR_SRC)\absorption_activity_uniquac.c\
 	$(DIR_SRC)\absorption_activity_floryhuggins.c\
-	$(DIR_SRC)\absorption_mixing_1pvdw.c\
+	$(DIR_SRC)\absorption_mixing.c\
 	$(DIR_SRC)\refrigerant.c\
 	$(DIR_SRC)\refrigerant_vaporPressure.c\
-	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c
+	$(DIR_SRC)\refrigerant_saturatedLiquidDensity.c\
+	$(DIR_SRC)\refrigerant_cubicEoS.c
 
 SOURCES = $(SOURCES_LIB) $(DIR_SRC)\workingPair.c
 
@@ -192,7 +193,7 @@ test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_nrtl.exe\
 	test_absorption_activity_uniquac.exe\
 	test_absorption_activity_floryhuggins.exe\
-	test_absorption_mixing_1pvdw.exe\
+	test_absorption_mixing.exe\
 	test_absorption.exe
 	$(DIR_TEST)\test_absorption_duehring.exe
 	$(DIR_TEST)\test_absorption_antoine.exe
@@ -203,7 +204,7 @@ test_absorption: test_absorption_duehring.exe\
 	$(DIR_TEST)\test_absorption_activity_nrtl.exe
 	$(DIR_TEST)\test_absorption_activity_uniquac.exe
 	$(DIR_TEST)\test_absorption_activity_floryhuggins.exe
-	$(DIR_TEST)\test_absorption_mixing_1pvdw.exe
+	$(DIR_TEST)\test_absorption_mixing.exe
 	$(DIR_TEST)\test_absorption.exe
 
 
@@ -261,7 +262,7 @@ $(DIR_LIB)\lib$(PROJECT).dll: $(OBJECTS_LIB)
 # Create test scripts
 #
 test_refrigerant_vaporPressure.exe: $(DIR_OBJ)\test_refrigerant_vaporPressure.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj $(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_refrigerant_saturatedLiquidDensity.exe: $(DIR_OBJ)\test_refrigerant_saturatedLiquidDensity.obj\
@@ -270,7 +271,8 @@ test_refrigerant_saturatedLiquidDensity.exe: $(DIR_OBJ)\test_refrigerant_saturat
 
 test_refrigerant.exe: $(DIR_OBJ)\test_refrigerant.obj\
 	$(DIR_OBJ)\refrigerant.obj $(DIR_OBJ)\refrigerant_vaporPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
+	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 
@@ -289,13 +291,15 @@ test_adsorption_toth.exe: $(DIR_OBJ)\test_adsorption_toth.obj\
 test_adsorption_freundlich.exe: $(DIR_OBJ)\test_adsorption_freundlich.obj\
 	$(DIR_OBJ)\adsorption_freundlich.obj $(DIR_OBJ)\refrigerant.obj\
 	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
+	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_adsorption_dubininAstakhov.exe: $(DIR_OBJ)\test_adsorption_dubininAstakhov.obj\
 	$(DIR_OBJ)\adsorption_dubininAstakhov.obj $(DIR_OBJ)\refrigerant.obj\
 	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
+	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\
@@ -304,7 +308,8 @@ test_adsorption.exe: $(DIR_OBJ)\test_adsorption.obj\
 	$(DIR_OBJ)\adsorption_toth.obj $(DIR_OBJ)\adsorption_freundlich.obj\
 	$(DIR_OBJ)\refrigerant.obj\
 	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
-	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj
+	$(DIR_OBJ)\refrigerant_saturatedLiquidDensity.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 
@@ -318,41 +323,49 @@ test_absorption_antoine.exe: $(DIR_OBJ)\test_absorption_antoine.obj\
 
 test_absorption_activity_wilson.exe: $(DIR_OBJ)\test_absorption_activity_wilson.obj\
 	$(DIR_OBJ)\absorption_activity_wilson.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_tsubokakatayama.exe: $(DIR_OBJ)\test_absorption_activity_tsubokakatayama.obj\
 	$(DIR_OBJ)\absorption_activity_tsubokakatayama.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_heil.exe: $(DIR_OBJ)\test_absorption_activity_heil.obj\
 	$(DIR_OBJ)\absorption_activity_heil.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_wangchao.exe: $(DIR_OBJ)\test_absorption_activity_wangchao.obj\
 	$(DIR_OBJ)\absorption_activity_wangchao.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_nrtl.exe: $(DIR_OBJ)\test_absorption_activity_nrtl.obj\
 	$(DIR_OBJ)\absorption_activity_nrtl.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_uniquac.exe: $(DIR_OBJ)\test_absorption_activity_uniquac.obj\
 	$(DIR_OBJ)\absorption_activity_uniquac.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption_activity_floryhuggins.exe: $(DIR_OBJ)\test_absorption_activity_floryhuggins.obj\
 	$(DIR_OBJ)\absorption_activity_floryhuggins.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
-test_absorption_mixing_1pvdw.exe: $(DIR_OBJ)\test_absorption_mixing_1pvdw.obj\
-	$(DIR_OBJ)\absorption_mixing_1pvdw.obj
+test_absorption_mixing.exe: $(DIR_OBJ)\test_absorption_mixing.obj\
+	$(DIR_OBJ)\absorption_mixing.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 test_absorption.exe: $(DIR_OBJ)\test_absorption.obj\
@@ -365,8 +378,9 @@ test_absorption.exe: $(DIR_OBJ)\test_absorption.obj\
 	$(DIR_OBJ)\absorption_activity_nrtl.obj\
 	$(DIR_OBJ)\absorption_activity_uniquac.obj\
 	$(DIR_OBJ)\absorption_activity_floryhuggins.obj\
-	$(DIR_OBJ)\absorption_mixing_1pvdw.obj\
-	$(DIR_OBJ)\refrigerant_vaporPressure.obj
+	$(DIR_OBJ)\absorption_mixing.obj\
+	$(DIR_OBJ)\refrigerant_vaporPressure.obj\
+	$(DIR_OBJ)\refrigerant_cubicEoS.obj
 	$(LINK) $(FLAGS_LINK)$(@F) $**
 
 

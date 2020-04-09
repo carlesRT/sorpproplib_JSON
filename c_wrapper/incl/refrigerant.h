@@ -19,14 +19,15 @@
  * Attributes:
  * -----------
  * 	function psat_T:
- *		Returns vapor pressure in Pa depending on temperature T in K and
- *		coefficients for refrigerant refrigerant_par.
+ *		Returns vapor pressure in Pa depending on temperature T in K,
+ *		coefficients for refrigerant refrigerant_par, and Refrigerant-struct.
  * 	function Tsat_p:
- *		Returns saturation temperature in K depending on pressure p in Pa and
- *		coefficients for refrigerant refrigerant_par.
+ *		Returns saturation temperature in K depending on pressure p in Pa,
+ *		coefficients for refrigerant refrigerant_par, and Refrigerant-struct.
  * 	function dpsat_dT:
  *		Returns derivative of vapor pressure wrt. temperature in Pa/K depending
- *		on temperature T in K and coefficients for refrigerant refrigerant_par.
+ *		on temperature T in K, coefficients for refrigerant refrigerant_par, and
+ *		Refrigerant-struct.
  * 	function rho_l_T:
  *		Returns saturated liquid density in kg/m3 depending on temperature T in
  *		K and coefficients for refrigerant refrigerant_par.
@@ -34,6 +35,23 @@
  *		Returns derivative of saturated liquid density wrt. temperature in in
  *		kg/m3/K depending on temperature T in K and coefficients for refrigerant
  *		refrigerant_par.
+ *
+ * 	function other_psat_T:
+ *		Returns vapor pressure in Pa depending on temperature T in K and
+ *		coefficients for refrigerant refrigerant_par.
+ * 	function other_Tsat_p:
+ *		Returns saturation temperature in K depending on pressure p in Pa and
+ *		coefficients for refrigerant refrigerant_par.
+ * 	function other_dpsat_dT:
+ *		Returns derivative of vapor pressure wrt. temperature in Pa/K depending
+ *		on temperature T in K and coefficients for refrigerant refrigerant_par.
+ * 	function cubic_eos_parameters:
+ *		Calculates pure component parameters of cubic equation of state.
+ * 	function cubic_gen_eos_parameters:
+ *		Calculates generalized pure component parameters of cubic equation of
+ *		state.
+ * 	function cubic_fug_coefficient:
+ *		Calculates fugacity coefficient of cubic equation of state.
  *
  * Remarks:
  * --------
@@ -43,6 +61,8 @@
  * --------
  *	01/05/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/07/2020, by Mirko Engelpracht:
+ *		Added function pointers for cubic equation of states.
  *
  */
 typedef struct Refrigerant Refrigerant;
@@ -67,6 +87,9 @@ typedef struct Refrigerant Refrigerant;
  *		Calculation approach for vapor pressure.
  * 	const char *saturatedLiquidDensity_approach:
  *		Calculation approach for saturated liquid density.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for vapor refrigerant
+ *		functions.
  *
  * Returns:
  * --------
@@ -78,10 +101,12 @@ typedef struct Refrigerant Refrigerant;
  * --------
  *	01/05/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/07/2020, by Mirko Engelpracht:
+ *		Added function pointers for cubic equation of states.
  *
  */
 Refrigerant *newRefrigerant(const char *vaporPressure_approach,
-	const char *saturatedLiquidDensity_approach);
+	const char *saturatedLiquidDensity_approach, double refrigerant_par[]);
 
 
 /*
@@ -102,5 +127,236 @@ Refrigerant *newRefrigerant(const char *vaporPressure_approach,
  *
  */
 void delRefrigerant(void *refrigerant);
+
+
+/*
+ * refrigerant_other_p_sat:
+ * ------------------------
+ *
+ * Calculates vapor pressure in Pa depending on saturation temperature T in K
+ * not using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for refrigerant function.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Vapor pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is valid for all approaches except for cubic equation of
+ *	states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_other_p_sat(double T_K, double refrigerant_par[],
+	void *refrigerant);
+
+
+/*
+ * refrigerant_other_T_sat:
+ * ------------------------
+ *
+ * Calculates saturation temperature in K depending on vapor pressure in Pa
+ * not using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Vapor pressure in Pa.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for refrigerant function.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation temperature in K.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is valid for all approaches except for cubic equation of
+ *	states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_other_T_sat(double p_Pa, double refrigerant_par[],
+	void *refrigerant);
+
+
+/*
+ * refrigerant_other_dp_sat_dT:
+ * ----------------------------
+ *
+ * Calculates derivative of vapor pressure wrt. temperature in Pa/K depending
+ * on saturation temperature T in K not using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for refrigerant function.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of vapor pressure wrt. temperature in Pa/K.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is valid for all approaches except for cubic equation of
+ *	states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_other_dp_sat_dT(double T_K, double refrigerant_par[],
+	void *refrigerant);
+
+
+/*
+ * refrigerant_cubic_p_sat:
+ * ------------------------
+ *
+ * Calculates vapor pressure in Pa depending on saturation temperature T in K
+ * using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for cubic equation of state.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Vapor pressure in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is only valid for cubic equation of states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_cubic_p_sat(double T_K, double refrigerant_par[],
+	void *refrigerant);
+
+
+/*
+ * refrigerant_cubic_T_sat:
+ * ------------------------
+ *
+ * Calculates saturation temperature in K depending on vapor pressure in Pa
+ * using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Vapor pressure in Pa.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for cubic equation of state.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Saturation temperature in K.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is only valid for cubic equation of states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_cubic_T_sat(double p_Pa, double refrigerant_par[],
+	void *refrigerant);
+
+
+/*
+ * refrigerant_cubic_dp_sat_dT:
+ * ----------------------------
+ *
+ * Calculates derivative of vapor pressure wrt. temperature in Pa/K depending
+ * on saturation temperature T in K using cubic equation of state.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Saturation temperature in K.
+ *	double refrigerant_par[]:
+ *		Array of doubles that contains coefficients for cubic equation of state.
+ * 	struct *Refrigerant
+ *		Pointer of Refrigerant-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of vapor pressure wrt. temperature in Pa/K.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Refrigerant-struct, this function is only
+ *	callable when Refrigerant-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *	This function is only valid for cubic equation of states.
+ *
+ * History:
+ * --------
+ *	04/07/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double refrigerant_cubic_dp_sat_dT(double T_K, double refrigerant_par[],
+	void *refrigerant);
 
 #endif

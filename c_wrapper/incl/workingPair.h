@@ -161,13 +161,18 @@ DLL_API void delWorkingPair(void *workingPair);
  * 	const char *name_function:
  *		Name of function that does not exist.
  *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
  * History:
  * --------
  *	27/03/2020, by Mirko Engelpracht:
  *		First implementation.
  *
  */
-void warning_struct(const char *name_struct, const char *name_function);
+double warning_struct(const char *name_struct, const char *name_function);
 
 
 /*
@@ -183,13 +188,18 @@ void warning_struct(const char *name_struct, const char *name_function);
  * 	const char *name_wpair_function:
  *		Name of working pair function that does not exist.
  *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
  * History:
  * --------
  *	27/03/2020, by Mirko Engelpracht:
  *		First implementation.
  *
  */
-void warning_parameter(const char *name_parameter,
+double warning_parameter(const char *name_parameter,
 	const char *name_wpair_function);
 
 
@@ -206,13 +216,18 @@ void warning_parameter(const char *name_parameter,
  * 	const char *name_wpair_function:
  *		Name of working pair function that does not exist.
  *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
  * History:
  * --------
  *	27/03/2020, by Mirko Engelpracht:
  *		First implementation.
  *
  */
-void warning_function(const char *name_function,
+double warning_function(const char *name_function,
 	const char *name_wpair_function);
 
 
@@ -2053,6 +2068,294 @@ DLL_API double abs_act_p_Txv1v2psat(double T_K, double x_molmol,
  */
 DLL_API double abs_act_x_pTv1v2psat(double p_Pa, double T_K, double v1_m3mol,
 	double v2_m3mol, double p_sat_Pa, void *workingPair);
+
+
+/*
+ * abs_act_p_Txv1v2:
+ * -----------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * molar volume of first component in m³/mol, and molar volume of second
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on activity
+ *	coefficients.
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, function uses molar volumes stored in JSON file when input
+ *	v1_m3mol or v2_m3mol is -1. Otherwise, function uses molar volumes given by
+ *	inputs.
+ *	This function uses internal model for vapor pressure of refrigerant.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_act_p_Txv1v2(double T_K, double x_molmol,
+	double v1_m3mol, double v2_m3mol, void *workingPair);
+
+
+/*
+ * abs_act_x_pTv1v2:
+ * -----------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, molar volume of first component in m³/mol, and molar
+ * volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on activity
+ *	coefficients.
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, function uses molar volumes stored in JSON file when input
+ *	v1_m3mol or v2_m3mol is -1. Otherwise, function uses molar volumes given by
+ *	inputs.
+ *	This function uses internal model for vapor pressure of refrigerant.
+ *
+ * History:
+ * --------
+ *	30/03/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_act_x_pTv1v2(double p_Pa, double T_K, double v1_m3mol,
+	double v2_m3mol, void *workingPair);
+
+
+/*
+ * abs_mix_x_pT:
+ * -------------
+ *
+ * Calculates equilibrium liquid mole fraction of first component in mol/mol
+ * depending on pressure in Pa and temperature T_K in K.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in of first component liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_mix_x_pT(double *ret_y_1_molmol, double *ret_y_2_molmol,
+	double p_Pa, double T_K, void *workingPair);
+
+
+/*
+ * abs_mix_p_Tx:
+ * -------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa depending on temperature T_K in K
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_mix_p_Tx(double *ret_y_1_molmol, double *ret_y_2_molmol,
+	double T_K, double x_1_molmol, void *workingPair);
+
+
+/*
+ * abs_mix_T_px:
+ * -------------
+ *
+ * Calculates equilibrium temperature T_K in K depending on pressure p_Pa in Pa
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Uses Newton-Raphson method for calculating equilibrium temperature.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_mix_T_px(double *ret_y_1_molmol, double *ret_y_2_molmol,
+	double p_Pa, double x_1_molmol, void *workingPair);
+
+
+/*
+ * abs_mix_dp_dx_Tx:
+ * -----------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to liquid mole
+ * fraction in Pa depending on temperature T_K in K and mole fraction in liquid
+ * phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt liquid mole fraction in Pa.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.00000001 mol/mol as small change.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_mix_dp_dx_Tx(double T_K, double x_1_molmol,
+	void *workingPair);
+
+
+/*
+ * abs_mix_dp_dT_Tx:
+ * -----------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to temperature in
+ * Pa/K depending on temperature T_K in K and mole fraction in liquid phase
+ * x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ * 	struct *WorkingPair:
+ *		Pointer of WorkingPair-struct.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt temperature in Pa/K.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.0001 K as small change.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double abs_mix_dp_dT_Tx(double T_K, double x_1_molmol,
+	void *workingPair);
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -5132,6 +5435,456 @@ DLL_API double direct_abs_act_x_pTv1v2psat(double p_Pa, double T_K,
 	const char *wp_as, const char *wp_st, const char *wp_rf, const char *wp_iso,
 	int no_iso, const char *rf_psat, int no_p_sat, const char *rf_rhol,
 	int no_rhol);
+
+
+/*
+ * direct_abs_act_p_Txv1v2:
+ * ------------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa of first component depending on
+ * temperature T_K in K, mole fraction in liquid phase x_molmol in mol/mol,
+ * molar volume of first component in m³/mol and molar volume of second
+ * component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on activity
+ *	coefficients.
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, function uses molar volumes stored in JSON file when input
+ *	v1_m3mol or v2_m3mol is -1. Otherwise, function uses molar volumes given by
+ *	inputs.
+ *
+ * History:
+ * --------
+ *	02/14/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_act_p_Txv1v2(double T_K, double x_molmol,
+	double v1_m3mol, double v2_m3mol, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_act_x_pTv1v2:
+ * ------------------------
+ *
+ * Calculates mole fraction of first component in liquid phase x_molmol in
+ * mol/mol depending on equilibrium pressure p_Pa in Pa of first component,
+ * temperature T_K in K, molar volume of first component in m³/mol and molar
+ * volume of second component in m³/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double v1_m3mol:
+ *		Equilibrium molar volume of first component in m³/mol.
+ *	double v2_m3mol:
+ *		Equilibrium molar volume of second component in m³/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on activity
+ *	coefficients.
+ *	Molar volumes may are not required and ignored. When molar volumes are
+ * 	required, function uses molar volumes stored in JSON file when input
+ *	v1_m3mol or v2_m3mol is -1. Otherwise, function uses molar volumes given by
+ *	inputs.
+ *
+ * History:
+ * --------
+ *	30/03/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_act_x_pTv1v2(double p_Pa, double T_K,
+	double v1_m3mol, double v2_m3mol, const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_mix_x_pT:
+ * --------------------
+ *
+ * Calculates equilibrium liquid mole fraction of first component in mol/mol
+ * depending on pressure in Pa and temperature T_K in K.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in of first component liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_mix_x_pT(double *ret_y_1_molmol,
+	double *ret_y_2_molmol, double p_Pa, double T_K, const char *path_db,
+	const char *wp_as, const char *wp_st, const char *wp_rf, const char *wp_iso,
+	int no_iso, const char *rf_psat, int no_p_sat, const char *rf_rhol,
+	int no_rhol);
+
+
+/*
+ * direct_abs_mix_p_Tx:
+ * --------------------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa depending on temperature T_K in K
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_mix_p_Tx(double *ret_y_1_molmol,
+	double *ret_y_2_molmol, double T_K, double x_1_molmol, const char *path_db,
+	const char *wp_as, const char *wp_st, const char *wp_rf, const char *wp_iso,
+	int no_iso, const char *rf_psat, int no_p_sat, const char *rf_rhol,
+	int no_rhol);
+
+
+/*
+ * direct_abs_mix_T_px:
+ * --------------------
+ *
+ * Calculates equilibrium temperature T_K in K depending on pressure p_Pa in Pa
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Uses Newton-Raphson method for calculating equilibrium temperature.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_mix_T_px(double *ret_y_1_molmol,
+	double *ret_y_2_molmol, double p_Pa, double x_1_molmol, const char *path_db,
+	const char *wp_as, const char *wp_st, const char *wp_rf, const char *wp_iso,
+	int no_iso, const char *rf_psat, int no_p_sat, const char *rf_rhol,
+	int no_rhol);
+
+
+/*
+ * direct_abs_mix_dp_dx_Tx:
+ * ------------------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to liquid mole
+ * fraction in Pa depending on temperature T_K in K and mole fraction in liquid
+ * phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt liquid mole fraction in Pa.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.00000001 mol/mol as small change.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_mix_dp_dx_Tx(double T_K, double x_1_molmol,
+	const char *path_db, const char *wp_as, const char *wp_st,
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat,
+	int no_p_sat, const char *rf_rhol, int no_rhol);
+
+
+/*
+ * direct_abs_mix_dp_dT_Tx:
+ * ------------------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to temperature in
+ * Pa/K depending on temperature T_K in K and mole fraction in liquid phase
+ * x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *
+ *	const char *path_db:
+ *		Path to database.
+ * 	const char *wp_as:
+ *		Name of sorbent.
+ * 	const char *wp_st:
+ *		Name of sub-type of sorbent.
+ * 	const char *wp_rf:
+ *		Name of refrigerant.
+ * 	const char *wp_iso:
+ *		Name of isotherm.
+ *	int no_iso:
+ *		ID of isotherm (i.e. when more than one isotherm is available)
+ * 	const char *rf_psat:
+ *		Name of calculation approach for vapor pressure.
+ *	int no_p_sat:
+ *		ID of vapor pressure equation (i.e. when more than one equation is
+ *		available)
+ * 	const char *rf_rhol:
+ *		Name of calculation approach for liquid density.
+ *	int no_rhol:
+ *		ID of liquid density equation (i.e. when more than one equation is
+ *		available)
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt temperature in Pa/K.
+ *
+ * Remarks:
+ * --------
+ *	This function is only valid for isotherm models based on mixing rules.
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.0001 K as small change.
+ *
+ * History:
+ * --------
+ *	04/09/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+DLL_API double direct_abs_mix_dp_dT_Tx(double T_K, double x_1_molmol,
+	const char *path_db, const char *wp_as, const char *wp_st,
+	const char *wp_rf, const char *wp_iso, int no_iso, const char *rf_psat,
+	int no_p_sat, const char *rf_rhol, int no_rhol);
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,6 @@
 // adsorption_freundlich.c //
 /////////////////////////////
 #include <math.h>
-#include <stdio.h>
 #include "adsorption_freundlich.h"
 
 
@@ -146,14 +145,16 @@ double adsorption_freundlich_p_wTpsat(double w_kgkg, double T_K,
  *		Equilibrium pressure in Pa.
  *	double w_kgkg:
  *		Equilibrium loading in kg/kg.
- *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[]):
+ *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for vapor pressure wrt. temperature.
- *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]):
+ *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for derivative of vapor pressure wrt. temperature.
  *	double isotherm_par[]:
  *		Array of doubles that contains coefficients of Freundlich equation.
  *	double p_sat_par[]:
  *		Array of doubles that contains coefficients vapor pressure.
+ *	void *refrigerant:
+ *		Pointer to Refrigerant-struct required for refrigerant functions.
  *
  * Returns:
  * --------
@@ -162,35 +163,22 @@ double adsorption_freundlich_p_wTpsat(double w_kgkg, double T_K,
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Uses Newton-Raphson method for calculating equilibrium temperature.
  *
  * History:
  * --------
  *	03/17/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added proper refrigerant functions.
  *
  */
 double adsorption_freundlich_T_pwpsat(double p_Pa, double w_kgkg,
-	double (*p_sat_T_Pa)(double T_K, double p_sat_par[]),
-	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]),
-	double isotherm_par[], double p_sat_par[]) {
-	// Check if function pointers are NULL
-	//
-	if (p_sat_T_Pa == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions p_sat_T is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_freundlich_T_pw\".");
-		return -1;
-	}
-	if (dp_sat_dT_PaK == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions dp_sat_dT is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_freundlich_T_pw\".");
-		return -1;
-	}
-
+	double (*p_sat_T_Pa)(double T_K, double p_sat_par[], void *refrigerant),
+	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant),
+	double isotherm_par[], double p_sat_par[], void *refrigerant) {
 	// Initialize variables for using Newton-Raphson method
 	//
 	double T_guess_K = 353.15;
@@ -203,22 +191,21 @@ double adsorption_freundlich_T_pwpsat(double p_Pa, double w_kgkg,
 	// Calculate temperature using Newton-Raphson method
 	//
 	for (w_guess_kgkg = adsorption_freundlich_w_pTpsat(p_Pa, T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par), isotherm_par);
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant), isotherm_par);
 	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
 		// Calculate loading depending on pressure and guess values for
 		// temperature
 		//
 		w_guess_kgkg = adsorption_freundlich_w_pTpsat(p_Pa, T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par), isotherm_par);
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant), isotherm_par);
 
 		// Calculate the first derivative of the loading with respect to
 		// temperature
 		//
 		dw_guess_dT_kgkgK = adsorption_freundlich_dw_dT_pTpsat(p_Pa, T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par),
-			dp_sat_dT_PaK(T_guess_K, p_sat_par),
-			isotherm_par);
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant),
+			dp_sat_dT_PaK(T_guess_K, p_sat_par, refrigerant), isotherm_par);
 
 		// Update guess value for temperature
 		// Negative temperatures are not allowed

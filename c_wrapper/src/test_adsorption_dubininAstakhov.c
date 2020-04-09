@@ -40,13 +40,16 @@ int main() {
 	//
 	Refrigerant *refrigerant_r134a = newRefrigerant(
 		"EoS_vaporPressure",
-		"EoS_saturatedLiquidDensity");
+		"EoS_saturatedLiquidDensity",
+		vapPre_par);
 
 	double p_Pa = 0.1e6;
 	double T_K = 258.15;
 
-	double p_sat_Pa = refrigerant_r134a->psat_T(T_K, vapPre_par);
-	double dp_sat_dT_PaK = refrigerant_r134a->dpsat_dT(T_K, vapPre_par);
+	double p_sat_Pa = refrigerant_r134a->psat_T(T_K, vapPre_par,
+		refrigerant_r134a);
+	double dp_sat_dT_PaK = refrigerant_r134a->dpsat_dT(T_K, vapPre_par,
+		refrigerant_r134a);
 	double rho_kgm3 = refrigerant_r134a->rho_l_T(T_K, satLiqDen_par);
 	double drho_dT_kgm3K = refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par);
 
@@ -69,7 +72,7 @@ int main() {
 		refrigerant_r134a->rho_l_T,
 		refrigerant_r134a->dpsat_dT,
 		refrigerant_r134a->drho_l_dT,
-		isotherm_par, vapPre_par, satLiqDen_par);
+		isotherm_par, vapPre_par, satLiqDen_par, refrigerant_r134a);
 
 	// Calculate derivatives
 	//

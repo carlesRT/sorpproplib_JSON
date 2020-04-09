@@ -124,11 +124,35 @@
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
+ * 	function mix_x_pT:
+ *		Returns equilibrium mole fraction in liquid phase x_molmol in mol/mol
+ *		depending on pressure p_Pa in Pa and temperature T_K in K.
  * 	function mix_p_Tx:
  *		Returns equilibrium pressure p_Pa in Pa of first component depending on
  * 		temperature T_K in K and mole fraction in liquid phase x_molmol in
  *		mol/mol.
+ * 	function mix_T_px:
+ *		Returns equilibrium temperature in K depending on equilibrium pressure p
+ * 		in Pa and equilibrium mole fraction X in mol/mol.
  *
+ * 	function mix_dp_dx_Tx:
+ *		Returns derivative of equilibrium pressure p with respect to mole
+ * 		fraction x in Pa depending on equilibrium mole fraction x in mol/mol
+ * 		and equilibrium temperature T in K.
+ * 	function mix_dp_dT_Tx:
+ *		Returns derivative of equilibrium pressure p with respect to temperature
+ * 		T in Pa/K depending on equilibrium mole fraction x in mol/mol and
+ * 		equilibrium temperature T in K.
+ *
+ *	function mix_pure_parameters:
+ *		Returns pure component parameters of cubic equation of state.
+ *	function mix_mixture_parameters:
+ *		Returns mixture parameters of cubic equation of state depending on pure
+ *		component parameters.
+ *	function mix_gen_parameters:
+ *		Returns generalized parameters of cubic equation of state.
+ *	function mix_mixture_fugacity_coefficient:
+ *		Returns mixture fugacity coefficient of cubic equation of state.
  *
  * Remarks:
  * --------
@@ -161,6 +185,8 @@ typedef struct Absorption Absorption;
  * -----------
  * 	const char *isotherm_type:
  *		Name of isotherm type.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients for isotherm functions.
  *
  * Returns:
  * --------
@@ -173,9 +199,11 @@ typedef struct Absorption Absorption;
  * --------
  *	02/13/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/09/2020, by Mirko Engelpracht:
+ *		Added functions based on mixing approach.
  *
  */
-Absorption *newAbsorption(const char *isotherm_type);
+Absorption *newAbsorption(const char *isotherm_type, double isotherm_par[]);
 
 
 /*
@@ -196,6 +224,34 @@ Absorption *newAbsorption(const char *isotherm_type);
  *
  */
 void delAbsorption(void *absorption);
+
+
+/*
+ * warning_par_func:
+ * -----------------
+ *
+ * Auxiliary function to throw warning if some function or parameter is missing.
+ *
+ * Parameters:
+ * -----------
+ * 	const char *name_function:
+ *		Name of parameter that is missing.
+ * 	const char *name_abs_function:
+ *		Name of absorption function that is executed.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
+ * History:
+ * --------
+ *	08/04/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double warning_par_func(const char *name_function,
+	const char *name_abs_function);
 
 
 /*
@@ -674,5 +730,209 @@ double act_x_pTgv1v2psat_w_v_gf(double p_Pa, double T_K, double v1_m3mol,
  */
 double act_x_pTgv1v2psat_w_gf(double p_Pa, double T_K, double v1_m3mol,
 	double v2_m3mol, double p_sat_Pa, double isotherm_par[], void *absorption);
+
+
+/*
+ * mix_x_pT:
+ * ---------
+ *
+ * Calculates equilibrium liquid mole fraction of first component in mol/mol
+ * depending on pressure in Pa and temperature T_K in K.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of pure component equations
+ *		of state and of mixing rule
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * History:
+ * --------
+ *	04/08/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double mix_x_pT(double *ret_y_1_molmol, double *ret_y_2_molmol, double p_Pa,
+	double T_K, double isotherm_par[], void *absorption);
+
+
+/*
+ * mix_p_Tx:
+ * ---------
+ *
+ * Calculates equilibrium pressure p_Pa in Pa depending on temperature T_K in K
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of pure component equations
+ *		of state and of mixing rule
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * History:
+ * --------
+ *	04/08/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double mix_p_Tx(double *ret_y_1_molmol, double *ret_y_2_molmol, double T_K,
+	double x_1_molmol, double isotherm_par[], void *absorption);
+
+
+/*
+ * mix_T_px:
+ * ---------
+ *
+ * Calculates equilibrium temperature T_K in K depending on pressure p_Pa in Pa
+ * and mole fraction in liquid phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double p_Pa:
+ *		Equilibrium pressure p_Pa in Pa.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of pure component equations
+ *		of state and of mixing rule
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double *ret_y_1_molmol:
+ *		Equilibrium mole fraction of first component.
+ *	double *ret_y_2_molmol:
+ *		Equilibrium mole fraction of second component.
+ *
+ * Remarks:
+ * --------
+ *	Uses Newton-Raphson method for calculating equilibrium temperature.
+ *
+ * History:
+ * --------
+ *	04/08/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double mix_T_px(double *ret_y_1_molmol, double *ret_y_2_molmol, double p_Pa,
+	double x_1_molmol, double isotherm_par[], void *absorption);
+
+
+/*
+ * mix_dp_dx_Tx:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to liquid mole
+ * fraction in Pa depending on temperature T_K in K and mole fraction in liquid
+ * phase x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of pure component equations
+ *		of state and of mixing rule
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt liquid mole fraction in Pa.
+ *
+ * Remarks:
+ * --------
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.00000001 K as small change.
+ *
+ * History:
+ * --------
+ *	04/08/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double mix_dp_dx_Tx(double T_K, double x_1_molmol, double isotherm_par[],
+	void *absorption);
+
+
+/*
+ * mix_dp_dT_Tx:
+ * -------------
+ *
+ * Calculates derivative of equilibrium pressure with respect to temperature in
+ * Pa/K depending on temperature T_K in K and mole fraction in liquid phase
+ * x_molmol in mol/mol.
+ *
+ * Parameters:
+ * -----------
+ *	double T_K:
+ *		Equilibrium temperature in K.
+ *	double x_1_molmol:
+ *		Equilibrium mole fraction in liquid phase in mol/mol.
+ *	double isotherm_par[]:
+ *		Array of doubles that contains coefficients of pure component equations
+ *		of state and of mixing rule
+ *	struct *Absorption:
+ *		Pointer to Absorption-struct that contains pointer of isotherm
+ *		functions.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Derivative of equilibrium pressure wrt temperature in Pa/K.
+ *
+ * Remarks:
+ * --------
+ *	Derivative is calculated numerically by the symmetric derivative using
+ *  h = 0.0001 K as small change.
+ *
+ * History:
+ * --------
+ *	04/08/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double mix_dp_dT_Tx(double T_K, double x_1_molmol, double isotherm_par[],
+	void *absorption);
+
 
 #endif

@@ -130,7 +130,7 @@
  *
  * 	function sur_piStar_pyxgTpsatM:
  *		Returns reduced spreading pressure piStar in kg/mol depending on
- *		equilibrium pressure p in Pa, molar fraction of refrigerant in vapor
+ *		equilibrium pressure p in Pa, molar fraction of refrigerant in vapour
  *		phase in mol/mol, molar fraction of refrigerant in adsorbed phase in
  *		mol/mol, activity coefficient of refrigerant in adsorbed phase,
  *		equilibrium temperature T in K, saturation pressure p_sat in K, molar
@@ -220,9 +220,10 @@
  *		First implementation.
  *	01/13/2020, by Mirko Engelpracht:
  *		Added functions for dp_dw, dp_dT and piStar.
- *	03/19/2020, by Mirko Engelpracht:
- *		Added functions for classical isotherms that also need saturation
- *		pressure.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added function pointers to Refrigerant-struct for isotherm types based
+ *		on both, the surface approach using saturated vapor pressure and the
+ *		volumetric approach.
  *
  */
 typedef struct Adsorption Adsorption;
@@ -296,6 +297,12 @@ void delAdsorption(void *adsorption);
  *		Pointer to Adsorption-struct that contains pointer of isotherm
  *		functions.
  *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *
  * History:
  * --------
  *	01/05/2020, by Mirko Engelpracht:
@@ -318,6 +325,12 @@ void init_surFunctions(void *adsorption);
  *	struct *Adsorption:
  *		Pointer to Adsorption-struct that contains pointer of isotherm
  *		functions.
+ *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
  *
  * History:
  * --------
@@ -342,6 +355,12 @@ void init_surPsatFunctions(void *adsorption);
  *		Pointer to "Adsorption-struct that contains pointer of isotherm
  *		functions.
  *
+ * Remarks:
+ * --------
+ *	Due to initialization procedure of Adsorption-struct, this function is only
+ *	callable when Adsorption-struct and sub-functions exist. Thus, no further
+ *	checks are necessary.
+ *
  * History:
  * --------
  *	01/05/2020, by Mirko Engelpracht:
@@ -349,6 +368,34 @@ void init_surPsatFunctions(void *adsorption);
  *
  */
 void init_volFunctions(void *adsorption);
+
+
+/*
+ * warning_func_par:
+ * -----------------
+ *
+ * Auxiliary function to throw warning if some function or parameter is missing.
+ *
+ * Parameters:
+ * -----------
+ * 	const char *name_function:
+ *		Name of parameter that is missing.
+ * 	const char *name_ads_function:
+ *		Name of adsorption function that is executed.
+ *
+ * Returns:
+ * --------
+ *	double:
+ *		Returns -1 to indicate error.
+ *
+ * History:
+ * --------
+ *	08/04/2020, by Mirko Engelpracht:
+ *		First implementation.
+ *
+ */
+double warning_func_par(const char *name_function,
+	const char *name_ads_function);
 
 
 /*
@@ -384,6 +431,8 @@ void init_volFunctions(void *adsorption);
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -433,6 +482,8 @@ double w_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -482,6 +533,8 @@ double w_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -531,6 +584,8 @@ double w_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -580,6 +635,8 @@ double p_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -629,6 +686,8 @@ double p_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate pressure depending on loading and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -678,6 +737,8 @@ double p_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -727,6 +788,8 @@ double T_pw_sur(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -778,6 +841,8 @@ double T_pw_surPsat(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate temperature depending on pressure
  *	and loading when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -833,6 +898,8 @@ double T_pw_vol(double p_Pa, double w_kgkg, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -883,6 +950,8 @@ double dw_dp_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -933,6 +1002,8 @@ double dw_dp_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -983,6 +1054,8 @@ double dw_dp_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1033,6 +1106,8 @@ double dw_dT_pT_sur(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1085,6 +1160,8 @@ double dw_dT_pT_surPsat(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1135,6 +1212,8 @@ double dw_dT_pT_vol(double p_Pa, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1185,6 +1264,8 @@ double dp_dw_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1235,6 +1316,8 @@ double dp_dw_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1285,6 +1368,8 @@ double dp_dw_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach, fluid properties at saturated state
@@ -1335,6 +1420,8 @@ double dp_dT_wT_sur(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for surface approach using saturation pressure, only
@@ -1387,6 +1474,8 @@ double dp_dT_wT_surPsat(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate loading depending on pressure and
  *	temperature when volumetric approach (e.g. Dubinin theory) is chosen as
  *	isotherm. Here, for volumetric approach, fluid properties at saturated state
@@ -1453,6 +1542,8 @@ double dp_dT_wT_vol(double w_kgkg, double T_K, double isotherm_par[],
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach, fluid properties
@@ -1520,6 +1611,8 @@ double piStar_pyxgTM_sur(double p_total_Pa, double y_molmol, double x_molmol,
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach using saturation
@@ -1587,6 +1680,8 @@ double piStar_pyxgTM_surPsat(double p_total_Pa, double y_molmol, double x_molmol
  *
  * Remarks:
  * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
  *	Wrapper function is required to calculate reduced spreading pressure
  *	depending on pressure and temperature when volumetric approach (e.g. Dubinin
  *	theory) is chosen as isotherm. Here, for surface approach, fluid properties

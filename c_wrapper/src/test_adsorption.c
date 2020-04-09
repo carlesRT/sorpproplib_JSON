@@ -193,13 +193,15 @@ int main() {
 	// Define some input values for calculating equilibrium data
 	//
 	Refrigerant *refrigerant_water = newRefrigerant("EoS_vaporPressure",
-		"EoS_saturatedLiquidDensity");
+		"EoS_saturatedLiquidDensity", refrigerant_par_H2O);
 
-	p_Pa = refrigerant_water->psat_T(283, refrigerant_par_H2O);
+	p_Pa = refrigerant_water->psat_T(283, refrigerant_par_H2O,
+		refrigerant_water);
 	T_K = 373;
-	double p_sat_Pa = refrigerant_water->psat_T(T_K, refrigerant_par_H2O);
+	double p_sat_Pa = refrigerant_water->psat_T(T_K, refrigerant_par_H2O,
+		refrigerant_water);
 	double dp_sat_dT_PaK = refrigerant_water->dpsat_dT(T_K,
-		refrigerant_par_H2O);
+		refrigerant_par_H2O, refrigerant_water);
 
 	// Calculate equilibrium data
 	//
@@ -211,7 +213,7 @@ int main() {
 		freundlich_par);
 	T_K_inv = isotherm_freundlich->sur_T_pwpsat(p_Pa, w_kgkg,
 		refrigerant_water->psat_T, refrigerant_water->dpsat_dT,
-		freundlich_par, refrigerant_par_H2O);
+		freundlich_par, refrigerant_par_H2O, refrigerant_water);
 	dw_dp_kgkgPa = isotherm_freundlich->sur_dw_dp_pTpsat(p_Pa, T_K, p_sat_Pa,
 		freundlich_par);
 	dw_dT_kgkgK = isotherm_freundlich->sur_dw_dT_pTpsat(p_Pa, T_K, p_sat_Pa,
@@ -270,11 +272,11 @@ int main() {
 	// Calculate equilibrium data
 	//
 	Adsorption *isotherm_dubininAstakhov = newAdsorption("dubinin-astakhov");
-	Refrigerant *refrigerant_r134a = newRefrigerant(
-		"EoS_vaporPressure",
-		"EoS_saturatedLiquidDensity");
+	Refrigerant *refrigerant_r134a = newRefrigerant("EoS_vaporPressure",
+		"EoS_saturatedLiquidDensity", vapPre_par);
 
-	p_sat_Pa = refrigerant_r134a->psat_T(T_K, vapPre_par);
+	p_sat_Pa = refrigerant_r134a->psat_T(T_K, vapPre_par,
+		refrigerant_r134a);
 	double rho_kgm3 = refrigerant_r134a->rho_l_T(T_K, satLiqDen_par);
 	double A_Jmol = 8.314462618f * T_K * log(p_sat_Pa/p_Pa);
 
@@ -292,7 +294,7 @@ int main() {
 		refrigerant_r134a->rho_l_T,
 		refrigerant_r134a->dpsat_dT,
 		refrigerant_r134a->drho_l_dT,
-		par_dubininAstakhov, vapPre_par, satLiqDen_par);
+		par_dubininAstakhov, vapPre_par, satLiqDen_par, refrigerant_r134a);
 
 	double dW_dA = isotherm_dubininAstakhov->vol_dW_dA_ARho(A_Jmol, rho_kgm3,
 		par_dubininAstakhov);
@@ -301,14 +303,15 @@ int main() {
 	dw_dp_kgkgPa = isotherm_dubininAstakhov->vol_dw_dp_pTpsatRho(p_Pa,
 		T_K, p_sat_Pa, rho_kgm3, par_dubininAstakhov);
 	dw_dT_kgkgK = isotherm_dubininAstakhov->vol_dw_dT_pTpsatRho(p_Pa,
-		T_K, p_sat_Pa, rho_kgm3, refrigerant_r134a->dpsat_dT(T_K, vapPre_par),
-		refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par),
+		T_K, p_sat_Pa, rho_kgm3, refrigerant_r134a->dpsat_dT(T_K, vapPre_par,
+		refrigerant_r134a), refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par),
 		par_dubininAstakhov);
 	dp_dw_Pakgkg = isotherm_dubininAstakhov->vol_dp_dw_wTpsatRho(w_kgkg, T_K,
 		p_sat_Pa, rho_kgm3, par_dubininAstakhov);
 	dp_dT_Pakgkg = isotherm_dubininAstakhov->vol_dp_dT_wTpsatRho(w_kgkg, T_K,
-		p_sat_Pa, rho_kgm3, refrigerant_r134a->dpsat_dT(T_K, vapPre_par),
-		refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par), par_dubininAstakhov);
+		p_sat_Pa, rho_kgm3, refrigerant_r134a->dpsat_dT(T_K, vapPre_par,
+		refrigerant_r134a), refrigerant_r134a->drho_l_dT(T_K, satLiqDen_par),
+		par_dubininAstakhov);
 	piStar_kgmol = isotherm_dubininAstakhov->vol_piStar_pyxgTpsatRhoM(p_Pa, 1,
 		1, 1, T_K, p_sat_Pa, rho_kgm3, 0.0441, par_dubininAstakhov);
 

@@ -709,6 +709,126 @@ void testWorkingPair_abs_act(double T_K, double x_molmol,
 }
 
 
+void testWorkingPair_abs_mix(double T_K, double x_molmol,
+	const char *path_db, const char *wp_as,
+	const char *wp_st, const char *wp_rf, const char *wp_iso, int no_iso,
+	const char *rf_psat, int no_p_sat, const char *rf_rhol, int no_rhol) {
+	// Initiate working pair
+	//
+	WorkingPair *workingPair = newWorkingPair(path_db, wp_as, wp_st, wp_rf,
+		wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+
+	if (workingPair != NULL) {
+		// Calculate equilibrium properties
+		//
+		double y_1_molmol, y_1_molmol_1, y_1_molmol_2,
+			y_2_molmol, y_2_molmol_1, y_2_molmol_2,
+			y_1_molmol_direct, y_1_molmol_1_direct, y_1_molmol_2_direct,
+			y_2_molmol_direct, y_2_molmol_1_direct, y_2_molmol_2_direct;
+
+		double p_Pa = abs_mix_p_Tx(&y_1_molmol, &y_2_molmol, T_K, x_molmol,
+			workingPair);
+		double x_inv_molmol = abs_mix_x_pT(&y_1_molmol_1, &y_2_molmol_1,
+			p_Pa, T_K, workingPair);
+		double T_K_inv = abs_mix_T_px(&y_1_molmol_2, &y_2_molmol_2, p_Pa,
+			x_molmol, workingPair);
+
+		double dp_dx_Pa = abs_mix_dp_dx_Tx(T_K, x_molmol,
+			workingPair);
+		double dp_dT_PaK = abs_mix_dp_dT_Tx(T_K, x_molmol,
+			workingPair);
+
+		double p_Pa_direct = direct_abs_mix_p_Tx(&y_1_molmol_direct,
+			&y_2_molmol_direct, T_K, x_molmol, path_db, wp_as, wp_st, wp_rf,
+			wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+		double x_inv_molmol_direct = direct_abs_mix_x_pT(&y_1_molmol_1_direct,
+			&y_2_molmol_1_direct, p_Pa, T_K, path_db, wp_as, wp_st, wp_rf,
+			wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+		double T_K_inv_direct = direct_abs_mix_T_px(&y_1_molmol_2_direct,
+			&y_2_molmol_2_direct, p_Pa, x_molmol, path_db, wp_as, wp_st, wp_rf,
+			wp_iso, no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+
+		double dp_dx_Pa_direct = direct_abs_mix_dp_dx_Tx(T_K, x_molmol,
+			path_db, wp_as, wp_st, wp_rf, wp_iso,
+			no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+		double dp_dT_PaK_direct = direct_abs_mix_dp_dT_Tx(T_K, x_molmol,
+			path_db, wp_as, wp_st, wp_rf, wp_iso,
+			no_iso, rf_psat, no_p_sat, rf_rhol, no_rhol);
+
+		// Print general information of selected working pair
+		//
+		printf("\n\n#############################");
+		printf("\n#############################");
+		printf("\n## Test WorkingPair-struct ##");
+		printf("\n#############################");
+		printf("\n#############################");
+
+		printf("\n\n\nGeneral information of working pair:");
+		printf("\n------------------------------------");
+		printf("\nSelected sorbent is: %s.", workingPair->wp_as);
+		printf("\nSelected sub-type of sorbent is: %s.", workingPair->wp_st);
+		printf("\nSelected refrigerant is: %s.", workingPair->wp_rf);
+		printf("\nSelected isotherm is: %s / ID %i.", workingPair->wp_iso,
+			workingPair->no_iso);
+		printf("\nSelected calculation approach for vapor pressure is: %s / "
+			" ID %i.", workingPair->rf_psat, workingPair->no_p_sat);
+		printf("\nSelected calculation approach for saturated liquid density "
+			"is: %s / ID %i.", workingPair->rf_rhol, workingPair->no_rhol);
+
+		// Print calculated values
+		//
+		printf("\n\n\nResults of mixing-based absorption functions that are "
+			"always defined:");
+		printf("\n-------------------------------------------------------------"
+			"--------");
+		printf("\nFor p = %f Pa and T = %f K, equilibrium liquid mole fraction "
+			"results in x = %f mol/mol and vapor mole fraction results in y = "
+			"%f mol/mol.", p_Pa, T_K, x_inv_molmol, y_1_molmol_1);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure "
+			"results in p = %f Pa and vapor mole fraction results in y = %f "
+			"mol/mol.", T_K, x_molmol, p_Pa, y_1_molmol);
+		printf("\nFor p = %f Pa and x = %f mol/mol, equilibrium temperature "
+			"results in T = %f K and vapor mole fraction results in y = %f "
+			"mol/mol.", p_Pa, x_molmol, T_K_inv, y_1_molmol_2);
+
+		printf("\n\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+			"p with respect to molar fraction results in dp_dx = %f Pa.",
+			T_K, x_molmol, dp_dx_Pa);
+		printf("\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+			"p with respect to temperature results in dp_dT = %f Pa/K.",
+			T_K, x_molmol, dp_dT_PaK);
+
+		printf("\n\n\nResults of mixing-based absorption functions using "
+			"that are always defined -> direct approach:");
+		printf("\n-------------------------------------------------------------"
+			"---------------------------------");
+		printf("\nFor p = %f Pa and T = %f K, equilibrium liquid mole fraction "
+			"results in x = %f mol/mol and vapor mole fraction results in y = "
+			"%f mol/mol.", p_Pa_direct, T_K, x_inv_molmol_direct,
+			y_1_molmol_1_direct);
+		printf("\nFor T = %f K and x = %f mol/mol, equilibrium pressure "
+			"results in p = %f Pa and vapor mole fraction results in y = %f "
+			"mol/mol.", T_K, x_molmol, p_Pa_direct, y_1_molmol_direct);
+		printf("\nFor p = %f Pa and x = %f mol/mol, equilibrium temperature "
+			"results in T = %f K and vapor mole fraction results in y = %f "
+			"mol/mol.", p_Pa_direct, x_molmol, T_K_inv_direct,
+			y_1_molmol_2_direct);
+
+		printf("\n\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+			"p with respect to molar fraction results in dp_dx = %f Pa.",
+			T_K, x_molmol, dp_dx_Pa_direct);
+		printf("\nFor T = %f K and x = %f mol/mol, derivative of equilibrium "
+			"p with respect to temperature results in dp_dT = %f Pa/K.",
+			T_K, x_molmol, dp_dT_PaK_direct);
+
+		// Free allocated memory
+		//
+		delWorkingPair(workingPair);
+
+	}
+}
+
+
 /////////////////////////////////
 // Definition of main function //
 /////////////////////////////////
@@ -893,6 +1013,26 @@ int main() {
 		"EoS_vaporPressure",
 		1,
 		"EoS_saturatedLiquidDensity",
+		1);
+
+	// Test working pair: "R-600a / Oil
+	//
+	double w_1_kgkg = 0.2;
+	double x_molmol =  (w_1_kgkg / 0.0581222) / (w_1_kgkg / 0.0581222 +
+		(1- w_1_kgkg) / 0.350);
+
+	testWorkingPair_abs_mix(
+		313.15,
+		x_molmol,
+		".\\data\\sorpproplib_ValidationCInterface.json",
+		"oil",
+		"",
+		"r-600a",
+		"mixingrule",
+		1,
+		"EoS_noVaporPressure",
+		1,
+		"EoS_voSaturatedLiquidDensity",
 		1);
 
 	return EXIT_SUCCESS;

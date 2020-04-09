@@ -222,11 +222,11 @@ double adsorption_dubininAstakhov_p_wTpsatRho(double w_kgkg, double T_K,
  *		Equilibrium pressure in Pa.
  * 	double w_kgkg:
  *		Equilibrium loading in kg/kg.
- *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[]):
+ *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for vapor pressure wrt. temperature.
  *	double (*rho_l_T_kgm3K)(double T_K, double rho_l_par[]):
  *		Function pointer for saturated liquid density of adsorpt.
- *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]):
+ *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for derivative of vapor pressure wrt. temperature.
  *	double (*drho_l_dT_kgm3K)(double T_K, double rho_l_par[]):
  *		Function pointer for derivative of saturated liquid density of adsorpt
@@ -245,20 +245,28 @@ double adsorption_dubininAstakhov_p_wTpsatRho(double w_kgkg, double T_K,
  *	double:
  *		Equilibrium temperature in K.
  *
+ * Remarks:
+ * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
+ *
  * History:
  * --------
  *	11/25/2019, by Mirko Engelpracht:
  *		First implementation.
  *	01/07/2020, by Mirko Engelpracht:
  *		Implemented function pointers for correct calculation of T.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added proper refrigerant functions.
  *
  */
 double adsorption_dubininAstakhov_T_pwpsatRho(double p_Pa, double w_kgkg,
-	double (*p_sat_T_Pa)(double T_K, double p_sat_par[]),
+	double (*p_sat_T_Pa)(double T_K, double p_sat_par[], void *refrigerant),
 	double (*rho_l_T_kgm3)(double T_K, double rho_l_par[]),
-	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]),
+	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant),
 	double (*drho_l_dT_kgm3K)(double T_K, double rho_l_par[]),
-	double isotherm_par[], double p_sat_par[], double rho_l_par[]);
+	double isotherm_par[], double p_sat_par[], double rho_l_par[],
+	void *refrigerant);
 
 
 /*

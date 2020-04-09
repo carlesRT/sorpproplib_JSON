@@ -36,14 +36,17 @@ int main() {
 	//
 	Refrigerant *refrigerant_water = newRefrigerant(
 		"EoS_vaporPressure",
-		"EoS_saturatedLiquidDensity");
+		"EoS_saturatedLiquidDensity",
+		isotherm_par);
 
-	double p_Pa = refrigerant_water->psat_T(283, refrigerant_par_H2O);
+	double p_Pa = refrigerant_water->psat_T(283, refrigerant_par_H2O,
+		refrigerant_water);
 	double T_K = 373;
 
-	double p_sat_Pa = refrigerant_water->psat_T(T_K, refrigerant_par_H2O);
+	double p_sat_Pa = refrigerant_water->psat_T(T_K, refrigerant_par_H2O,
+		refrigerant_water);
 	double dp_sat_dT_PaK = refrigerant_water->dpsat_dT(T_K,
-		refrigerant_par_H2O);
+		refrigerant_par_H2O, refrigerant_water);
 
 
 	// Calculate equilibrium data
@@ -54,7 +57,7 @@ int main() {
 		isotherm_par);
 	double T_K_inv = adsorption_freundlich_T_pwpsat(p_Pa, w_kgkg,
 		refrigerant_water->psat_T, refrigerant_water->dpsat_dT,
-		isotherm_par, refrigerant_par_H2O);
+		isotherm_par, refrigerant_par_H2O, refrigerant_water);
 
 
 	// Calculate derivatives
@@ -70,9 +73,11 @@ int main() {
 	double dw_dT_func_kgkgK = adsorption_freundlich_dw_dT_pTpsat(p_Pa, T_K,
 		p_sat_Pa, dp_sat_dT_PaK, isotherm_par);
 	double dw_dT_plus_kgkgK = adsorption_freundlich_w_pTpsat(p_Pa, T_K+0.01,
-		refrigerant_water->psat_T(T_K+0.01, refrigerant_par_H2O), isotherm_par);
+		refrigerant_water->psat_T(T_K+0.01, refrigerant_par_H2O,
+		refrigerant_water), isotherm_par);
 	double dw_dT_minus_kgkgK = adsorption_freundlich_w_pTpsat(p_Pa, T_K-0.01,
-		refrigerant_water->psat_T(T_K-0.01, refrigerant_par_H2O), isotherm_par);
+		refrigerant_water->psat_T(T_K-0.01, refrigerant_par_H2O,
+		refrigerant_water), isotherm_par);
 	double dw_dT_num_kgkgK = (dw_dT_plus_kgkgK - dw_dT_minus_kgkgK)/0.02;
 
 	double dp_dw_func_Pakgkg= adsorption_freundlich_dp_dw_wTpsat(w_kgkg, T_K,
@@ -86,9 +91,11 @@ int main() {
 	double dp_dT_func_Pakgkg= adsorption_freundlich_dp_dT_wTpsat(w_kgkg, T_K,
 		p_sat_Pa, dp_sat_dT_PaK, isotherm_par);
 	double dp_dT_plus_Pakgkg = adsorption_freundlich_p_wTpsat(w_kgkg, T_K+0.01,
-		refrigerant_water->psat_T(T_K+0.01, refrigerant_par_H2O), isotherm_par);
+		refrigerant_water->psat_T(T_K+0.01, refrigerant_par_H2O,
+		refrigerant_water), isotherm_par);
 	double dp_dT_minus_Pakgkg = adsorption_freundlich_p_wTpsat(w_kgkg, T_K-0.01,
-		refrigerant_water->psat_T(T_K-0.01, refrigerant_par_H2O), isotherm_par);
+		refrigerant_water->psat_T(T_K-0.01, refrigerant_par_H2O,
+		refrigerant_water), isotherm_par);
 	double dp_dT_num_Pakgkg = (dp_dT_plus_Pakgkg - dp_dT_minus_Pakgkg)/0.02;
 
 	// Calculate reduced spreading pressure

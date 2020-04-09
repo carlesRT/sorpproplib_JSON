@@ -12,7 +12,7 @@ PROJECT = sorpPropLib
 # YES: Disable debugging information and optimize code
 # NO: Debugging information
 #
-BUILD_RELEASE = YES
+BUILD_RELEASE = NO
 
 
 # Names of sources
@@ -36,10 +36,11 @@ SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
 	absorption_activity_nrtl.c\
 	absorption_activity_uniquac.c\
 	absorption_activity_floryhuggins.c\
-	absorption_mixing_1pvdw.c\
+	absorption_mixing.c\
 	refrigerant.c\
 	refrigerant_vaporPressure.c\
-	refrigerant_saturatedLiquidDensity.c)
+	refrigerant_saturatedLiquidDensity.c\
+	refrigerant_cubicEoS.c)
 
 SOURCES = $(SOURCES_LIB) $(DIR_SRC)/workingPair.c
 
@@ -177,7 +178,7 @@ test_absorption: test_absorption_duehring.exe\
 	test_absorption_activity_nrtl.exe\
 	test_absorption_activity_uniquac.exe\
 	test_absorption_activity_floryhuggins.exe\
-	test_absorption_mixing_1pvdw.exe\
+	test_absorption_mixing.exe\
 	test_absorption.exe
 
 	$(DIR_TEST)/test_absorption_duehring.exe
@@ -189,7 +190,7 @@ test_absorption: test_absorption_duehring.exe\
 	$(DIR_TEST)/test_absorption_activity_nrtl.exe
 	$(DIR_TEST)/test_absorption_activity_uniquac.exe
 	$(DIR_TEST)/test_absorption_activity_floryhuggins.exe
-	$(DIR_TEST)/test_absorption_mixing_1pvdw.exe
+	$(DIR_TEST)/test_absorption_mixing.exe
 	$(DIR_TEST)/test_absorption.exe
 
 
@@ -243,7 +244,8 @@ $(DIR_OBJ)/workingPair_dll.o: $(DIR_SRC)/workingPair.c
 # Create test scripts
 #
 test_refrigerant_vaporPressure.exe: $(addprefix $(DIR_OBJ)/,\
-	test_refrigerant_vaporPressure.o refrigerant_vaporPressure.o)
+	test_refrigerant_vaporPressure.o refrigerant_vaporPressure.o\
+	refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_refrigerant_saturatedLiquidDensity.exe: $(addprefix $(DIR_OBJ)/,\
@@ -253,7 +255,8 @@ test_refrigerant_saturatedLiquidDensity.exe: $(addprefix $(DIR_OBJ)/,\
 
 test_refrigerant.exe: $(addprefix $(DIR_OBJ)/,\
 	test_refrigerant.o refrigerant.o\
-	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o)
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 
@@ -272,13 +275,13 @@ test_adsorption_toth.exe: $(addprefix $(DIR_OBJ)/,\
 test_adsorption_freundlich.exe: $(addprefix $(DIR_OBJ)/,\
 	test_adsorption_freundlich.o adsorption_freundlich.o\
 	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
-	refrigerant.o)
+	refrigerant.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_adsorption_dubininAstakhov.exe: $(addprefix $(DIR_OBJ)/,\
 	test_adsorption_dubininAstakhov.o adsorption_dubininAstakhov.o\
 	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
-	refrigerant.o)
+	refrigerant.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
@@ -286,7 +289,7 @@ test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
 	adsorption_dualSiteSips.o adsorption_langmuir.o adsorption_toth.o\
 	adsorption_freundlich.o adsorption_dubininAstakhov.o\
 	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
-	refrigerant.o)
+	refrigerant.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 
@@ -300,41 +303,41 @@ test_absorption_antoine.exe: $(addprefix $(DIR_OBJ)/,\
 
 test_absorption_activity_wilson.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_wilson.o absorption_activity_wilson.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_tsubokakatayama.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_tsubokakatayama.o absorption_activity_tsubokakatayama.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_heil.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_heil.o absorption_activity_heil.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_wangchao.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_wangchao.o absorption_activity_wangchao.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_nrtl.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_nrtl.o absorption_activity_nrtl.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_uniquac.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_uniquac.o absorption_activity_uniquac.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption_activity_floryhuggins.exe: $(addprefix $(DIR_OBJ)/,\
 	test_absorption_activity_floryhuggins.o absorption_activity_floryhuggins.o\
-	refrigerant_vaporPressure.o)
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
-test_absorption_mixing_1pvdw.exe: $(addprefix $(DIR_OBJ)/,\
-	test_absorption_mixing_1pvdw.o absorption_mixing_1pvdw.o)
+test_absorption_mixing.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_mixing.o absorption_mixing.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 test_absorption.exe: $(addprefix $(DIR_OBJ)/,\
@@ -343,7 +346,7 @@ test_absorption.exe: $(addprefix $(DIR_OBJ)/,\
 	absorption_activity_nrtl.o absorption_activity_wangchao.o\
 	absorption_activity_uniquac.o absorption_activity_floryhuggins.o\
 	absorption_activity_heil.o absorption_activity_tsubokakatayama.o\
-	absorption_mixing_1pvdw.o refrigerant_vaporPressure.o)
+	absorption_mixing.o refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
 	$(CC) $? -o $(DIR_TEST)/$(@F)
 
 

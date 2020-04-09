@@ -19,6 +19,7 @@
  *
  */
 typedef double (*genFunc_1_1_0)(double, double[]);
+typedef double (*genFunc_1_1_1)(double, double[], void*);
 typedef double (*genFunc_2_1_0)(double, double, double[]);
 typedef double (*genFunc_3_1_0)(double, double, double, double[]);
 typedef double (*genFunc_4_1_0)(double, double, double, double, double[]);
@@ -30,6 +31,13 @@ typedef double (*genFunc_6_1_0)(double, double, double, double, double, double,
 	double[]);
 typedef double (*genFunc_2_3_2)(double, double, double[], double[], double[],
 	void*, void*);
+
+typedef void (*genMixFunc_1)(double[], double, double[]);
+typedef void (*genMixFunc_2)(double[], double, double, double, double, double,
+	double, double[]);
+typedef void (*genMixFunc_3)(double[], double, double, double, double);
+typedef double (*genMixFunc_4)(int*, int, double, double, double, double,
+	double, double, double, double, double, double);
 
 
 ////////////////////////
@@ -247,6 +255,10 @@ typedef double (*genFunc_2_3_2)(double, double, double[], double[], double[],
  *		First implementation.
  *	01/13/2020, by Mirko Engelpracht:
  *		Added functions for dp_dw, dp_dT and piStar.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added function pointers to Refrigerant-struct for isotherm types based
+ *		on both, the surface approach using saturated vapor pressure and the
+ *		volumetric approach.
  *
  */
 struct Adsorption {
@@ -289,8 +301,8 @@ struct Adsorption {
 	//
     genFunc_3_1_0 sur_w_pTpsat;
     genFunc_3_1_0 sur_p_wTpsat;
-    double (*sur_T_pwpsat)(double, double, genFunc_1_1_0, genFunc_1_1_0,
-		double[], double[]);
+    double (*sur_T_pwpsat)(double, double, genFunc_1_1_1, genFunc_1_1_1,
+		double[], double[], void*);
 
     genFunc_3_1_0 sur_dw_dp_pTpsat;
     genFunc_4_1_0 sur_dw_dT_pTpsat;
@@ -311,8 +323,8 @@ struct Adsorption {
 	genFunc_4_1_0 vol_w_pTpsatRho;
 	genFunc_4_1_0 vol_p_wTpsatRho;
     double (*vol_T_pwpsatRho)(double, double,
-		genFunc_1_1_0, genFunc_1_1_0, genFunc_1_1_0, genFunc_1_1_0,
-		double[], double[], double[]);
+		genFunc_1_1_1, genFunc_1_1_0, genFunc_1_1_1, genFunc_1_1_0,
+		double[], double[], double[], void*);
 
 	genFunc_4_1_0 vol_dw_dp_pTpsatRho;
 	genFunc_6_1_0 vol_dw_dT_pTpsatRho;
@@ -440,11 +452,35 @@ struct Adsorption {
  *
  * Attributes for isotherms based on mixing rules:
  * -----------------------------------------------
+ * 	function mix_x_pT:
+ *		Returns equilibrium mole fraction in liquid phase x_molmol in mol/mol
+ *		depending on pressure p_Pa in Pa and temperature T_K in K.
  * 	function mix_p_Tx:
  *		Returns equilibrium pressure p_Pa in Pa of first component depending on
  * 		temperature T_K in K and mole fraction in liquid phase x_molmol in
  *		mol/mol.
+ * 	function mix_T_px:
+ *		Returns equilibrium temperature in K depending on equilibrium pressure p
+ * 		in Pa and equilibrium mole fraction X in mol/mol.
  *
+ * 	function mix_dp_dx_Tx:
+ *		Returns derivative of equilibrium pressure p with respect to mole
+ * 		fraction x in Pa depending on equilibrium mole fraction x in mol/mol
+ * 		and equilibrium temperature T in K.
+ * 	function mix_dp_dT_Tx:
+ *		Returns derivative of equilibrium pressure p with respect to temperature
+ * 		T in Pa/K depending on equilibrium mole fraction x in mol/mol and
+ * 		equilibrium temperature T in K.
+ *
+ *	function mix_pure_parameters:
+ *		Returns pure component parameters of cubic equation of state.
+ *	function mix_mixture_parameters:
+ *		Returns mixture parameters of cubic equation of state depending on pure
+ *		component parameters.
+ *	function mix_gen_parameters:
+ *		Returns generalized parameters of cubic equation of state.
+ *	function mix_mixture_fugacity_coefficient:
+ *		Returns mixture fugacity coefficient of cubic equation of state.
  *
  * Remarks:
  * --------
@@ -507,7 +543,20 @@ struct Absorption {
 	// Pointers for isotherm functions that are only defined for isotherm types
 	// based on mixing rules (e.g. 1PVDW, ...)
 	//
-	genFunc_2_1_0 mix_p_Tx;
+	double (*mix_x_pT)(double*, double*, double, double, double[], void*);
+	double (*mix_p_Tx)(double*, double*, double, double, double[], void*);
+	double (*mix_T_px)(double*, double*, double, double, double[], void*);
+
+	double (*mix_dp_dx_Tx)(double, double, double[], void*);
+	double (*mix_dp_dT_Tx)(double, double, double[], void*);
+
+	// Pointers for internal functions that are required to execute absorption
+	// functions
+	//
+	genMixFunc_1 mix_pure_parameters;
+	genMixFunc_2 mix_mixture_parameters;
+	genMixFunc_3 mix_gen_parameters;
+	genMixFunc_4 mix_mixture_fugacity_coefficient;
 };
 
 
@@ -522,14 +571,15 @@ struct Absorption {
  * Attributes:
  * -----------
  * 	function psat_T:
- *		Returns vapor pressure in Pa depending on temperature T in K and
- *		coefficients for refrigerant refrigerant_par.
+ *		Returns vapor pressure in Pa depending on temperature T in K,
+ *		coefficients for refrigerant refrigerant_par, and Refrigerant-struct.
  * 	function Tsat_p:
- *		Returns saturation temperature in K depending on pressure p in Pa and
- *		coefficients for refrigerant refrigerant_par.
+ *		Returns saturation temperature in K depending on pressure p in Pa,
+ *		coefficients for refrigerant refrigerant_par, and Refrigerant-struct.
  * 	function dpsat_dT:
  *		Returns derivative of vapor pressure wrt. temperature in Pa/K depending
- *		on temperature T in K and coefficients for refrigerant refrigerant_par.
+ *		on temperature T in K, coefficients for refrigerant refrigerant_par, and
+ *		Refrigerant-struct.
  * 	function rho_l_T:
  *		Returns saturated liquid density in kg/m3 depending on temperature T in
  *		K and coefficients for refrigerant refrigerant_par.
@@ -537,6 +587,23 @@ struct Absorption {
  *		Returns derivative of saturated liquid density wrt. temperature in in
  *		kg/m3/K depending on temperature T in K and coefficients for refrigerant
  *		refrigerant_par.
+ *
+ * 	function other_psat_T:
+ *		Returns vapor pressure in Pa depending on temperature T in K and
+ *		coefficients for refrigerant refrigerant_par.
+ * 	function other_Tsat_p:
+ *		Returns saturation temperature in K depending on pressure p in Pa and
+ *		coefficients for refrigerant refrigerant_par.
+ * 	function other_dpsat_dT:
+ *		Returns derivative of vapor pressure wrt. temperature in Pa/K depending
+ *		on temperature T in K and coefficients for refrigerant refrigerant_par.
+ * 	function cubic_eos_parameters:
+ *		Calculates pure component parameters of cubic equation of state.
+ * 	function cubic_gen_eos_parameters:
+ *		Calculates generalized pure component parameters of cubic equation of
+ *		state.
+ * 	function cubic_fug_coefficient:
+ *		Calculates fugacity coefficient of cubic equation of state.
  *
  * Remarks:
  * --------
@@ -546,16 +613,29 @@ struct Absorption {
  * --------
  *	01/05/2020, by Mirko Engelpracht:
  *		First implementation.
+ *	04/07/2020, by Mirko Engelpracht:
+ *		Added function pointers for cubic equation of states.
  *
  */
 struct Refrigerant {
 	// Pointers for functions describing state of refrigerant
 	//
-    genFunc_1_1_0 psat_T;
-    genFunc_1_1_0 Tsat_p;
+	genFunc_1_1_1 psat_T;
+	genFunc_1_1_1 Tsat_p;
     genFunc_1_1_0 rho_l_T;
-    genFunc_1_1_0 dpsat_dT;
+	genFunc_1_1_1 dpsat_dT;
     genFunc_1_1_0 drho_l_dT;
+
+	// Pointers for internal functions that are required to execute refrigerant
+	// functions
+	//
+	genFunc_1_1_0 other_psat_T;
+	genFunc_1_1_0 other_Tsat_p;
+	genFunc_1_1_0 other_dpsat_dT;
+
+	void (*cubic_eos_parameters)(double[], double, double[]);
+	void (*cubic_gen_eos_parameters)(double[], double, double, double, double);
+	double (*cubic_fug_coefficient)(int*, double, double, double);
 };
 
 

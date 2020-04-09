@@ -2,7 +2,6 @@
 // adsorption_dubininAstakhov.h //
 //////////////////////////////////
 #include <math.h>
-#include <stdio.h>
 #include "adsorption_dubininAstakhov.h"
 
 
@@ -268,11 +267,11 @@ double adsorption_dubininAstakhov_p_wTpsatRho(double w_kgkg, double T_K,
  *		Equilibrium pressure in Pa.
  * 	double w_kgkg:
  *		Equilibrium loading in kg/kg.
- *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[]):
+ *	double (*p_sat_T_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for vapor pressure wrt. temperature.
  *	double (*rho_l_T_kgm3K)(double T_K, double rho_l_par[]):
  *		Function pointer for saturated liquid density of adsorpt.
- *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]):
+ *	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant):
  *		Function pointer for derivative of vapor pressure wrt. temperature.
  *	double (*drho_l_dT_kgm3K)(double T_K, double rho_l_par[]):
  *		Function pointer for derivative of saturated liquid density of adsorpt
@@ -291,51 +290,28 @@ double adsorption_dubininAstakhov_p_wTpsatRho(double w_kgkg, double T_K,
  *	double:
  *		Equilibrium temperature in K.
  *
+ * Remarks:
+ * --------
+ *	No error handling because pointers are checked at highest level (i.e.
+ *	functions for workingPair-Struct).
+ *
  * History:
  * --------
  *	11/25/2019, by Mirko Engelpracht:
  *		First implementation.
  *	01/07/2020, by Mirko Engelpracht:
  *		Implemented function pointers for correct calculation of T.
+ *	04/08/2020, by Mirko Engelpracht:
+ *		Added proper refrigerant functions.
  *
  */
 double adsorption_dubininAstakhov_T_pwpsatRho(double p_Pa, double w_kgkg,
-	double (*p_sat_T_Pa)(double T_K, double p_sat_par[]),
+	double (*p_sat_T_Pa)(double T_K, double p_sat_par[], void *refrigerant),
 	double (*rho_l_T_kgm3)(double T_K, double rho_l_par[]),
-	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[]),
+	double (*dp_sat_dT_PaK)(double T_K, double p_sat_par[], void *refrigerant),
 	double (*drho_l_dT_kgm3K)(double T_K, double rho_l_par[]),
-	double isotherm_par[], double p_sat_par[], double rho_l_par[]) {
-	// Check if function pointers are NULL
-	//
-	if (p_sat_T_Pa == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions p_sat_T is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_dubininAstakhov_T_pwpsatRho\".");
-		return -1;
-	}
-	if (rho_l_T_kgm3 == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions rho_l_T is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_dubininAstakhov_T_pwpsatRho\".");
-		return -1;
-	}
-	if (dp_sat_dT_PaK == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions dp_sat_dT is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_dubininAstakhov_T_pwpsatRho\".");
-		return -1;
-	}
-	if (drho_l_dT_kgm3K == NULL) {
-		printf("\n\n###########\n# Warning #\n###########");
-		printf("\nRefrigerant functions drho_l_dT is not implemented.");
-		printf("\nReturn -1 for function call of "
-			"\"adsorption_dubininAstakhov_T_pwpsatRho\".");
-		return -1;
-	}
-
+	double isotherm_par[], double p_sat_par[], double rho_l_par[],
+	void *refrigerant) {
 	// Initialize variables for using Newton-Raphson method
 	//
 	double T_guess_K = 273.15;
@@ -348,7 +324,7 @@ double adsorption_dubininAstakhov_T_pwpsatRho(double p_Pa, double w_kgkg,
 	// Calculate temperature using Newton-Raphson method
 	//
 	for (w_guess_kgkg = adsorption_dubininAstakhov_w_pTpsatRho(p_Pa, T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par),
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant),
 			rho_l_T_kgm3(T_guess_K, rho_l_par), isotherm_par);
 	     fabs(w_guess_kgkg - w_kgkg)>tolerance && counter_NRM<50;
 		 counter_NRM++) {
@@ -356,7 +332,7 @@ double adsorption_dubininAstakhov_T_pwpsatRho(double p_Pa, double w_kgkg,
 		// temperature
 		//
 		w_guess_kgkg = adsorption_dubininAstakhov_w_pTpsatRho(p_Pa, T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par),
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant),
 			rho_l_T_kgm3(T_guess_K, rho_l_par), isotherm_par);
 
 		// Calculate the first derivative of the loading with respect to
@@ -364,9 +340,9 @@ double adsorption_dubininAstakhov_T_pwpsatRho(double p_Pa, double w_kgkg,
 		//
 		dw_guess_dT_kgkgK = adsorption_dubininAstakhov_dw_dT_pTpsatRho(p_Pa,
 			T_guess_K,
-			p_sat_T_Pa(T_guess_K, p_sat_par),
+			p_sat_T_Pa(T_guess_K, p_sat_par, refrigerant),
 			rho_l_T_kgm3(T_guess_K, rho_l_par),
-			dp_sat_dT_PaK(T_guess_K, p_sat_par),
+			dp_sat_dT_PaK(T_guess_K, p_sat_par, refrigerant),
 			drho_l_dT_kgm3K(T_guess_K, rho_l_par), isotherm_par);
 
 		// Update guess value for temperature
