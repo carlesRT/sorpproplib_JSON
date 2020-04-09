@@ -1,7 +1,6 @@
 //////////////////////
 // json_interface.c //
 //////////////////////
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,18 +57,27 @@ char *json_read_file(const char *path) {
 		return NULL;
 	}
 
-	// Read JSON-file and save its content to data
+	// Read JSON-file and save its content to data:
+	// Different approach for windows and linux
 	//
 	FILE *fp;
 	char *data;
-	errno_t err;
 
-	if ((err = fopen_s(&fp, path, "rb")) != 0) {
+	#ifdef __unix
+	if ((fp = fopen(path, "rb")) == NULL) {
 		// Cannot open JSON-file
 		//
 		printf("\n\n###########\n# Warning #\n###########");
-		printf("Cannot open file JSON-file.");
+		printf("\nCannot open file JSON-file.");
 		return NULL;
+	#else
+	if ((fopen_s(&fp, path, "rb")) != 0) {
+		// Cannot open JSON-file
+		//
+		printf("\n\n###########\n# Warning #\n###########");
+		printf("\nCannot open file JSON-file.");
+		return NULL;
+	#endif
 
 	} else if (fseek(fp, 0, SEEK_END) != 0) {
 		// Cannot set JSON-file position

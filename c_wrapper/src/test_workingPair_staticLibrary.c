@@ -8,6 +8,16 @@
 #include "structDefinitions.c"
 
 
+//////////////////////////
+// Definition of macros //
+//////////////////////////
+#ifdef __unix
+	#define PATH ".//data//sorpproplib_ValidationCInterface.json"
+#else
+	#define PATH ".\\data\\sorpproplib_ValidationCInterface.json"
+#endif
+
+
 /////////////////////////////
 // Definition of functions //
 /////////////////////////////
@@ -836,7 +846,7 @@ int main() {
 	// Test working pair: Carbon Maxsorb-III / R-134a
 	//
 	testWorkingPair_ads(
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"carbon",
 		"maxsorb-iii",
 		"r-134a",
@@ -850,7 +860,7 @@ int main() {
 	// Test working pair: Carbon Norit-rb1 / CO2
 	//
 	testWorkingPair_ads(
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"carbon",
 		"norit-rb1",
 		"co2",
@@ -864,7 +874,7 @@ int main() {
 	// Test working pair: Zeolite 5A / Water
 	//
 	testWorkingPair_ads(
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"zeolite",
 		"5a",
 		"water",
@@ -878,7 +888,7 @@ int main() {
 	// Test working pair: MOF CuBtC / Propane
 	//
 	testWorkingPair_ads(
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"mof",
 		"cubtc",
 		"propane",
@@ -892,7 +902,7 @@ int main() {
 	// Test working pair: NaOH-KOH-CsOH / H2O
 	//
 	testWorkingPair_abs_con(
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"naoh-koh-csoh",
 		"",
 		"water",
@@ -908,7 +918,7 @@ int main() {
 	testWorkingPair_abs_act(
 		353.15,
 		0.9386,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"il",
 		"[bmim][(cf3so2)2n]",
 		"water",
@@ -924,7 +934,7 @@ int main() {
 	testWorkingPair_abs_act(
 		353.15,
 		0.9386,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"il",
 		"[bmim][(cf3so2)2n]",
 		"water",
@@ -940,7 +950,7 @@ int main() {
 	testWorkingPair_abs_act(
 		353.15,
 		0.289300,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"il",
 		"[bmim][(cf3so2)2n]",
 		"benzene",
@@ -956,7 +966,7 @@ int main() {
 	testWorkingPair_abs_act(
 		353.15,
 		0.9386,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"il",
 		"[bmim][(cf3so2)2n]",
 		"water",
@@ -972,7 +982,7 @@ int main() {
 	testWorkingPair_abs_act(
 		353.15,
 		0.3475,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"il",
 		"[bmim][(cf3so2)2n]",
 		"benzene",
@@ -988,7 +998,7 @@ int main() {
 	testWorkingPair_abs_act(
 		323.07,
 		0.5864,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"lubricant",
 		"pec-9",
 		"r-134a",
@@ -1004,7 +1014,7 @@ int main() {
 	testWorkingPair_abs_act(
 		323.07,
 		0.5864,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"lubricant",
 		"pag",
 		"r-134a",
@@ -1024,7 +1034,7 @@ int main() {
 	testWorkingPair_abs_mix(
 		313.15,
 		x_molmol,
-		".\\data\\sorpproplib_ValidationCInterface.json",
+		PATH,
 		"oil",
 		"",
 		"r-600a",

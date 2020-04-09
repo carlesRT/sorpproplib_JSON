@@ -8,10 +8,18 @@
 //////////////////////////
 // Definition of macros //
 //////////////////////////
-#ifdef DLL_EXPORTS
-#define DLL_API __declspec(dllexport)
+#ifdef __unix
+	#ifdef DLL_EXPORTS
+	#define DLL_API
+	#else
+	#define DLL_API
+	#endif
 #else
-#define DLL_API
+	#ifdef DLL_EXPORTS
+	#define DLL_API __declspec(dllexport)
+	#else
+	#define DLL_API
+	#endif
 #endif
 
 
