@@ -1,6 +1,0 @@
-ref/sorb	propylene	Zeolite:4a
-t[K]	mass ratio	p[kPa]	equation form	reference
-295	20	0.326097	Toth	DaSilvaF.A.andA.E.RodriguesAdsorptionequilibriaandkineticsforpropyleneandpropaneover13Xand4Azeolitepellets.Industrial&engineeringchemistryresearch1999.38(5):p.2051-2057.
-355	20	2.56507	Toth	DaSilvaF.A.andA.E.RodriguesAdsorptionequilibriaandkineticsforpropyleneandpropaneover13Xand4Azeolitepellets.Industrial&engineeringchemistryresearch1999.38(5):p.2051-2057.
-295	50	2.42911	Toth	DaSilvaF.A.andA.E.RodriguesAdsorptionequilibriaandkineticsforpropyleneandpropaneover13Xand4Azeolitepellets.Industrial&engineeringchemistryresearch1999.38(5):p.2051-2057.
-355	50	19.1071	Toth	DaSilvaF.A.andA.E.RodriguesAdsorptionequilibriaandkineticsforpropyleneandpropaneover13Xand4Azeolitepellets.Industrial&engineeringchemistryresearch1999.38(5):p.2051-2057.

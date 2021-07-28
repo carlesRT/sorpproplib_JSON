@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - CarbonDioxide - zeolite pellet 5A'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Zeolite pellet 5A}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Toth - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & zeolite pellet \\
+\textbf{Subtype:} & 5A \\
+\textbf{Refrigerant:} & CarbonDioxide \\
+\textbf{Equation:} & Toth \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Wang, Yu; LeVan, M. Douglas (2009): Adsorption Equilibrium of Carbon Dioxide and Water Vapor on Zeolites 5A and 13X and Silica Gel. Pure Components. In: J. Chem. Eng. Data 54 (10), S. 2839–2844. DOI: 10.1021/je800900a. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+Property data of sorbent and subtype does not exist.
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$ and temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \frac{w_\mathrm{sat} b^{m} p}{\left( 1 + b^{r} p^{n} \right)^{\nicefrac{1}{n}}} & \quad\text{, and} \\
+b &=& b_0 \exp\left( \frac{Q^{*}}{T} \right) & \quad\text{, and} \\
+n &=& n_0 + \nicefrac{c}{T} & \quad\text{, and} \\
+r &=& \begin{cases} n & \quad \text{if } r^{*} < 0 \\ r^{*}  & \quad \text{else} \end{cases} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$b_0$ & $\si{\per\pascal}$ & 6.761000000e-11 & $Q^{*}$ & $\si{\kelvin}$ & 5.625000000e+03 \\
+$c$ & $\si{\kelvin}$ & -2.002000000e+01 & $r^{*}$ & - & -1.000000000e+00 \\
+$m$ & - & 1.000000000e+00 & $w_\mathrm{sat}$ & $\si{\kilogram\per\kilogram}$ & 6.427951671e-01 \\
+$n_0$ & - & 2.700000000e-01 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $5.3 \si{\pascal} \leq p \leq 108000.0 \si{\pascal}$,  $228.15 \si{\kelvin} \leq T \leq 448.15 \si{\kelvin}$, and $0.0044009 \si{\kilogram\per\kilogram} \leq w \leq 0.21388374 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_CarbonDioxide_zeolite_pellet_5A_Toth_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\item Pressure, relative, in \% $\,\to\,$ 0.067 Pa < p < 13300 Pa: 0.25% reading | 6900 Pa < p < 103000 Pa: 0.25% full scale
+\item Temperature, absolute, in $\si{\kelvin}$ $\,\to\,$ 0.3
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 5.71\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

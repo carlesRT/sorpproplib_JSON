@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Water - NaOH-KOH-CsOH '
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Naoh-koh-csoh }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Duehring - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & NaOH-KOH-CsOH \\
+\textbf{Subtype:} &  \\
+\textbf{Refrigerant:} & Water \\
+\textbf{Equation:} & Duehring \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Herold, Keith E.; Radermacher, Reinhard; Howe, Lawrence; Erickson, Donald C. (1991): Development of an absorption heat pump water heater using an aqueous ternary hydroxide working fluid. In: International Journal of Refrigeration 14 (3), S. 156–167. DOI: 10.1016/0140-7007(91)90070-W. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on concentration $X$ in $\si{\kilogram\per\kilogram}$ and  temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p &=& \nicefrac{1}{r} 10 ^ { C + \frac{D}{T_\mathrm{ref}} + \frac{E}{T_\mathrm{ref}^{2}} } & \quad\text{, and} \\
+T_\mathrm{ref} &=& q + \frac{\left( n T + m - B \right)}{A}  & \quad\text{, and} \\
+A &=& \sum_{i=0}^{3} a_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+B &=& \sum_{i=0}^{3} b_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+X_\mathrm{cor} &=& 100 X  & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a_0$ & - & 6.164233723e+00 & $b_0$ & - & -5.380343163e+01 \\
+$a_1$ & - & -2.746665026e-01 & $b_1$ & - & 5.004848451e+00 \\
+$a_2$ & - & 4.916023734e-03 & $b_2$ & - & -1.228273028e-01 \\
+$a_3$ & - & -2.859098259e-05 & $b_3$ & - & 1.096142341e-03 \\
+$C$ & - & 6.427154896e+00 & $D$ & $\si{\kelvin}$ & -1.208919437e+03 \\
+$m$ & - & 0.000000000e+00 & $E$ & $\si{\square\kelvin}$ & -1.661599630e+05 \\
+$n$ & - & 1.000000000e+00 & $q$ & - & 2.731500000e+02 \\
+$r$ & $\si{\per\pascal}$ & 1.000000000e-03 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $282.15 \si{\kelvin} \leq T \leq 443.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

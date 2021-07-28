@@ -1,5 +1,0 @@
-ref/sorb	propylene	Zeolite:4a
-295	20
-355	20
-295	50
-355	50

@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Water  - LiBr/LiNO3/LiI/LiCl ratio 5/1/1/2'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Libr/lino3/lii/licl ratio 5/1/1/2}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Antoine - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & LiBr/LiNO3/LiI/LiCl \\
+\textbf{Subtype:} & ratio 5/1/1/2 \\
+\textbf{Refrigerant:} & Water  \\
+\textbf{Equation:} & Antoine \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Koo, Kee-Kahb; Lee, Hyung-Rae; Jeong, Siyoung; Oh, Young-Sam; Park, Dal-Ryung; Baek, Young-Soon (1998): Solubilities, Vapor Pressures, Densities, and Viscosities of the (Water + Lithium Bromide + Lithium Iodide + Lithium Chloride) System. In: J. Chem. Eng. Data 43 (5), S. 722–725. DOI: 10.1021/je980063l. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on concentration $X$ in $\si{\kilogram\per\kilogram}$ and  temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p}{d} = 10 ^ { \sum_{i=0}^{4} \left( A_i + \frac{1000 B_i}{T - c} \right) \left( 100 X \right) ^{i}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$c$ & $\si{\kelvin}$ & 4.315000000e+01 & $d$ & $\si{\pascal}$ & 1.000000000e+03 \\
+$A_0$ & - & -1.276429000e+03 & $B_0$ & $\si{\kelvin}$ & 4.374120000e+02 \\
+$A_1$ & - & 8.764646000e+01 & $B_1$ & $\si{\kelvin}$ & -3.008232000e+01 \\
+$A_2$ & - & -2.233375000e+00 & $B_2$ & $\si{\kelvin}$ & 7.690697000e-01 \\
+$A_3$ & - & 2.517102000e-02 & $B_3$ & $\si{\kelvin}$ & -8.697553000e-03 \\
+$A_4$ & - & -1.058556000e-04 & $B_4$ & $\si{\kelvin}$ & 3.669313000e-05 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $330.15 \si{\kelvin} \leq T \leq 410.15 \si{\kelvin}$.
+\newline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

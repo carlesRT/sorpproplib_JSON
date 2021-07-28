@@ -1,0 +1,616 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Argon'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Argon}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturated Liquid Density - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & SaturatedLiquidDensity\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Tegeler, Ch.; Span, Roland; Wagner, Wolfgang (1999): A New Equation of State for Argon Covering the Fluid Region for Temperatures From the Melting Line to 700 K at Pressures up to 1000 MPa. In: Journal of Physical and Chemical Reference Data 28 (3), S. 779–850. DOI: 10.1063/1.556037. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Saturated liquid density $\rho_\mathrm{sat}^\mathrm{liq}$ in $\si{\kilogram\per\cubic\meter}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & -1.000000000e+00 & $b_4$ & - & 4.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 1.506870000e+02 & $a_5$ & - & 0.000000000e+00 \\
+$\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & 5.356000000e+02 & $b_5$ & - & 0.000000000e+00 \\
+$a_1$ & - & 1.500426200e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_1$ & - & 3.340000000e-01 & $b_6$ & - & 0.000000000e+00 \\
+$a_2$ & - & -3.138129000e-01 & $a_7$ & - & 0.000000000e+00 \\
+$b_2$ & - & 6.666666667e-01 & $b_7$ & - & 0.000000000e+00 \\
+$a_3$ & - & 8.646162200e-02 & $a_8$ & - & 0.000000000e+00 \\
+$b_3$ & - & 2.333333333e+00 & $b_8$ & - & 0.000000000e+00 \\
+$a_4$ & - & -4.147752500e-02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $83.806 \si{\kelvin} \leq T \leq 150.687 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturated Liquid Density - EoS1 - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & SaturatedLiquidDensity\_EoS1 \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Verein Deutscher Ingenieure (2010): VDI Heat Atlas. 2. Ed. Heidelberg: Springer. Online: http://dx.doi.org/10.1007/978-3-540-77877-6. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Saturated liquid density $\rho_\mathrm{sat}^\mathrm{liq}$ in $\si{\kilogram\per\cubic\meter}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $b_4$ & - & 1.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 1.506900000e+02 & $a_5$ & - & 2.236354478e-01 \\
+$\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & 5.360000000e+02 & $b_5$ & - & 1.333333333e+00 \\
+$a_1$ & - & 1.000000000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_1$ & - & 0.000000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_2$ & - & 1.670586754e+00 & $a_7$ & - & 0.000000000e+00 \\
+$b_2$ & - & 3.500000000e-01 & $b_7$ & - & 0.000000000e+00 \\
+$a_3$ & - & 5.555796642e-01 & $a_8$ & - & 0.000000000e+00 \\
+$b_3$ & - & 6.666666667e-01 & $b_8$ & - & 0.000000000e+00 \\
+$a_4$ & - & -2.977630597e-02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $83.806 \si{\kelvin} \leq T \leq 150.69 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - Antoine - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_Antoine \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & P.J. Linstrom and W.G. Mallard, Eds., NIST Chemistry WebBook, NIST Standard Reference Database Number 69, National Institute of Standards and Technology, Gaithersburg MD, 20899, https://doi.org/10.18434/T4D303. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p_\mathrm{sat}}{100000} = 10^{a - \nicefrac{b}{T + c}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & - & 3.295550000e+00 & $c$ & $\si{\kelvin}$  & -2.223300000e+01 \\
+$b$ & $\si{\kelvin}$ & 2.152400000e+02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $83.78 \si{\kelvin} \leq T \leq 150.72 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - Antoine - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_Antoine \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & P.J. Linstrom and W.G. Mallard, Eds., NIST Chemistry WebBook, NIST Standard Reference Database Number 69, National Institute of Standards and Technology, Gaithersburg MD, 20899, https://doi.org/10.18434/T4D303. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p_\mathrm{sat}}{100000} = 10^{a - \nicefrac{b}{T + c}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & - & 4.469030000e+00 & $c$ & $\si{\kelvin}$  & 2.215600000e+01 \\
+$b$ & $\si{\kelvin}$ & 4.810120000e+02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $114.4 \si{\kelvin} \leq T \leq 150.31 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - Antoine - ID 3}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_Antoine \\
+\textbf{ID:} & 3 \\
+\textbf{Reference:} & P.J. Linstrom and W.G. Mallard, Eds., NIST Chemistry WebBook, NIST Standard Reference Database Number 69, National Institute of Standards and Technology, Gaithersburg MD, 20899, https://doi.org/10.18434/T4D303. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p_\mathrm{sat}}{100000} = 10^{a - \nicefrac{b}{T + c}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & - & 4.971710000e+00 & $c$ & $\si{\kelvin}$  & 4.981900000e+01 \\
+$b$ & $\si{\kelvin}$ & 6.589820000e+02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $129.33 \si{\kelvin} \leq T \leq 147.4 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - Antoine - ID 4}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_Antoine \\
+\textbf{ID:} & 4 \\
+\textbf{Reference:} & P.J. Linstrom and W.G. Mallard, Eds., NIST Chemistry WebBook, NIST Standard Reference Database Number 69, National Institute of Standards and Technology, Gaithersburg MD, 20899, https://doi.org/10.18434/T4D303. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p_\mathrm{sat}}{100000} = 10^{a - \nicefrac{b}{T + c}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & - & 3.734790000e+00 & $c$ & $\si{\kelvin}$  & -6.083000000e+00 \\
+$b$ & $\si{\kelvin}$ & 3.026830000e+02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $90.94 \si{\kelvin} \leq T \leq 101.48 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Verein Deutscher Ingenieure (2010): VDI Heat Atlas. 2. Ed. Heidelberg: Springer. Online: http://dx.doi.org/10.1007/978-3-540-77877-6. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p_\mathrm{sat} &=& p_\mathrm{crit} \exp \left( \nicefrac{1}{\theta} \sum_{i=1}^{7} a_i \xi^{b_i} \right) & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 1.506900000e+02 & $a_4$ & - & -1.523120000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.863000000e+06 & $b_4$ & - & 5.000000000e+00 \\
+$a_1$ & - & -5.928010000e+00 & $a_5$ & - & 0.000000000e+00 \\
+$b_1$ & - & 1.000000000e+00 & $b_5$ & - & 0.000000000e+00 \\
+$a_2$ & - & 1.219820000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_2$ & - & 1.500000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_3$ & - & -5.396700000e-01 & $a_7$ & - & 0.000000000e+00 \\
+$b_3$ & - & 2.500000000e+00 & $b_7$ & - & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $83.806 \si{\kelvin} \leq T \leq 150.69 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+a &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.08664 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.48508 + 1.55171 \omega - 0.15613 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & -5.000000000e+00 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 1.506900000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.863000000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & -2.190000000e-03 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $96.3769 \si{\kelvin} \leq T \leq 128.0865 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & Argon \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+a &=& 0.45724 \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.07780 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.37464 + 1.54226 \omega - 0.26992 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & 1.000000000e+01 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 1.506900000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.863000000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & -2.190000000e-03 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $96.3769 \si{\kelvin} \leq T \leq 128.0865 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'Argon'. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

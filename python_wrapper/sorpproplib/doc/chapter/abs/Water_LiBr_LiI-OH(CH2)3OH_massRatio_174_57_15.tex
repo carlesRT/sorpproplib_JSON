@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Water - LiBr/LiI-OH(CH2)3OH massRatio 174/57/15'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Libr/lii-oh(ch2)3oh massRatio 174/57/15}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Antoine - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & LiBr/LiI-OH(CH2)3OH \\
+\textbf{Subtype:} & massRatio 174/57/15 \\
+\textbf{Refrigerant:} & Water \\
+\textbf{Equation:} & Antoine \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Kim, Jin-Soo; Lee, Huen (2001): Solubilities, Vapor Pressures, Densities, and Viscosities of the LiBr + LiI + HO(CH 2 ) 3 OH + H 2 O System. In: J. Chem. Eng. Data 46 (1), S. 79–83. DOI: 10.1021/je000154u. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on concentration $X$ in $\si{\kilogram\per\kilogram}$ and  temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p}{d} = 10 ^ { \sum_{i=0}^{4} \left( A_i + \frac{1000 B_i}{T - c} \right) \left( 100 X \right) ^{i}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$c$ & $\si{\kelvin}$ & 4.315000000e+01 & $d$ & $\si{\pascal}$ & 1.000000000e+03 \\
+$A_0$ & - & 9.537943000e+00 & $B_0$ & $\si{\kelvin}$ & -2.181261000e+00 \\
+$A_1$ & - & -1.303482000e-01 & $B_1$ & $\si{\kelvin}$ & 2.793675000e-02 \\
+$A_2$ & - & 1.919265000e-03 & $B_2$ & $\si{\kelvin}$ & -3.596105000e-04 \\
+$A_3$ & - & -7.926247000e-06 & $B_3$ & $\si{\kelvin}$ & 2.400981000e-08 \\
+$A_4$ & - & 0.000000000e+00 & $B_4$ & $\si{\kelvin}$ & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $339.15 \si{\kelvin} \leq T \leq 444.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/abs/abs_Water_LiBr_LiI-OH(CH2)3OH_massRatio_174_57_15_Antoine_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 2.5\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

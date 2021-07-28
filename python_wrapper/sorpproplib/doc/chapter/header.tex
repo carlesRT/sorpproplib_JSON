@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base setting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[pdftex								% Propper PDF
+				,a4paper							% Paper format
+				,12pt								% Font size
+				,titlepage							% Allows adding title papge
+				,openright							% New chapters opened on left
+				,parskip=half-						% Line spacing
+				,numbers=noenddot					% No dots when using numberings
+				,fleqn								% Left-centred equations
+				,headings=small						% Smaller headings
+			  ]{scrreprt}
+\setcounter{tocdepth}{\subsubsectionnumdepth}		% Depeth of ToC
+\setcounter{secnumdepth}{\subsubsectionnumdepth}	% Depth of numbering sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}	% Encoding: UTF8
+\usepackage[english]{babel}	% Dictionary: English
+\usepackage{titletoc}		% Propper table of content
+
+\usepackage{anyfontsize}	% Fontsize for title page
+\usepackage[T1]{fontenc}	% Font
+\usepackage{microtype}		% Propper justified setting
+\usepackage{ifpdf} 			% Propper PDF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[left=3cm, 
+			right=3cm, 
+			top=3cm, 
+			bottom=3cm]{geometry} 	% Custom layout
+\usepackage[hidelinks]{hyperref}	% Allows to use hyperlinks within document
+\usepackage[headsepline=0.4pt,		% Headline
+			footsepline=0.4pt,		% Footline
+			plainfootsepline,		% Footline on first page of new chapter
+			]{scrlayer-scrpage}
+	\clearpairofpagestyles			% Clear previeous head- and footlines
+	
+	\automark{chapter}				% Current chapter
+	\ihead{\headmark}				% Current chapter
+	
+	\ifoot*{\today}														% Current date
+	\cfoot*{\hyperlink{back}{Manual | SorpPropLib | Back to ToC}}		% Title and link
+	\ofoot*{\pagemark}													% Page number	
+	
+	\pagestyle{scrheadings}			% Update head- and footlines
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{longtable}		% Usage of long tables (i.e., longer than one side)
+\usepackage{booktabs} 		% Usage of nicer tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}		% Propper environment for figures
+\usepackage{placeins}		% Forces to include all graphics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{nicefrac}		% Usage of nicer fracs
+\usepackage{siunitx}		% Usage of SI units
+\usepackage{amsmath}		% Propper environment for equations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

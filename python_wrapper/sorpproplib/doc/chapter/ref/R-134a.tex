@@ -1,0 +1,297 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - R-134a'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R-134a}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturated Liquid Density - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-134a \\
+\textbf{Equation:} & SaturatedLiquidDensity\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Tillner-Roth, Reiner; Baehr, Hans Dieter (1994): An International Standard Formulation for the Thermodynamic Properties of 1,1,1,2‐Tetrafluoroethane (HFC‐134a) for Temperatures from 170 K to 455 K and Pressures up to 70 MPa. In: Journal of Physical and Chemical Reference Data 23 (5), S. 657–729. DOI: 10.1063/1.555958. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Saturated liquid density $\rho_\mathrm{sat}^\mathrm{liq}$ in $\si{\kilogram\per\cubic\meter}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $b_4$ & - & 3.333333333e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.741800000e+02 & $a_5$ & - & 0.000000000e+00 \\
+$\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & 1.000000000e+00 & $b_5$ & - & 0.000000000e+00 \\
+$a_1$ & - & 5.182000000e+02 & $a_6$ & - & 0.000000000e+00 \\
+$b_1$ & - & 0.000000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_2$ & - & 8.841300000e+02 & $a_7$ & - & 0.000000000e+00 \\
+$b_2$ & - & 3.333333333e-01 & $b_7$ & - & 0.000000000e+00 \\
+$a_3$ & - & 4.858400000e+02 & $a_8$ & - & 0.000000000e+00 \\
+$b_3$ & - & 6.666666667e-01 & $b_8$ & - & 0.000000000e+00 \\
+$a_4$ & - & 1.932900000e+02 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $169.85 \si{\kelvin} \leq T \leq 374.18 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-134a_SaturatedLiquidDensity_EoS1_1.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-134a \\
+\textbf{Equation:} & VaporPressure\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Tillner-Roth, Reiner; Baehr, Hans Dieter (1994): An International Standard Formulation for the Thermodynamic Properties of 1,1,1,2‐Tetrafluoroethane (HFC‐134a) for Temperatures from 170 K to 455 K and Pressures up to 70 MPa. In: Journal of Physical and Chemical Reference Data 23 (5), S. 657–729. DOI: 10.1063/1.555958. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p_\mathrm{sat} &=& p_\mathrm{crit} \exp \left( \nicefrac{1}{\theta} \sum_{i=1}^{7} a_i \xi^{b_i} \right) & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.741800000e+02 & $a_4$ & - & -3.583758000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.056290000e+06 & $b_4$ & - & 4.000000000e+00 \\
+$a_1$ & - & -7.686556000e+00 & $a_5$ & - & 0.000000000e+00 \\
+$b_1$ & - & 1.000000000e+00 & $b_5$ & - & 0.000000000e+00 \\
+$a_2$ & - & 2.311791000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_2$ & - & 1.500000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_3$ & - & -2.039554000e+00 & $a_7$ & - & 0.000000000e+00 \\
+$b_3$ & - & 2.000000000e+00 & $b_7$ & - & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $169.85 \si{\kelvin} \leq T \leq 374.18 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-134a_VaporPressure_EoS1_1.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-134a \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+a &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.08664 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.48508 + 1.55171 \omega - 0.15613 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & -5.000000000e+00 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.742100000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.059300000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & 3.268400000e-01 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $195.3275 \si{\kelvin} \leq T \leq 318.0785 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-134a_VaporPressure_EoSCubic_1.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-134a \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+a &=& 0.45724 \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.07780 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.37464 + 1.54226 \omega - 0.26992 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & 1.000000000e+01 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.742100000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 4.059300000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & 3.268400000e-01 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $195.3275 \si{\kelvin} \leq T \leq 318.0785 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-134a_VaporPressure_EoSCubic_2.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

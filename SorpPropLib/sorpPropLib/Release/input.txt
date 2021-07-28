@@ -1,3 +1,0 @@
-ref/sorb	water	NaOH-KOH-CsOH
-423	0.65
-323	0.5

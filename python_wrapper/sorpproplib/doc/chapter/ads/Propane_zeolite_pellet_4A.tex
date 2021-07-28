@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Propane - zeolite pellet 4A'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Zeolite pellet 4A}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Langmuir - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & zeolite pellet \\
+\textbf{Subtype:} & 4A \\
+\textbf{Refrigerant:} & Propane \\
+\textbf{Equation:} & Langmuir \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Grande, Carlos A.; Gigola, Carlos; Rodrigues, Alírio E. (2003): Propane–propylene binary adsorption on zeolite 4A. In: Adsorption 9 (4), S. 321–329. DOI: 10.1023/A:1026223914143. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+Property data of sorbent and subtype does not exist.
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$ and temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \frac{w_\mathrm{sat} K p}{1 + K p} & \quad\text{, and} \\
+K &=& K_0 \exp \left( \frac{\Delta H}{R T} \right) & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta H$ & $\si{\joule\per\mole}$ & 1.621460000e+04 & $w_\mathrm{sat}$ & $\si{\kilogram\per\kilogram}$ & 7.727999250e-02 \\
+$K_0$ & $\si{\per\pascal}$ & 4.220000000e-08 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $0.0 \si{\pascal} \leq p \leq 367890.0 \si{\pascal}$,  $423.0 \si{\kelvin} \leq T \leq 473.0 \si{\kelvin}$, and $0.0 \si{\kilogram\per\kilogram} \leq w \leq 0.04762476 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_Propane_zeolite_pellet_4A_Langmuir_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\item Pressure, absolute, in $\si{\pascal}$ $\,\to\,$ 40
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 3.41\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Toth - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & zeolite pellet \\
+\textbf{Subtype:} & 4A \\
+\textbf{Refrigerant:} & Propane \\
+\textbf{Equation:} & Toth \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Da Silva, Francisco A.; Rodrigues, Alírio E. (1999): Adsorption Equilibria and Kinetics for Propylene and Propane over 13X and 4A Zeolite Pellets. In: Ind. Eng. Chem. Res. 38 (5), S. 2051–2057. DOI: 10.1021/ie980640z. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Diameter of crystal & \si{\milli\meter} & 0.0034\\
+Diameter of pellet & \si{\milli\meter} & 1.6\\
+Diameter of extrudate & \si{\milli\meter} & 3.2\\
+Length of extrudate & \si{\milli\meter} & 8-12\\
+Porosity of pellet & - & 0.34\\
+Bulk density & \si{\kilogram\per\cubic\meter} & >700\\
+Pellet density & \si{\kilogram\per\cubic\meter} & 1700\\
+Solid density & \si{\kilogram\per\cubic\meter} & 2590\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$ and temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \frac{w_\mathrm{sat} b^{m} p}{\left( 1 + b^{r} p^{n} \right)^{\nicefrac{1}{n}}} & \quad\text{, and} \\
+b &=& b_0 \exp\left( \frac{Q^{*}}{T} \right) & \quad\text{, and} \\
+n &=& n_0 + \nicefrac{c}{T} & \quad\text{, and} \\
+r &=& \begin{cases} n & \quad \text{if } r^{*} < 0 \\ r^{*}  & \quad \text{else} \end{cases} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$b_0$ & $\si{\per\pascal}$ & 6.000000000e-07 & $Q^{*}$ & $\si{\kelvin}$ & 0.000000000e+00 \\
+$c$ & $\si{\kelvin}$ & 0.000000000e+00 & $r^{*}$ & - & -1.000000000e+00 \\
+$m$ & - & 1.000000000e+00 & $w_\mathrm{sat}$ & $\si{\kilogram\per\kilogram}$ & 8.951691000e-02 \\
+$n_0$ & - & 1.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $291.1 \si{\pascal} \leq p \leq 107707.2 \si{\pascal}$,  $303.0 \si{\kelvin} \leq T \leq 473.0 \si{\kelvin}$, and $0.0073 \si{\kilogram\per\kilogram} \leq w \leq 0.012964 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

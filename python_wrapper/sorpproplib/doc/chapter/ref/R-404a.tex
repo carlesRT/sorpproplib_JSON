@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - R-404a'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R-404a}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturated Liquid Density - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-404a \\
+\textbf{Equation:} & SaturatedLiquidDensity\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Online: https://www.freon.com/en/-/media/files/freon/freon-410a-si-thermodynamic-properties.pdf?rev=6b72bfaa299142d697540982b88a56eb \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Saturated liquid density $\rho_\mathrm{sat}^\mathrm{liq}$ in $\si{\kilogram\per\cubic\meter}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $b_4$ & - & 1.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.452200000e+02 & $a_5$ & - & 7.614200000e+00 \\
+$\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & 4.845000000e+02 & $b_5$ & - & 1.333333333e+00 \\
+$a_1$ & - & 1.000200000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_1$ & - & 0.000000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_2$ & - & 1.930000000e-01 & $a_7$ & - & 0.000000000e+00 \\
+$b_2$ & - & 3.333333333e-01 & $b_7$ & - & 0.000000000e+00 \\
+$a_3$ & - & 9.082900000e+00 & $a_8$ & - & 0.000000000e+00 \\
+$b_3$ & - & 6.666666667e-01 & $b_8$ & - & 0.000000000e+00 \\
+$a_4$ & - & -1.378100000e+01 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $200.0 \si{\kelvin} \leq T \leq 345.22 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-404a_SaturatedLiquidDensity_EoS1_1.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

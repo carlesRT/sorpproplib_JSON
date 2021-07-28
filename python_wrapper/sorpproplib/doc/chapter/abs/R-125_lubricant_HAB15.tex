@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - R-125 - lubricant HAB15'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lubricant HAB15}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{MixingRule - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & lubricant \\
+\textbf{Subtype:} & HAB15 \\
+\textbf{Refrigerant:} & R-125 \\
+\textbf{Equation:} & MixingRule \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Yokozeki, A. (2001): Solubility of Refrigerant in Various Lubricants. In: International Journal of Thermophysics 22 (4), S. 1057–1071. DOI: 10.1023/A:1010695705260. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state and mixing rules are given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+a &=& z_1^2 a_1 + 2 z_1 z_2 a_{12} + 2_2^2 a_2 & \quad\text{, and} \\
+b &=& z_1^2 b_1 + 2 z_1 z_2 b_{12} + 2_2^2 b_2 & \quad\text{, and} \\
+a_{12} &=& \left( a_1 a_2 \right) ^{0.5} \left( 1 + \nicefrac{t}{T} \right) \left(1 - k_{12} \right) & \quad\text{, and} \\
+b_{12} &=& \frac{ b_1 + b_2 }{2} \left(1 - m \right) & \quad\text{, and} \\
+k_{12} &=& \frac{l_{12} l_{21} \left(z_1 + z_2 \right)}{l_{21} z_1 + l_{12} z_2} & \quad\text{, and} \\
+z_j &=& x_j \textrm { or } y_j \textrm{ depending on phase} & \quad\text{, and} \\
+a_j &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_{\mathrm{crit},j} \right)^2}{p_{\mathrm{crit},j}} \alpha_j & \quad\text{, and} \\
+b_j &=& 0.08664 R \frac{T_{\mathrm{crit},j}}{p_{\mathrm{crit},j}} & \quad\text{, and} \\
+\alpha_j &=& \beta_{0,j} + \sum_{i=1}^{3} \beta_{i,j} \theta_j^i & \quad\text{, and} \\
+\theta_j &=& \nicefrac{T_{\mathrm{crit},j}}{T} - \nicefrac{T}{T_{\mathrm{crit},j}} & \quad\text{.}
+\end{split}
+\end{equation*}%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & -1.000000000e+01 & Mix & - & 1.000000000e+01 \\
+$T_\mathrm{crit,1}$ & $\si{\kelvin}$ & 3.391900000e+02 & $T_\mathrm{crit,2}$ & $\si{\kelvin}$ & 7.550000000e+02 \\
+$p_\mathrm{crit,1}$ & $\si{\pascal}$ & 3.637000000e+06 & $p_\mathrm{crit,2}$ & $\si{\pascal}$ & 1.145000000e+06 \\
+$\omega_{1}$ & - & 0.000000000e+00 & $\omega_{2}$ & - & 0.000000000e+00 \\
+$\kappa_{1,1}$ & - & 0.000000000e+00 & $\kappa_{1,2}$ & - & 0.000000000e+00 \\
+$\beta_{0,1}$ & - & 1.000100000e+00 & $\beta_{0,2}$ & - & 1.000000000e+00 \\
+$\beta_{1,1}$ & - & 4.773600000e-01 & $\beta_{1,2}$ & - & 9.500000000e-01 \\
+$\beta_{2,1}$ & - & -1.977000000e-02 & $\beta_{2,2}$ & - & 0.000000000e+00 \\
+$\beta_{3,1}$ & - & -1.770000000e-02 & $\beta_{3,2}$ & - & 0.000000000e+00 \\
+$k_{12}$ & - & 0.000000000e+00 & $m$ & - & -1.570000000e-01 \\
+$l_{12}$ & - & 9.150000000e-02 & $l_{21}$ & - & 1.297000000e-01 \\
+$t$ & - & 1.220000000e+01 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+No data on validity available!
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
