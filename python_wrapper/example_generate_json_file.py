@@ -1,6 +1,8 @@
 """Script 'example_generate_json_file'.
 
-This script is an example script to demonstrate how to create the JSON data base from *csv-files.
+This script is an example script to demonstrate how to create the JSON database from *csv-files
+stored at 'python_wrapper\sorpproplib\data\JSON\ ...' (see below). The JSON database is saved
+at 'python_wrapper\sorpproplib\data\JSON\'. 
 
 Revisions:
 ----------
@@ -15,7 +17,7 @@ import os
 from sorpproplib.data.create_json_file import create_json_file
 
 
-# %% Example script to generate JSON data base from *csv-files.
+# %% Example script to generate JSON database from *csv-files.
 #
 # Set up paths
 #

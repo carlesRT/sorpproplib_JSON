@@ -1,0 +1,4 @@
+The Python wrapper has been created using the Anaconda Python distribution.
+Additionally, the following packages are required:
+
+- CoolProp
