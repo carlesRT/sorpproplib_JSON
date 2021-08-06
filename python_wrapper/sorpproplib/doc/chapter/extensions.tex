@@ -4,84 +4,85 @@
 \chapter{Extension of SorpPropLib}
 \label{cha:extensions}
 %
-Three cases can be distinguished to extend SorpPropLib with new (equilibrium) data:
+Three cases can be distinguished to extend SorpPropLib with new equilibrium data or equilibrium equations:
 \begin{enumerate}
-	\item (Equilibrium) model is already implemented in SorpPropLib.
-	\item (Equilibrium) model is not yet implemented in SorpPropLib, but the type of the equilibrium model (e.g., adsorption$\rightarrow$equilibrium approach based on the volumetric approach, or absorption$\rightarrow$equilibrium approach based on activity coefficients) is implemented in SorpPropLib.
-	\item (Equilibrium) model and type of equilibrium model are not yet implemented in SorpPropLib.
+	\item Equilibrium equation is already implemented in SorpPropLib (for implemented equations, see chapter \ref{cha:approaches}).
+	\item Equilibrium equation is not yet implemented in SorpPropLib, but the type of the equilibrium model (e.g., adsorption$\rightarrow$equilibrium approach based on the volumetric approach, or absorption$\rightarrow$equilibrium approach based on activity coefficients) is implemented in SorpPropLib (for implemented types, see sub-sections of chapter \ref{cha:approaches}).
+	\item Equilibrium equation and type of equilibrium equation are not yet implemented in SorpPropLib.
 \end{enumerate}
 The necessary procedure for the three cases is explained below.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Case 1 – (Equilibrium) model implemented in SorpPropLib'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Case 1 – (Equilibrium) model implemented in SorpPropLib}
+\section{Case 1 – Equilibrium equation already implemented in SorpPropLib}
 \label{cha:extensions:case1}
 %
-If the (equilibrium) model already exists in SorpPropLib, the following steps are necessary to add (equilibrium) data:
+If the equilibrium equation already exists in SorpPropLib, the following steps are necessary to add equilibrium data:
 \begin{enumerate}
-	\item Add the coefficients of the (equilibrium) model and all other necessary data to the correct \textit{Excel} file in the folder “SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash \newline data\textbackslash JSON\textbackslash equation\_coefficients\textbackslash xlsx\textbackslash ”:
+	\item Add the coefficients of the equilibrium equation and all other necessary data to the correct \textit{Excel} file in the folder “SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash \newline data\textbackslash JSON\textbackslash equation\_coefficients\textbackslash xlsx\textbackslash ”. The \textit{Excel} files are named after the equilibrium models. When adding data to the \textit{Excel} file, following steps are required:
 	\begin{enumerate}
-		\item Colour code: Black - check OK; Red - No experimental data available to check; Orange - Fit does not match experimental data well
-		\item Save the \textit{Excel} file as a CSV file in UTF8 format under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash equation\_coefficients\textbackslash"
+		\item Add color code: Black - check of calculated and experimental data is OK; Red - No experimental data available to check; Orange - Fit does not match experimental data well
+		\item Save the \textit{Excel} file as a \textit{CSV} file in \textbf{\underline{UTF8}} format under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash equation\_coefficients\textbackslash".
 	\end{enumerate}
-	\item If available, add experimental data points and other necessary data to the correct \textit{Excel} files under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash expe-rimental\_data\textbackslash abs\textbackslash xlsx\textbackslash " or "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash \newline JSON\textbackslash experimental\_data\textbackslash abs\textbackslash xlsx\textbackslash " and also save it as a CSV file in UTF8 format under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash experimen-tal\_data\textbackslash abs\textbackslash " or "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash ex-perimental\_data\textbackslash abs\textbackslash " respectively
-	\item Execute the Python files "example\_generate\_json\_file", "example\_generate\_\newline content\_list", and "example\_generate\_manual" to update the JSON database and the content lists
-	\item Update the manual by compiling the LaTeX file "manual.tex" in the folder "SorpPropLob\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc"
+	\item If available, add experimental data points and other necessary data to the correct \textit{Excel} files under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash expe-rimental\_data\textbackslash abs\textbackslash xlsx\textbackslash " or "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash \newline JSON\textbackslash experimental\_data\textbackslash abs\textbackslash xlsx\textbackslash". The \textit{Excel} files are named after the refrigerants. Then, save the \textit{Excel} file as a \textit{CSV} file in \textbf{\underline{UTF8}} format under "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash experimental\_data\textbackslash abs\textbackslash " or "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash data\textbackslash JSON\textbackslash experimental\_data\textbackslash\newline abs\textbackslash " respectively.
+	\item Execute the \textit{Python} files "example\_generate\_json\_file", "example\_generate\_\newline content\_list", and "example\_generate\_manual" to update the JSON database, content lists and pages of this manual.
+	\item Update this manual by compiling the LaTeX file "manual.tex", loacted in the folder "SorpPropLob\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc", twice.
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Case 2 - Type of (equilibrium) model implemented in SorpPropLib'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Case 2 - Type of (equilibrium) model implemented in SorpPropLib}
+\section{Case 2 - Type of equilibrium equation already implemented in SorpPropLib}
 \label{cha:extensions:case2}
 %
-If the type of (equilibrium) model already exists in SorpPropLib, but not the required (equilibrium) model, the following steps are necessary to add (equilibrium) data:
+If the type of equilibrium equation already exists in SorpPropLib, but not the required equilibrium equation, the following steps are necessary to add equilibrium data:
 \begin{enumerate}
-	\item Implement the (equilibrium) model and all associated inverses / partial derivatives in C (compare equilibrium models of the same type for further information):
+	\item Implement the equilibrium model and all associated inverses / partial derivatives in C (compare equilibrium models of the same type for further information) by performing these steps:
 	\begin{enumerate}
-		\item Insert the header file, including documentation, in the folder "SorpPropLib\textbackslash c\_code\textbackslash incl\textbackslash ”
-		\item Insert the source file, including documentation, in the folder “SorpPropLib\textbackslash c\_code\textbackslash src”,
-		\item Insert the source file, including the tester documentation used to test and verify all implementations, in the folder “SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash ”
+		\item Insert a new header file of the equilibrium equation, including documentation, in the folder "SorpPropLib\textbackslash c\_code\textbackslash incl\textbackslash”. The new header file shall by named by the new equilibrium equation. As a good starting point, copy and adjust a header file of the same type of equilibrium model.
+		\item Insert a new source file of the equilibrium equation, including documentation, in the folder “SorpPropLib\textbackslash c\_code\textbackslash src”. The new source file shall by named by the new equilibrium approach. As a good starting point, copy and adjust a source file of the same type of equilibrium equation. Whenever possible, implement analytical and no numerical functional forms. If only numerical functional forms a possible, add sound method to determine roots, e.g., the Newton-Rhapson method. The Newton-Rhapson method has already been used several times within SorpPropLib and you will find, e.g., an implementation in the source file "adsorption\_dualSiteSips.c", function "adsorption\_dualSiteSips\_p\_wT".
+		\item Insert a new source file, including documentation, to test and verify all implementations of the new equilibrium equation in the folder “SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash ”. As a good starting point, copy and adjust a source file of a tester of the same type of equilibrium equation.
 	\end{enumerate}
-	\item Add the new (equilibrium) model (i.e., all inverses, partial derivatives, ...) to the initialization functions of the refrigerant, adsorption, or absorption struct:
+	\item Add the new equilibrium equation (i.e., all inverses, partial derivatives, ...) to the initialization functions of the refrigerant, adsorption, \textbf{or} absorption struct by performing the corresponding step:
 	\begin{enumerate}
-		\item Refrigerant: The initialization has to be adapted via the function "newRefrigerant" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash refrigerant.c"
-		\item Adsorption: The initialization has to be adapted via the function "newAdsorption" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash sorption.c"
-		\item Absorption: The initialization has to be adapted via the function "newAbsorption" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash absorption.c"
+		\item \underline{Refrigerant:} The equilibrium equations has to be added by adapting the function "newRefrigerant" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash refrigerant.c". As a good starting point, copy and adjust a "else if"-section of a equilibrium model of the same type. Moreover, the header name created in step 1.a) has to be added at the top of the file "refrigerant.c".
+		\item \underline{Adsorption:} The equilibrium equations has to be added by adapting the function "newAdsorption" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash adsorption.c". As a good starting point, copy and adjust a "else if"-section of a equilibrium model of the same type. Moreover, the header name created in step 1.a) has to be added at the top of the file "adsorption.c".
+		\item \underline{Absorption:} The equilibrium equations has to be added by adapting the function "newAbsorption" in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash absorption.c". As a good starting point, copy and adjust a "else if"-section of a equilibrium model of the same type. Moreover, the header name created in step 1.a) has to be added at the top of the file "absorption.c".
 	\end{enumerate}
-	\item Extend the test models of the refrigerant-, adsorption- or absorption-struct as well as the workingPair-structs with the new (equilibrium) model
+	\item Extend the test models of the refrigerant-, adsorption- \textbf{or} absorption-struct as well as the workingPair-structs with the new equilibrium equation by performing the corresponding steps:
 	\begin{enumerate}
-		\item Refrigerant: The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_refrigerant.c" has to be extended by the new model
-		\item Adsorption: The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_adsorption.c" has to be extended by the new model
-		\item Absorption: The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_absorption.c" shall be extended by the new model
-		\item Working pair: The files "test\_workingPair.c", "test\_workingPair\_staticLi-brary.c", and "test\_workingPair\_DLL.c" in the folder "SorpPropLib\textbackslash c\_code\newline \textbackslash src\textbackslash " have to be extended with the new model
+		\item \underline{Refrigerant:} The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_refrigerant.c" has to be extended by the new equilibrium equation. As a good starting point, copy and adjust a code block testing an equilibrium equation of the same type within this file. Besides, do not forget to free the allocated memory at the end of this file.
+		\item \underline{Adsorption:} The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_adsorption.c" has to be extended by the new equilibrium equation. As a good starting point, copy and adjust a code block testing an equilibrium equation of the same type within this file. Besides, do not forget to free the allocated memory at the end of this file.
+		\item \underline{Absorption:} The file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash test\_absorption.c" shall be extended by the new equilibrium equation. As a good starting point, copy and adjust a code block testing an equilibrium equation of the same type within this file. Besides, do not forget to free the allocated memory at the end of this file.
+		\item \underline{Working pair:} The files "test\_workingPair.c", "test\_workingPair\_staticLi-brary.c", and "test\_workingPair\_DLL.c" in the folder "SorpPropLib\textbackslash c\_code\newline \textbackslash src\textbackslash " have to be extended with the new equilibrium model in a similar way as described in the privious steps a)-c).
 	\end{enumerate}
-	\item Adapt the makefiles to execute the C-code:
+	\item Adapt the existing makefiles (see chapter \ref{cha:usage:c}) to execute the C-code by performing these steps:
 	\begin{enumerate}
-		\item Add the path to the source file of the new (equilibrium) model to the variable “SOURCE\_LIB”.
-		\item Add the test file of the new (equilibrium) model to the recipes "test\_refrige-rants", "test\_adsorption", or "test\_absorption".
-		\item Add a recipe for the test file
+		\item Add the path to the source file of the new equilibrium equation to the variable “SOURCE\_LIB”.
+		\item Add the test file name of the new equilibrium equation to the recipes "test\_refrigerants", "test\_adsorption", \textbf{or} "test\_absorption".
+		\item Add a recipe for the test file. As a good starting point, copy and adjust a recipe of a test file for an equilibrium equation of the same type.
 	\end{enumerate}
-	\item Execute steps 1)-2) of case 1
-	\item Add the LaTeX code of the new (equilibrium) model to the Python file "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash equation.py" and to the LaTeX file "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash chapter\textbackslash approaches.tex
-	\item Execute steps 3)-4) of case 1
+	\item Compile the DLL of SorpPropLib as you added new functionalities (see chapter \ref{cha:usage:c}). Replace the old DLL with the new one in all wrappers of SorpPropLib (see sub-chapters of chapter \ref{cha:usage}).
+	\item Execute steps 1)-2) of case 1, where the \textit{Excel} file of case 1 is created for the first time. As a good starting point, copy and adjust an \textit{Excel} file of an equilibrium equation of the same type.
+	\item Add new LaTeX code of the new equilibrium equation to the Python file "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash equation.py" and to the LaTeX file "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash chapter\textbackslash approaches.tex. As a good starting point, copy and adapt a code block creating the LaTeX strings of an equilibrium model of the same type.
+	\item Execute steps 3)-4) of case 1.
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Case 3 - Type of (equilibrium) model not implemented in SorpPropLibb'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Case 3 - Type of (equilibrium) model not implemented in SorpPropLib}
+\section{Case 3 - Type of equilibrium equation not implemented in SorpPropLib}
 \label{cha:extensions:case3}
 %
-If neither the (equilibrium) model nor the type of (equilibrium) model exists in SorpPropLib, the following steps are necessary to add (equilibrium) data:
+If neither the equilibrium equation nor its type exist in SorpPropLib, the following eloborate steps are necessary to add new equilibrium data:
 \begin{enumerate}
-	\item Execute step 1) of case 2
-	\item Execute step 2) of case 2:
+	\item Execute step 1) of case 2.
+	\item Execute step 2) of case 2, with following special cases are to be taken into account:
 	\begin{enumerate}
-		\item If necessary, new function prototypes for the general functions of adsorption working pairs have to be added to the file “SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash \newline structDefinitions.c”
-		\item Add new low-level functions to directly execute the new equilibrium functions in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash workingPair.c" and all wrappers
+		\item If necessary, new function prototypes for the general functions of adsorption working pairs have to be added to the file “SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash \newline structDefinitions.c”. Then, the whole initialization functions of the refrigerant, adsorption, \textbf{or} absorption struct hast to be adapted as well.
+		\item Add new low-level functions to directly execute the new equilibrium functions in the file "SorpPropLib\textbackslash c\_code\textbackslash src\textbackslash workingPair.c" \textbf{\underline{and}} all wrappers (e.g., \textit{Python}, \textit{LabVIEW}, \textit{Excel}, \textit{Matlab}, \textit{Modelica}, ...).
 	\end{enumerate}
-\item Execute steps 3) - 7) of case 2
+\item Execute steps 3) - 8) of case 2.
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

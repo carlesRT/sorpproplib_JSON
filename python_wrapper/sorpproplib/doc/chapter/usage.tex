@@ -4,7 +4,7 @@
 \chapter{Usage of SorpPropLib}
 \label{cha:usage}
 %
-SorpPropLib is currently applicable in 6 programming environments: \textit{C/C++}, \textit{Python}, \textit{Matlab}, \textit{Modelica}, \textit{LabVIEW}, and \textit{Excel}. The application of SorpPropLib in the programming environments is briefly explained below.
+SorpPropLib can currently be used from 6 programming environments: \textit{C/C++}, \textit{Python}, \textit{Matlab}, \textit{Modelica}, \textit{LabVIEW}, and \textit{Excel}. The usage of SorpPropLib in the programming environments is briefly explained below.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'C/C++ and compiling the DLL'
@@ -22,8 +22,8 @@ Since the equilibrium models are implemented in \textit{C}, either the \textit{C
 		\item Replace the contents of the file "makefile" in the folder "SorpPropLib\textbackslash c\_code\textbackslash" with the contents of the file "makefile\_MSVS"
 		\item Make sure that the variable "BUILD\_RELEASE" in the "makefile" file is set to "YES"
 		\item Open the developer prompt for Microsoft Visual Studios
-		\item Set the correct architecture (32bit or 64bit) by running the appropriate bat file (see the comment at the beginning of the makefile)
-		\item Navigate to the folder "SorpPropLib\textbackslash c\_code\textbackslash"
+		\item Set the correct architecture (32bit or 64bit) by running the appropriate bat file (see the comment at the beginning of the makefile "makefile\_MSVS"; you may have to adapt the path to your installation folder of Microsoft Visual Studios)
+		\item Navigate to the folder "SorpPropLib\textbackslash c\_code\textbackslash" (change drive by typing, e.g., "C:" or "D:"; change directory by typing "cd D:\textbackslash YourPath")
 		\item Compile the DLL by executing the command "NMAKE all /C" (if all files are to be rebuilt, use the command "NMAKE all /A /C")
 		\item The DLL is saved in the folder "SorpPropLib\textbackslash c\_code\textbackslash lib\textbackslash"
 	\end{enumerate}
@@ -32,13 +32,13 @@ Since the equilibrium models are implemented in \textit{C}, either the \textit{C
 		\item Replace the content of the file "makefile" in the folder "SorpPropLib\textbackslash c\_code\textbackslash" with the content of the file "makefile\_MINGW"
 		\item Make sure that the variable "BUILD\_RELEASE" is set to "YES" and the variable "TYPE\_SYSTEM" is set according to the system
 		\item Open the command prompt under Windows or the console under Linux
-		\item Navigate to the folder "SorpPropLib\textbackslash c\_code\textbackslash"
+		\item Navigate to the folder "SorpPropLib\textbackslash c\_code\textbackslash" (change drive by typing, e.g., "C:" or "D:"; change directory by typing "cd D:\textbackslash YourPath")
 		\item Copy the path to the file "mingw32-make.exe", which corresponds to the required architecture (32bit or 64bit):
 		\begin{enumerate}
 			\item Example for 32bit: "C:\textbackslash MinGW32bit\textbackslash bin\textbackslash mingw32-make.exe"
 			\item Example for 64bit: "C:\textbackslash MinGW64bit\textbackslash bin\textbackslash mingw32-make.exe"
 		\end{enumerate}
-		\item Compile the DLL by executing the command"’path to correct make.exe’ all” (if all files are to be rebuilt, use the command”’path to correct make.exe’ all -B”)
+		\item Compile the DLL by executing the command "’path to correct make.exe’ all” (if all files are to be rebuilt, use the command ”’path to correct make.exe’ all -B”)
 		\item The DLL is saved in the folder “SorpPropLib\textbackslash c\_code\textbackslash lib\textbackslash”
 	\end{enumerate}
 \end{enumerate}
@@ -50,15 +50,15 @@ Since the equilibrium models are implemented in \textit{C}, either the \textit{C
 \section{\textit{Python}}
 \label{cha:usage:python}
 %
-The \textit{Python} interface is in the folder “SorpPropLib\textbackslash textbackslash python\_wrapper\textbackslash ”. The required (pre)compiled DLL is to be stored in “SorpPropLib\textbackslash python\_wrapper\textbackslash sorp-proplib\textbackslash data”. Examples for using the \textit{Python} interface are in the folder “SorpProp-Lib\textbackslash python\_wrapper\textbackslash ”, with file names starting with “example\_”:
+The \textit{Python} interface is in the folder “SorpPropLib\textbackslash python\_wrapper\textbackslash ”. The required (pre)compiled DLL is to be stored in “SorpPropLib\textbackslash python\_wrapper\textbackslash sorp-proplib\textbackslash data\textbackslash 'CorrectSystemArchitecture'”. Examples for using the \textit{Python} interface are in the folder “SorpProp-Lib\textbackslash python\_wrapper\textbackslash ”, with file names starting with “example\_”:
 \begin{itemize}
-	\item \underline{example\_generate\_json\_file:} Generates the JSON database from CSV files in UTF8 format (see chapter Extension)
+	\item \underline{example\_generate\_json\_file:} Generates the JSON database from CSV files in UTF8 format (see chapter \ref{cha:extensions})
 	\item \underline{example\_generate\_content\_list:} Generates Excel files in the folder “SorpPropLib” containing all implemented equilibrium approaches for absorption and adsorption work pairs as well as all implemented refrigerant functions
-	\item \underline{example\_generate\_manual:} Automatically generates LaTeX files in the folder "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash " to compile the manual
+	\item \underline{example\_generate\_manual:} Automatically generates LaTeX files in the folder "SorpPropLib\textbackslash python\_wrapper\textbackslash sorpproplib\textbackslash doc\textbackslash " to compile this manual
 	\item \underline{example\_calling\_DLL:} Demonstrates all wrapper functions available in \textit{Python}
 	\item \underline{example\_generate\_plots:} Demonstrates all implemented functions for visualizing equilibrium data
 \end{itemize}
-The example files can be executed directly with \textit{Python} because the paths to the DLL and the JSON database are stored as relative paths in the example files.
+\textbf{\underline{Important notes:}} The \textit{Python} interface was developed using the \textit{Anaconda Python distibutio}n and using the additional package "CoolProp" to calculate refrigerant properties. Besides, the example files can be executed directly with \textit{Python} because the paths to the DLL and the JSON database are stored as relative paths in the example files.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Matlab'
@@ -66,16 +66,16 @@ The example files can be executed directly with \textit{Python} because the path
 \section{\textit{Matlab}}
 \label{cha:usage:matlab}
 %
-The \textit{Matlab} interface is in the folder “SorpPropLib\textbackslash matlab\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be stored in “SorpPropLib\textbackslash matlab\_wrapper\textbackslash  data”. Examples for using the \textit{Matlab} interface are in the folder “SorpPropLib\textbackslash matlab\_wrapper\textbackslash ”, where the file names start with “minimal\_example\_”:
+The \textit{Matlab} interface is in the folder “SorpPropLib\textbackslash matlab\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be stored in “SorpPropLib\textbackslash matlab\_wrapper\textbackslash  data\textbackslash 'CorrectSystemArchitecture'”. Examples for using the \textit{Matlab} interface are in the folder “SorpPropLib\textbackslash matlab\_wrapper\textbackslash ”, with file names starting with “minimal\_example\_”:
 \begin{itemize}
 	\item \underline{minimal\_example\_absorption\_activity:} Demonstrates all available equilibrium functions of absorption work pairs based on activity coefficients (e.g., Wilson)
-	\item \underline{minimal\_example\_absorption\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Duehring)
+	\item \underline{minimal\_example\_absorption\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Dühring)
 	\item \underline{minimum\_example\_absorption\_mixing:} Demonstrates all available equilibrium functions of absorption work pairs based on mixing rules of cubic equations of state
 	\item \underline{minimum\_example\_adsorption\_surface:} Demonstrates all available equilibrium functions of adsorption work pairs based on the surface approach (e.g., Toth)
 	\item \underline{minimal\_example\_adsorption\_surface\_vapor:} Demonstrates all available equilibrium functions of adsorption working pairs based on the surface approach and using the vapor pressure as an additional function argument (e.g., Freundlich)
 	\item \underline{minimal\_example\_adsorption\_volumetric:} Demonstrates all available equilibrium functions of adsorption working pairs based on the volumetric approach and using the vapor pressure and density of the adsorpt as additional function arguments (e.g., Dubinin-Astakhov)
 \end{itemize}
-The example files can be executed directly with \textit{Matlab} since the paths to the DLL and the JSON database are stored as relative paths in the example files.
+\textbf{\underline{Important note:}} The example files can be executed directly with \textit{Matlab} since the paths to the DLL and the JSON database are stored as relative paths in the example files.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Modelica'
@@ -83,17 +83,17 @@ The example files can be executed directly with \textit{Matlab} since the paths 
 \section{\textit{Modelica}}
 \label{cha:usage:modelica}
 %
-The \textit{Modelica} interface is in the folder "SorpProp-Lib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash ". The required (pre)compiled DLL and the JSON database are to be stored under "SorpPropLib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash Resoureces\textbackslash Library" and "SorpPropLib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash Resoureces\textbackslash Data" respectively. Examples for using the \textit{Modelica} interface can be found in the \textit{Modelica} library in the packages "SorpPropLib.DirectFunctionCals.Tester" or "SorpPropLib.WorkingPair.Tester":
+The \textit{Modelica} interface is in the folder "SorpProp-Lib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash ". The required (pre)compiled DLL and the JSON database are to be stored under "SorpPropLib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash Resources\textbackslash Library\textbackslash 'CorrectSystemArchitecture'" and "SorpPropLib\textbackslash modelica\_wrapper\textbackslash SorpPropLib\textbackslash Resources\textbackslash Data" respectively. Examples for using the \textit{Modelica} interface can be found in the \textit{Modelica} library in the packages "SorpPropLib.DirectFunctionCals.Tester" or "SorpPropLib.WorkingPair.Tester":
 \begin{itemize}
 	\item \underline{Test\_WPair\_refrigerant:} Demonstrates all available refrigerant functions
 	\item \underline{Test\_WPair\_absorption\_activity:} Demonstrates all available equilibrium functions of absorption working pairs based on activity coefficients (e.g., Wilson)
-	\item \underline{Test\_WPair\_absorption\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Duehring)
+	\item \underline{Test\_WPair\_absorption\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Dühring)
 	\item \underline{Test\_WPair\_absorption\_mixing:} Demonstrates all available equilibrium functions of absorption working pairs based on mixing rules of cubic equations of state
 	\item \underline{Test\_WPair\_adsorption\_surface:} Demonstrates all available equilibrium functions of adsorption work pairs starting based on the surface approach (e.g., Toth)
 	\item \underline{Test\_WPair\_adsorption\_surface\_vapor:} Demonstrates all available equilibrium functions of adsorption working pairs based on the surface approach and using the vapor pressure as an additional function argument (e.g., Freundlich)
 	\item \underline{Test\_WPair\_adsorption\_volumetric:} Demonstrates all available equilibrium functions of adsorption working pairs based on the volumetric approach and using the vapor pressure and density of the adsorpt as additional function arguments (e.g., Dubinin-Astakhov)
 \end{itemize}
-The example files cannot be executed directly in \textit{Modelica} because the path to the JSON database is not specified as a relative path. Therefore, the variable “path\_db” must be adjusted to execute the sample files.
+\textbf{\underline{Important note:}} The example files \textbf{\underline{cannot be executed directly}} in \textit{Modelica} because the path to the JSON database is not specified as a relative path. Therefore, the variable “path\_db” must be adjusted to execute the sample files.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'LabVIEW'
@@ -101,17 +101,17 @@ The example files cannot be executed directly in \textit{Modelica} because the p
 \section{\textit{LabVIEW}}
 \label{cha:usage:labview}
 %
-The \textit{LabVIEW} interface is in the folder “SorpPropLib\textbackslash labview\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be saved under “SorpPropLib\textbackslash labview\_wrapper\textbackslash data”. Examples for using the \textit{LabVIEW} interface can be found in the \textit{LabVIEW} project under "SorpPropLib.Examples" or under "SorpPropLib.Sub-libraries.direct\_call.Examples" and "SorpPropLib.Sub-libraries. struct\_call.Examples":
+The \textit{LabVIEW} interface is in the folder “SorpPropLib\textbackslash labview\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be saved under “SorpPropLib\textbackslash labview\_wrapper\textbackslash data\textbackslash”. Examples for using the \textit{LabVIEW} interface can be found in the \textit{LabVIEW} project under "SorpPropLib.Examples" or under "SorpPropLib.Sub-libraries.direct\_call.Examples" and "SorpPropLib.Sub-libraries. struct\_call.Examples":
 \begin{itemize}
 	\item \underline{plot\_isosteric\_chart:} Demonstrates how to plot equilibrium data in an isosteric chart.
 	\item \underline{Test\_abs\_activity:} Demonstrates all available equilibrium functions of absorption work pairs based on activity coefficients (e.g., Wilson)
-	\item \underline{Test\_abs\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Duehring)
+	\item \underline{Test\_abs\_conventional:} Demonstrates all available equilibrium functions of absorption work pairs based on conventional approaches (e.g., Antoine or Dühring)
 	\item \underline{Test\_abs\_mixing:} Demonstrates all available equilibrium functions of absorption working pairs based on mixing rules of cubic equations of state
 	\item \underline{Test\_ads\_surface:} Demonstrates all available equilibrium functions of adsorption work pairs starting based on the surface approach (e.g., Toth)
 	\item \underline{Test\_ads\_surface\_vapor:} Demonstrates all available equilibrium functions of adsorption working pairs based on the surface approach and using the vapor pressure as an additional function argument (e.g., Freundlich)
 	\item \underline{Test\_ads\_volumetric:} Demonstrates all available equilibrium functions of adsorption working pairs based on the volumetric approach and using the vapor pressure and density of the adsorpt as additional function arguments (e.g., Dubinin-Astakhov)
 \end{itemize}
-The example files cannot be executed directly in \textit{LabVIEW} because the path to the JSON database is not specified as a relative path. Therefore, the variable “path\_db” must be adjusted to execute the example files.
+\textbf{\underline{Important note:}} The example files \textbf{\underline{cannot be executed directly}} in \textit{LabVIEW} because the path to the JSON database is not specified as a relative path. Therefore, the variable “path\_db” must be adjusted to execute the example files.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter 'Excel'
@@ -119,19 +119,19 @@ The example files cannot be executed directly in \textit{LabVIEW} because the pa
 \section{\textit{Excel}}
 \label{cha:usage:excel}
 %
-The \textit{Excel} interface is in the folder “SorpPropLib\textbackslash excel\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be stored under “SorpPropLib\textbackslash excel\_wrapper\textbackslash data”. Examples for using the \textit{Excel} interface can be found in the folder “SorpPropLib\textbackslash excel\_wrapper\textbackslash ”, where the file names start with “minimal\_example\_”:
+The \textit{Excel} interface is in the folder “SorpPropLib\textbackslash excel\_wrapper\textbackslash ”. The required (pre)compiled DLL and the JSON database are to be stored under “SorpPropLib\textbackslash excel\_wrapper\textbackslash data\textbackslash”. Examples for using the \textit{Excel} interface can be found in the folder “SorpPropLib\textbackslash excel\_wrapper\textbackslash ”, with file names starting with “minimal\_example\_”:
 \begin{itemize}
-	\item minimal\_example\_dll\_functions: Demonstrates all wrapper functions that are available in \textit{Excel}
-	\item minimal\_example\_isosteric\_chart\_adsorption: Demonstrates how to visualize adsorption equilibrium data in an isosteric chart
+	\item \underline{minimal\_example\_dll\_functions:} Demonstrates all wrapper functions that are available in \textit{Excel}
+	\item \underline{minimal\_example\_isosteric\_chart\_adsorption:} Demonstrates how to visualize adsorption equilibrium data in an isosteric chart
 \end{itemize}
-The sample files cannot be executed directly in \textit{Excel} because the path to the DLL cannot be specified as a relative path but must be hardcoded. Therefore, the path to the DLL must be corrected before executing the \textit{Excel} files:
+\textbf{\underline{Important note:}} The example files \textbf{\underline{cannot be executed directly}} in \textit{Excel} because the path to the DLL cannot be specified as a relative path but must be hardcoded. Therefore, the path to the DLL must be corrected before executing the \textit{Excel} files:
 \begin{enumerate}
-	\item Open the file "DirectFunctionCalls.bas" in the folder "SorpPropLib\textbackslash excel\_wrap-per\textbackslash vba\textbackslash ", for example, with Notepad
+	\item Open the file "DirectFunctionCalls.bas" in the folder "SorpPropLib\textbackslash excel\_wrap-per\textbackslash vba\textbackslash ", e.g., with Notepad
 	\item Search and replace all “lib ‘Path to DLL’” with “lib ‘Corrected path to DLL’”
 	\item Open an \textit{Excel} example and allow macros
 	\item If developer tools are not yet activated in \textit{Excel}, activate them under File -> Options -> Customize ribbon -> Check developer tools
 	\item Open the application “Visual Basic” under Developer tools
-	\item Delete module “DirectFunctionCalls” and add adapted module “DirectFunctionCalls”, which contains the correct path to DLL
+	\item Delete module “DirectFunctionCalls” and add the module “DirectFunctionCalls” adapted before, which contains the correct path to DLL
 	\item Recalculate a formula in \textit{Excel} so that all functions are updated
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,13 +143,13 @@ The sample files cannot be executed directly in \textit{Excel} because the path 
 %
 The following problems are currently known:
 \begin{enumerate}
-	\item \textit{Excel} wrapper is currently just working with \textit{Excel 2016} and not with \textit{Excel 365}
+	\item \textit{Excel} wrapper is currently just working with \textit{Excel 2016} and not with \textit{Excel 365}.
 	\item When running wrapper functions that rely on the approach ‘direct function calls’ (e.g., all wrapper functions in \textit{Excel}), RAM is only freed when the programming environment is closed and not when the calculation is finished. However, the error does not occur in the testers of the \textit{C} code. In addition, the error does not occur when wrapper functions based on the approach ‘working pair struct’ (i.e., mainly used in all examples) are executed.
 	\item Some implemented fits represent the experimental data very poorly:
 	\begin{enumerate}
-		\item This happens mainly for absorption work pairs based on activity coefficients.
-		\item Since all implemented equations have been checked several times and for each equilibrium approach there are fits for work pairs that reproduce experimental data very well, the error is suspected to be in the parameterization
-		\item Tip: Check the quality of the equilibrium approach before use, e.g., with this manual
+		\item This happens mainly for absorption work pairs and in particular for absorption work pairs based on activity coefficients.
+		\item The error is suspected to be in the parameterization of the working pairs or the extracted experimental data since all implemented equilibrium equations have been checked several times and for each equilibrium equations there are fits for work pairs that reproduce experimental data very well
+		\item \textbf{\underline{Important note:}} Check the quality of the equilibrium approach before using it, e.g., with this manual (see chapters \ref{cha:refrigerants}-\ref{cha:absorption})
 	\end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
