@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Water - LiBr '
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Libr }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Duehring - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & LiBr \\
+\textbf{Subtype:} &  \\
+\textbf{Refrigerant:} & Water \\
+\textbf{Equation:} & Duehring \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Handbook AF. American society of heating, refrigerating and air-conditioning engineers. Inc: Atlanta, GA, USA. 2009 \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on concentration $X$ in $\si{\kilogram\per\kilogram}$ and  temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p &=& \nicefrac{1}{r} 10 ^ { C + \frac{D}{T_\mathrm{ref}} + \frac{E}{T_\mathrm{ref}^{2}} } & \quad\text{, and} \\
+T_\mathrm{ref} &=& q + \frac{\left( n T + m - B \right)}{A}  & \quad\text{, and} \\
+A &=& \sum_{i=0}^{3} a_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+B &=& \sum_{i=0}^{3} b_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+X_\mathrm{cor} &=& 100 X  & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a_0$ & - & -2.007550000e+00 & $b_0$ & - & 3.211280000e+02 \\
+$a_1$ & - & 1.697600000e-01 & $b_1$ & - & -1.932200000e+01 \\
+$a_2$ & - & -3.133362000e-03 & $b_2$ & - & 3.743800000e-01 \\
+$a_3$ & - & 1.976680000e-05 & $b_3$ & - & -2.063700000e-03 \\
+$C$ & - & 6.211470000e+00 & $D$ & $\si{\kelvin}$ & -2.886373000e+03 \\
+$m$ & - & 3.200000000e+01 & $E$ & $\si{\square\kelvin}$ & -3.372694600e+05 \\
+$n$ & - & 1.800000000e+00 & $q$ & - & 4.597200000e+02 \\
+$r$ & $\si{\per\pascal}$ & 1.450000000e-04 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $277.15 \si{\kelvin} \leq T \leq 450.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

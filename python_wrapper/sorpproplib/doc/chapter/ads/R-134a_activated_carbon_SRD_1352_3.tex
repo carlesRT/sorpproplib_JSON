@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - R-134a - activated carbon SRD 1352/3'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon SRD 1352/3}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon \\
+\textbf{Subtype:} & SRD 1352/3 \\
+\textbf{Refrigerant:} & R-134a \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Saha, Bidyut Baran; El-Sharkawy, Ibrahim I.; Thorpe, Roger; Critoph, Robert E. (2012): Accurate adsorption isotherms of R134a onto activated carbons for cooling and freezing applications. In: International Journal of Refrigeration 35 (3), S. 499–505. DOI: 10.1016/j.ijrefrig.2011.05.002. \\
+\textbf{Comment:} & See original literature: Use low-level interface for calculations as special form of density of adsorpt is required (i.e., 1/rho\_adsorpt = 7.2643e-4 * exp(ln(9.39e-4 /7.2643e-4) * (T - 246.78) / (374.21 - 246.78)) in kg/m3); inverse functions may not work anymore. \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+Property data of sorbent and subtype does not exist.
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.700000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 1.091659312e+04 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 7.670000000e-04 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $131850.0 \si{\pascal} \leq p \leq 965390.0 \si{\pascal}$,  $303.35 \si{\kelvin} \leq T \leq 351.65 \si{\kelvin}$, and $0.42159 \si{\kilogram\per\kilogram} \leq w \leq 1.20432 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_R-134a_activated_carbon_SRD_1352_3_DubininAstakhov_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\item Special refrigerant functions as described by comment and CoolProp
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from figure
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 0.95\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon \\
+\textbf{Subtype:} & SRD 1352/3 \\
+\textbf{Refrigerant:} & R-134a \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Saha, Bidyut Baran; El-Sharkawy, Ibrahim I.; Thorpe, Roger; Critoph, Robert E. (2012): Accurate adsorption isotherms of R134a onto activated carbons for cooling and freezing applications. In: International Journal of Refrigeration 35 (3), S. 499–505. DOI: 10.1016/j.ijrefrig.2011.05.002. \\
+\textbf{Comment:} & See original literature: Use low-level interface for calculations as special form of density of adsorpt is required (i.e., 1/rho\_adsorpt = 7.2643e-4 * exp(ln(9.39e-4 /7.2643e-4) * (T - 246.78) / (374.21 - 246.78)) in kg/m3); inverse functions may not work anymore. \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+Property data of sorbent and subtype does not exist.
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & -1.000000000e+00 & $n$ & - & 1.800000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 9.729715794e+03 & $W_0$ & $\si{\kilogram\per\kilogram}$ & 9.260000000e-01 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $131850.0 \si{\pascal} \leq p \leq 965390.0 \si{\pascal}$,  $303.35 \si{\kelvin} \leq T \leq 351.65 \si{\kelvin}$, and $0.42159 \si{\kilogram\per\kilogram} \leq w \leq 1.20432 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_R-134a_activated_carbon_SRD_1352_3_DubininAstakhov_2.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\item Special refrigerant functions as described by comment and CoolProp
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from figure
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 2.49\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

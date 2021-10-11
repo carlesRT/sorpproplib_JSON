@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Water  - LiBr/LiNO3 massRatio 348/69'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Libr/lino3 massRatio 348/69}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Antoine - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & LiBr/LiNO3 \\
+\textbf{Subtype:} & massRatio 348/69 \\
+\textbf{Refrigerant:} & Water  \\
+\textbf{Equation:} & Antoine \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Iyoki, Shigeki; Yamanaka, Ryousuke; Uemura, Tadashi (1993): Physical and thermal properties of the water-lithium bromide-lithium nitrate system. In: International Journal of Refrigeration 16 (3), S. 191–200. DOI: 10.1016/0140-7007(93)90048-D. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on concentration $X$ in $\si{\kilogram\per\kilogram}$ and  temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\nicefrac{p}{d} = 10 ^ { \sum_{i=0}^{4} \left( A_i + \frac{1000 B_i}{T - c} \right) \left( 100 X \right) ^{i}}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$c$ & $\si{\kelvin}$ & 4.315000000e+01 & $d$ & $\si{\pascal}$ & 1.000000000e+00 \\
+$A_0$ & - & 3.559780000e+00 & $B_0$ & $\si{\kelvin}$ & -6.695280000e-01 \\
+$A_1$ & - & 6.304910000e-01 & $B_1$ & $\si{\kelvin}$ & -1.020250000e-01 \\
+$A_2$ & - & -2.171200000e-02 & $B_2$ & $\si{\kelvin}$ & 3.552500000e-03 \\
+$A_3$ & - & 3.144770000e-04 & $B_3$ & $\si{\kelvin}$ & -5.127410000e-05 \\
+$A_4$ & - & -1.628200000e-06 & $B_4$ & $\si{\kelvin}$ & 2.436950000e-07 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $320.15 \si{\kelvin} \leq T \leq 442.15 \si{\kelvin}$.
+\newline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

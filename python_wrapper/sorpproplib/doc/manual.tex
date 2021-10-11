@@ -1,0 +1,56 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Manual of the SorpPropLib
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include sub-packages and define layout of document
+%
+\include{chapter/header}
+
+% Start main document
+%
+\begin{document}		
+	% Set up for layout
+	%
+	\setlength{\parindent}{0pt}
+	\setlength{\parskip}{1.5ex plus0.5ex minus0.5ex}
+	
+	% Include title page
+	%
+	\include{chapter/titlepage}
+	
+	% Set page numbering for abstract and table of content
+	%
+	\setcounter{page}{1}
+	\pagenumbering{roman}
+	
+	% Include abstract
+	%
+	\begin{titlepage}
+		\include{chapter/abstract}
+	\end{titlepage}
+
+	% Include table of content and reference for link
+	%
+	\thispagestyle{plain}
+	\hypertarget{back}{}
+	\tableofcontents
+	\cleardoublepage
+	
+	% Set page numbering for further chapters
+	%
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+	
+	% Set static chapters (i.e, created manually)
+	%
+	\include{chapter/usage}
+	\include{chapter/extensions}
+	\include{chapter/approaches}
+	
+	% Set dynamic chapters (i.e., created via Python function)
+	%
+	\include{chapter/refrigerants}
+	\include{chapter/adsorption}
+	\include{chapter/absorption}
+	
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

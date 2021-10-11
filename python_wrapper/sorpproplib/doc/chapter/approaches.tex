@@ -1,0 +1,1876 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Approaches implemented into SorpPropLib'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Approaches implemented into SorpPropLib}
+\label{cha:approaches}
+%
+Currently, various generalized equilibrium approaches have been implemented for absorption and adsorption working pairs as well as for the vapor pressure and saturated liquid density of refrigerants. Details of the implemented functions are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Refrigerants - Vapour Pressure}
+\label{cha:approaches:refp}
+%
+Currently, 5 approaches are implemented in SorpPropLib to calculate vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$. In addition, the partial derivatives according to the temperature as well as the inverses of the approaches are implemented in SorpPropLib. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - VaporPressure_EoS1'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{VaporPressure\_EoS1}
+\label{cha:approaches:refp:eos1}
+%
+The vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p_\mathrm{sat} &=& p_\mathrm{crit} \exp \left( \nicefrac{1}{\theta} \sum_{i=1}^{7} a_i \xi^{b_i} \right) & \quad\text{, and} \\
+		\xi &=& 1 - \theta & \quad\text{, and} \\
+		\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+	\toprule
+	\addlinespace
+	\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T_\mathrm{crit}$ & $\si{\kelvin}$ & $p_\mathrm{ref}$ & $\si{\pascal}$ &$a_1$ & - & $b_1$ & - \\	
+	$a_2$ & - &	$b_2$ & - &	$a_3$ & - &	$b_3$ & - \\	
+	$a_4$ & - &	$b_4$ & - &	$a_5$ & - &	$b_5$ & - \\	
+	$a_6$ & - &	$b_6$ & - &	$a_7$ & - & $b_7$ & - \\
+	
+	
+	\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+		
+	$T(p_\mathrm{sat})$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 253.15 K) \\
+	$\frac{\partial p_\mathrm{sat}(T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - VaporPressure_EoS2'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{VaporPressure\_EoS2}
+\label{cha:approaches:refp:eos2}
+%
+The vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p_\mathrm{sat} &=& p_\mathrm{ref} \exp \left( \nicefrac{a_0}{\theta} + \sum_{i=1}^{4} a_i \theta^{b_i} + a_5 \xi^{b_5} \right) & \quad\text{, and} \\
+		\xi &=& 1 - \theta & \quad\text{, and} \\
+		\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & $p_\mathrm{ref}$ & $\si{\pascal}$ &$a_0$ & - & $a_1$ & - \\	
+$b_1$ & - &	$a_2$ & - &	$b_2$ & - &	$a_3$ & - \\	
+$b_3$ & - &	$a_4$ & - &	$b_4$ & - &	$a_5$ & - \\	
+$b_5$ & - &	& &	& & & \\
+
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p_\mathrm{sat})$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 313.15 K) \\
+	$\frac{\partial p_\mathrm{sat}(T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - VaporPressure_EoS3'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{VaporPressure\_EoS3}
+\label{cha:approaches:refp:eos3}
+%
+The vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p_\mathrm{sat} &=& p_\mathrm{ref} \exp \left( \nicefrac{a_0}{T} + \sum_{i=1}^{2} a_i T^{b_i} + a_3 \xi^{b_3} \right) & \quad\text{, and} \\
+		\xi &=& 1 - \theta & \quad\text{, and} \\
+		\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & $p_\mathrm{ref}$ & $\si{\pascal}$ &$a_0$ & - & $a_1$ & - \\	
+$b_1$ & - &	$a_2$ & - &	$b_2$ & - &	$a_3$ & - \\	
+$b_3$ & - &	& &	& & & \\
+
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p_\mathrm{sat})$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 253.15 K) \\
+	$\frac{\partial p_\mathrm{sat}(T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - VaporPressure_Antoine'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{VaporPressure\_Antoine}
+\label{cha:approaches:refp:antoine}
+%
+The vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\nicefrac{p_\mathrm{sat}}{100000} = 10^{a - \nicefrac{b}{T + c}}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & - & $b$ & $\si{\kelvin}$ & $c$ & $\si{\kelvin}$ \\	
+
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p_\mathrm{sat})$	& $\si{\kelvin}$ & Analytical function \\
+	$\frac{\partial p_\mathrm{sat}(T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - VaporPressure_EoSCubic'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{VaporPressure\_EoSCubic}
+\label{cha:approaches:refp:eoscubic}
+%
+When using the Soave-Redlich-Kwong equation of state with custom equation for $\alpha$ (EoS = -10), the vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+		a &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+		b &=& 0.08664 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+		\alpha &=& \beta_{0} + \sum_{i=1}^{3} \beta_{i} \theta^i & \quad\text{, and} \\
+		\theta &=& \nicefrac{T_{\mathrm{crit}}}{T} - \nicefrac{T}{T_{\mathrm{crit}}} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+When using the Soave-Redlich-Kwong equation of state (EoS = -5), the vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+		a &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+		b &=& 0.08664 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+		\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+		\kappa &=& 0.48508 + 1.55171 \omega - 0.15613 \omega^2 & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+When using the Peng-Robinson equation of state with custom equation for  $\alpha$ (EoS = 5), the vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+\begin{split}
+	p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+	a &=& 0.45724 \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+	b &=& 0.07780 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+	\alpha &=& \beta_{0} + \sum_{i=1}^{3} \beta_{i} \theta^i & \quad\text{, and} \\
+	\theta &=& \nicefrac{T_{\mathrm{crit}}}{T} - \nicefrac{T}{T_{\mathrm{crit}}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+When using the Peng-Robinson equation of state (EoS = 10), the vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+		a &=& 0.45724 \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+		b &=& 0.07780 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+		\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+		\kappa &=& 0.37464 + 1.54226 \omega - 0.26992 \omega^2 & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+When using the Peng-Robinson-Stryjek-Vera equation of state (EoS = 20), the vapor pressure $p_\mathrm{sat}$ is calculted by:
+%
+\begin{equation*}
+\begin{split}
+	p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+	a &=& 0.45724 \frac{\left(R T_{\mathrm{crit}} \right)^2}{p_{\mathrm{crit}}} \alpha & \quad\text{, and} \\
+	b &=& 0.07780 R \frac{T_{\mathrm{crit}}}{p_{\mathrm{crit}}} & \quad\text{, and} \\
+	\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_{\mathrm{crit}}}) \right) \right)^2 & \quad\text{, and} \\
+	\kappa &=& \kappa_{0} + \kappa_{1} \left(1 + \sqrt(\nicefrac{T}{T_{\mathrm{crit}}}) \right) \left(0.7 - \nicefrac{T}{T_{\mathrm{crit}}}\right)  & \quad\text{, and} \\
+	\kappa_{0} &=& 0.378893 + 1.4897153 \omega - 0.17131848 \omega^2 + 0.0196554 \omega^3 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & $T_\mathrm{crit}$ & $\si{\kelvin}$ & $p_\mathrm{crit}$ & $\si{\pascal}$ & $\omega$ & - \\
+$\kappa_1$ & - & $\beta_0$ & - & $\beta_1$ & - & $\beta_2$ & - \\
+$\beta_3$ & - & & & & & & \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p_\mathrm{sat})$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start value calculated) \\
+	$\frac{\partial p_\mathrm{sat}(T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Saturated liquid density'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Refrigerants - Saturated liquid density}
+\label{cha:approaches:refd}
+%
+Currently, 1 approach is implemented in SorpPropLib to calculate saturated liquid density $\rho_\mathrm{sat}^{\mathrm{liq}}$ in $\si{\kilogram\per\cubic\meter}$ as a function of temperature $T$ in $\si{\kelvin}$. In addition, the partial derivatives according to the temperature is implemented in SorpPropLib. Details of the approach are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - Vapour Pressure - SaturatedLiquidDensity_EoS1'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{SaturatedLiquidDensity\_EoS1}
+\label{cha:approaches:refd:eos1}
+%
+The saturated liquid density $\rho_\mathrm{sat}^{\mathrm{liq}}$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+		\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+		\xi &=& 1 - \theta & \quad\text{, and} \\
+		\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & $T_\mathrm{crit}$ & $\si{\kelvin}$ & $\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & $a_1$ & - \\	
+$b_1$ & - &	$a_2$ & - &	$b_2$ & - &	$a_3$ & - \\	
+$b_3$ & - &	$a_4$ & - &	$b_4$ & - &	$a_5$ & - \\	
+$b_5$ & - &	$a_6$ & - &	$b_6$ & - &	$a_7$ & - \\	
+$b_7$ & - &	$a_8$ & - &	$b_8$ & - &	 & - \\
+
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$\frac{\partial \rho_\mathrm{sat}^\mathrm{liq}(T)}{\partial T}$	& $\si{\kilogram\per\cubic\meter\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Conventional'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Absorption - Conventional}
+\label{cha:abs:con}
+%
+Currently, 2 approaches are implemented in SorpPropLib for conventional absorption working pairs to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$ and concentration $X$ in $\si{\kilogram\per\kilogram}$. In addition, partial derivatives according to the temperature and concentration as well as the inverses of the approaches are implemented in SorpPropLib. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Conventional - Antoine'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Antoine}
+\label{cha:approaches:abs:con:antoine}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\nicefrac{p}{d} = 10 ^ { \sum_{i=0}^{4} \left( A_i + \frac{1000 B_i}{T - c} \right) \left( 100 X \right) ^{i}}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$c$ & $\si{\kelvin}$ & $d$ & $\si{\pascal}$ & $A_0$ & - & $B_0$ & $\si{\kelvin}$ \\
+$A_1$ & - & $A_2$ & - & $A_3$ & - & $A_4$ & - \\
+$B_1$ & $\si{\kelvin}$ & $B_2$ & $\si{\kelvin}$ & $B_3$ & $\si{\kelvin}$ & $B_4$ & $\si{\kelvin}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$X(p,T)$& $\si{\kilogram\per\kilogram}$ & Uses Newton-Raphson method (start: 0.5 $\si{\kilogram\per\kilogram}$) \\
+	$T(p,X)$& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 353.15 K) \\
+	$\frac{\partial p(X,T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	$\frac{\partial p(X,T)}{\partial X}$	& $\si{\pascal\kilogram\per\kelvin\per\kilogram}$ & Analytical function\\
+	$\frac{\partial X(p,T)}{\partial p}$	& $\si{\kilogram\per\pascal\per\kilogram}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial X(p,T)}{\partial T}$	& $\si{\kilogram\per\kelvin\per\kilogram}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Conventional - Dühring'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dühring}
+\label{cha:approaches:abs:con:duehring}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \nicefrac{1}{r} 10 ^ { C + \frac{D}{T_\mathrm{ref}} + \frac{E}{T_\mathrm{ref}^{2}} } & \quad\text{, and} \\
+		T_\mathrm{ref} &=& q + \frac{\left( n T + m - B \right)}{A}  & \quad\text{, and} \\
+		A &=& \sum_{i=0}^{3} a_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+		B &=& \sum_{i=0}^{3} b_0 X_\mathrm{cor} ^{i}  & \quad\text{, and} \\
+		X_\mathrm{cor} &=& 100 X  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a_0$ & - &$a_1$ & - &$a_2$ & - &$a_3$ & - \\
+$b_0$ & - &$b_1$ & - &$b_2$ & - &$b_3$ & - \\
+$C$ & - &$m$ & - &$n$ & - &$r$ & $\si{\per\pascal}$ \\
+$D$ & $\si{\kelvin}$ & $E$ &$\si{\square\kelvin}$ & $q$ & - & &  \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|l}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$X(p,T)$& $\si{\kilogram\per\kilogram}$ & Uses Newton-Raphson method (start: 0.5 $\si{\kilogram\per\kilogram}$) \\
+	$T(p,X)$& $\si{\kelvin}$ & Analytical function \\
+	$\frac{\partial p(X,T)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Analytical function\\
+	$\frac{\partial p(X,T)}{\partial X}$	& $\si{\pascal\kilogram\per\kelvin\per\kilogram}$ & Analytical function\\
+	$\frac{\partial X(p,T)}{\partial p}$	& $\si{\kilogram\per\pascal\per\kilogram}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial X(p,T)}{\partial T}$	& $\si{\kilogram\per\kelvin\per\kilogram}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Absorption - Activity}
+\label{cha:abs:act}
+%
+Currently, 10 approaches are implemented in SorpPropLib for absorption working pairs based on activity coefficients to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$, molar composition in the liquid phase $x_1$ in $\si{\mole\per\mole}$, and molar volumes of both components ($v_1$ and $v_2$) in $\si{\cubic\meter\per\mole}$. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - WilsonFixedDl'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{WilsonFixedDl}
+\label{cha:approaches:abs:act:wilson_fdl}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( - \ln \left( x_1 + \Lambda_{12} x_2 \right) + x_2 \left( \frac{\Lambda_{12}}{x_1 + \Lambda_{12} x_2} - \frac{\Lambda_{21}}{x_2 + \Lambda_{21} x_1} \right) \right) & \quad\text{, and} \\
+		\Lambda_{12} &=& \begin{cases} \nicefrac{v_2}{v_1} \exp \left( - \nicefrac{\Delta\lambda_{12}}{R T} \right) & \quad \text{if } \Lambda_{12}^{*} = 0 \\ \Lambda_{12}^{*}  & \quad \text{else} \end{cases}  & \quad\text{, and} \\
+		\Lambda_{21} &=& \begin{cases} \nicefrac{v_1}{v_2} \exp \left( - \nicefrac{\Delta\lambda_{21}}{R T} \right) & \quad \text{if } \Lambda_{21}^{*} = 0 \\ \Lambda_{21}^{*}  & \quad \text{else} \end{cases}  & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Lambda_{12}^{*}$ & - &$\Lambda_{21}^{*}$ & - &$\Delta\lambda_{12}$ & $\si{\joule\per\mole}$ &$\Delta\lambda_{21}$ & $\si{\joule\per\mole}$ \\
+$v_1$ & $\si{\cubic\meter\per\mole}$& $v_2$ & $\si{\cubic\meter\per\mole}$ & & & & \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - WilsonTemperatureDl'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{WilsonTemperatureDl}
+\label{cha:approaches:abs:act:wilson_tdl}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( - \ln \left( x_1 + \Lambda_{12} x_2 \right) + x_2 \left( \frac{\Lambda_{12}}{x_1 + \Lambda_{12} x_2} - \frac{\Lambda_{21}}{x_2 + \Lambda_{21} x_1} \right) \right) & \quad\text{, and} \\
+		\Lambda_{12} &=& \nicefrac{v_2}{v_1} \exp \left( - \frac{\Delta\lambda_{12}}{R T} \right) & \quad\text{, and} \\
+		\Lambda_{21} &=& \nicefrac{v_1}{v_2} \exp \left( - \frac{\Delta\lambda_{21}}{R T} \right) & \quad\text{, and} \\
+		\Delta\lambda_{12} &=& R \left( \Delta\lambda_\mathrm{12,c} + \Delta\lambda_\mathrm{12,t} \left( T - c \right) \right) & \quad\text{, and} \\
+		\Delta\lambda_{21} &=& R \left( \Delta\lambda_\mathrm{21,c} + \Delta\lambda_\mathrm{21,t} \left( T - c \right) \right) & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta\lambda_\mathrm{12,c}$ & $\si{\kelvin}$ & $\Delta\lambda_\mathrm{21,c}$ & $\si{\kelvin}$ & $\Delta\lambda_\mathrm{12,t}$ & - & $\Delta\lambda_\mathrm{12,t}$ & - \\
+$v_1$ & $\si{\cubic\meter\per\mole}$& $v_2$ & $\si{\cubic\meter\per\mole}$ &$c$ & $\si{\kelvin}$ & & \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - WangChao'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{WangChao}
+\label{cha:approaches:abs:act:wang_chao}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( - \ln \left( x_1 + \Lambda_{21} x_2 \right) + x_2 \left( \frac{\Lambda_{21}}{x_1 + \Lambda_{21} x_2} - \frac{\Lambda_{12}}{x_1 \Lambda_{12} + x_2} \right) + \Phi \right) & \quad\text{, and} \\
+		\Phi &=& \frac{1}{R T} \frac{z}{2} \left( x_{21}^2 \Delta\lambda_{21} + x_2 x_{22} \frac{x_{12}}{x_1} \Delta\lambda_{12} \right) & \quad\text{, and} \\
+		x_{11} &=& \left( 1 + \nicefrac{x_2}{x_1} \exp \left( - \nicefrac{\Delta\lambda_{21}}{R T} \right) \right) ^ {-1} & \quad\text{, and} \\
+		x_{22} &=& \left( 1 + \nicefrac{x_1}{x_2} \exp \left( - \nicefrac{\Delta\lambda_{12}}{R T} \right) \right) ^ {-1} & \quad\text{, and} \\
+		\Lambda_{12} &=& \rho_{21} \exp \left( - \frac{\Delta\lambda_{12}}{R T} \right) & \quad\text{, and} \\
+		\Lambda_{21} &=& \rho_{12} \exp \left( - \frac{\Delta\lambda_{21}}{R T} \right) & \quad\text{, and} \\
+		\rho_{12} &=& \nicefrac{v_1}{v_2} & \quad\text{, and} \\
+		\rho_{21} &=& \nicefrac{v_2}{v_1} & \quad\text{, and} \\
+		x_{12} &=& 1 - x_{22} & \quad\text{, and} \\
+		x_{21} &=& 1 - x_{11} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta\lambda_{12}$ & $\si{\joule\per\mole}$ &$\Delta\lambda_{21}$ & $\si{\joule\per\mole}$ & $v_1$ & $\si{\cubic\meter\per\mole}$& $v_2$ & $\si{\cubic\meter\per\mole}$ \\
+$z$ & - & & & & & & \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - TsubokaKatayama'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{TsubokaKatayama}
+\label{cha:approaches:abs:act:tsuboka_katayama}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( - \ln \left( x_1 + \Lambda_{21} x_2 \right) + x_2 \left( \frac{\Lambda_{21}}{x_1 + \Lambda_{21} x_2} - \frac{\Lambda_{12}}{x_1 \Lambda_{12} + x_2} \right) + \Phi \right) & \quad\text{, and} \\
+		\Phi &=& \ln \left( x_1 + x_2 \rho_{21} \right) - x_2 \left( \frac{\rho_{21}}{x_1 + x_2 \rho_{21}} - \frac{\rho_{12}}{x_1 \rho_{12} + x_2} \right) & \quad\text{, and} \\
+		\Lambda_{12} &=& \rho_{21} \exp \left( - \nicefrac{\Delta\lambda_{12}}{R T} \right) & \quad\text{, and} \\
+		\Lambda_{21} &=& \rho_{12} \exp \left( - \nicefrac{\Delta\lambda_{21}}{R T} \right) & \quad\text{, and} \\
+		\rho_{12} &=& \nicefrac{v_1}{v_2} & \quad\text{, and} \\
+		\rho_{21} &=& \nicefrac{v_2}{v_1} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta\lambda_{12}$ & $\si{\joule\per\mole}$ &$\Delta\lambda_{21}$ & $\si{\joule\per\mole}$ & $v_1$ & $\si{\cubic\meter\per\mole}$& $v_2$ & $\si{\cubic\meter\per\mole}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - Heil'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Heil}
+\label{cha:approaches:abs:act:heil}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( - \ln \left( x_1 + \Lambda_{21} x_2 \right) + x_2 \left( \frac{\Lambda_{21}}{x_1 + \Lambda_{21} x_2} - \frac{\Lambda_{12}}{x_1 \Lambda_{12} + x_2} \right) + \Phi \right) & \quad\text{, and} \\
+		\Phi &=& x_2^2 \left( \tau_{12} \left( \frac{\Lambda_{21}}{x_1 + \Lambda_{21} x_2} \right) ^2 + \tau_{12} \frac{\Lambda_{12}}{\left( x_1 \Lambda_{12} + x_2 \right) ^2}  \right) & \quad\text{, and} \\
+		\Delta\Lambda_{12} &=& \nicefrac{v_2}{v_1} \exp \left( - \tau_{12} \right) & \quad\text{, and} \\
+		\Delta\Lambda_{21} &=& \nicefrac{v_1}{v_2} \exp \left( - \tau_{21} \right) & \quad\text{, and} \\
+		\tau_{12} &=& \nicefrac{\lambda_{12}}{R T} & \quad\text{, and} \\
+		\tau_{21} &=& \nicefrac{\lambda_{21}}{R T} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta\lambda_{12}$ & $\si{\joule\per\mole}$ &$\Delta\lambda_{21}$ & $\si{\joule\per\mole}$ & $v_1$ & $\si{\cubic\meter\per\mole}$& $v_2$ & $\si{\cubic\meter\per\mole}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - FloryHuggins'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{FloryHuggins}
+\label{cha:approaches:abs:act:flory_huggins}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( \ln \left( 1 - \left( 1 - \nicefrac{1}{r} \right) \Phi_2  \right) + \left(1 - \nicefrac{1}{r}\right) \Phi_2 + \Gamma \Phi_2 ^2 \right) & \quad\text{, and} \\
+		\Phi_2 &=& r \frac{x_2}{x_1 + r x_2} & \quad\text{, and} \\
+		\Gamma &=& \nicefrac{w_0^{*}}{T} \left( 1 + \nicefrac{w_1}{T} \right) & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$r$ & - & $w_0^{*}$ & $\si{\kelvin}$ & $w_1$ & $\si{\kelvin}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - NrtlFixedDg'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{NrtlFixedDg}
+\label{cha:approaches:abs:act:nrtl_fdg}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( x_2^2 \left( \tau_{21} \left( \frac{G_{21}}{x_1 + x_2 G_{21}} \right) ^2 + \tau_{12} \frac{G_{12}}{\left( x_2 + x_1 G_{12} \right) ^2}\right) \right) & \quad\text{, and} \\
+		G_{12} &=& \exp \left( -\alpha_{12} \tau_{12} \right) & \quad\text{, and} \\
+		G_{21} &=& \exp \left( -\alpha_{21} \tau_{21} \right) & \quad\text{, and} \\
+		\tau_{12} &=& \nicefrac{\Delta g_{12}}{R T} & \quad\text{, and} \\
+		\tau_{21} &=& \nicefrac{\Delta g_{21}}{R T} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\alpha_{12}$ & - & $\alpha_{21}$ & - & $\Delta g_{12}$ & $\si{\joule\per\mole}$ & $\Delta g_{21}$ & $\si{\joule\per\mole}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - NrtlTemperatureDg'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{NrtlTemperatureDg}
+\label{cha:approaches:abs:act:nrtl_tdg}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( x_2^2 \left( \tau_{21} \left( \frac{G_{21}}{x_1 + x_2 G_{21}} \right) ^2 + \tau_{12} \frac{G_{12}}{\left( x_2 + x_1 G_{12} \right) ^2}\right) \right) & \quad\text{, and} \\
+		G_{12} &=& \exp \left( -\alpha_{12} \tau_{12} \right) & \quad\text{, and} \\
+		G_{21} &=& \exp \left( -\alpha_{21} \tau_{21} \right) & \quad\text{, and} \\
+		\tau_{12} &=& \nicefrac{\Delta g_{12}}{R T} & \quad\text{, and} \\
+		\tau_{21} &=& \nicefrac{\Delta g_{21}}{R T} & \quad\text{, and} \\
+		\Delta g_{12} &=& a_{12} + b_{12} T & \quad\text{, and} \\
+		\Delta g_{21} &=& a_{21} + b_{21} T & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\alpha_{12}$ & - & $\alpha_{21}$ & - & $a_{12}$ & $\si{\joule\per\mole}$ & $a_{21}$ & $\si{\joule\per\mole}$ \\
+$b_{12}$ & $\si{\joule\per\mole\per\kelvin}$ & $b_{21}$ & $\si{\joule\per\mole\per\kelvin}$ & & & &  \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.5 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - UniquacFixedDu'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{UniquacFixedDu}
+\label{cha:approaches:abs:act:uniquac_fdu}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( \ln \left( \nicefrac{\Phi_1}{x_1} \right) + q_1 \nicefrac{z}{2} \ln \left( \nicefrac{\Theta_1}{\Phi_1} \right) + l_1 - \nicefrac{\Phi_1}{x_2} \left( x_1 l_1 + x_2 l_2 \right) + \Gamma \right) & \quad\text{, and} \\
+		\Gamma &=& - q_1 \ln \left( \Theta_1 + \Theta_2 \tau_{21} \right) + q_1 - q_1 \left( \frac{\Theta_1}{\Theta_1 + \Theta_2 \tau_{21}} + \frac{\Theta_2 \tau_{12}}{\Theta_1 \tau_{12} + \Theta_2} \right) & \quad\text{, and} \\
+		\tau_{ij} &=& \exp \left( \nicefrac{\Delta u_{ij}}{R T} \right) & \quad\text{, and} \\
+		l_i &=& \nicefrac{z}{2} \left( r_i - q_i \right) \left(r_i - 1 \right) & \quad\text{, and} \\
+		\Theta_i &=& \frac{q_i x_i}{\sum_{j=1}^{2} q_j x_j} & \quad\text{, and} \\
+		\Phi_i &=& \frac{r_i x_i}{\sum_{j=1}^{2} r_j x_j} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta u_{12}$ & $\si{\joule\per\mole}$ &  $\Delta u_{21}$ & $\si{\joule\per\mole}$ & $r_{1}$ & - & $r_{2}$ & - \\
+$q_{1}$ & - & $q_{3}$ & - & $z$ & - & &  \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.6 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Activity - NrtlTemperatureDg'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{UniquacTemperatureDu}
+\label{cha:approaches:abs:act:uniquac_tdu}
+%
+The equilibrium pressure $p$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+		\gamma_1 &=& \exp \left( \ln \left( \nicefrac{\Phi_1}{x_1} \right) + q_1 \nicefrac{z}{2} \ln \left( \nicefrac{\Theta_1}{\Phi_1} \right) + l_1 - \nicefrac{\Phi_1}{x_2} \left( x_1 l_1 + x_2 l_2 \right) + \Gamma \right) & \quad\text{, and} \\
+		\Gamma &=& - q_1 \ln \left( \Theta_1 + \Theta_2 \tau_{21} \right) + q_1 - q_1 \left( \frac{\Theta_1}{\Theta_1 + \Theta_2 \tau_{21}} + \frac{\Theta_2 \tau_{12}}{\Theta_1 \tau_{12} + \Theta_2} \right) & \quad\text{, and} \\
+		\tau_{ij} &=& \exp \left( \nicefrac{\Delta u_{ij}}{R T} \right) & \quad\text{, and} \\
+		\Delta u_{ij} &=& a_{ij} + b_{ij} T & \quad\text{, and} \\
+		l_i &=& \nicefrac{z}{2} \left( r_i - q_i \right) \left(r_i - 1 \right) & \quad\text{, and} \\
+		\Theta_i &=& \frac{q_i x_i}{\sum_{j=1}^{2} q_j x_j} & \quad\text{, and} \\
+		\Phi_i &=& \frac{r_i x_i}{\sum_{j=1}^{2} r_j x_j} & \quad\text{, and} \\
+		x_2 &=& 1 - x_1  & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par} & \textbf{Value} & \textbf{Par} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a_{12}$ & $\si{\joule\per\mole}$ & $a_{21}$ & $\si{\joule\per\mole}$ &$b_{12}$ & $\si{\joule\per\mole\per\kelvin}$ &$b_{21}$ & $\si{\joule\per\mole\per\kelvin}$ \\
+$r_{1}$ & - &$r_{2}$ & - &$q_{1}$ & - &$q_{2}$ & - \\
+$z$ & - & &  & &  & & \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$x_1(p,T,v_1,v_2,p_\mathrm{sat,1}(T))$& $\si{\mole\per\mole}$ & Uses Newton-Raphson method (start: 0.6 $\si{\mole\per\mole}$) \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Mixing'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Absorption - Mixing}
+\label{cha:abs:mix}
+%
+Currently, 3 approaches are implemented in SorpPropLib for absorption working pairs based on mixing rules to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$ and molar composition in the liquid phase $x$ in $\si{\mole\per\mole}$. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Mixing - 1pvdw'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{1pvdw}
+\label{cha:approaches:abs:mic:1pvdw}
+%
+The equilibrium pressure $p$ is calculated iteratively by applying the one-parameter van der Waals mixing rule (MIXING = -5) to cubic equations of state (see Section~\ref{cha:approaches:refp:eoscubic}):
+%
+\begin{equation*}
+	\begin{split}
+		a &=& z_1^2 a_1 + 2 z_1 z_2 a_{12} + 2_2^2 a_2 & \quad\text{, and} \\
+		b &=& z_1 b_1 + z_2 b_2 & \quad\text{, and} \\
+		a_{12} &=& \left( a_1 a_2 \right) ^{0.5} \left(1 - k_{12} \right) & \quad\text{, and} \\
+		z_j &=& x_j \textrm { or } y_j \textrm{ depending on phase} & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & Mix & - &$T_\mathrm{crit,1}$ & $\si{\kelvin}$ &$p_\mathrm{crit,1}$ & $\si{\pascal}$ \\
+$\omega_{1}$ & - &$\kappa_{1,1}$ & - &$\beta_{0,1}$ & - &$\beta_{1,1}$ & - \\
+$\beta_{2,1}$ & - &$\beta_{3,1}$ & - &$T_\mathrm{crit,2}$ & $\si{\kelvin}$ &$p_\mathrm{crit,2}$ & $\si{\pascal}$ \\
+$\omega_{2}$ & - &$\kappa_{1,2}$ & - &$\beta_{0,2}$ & - &$\beta_{1,2}$ & - \\
+$\beta_{2,2}$ & - &$\beta_{3,2}$ & - &$k_{12}$ & - &$m$ & - \\
+$l_{12}$ & - & $l_{21}$ & - & $t$ & - & &  \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p,x_1)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start value calculated) \\
+	$x_1(p,T)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: $x_1 = 0.25 \si{\mole\per\mole}$, $y_1 = 0.99 \si{\mole\per\mole}$) \\
+	$\frac{\partial p(T,x_1)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial p(T,x_1)}{\partial x_1}$	& $\si{\pascal\mole\per\mole}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Mixing - 2pvdw'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{2pvdw}
+\label{cha:approaches:abs:mic:2pvdw}
+%
+The equilibrium pressure $p$ is calculated iteratively by applying the two-parameter van der Waals mixing rule (MIXING = 5) to cubic equations of state (see Section~\ref{cha:approaches:refp:eoscubic}):
+%
+\begin{equation*}
+	\begin{split}
+		a &=& z_1^2 a_1 + 2 z_1 z_2 a_{12} + 2_2^2 a_2 & \quad\text{, and} \\
+		b &=& z_1^2 b_1 + 2 z_1 z_2 b_{12} + 2_2^2 b_2 & \quad\text{, and} \\
+		a_{12} &=& \left( a_1 a_2 \right) ^{0.5} \left(1 - k_{12} \right) & \quad\text{, and} \\
+		b_{12} &=& \frac{ b_1 + b_2 }{2} \left(1 - m \right) & \quad\text{, and} \\
+		z_j &=& x_j \textrm { or } y_j \textrm{ depending on phase} & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+	\toprule
+	\addlinespace
+	\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	EoS & - & Mix & - &$T_\mathrm{crit,1}$ & $\si{\kelvin}$ &$p_\mathrm{crit,1}$ & $\si{\pascal}$ \\
+	$\omega_{1}$ & - &$\kappa_{1,1}$ & - &$\beta_{0,1}$ & - &$\beta_{1,1}$ & - \\
+	$\beta_{2,1}$ & - &$\beta_{3,1}$ & - &$T_\mathrm{crit,2}$ & $\si{\kelvin}$ &$p_\mathrm{crit,2}$ & $\si{\pascal}$ \\
+	$\omega_{2}$ & - &$\kappa_{1,2}$ & - &$\beta_{0,2}$ & - &$\beta_{1,2}$ & - \\
+	$\beta_{2,2}$ & - &$\beta_{3,2}$ & - &$k_{12}$ & - &$m$ & - \\
+	$l_{12}$ & - & $l_{21}$ & - & $t$ & - & &  \\
+	
+	\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p,x_1)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start value calculated) \\
+	$x_1(p,T)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: $x_1 = 0.25 \si{\mole\per\mole}$, $y_1 = 0.99 \si{\mole\per\mole}$) \\
+	$\frac{\partial p(T,x_1)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial p(T,x_1)}{\partial x_1}$	& $\si{\pascal\mole\per\mole}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Mixing - vdwb'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{vdwb}
+\label{cha:approaches:abs:mic:vdwb}
+%
+The equilibrium pressure $p$ is calculated iteratively by applying the modified van der Waals and Berthelot mixing rule (MIXING = 10) to cubic equations of state (see Section~\ref{cha:approaches:refp:eoscubic}):
+%
+\begin{equation*}
+	\begin{split}
+		a &=& z_1^2 a_1 + 2 z_1 z_2 a_{12} + 2_2^2 a_2 & \quad\text{, and} \\
+		b &=& z_1^2 b_1 + 2 z_1 z_2 b_{12} + 2_2^2 b_2 & \quad\text{, and} \\
+		a_{12} &=& \left( a_1 a_2 \right) ^{0.5} \left( 1 + \nicefrac{t}{T} \right) \left(1 - k_{12} \right) & \quad\text{, and} \\
+		b_{12} &=& \frac{ b_1 + b_2 }{2} \left(1 - m \right) & \quad\text{, and} \\
+		k_{12} &=& \frac{l_{12} l_{21} \left(z_1 + z_2 \right)}{l_{21} z_1 + l_{12} z_2} & \quad\text{, and} \\
+		z_j &=& x_j \textrm { or } y_j \textrm{ depending on phase} & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+	\toprule
+	\addlinespace
+	\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	EoS & - & Mix & - &$T_\mathrm{crit,1}$ & $\si{\kelvin}$ &$p_\mathrm{crit,1}$ & $\si{\pascal}$ \\
+	$\omega_{1}$ & - &$\kappa_{1,1}$ & - &$\beta_{0,1}$ & - &$\beta_{1,1}$ & - \\
+	$\beta_{2,1}$ & - &$\beta_{3,1}$ & - &$T_\mathrm{crit,2}$ & $\si{\kelvin}$ &$p_\mathrm{crit,2}$ & $\si{\pascal}$ \\
+	$\omega_{2}$ & - &$\kappa_{1,2}$ & - &$\beta_{0,2}$ & - &$\beta_{1,2}$ & - \\
+	$\beta_{2,2}$ & - &$\beta_{3,2}$ & - &$k_{12}$ & - &$m$ & - \\
+	$l_{12}$ & - & $l_{21}$ & - & $t$ & - & &  \\
+	
+	\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$T(p,x_1)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start value calculated) \\
+	$x_1(p,T)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: $x_1 = 0.25 \si{\mole\per\mole}$, $y_1 = 0.99 \si{\mole\per\mole}$) \\
+	$\frac{\partial p(T,x_1)}{\partial T}$	& $\si{\pascal\per\kelvin}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial p(T,x_1)}{\partial x_1}$	& $\si{\pascal\mole\per\mole}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adsorption - Surface}
+\label{cha:ads:sur}
+%
+Currently, 3 approaches are implemented in SorpPropLib for conventional adsorption working pairs based on the surface approach to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$ and loading $w$ in $\si{\kilogram\per\kilogram}$. In addition, partial derivatives according to the temperature and concentration as well as the inverses of the approaches are implemented in SorpPropLib. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface - DualSiteSips'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{DualSiteSips}
+\label{cha:approaches:ads:sur:dss}
+%
+The loading $w$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		w &=& \sum_{i=A}^{B} w_\mathrm{i} \frac{\left( b_i p \right) ^ {\nicefrac{1}{\eta_i}} }{1 + \left( b_i p \right) ^ {\nicefrac{1}{\eta_i}}} & \quad\text{, and} \\
+		b_i &=& b_{i,0} \exp \left( \frac{Q_i}{R T} \left( 1 - \frac{T}{T_0} \right) \right) & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$b_\mathrm{A,0}$ & $\si{\per\pascal}$ & $Q_\mathrm{A}$ & $\si{\joule\per\mole}$ & $\eta_\mathrm{A}$ & - & $w_\mathrm{A}$ & $\si{\kilogram\per\kilogram}$ \\ 
+$T_0$ & $\si{\kelvin}$ & $b_\mathrm{B,0}$ & $\si{\per\pascal}$ & $Q_\mathrm{B}$ & $\si{\joule\per\mole}$ & $\eta_\mathrm{B}$ & -  \\
+$w_\mathrm{B}$ & $\si{\kilogram\per\kilogram}$ & & & & & & \\ 
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 10000 Pa) \\
+	$T(p,w)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 353.15 K) \\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Uses two-point numerical differentiation\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Uses two-point numerical differentiation\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface - Langmuir'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Langmuir}
+\label{cha:approaches:ads:sur:langmuir}
+%
+The loading $w$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		w &=& \frac{w_\mathrm{sat} K p}{1 + K p} & \quad\text{, and} \\
+		K &=& K_0 \exp \left( \frac{\Delta H}{R T} \right) & \quad\text{.}
+	\end{split}
+\end{equation*}
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\Delta H$ & $\si{\joule\per\mole}$ & $K_0$ & $\si{\per\pascal}$ & $w_\mathrm{sat}$ & $\si{\kilogram\per\kilogram}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T)$	& $\si{\kelvin}$ & Analytical function\\
+	$T(p,w)$	& $\si{\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface - Toth'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Toth}
+\label{cha:approaches:ads:sur:toth}
+%
+The loading $w$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		w &=& \frac{w_\mathrm{sat} b^{m} p}{\left( 1 + b^{r} p^{n} \right)^{\nicefrac{1}{n}}} & \quad\text{, and} \\
+		b &=& b_0 \exp\left( \frac{Q^{*}}{T} \right) & \quad\text{, and} \\
+		n &=& n_0 + \nicefrac{c}{T} & \quad\text{, and} \\
+		r &=& \begin{cases} n & \quad \text{if } r^{*} < 0 \\ r^{*}  & \quad \text{else} \end{cases} & \quad\text{.}
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$b_0$ & $\si{\per\pascal}$ & $m$ & - & $Q^{*}$ & $\si{\kelvin}$ & $w_\mathrm{sat}$ & $\si{\kilogram\per\kilogram}$ \\
+$c$ & $\si{\kelvin}$ & $n_0$ & - & $r^{*}$ & - &  &  \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T)$	& $\si{\kelvin}$ & Analytical function\\
+	$T(p,w)$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 353.15 K) \\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T)}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface & Vapor Pressure'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adsorption - Surface \& Vapor Pressure}
+\label{cha:ads:surp}
+%
+Currently, 1 approach are implemented in SorpPropLib for conventional adsorption working pairs based on the surface approach to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$, loading $w$ in $\si{\kilogram\per\kilogram}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$. In addition, partial derivatives according to the temperature and concentration as well as the inverses of the approaches are implemented in SorpPropLib. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Surface & Vapor Pressure - Freundlich'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Freundlich}
+\label{cha:approaches:ads:surp:freundlich}
+%
+The loading $w$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		w &=& A \left( \nicefrac{p}{p_\mathrm{sat}} \right) ^{B} & \quad\text{, and} \\
+		A &=& A_0 + A_1 T + A_2 T^2 + A_3 T^3 & \quad\text{, and} \\
+		B &=& B_0 + B_1 T + B_2 T^2 + B_3 T^3 & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+	\toprule
+	\addlinespace
+	\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value} & \textbf{Par.} & \textbf{Value} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$A_0$ & $\si{\kilogram\per\kilogram}$ & $A_2$ & $\si{\kilogram\per\kilogram\per\square\kelvin}$ & $B_0$ & - & $B_2$ & $\si{\per\cubic\kelvin}$ \\
+	$A_1$ & $\si{\kilogram\per\kilogram\per\kelvin}$ & $A_3$ & $\si{\kilogram\per\kilogram\per\cubic\kelvin}$ & $B_1$ & $\si{\per\kelvin}$ & $B_3$ & $\si{\per\square\kelvin}$ \\
+	
+	\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{7.5cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T,p_\mathrm{sat}(T))$	& $\si{\kelvin}$ & Analytical function\\
+	$T(p,w,p_\mathrm{sat}(T))$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 353.15 K) \\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Volumetric'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adsorption - Volumetric}
+\label{cha:ads:vol}
+%
+Currently, 3 approaches are implemented in SorpPropLib for conventional adsorption working pairs based on the volumetric approach to calculate equilibrium pressure $p$ in $\si{\pascal}$ as a function of temperature $T$ in $\si{\kelvin}$, loading $w$ in $\si{\kilogram\per\kilogram}$, vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$, and saturated liquid density $\rho_\mathrm{sat}^{\mathrm{liq}}$ in $\si{\kilogram\per\cubic\meter}$. In addition, partial derivatives according to the temperature and concentration as well as the inverses of the approaches are implemented in SorpPropLib. Details of the approaches are presented below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Volumetric - DubininAstakhov'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{DubininAstakhov}
+\label{cha:approaches:ads:vol:da}
+%
+The loading $w$ is calculated by:
+%
+\begin{equation*}
+	\begin{split}
+		w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+		W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+		A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value}  & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & $E$ & $\si{\joule\per\mole}$ & $n$ & - & $W_0$ & $\si{\kilogram\per\kilogram}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{4cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))$	& $\si{\kelvin}$ & Analytical function\\
+	$T(p,w,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 273.15 K) \\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T},\nicefrac{\partial \rho_\mathrm{sat}^\mathrm{liq}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T},\nicefrac{\partial \rho_\mathrm{sat}^\mathrm{liq}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$W(A,rho_\mathrm{sat}^\mathrm{liq}(T))$ & $\si{\cubic\meter\per\kilogram}$ & Analytical function \\
+	$A(W,rho_\mathrm{sat}^\mathrm{liq}(T))$ & $\si{\joule\per\mole}$ & Analytical function \\
+	$\frac{\partial W(A,rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial A}$ & $\si{\mole\cubic\meter\per\kilogram\per\joule}$ & Analytical function \\
+	$\frac{\partial A(W,rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial W}$ & $\si{\kilogram\joule\per\mole\per\cubic\meter}$ & Analytical function \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Volumetric - DubininArctan1'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{DubininArctan1}
+\label{cha:approaches:ads:vol:darctan1}
+%
+The loading $w$ is calculated by: 
+%
+\begin{equation*}
+	\begin{split}
+		w &=& W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad\text{, and} \\
+		W &=& \frac{a}{\Pi} \left( \arctan \left( \frac{A - b}{c} \right) + \frac{\Pi}{2}\right) + d & \quad\text{, and} \\
+		A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+	\end{split}
+\end{equation*}
+%
+Required coefficients of the equation are:
+%
+\begin{longtable}[l]{ll|ll|ll|ll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Par.} &	\textbf{Unit.} & \textbf{Par.} & \textbf{Value}  & \textbf{Par.} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$a$ & $\si{\cubic\meter\per\kilogram}$ & $b$ & $\si{\joule\per\mole}$ & $c$ & $\si{\joule\per\mole}$ & $d$ & $\si{\cubic\meter\per\kilogram}$ \\
+
+\addlinespace
+\end{longtable}
+%
+Implemented inverse functions and partial derivatives are:
+%
+\begin{longtable}[l]{l|l|p{4cm}}
+	\toprule
+	\addlinespace
+	\textbf{Function} & \textbf{Unit} &	\textbf{Implementation} \\
+	\addlinespace
+	\midrule
+	\endhead
+	
+	\bottomrule
+	\endfoot
+	\bottomrule
+	\endlastfoot
+	\addlinespace
+	
+	$p(w,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))$	& $\si{\kelvin}$ & Analytical function\\
+	$T(p,w,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))$	& $\si{\kelvin}$ & Uses Newton-Raphson method (start: 313.15 K) \\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T},\nicefrac{\partial \rho_\mathrm{sat}^\mathrm{liq}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial p}$	& $\si{\kilogram\per\kilogram\per\pascal}$ & Analytical function\\
+	$\frac{\partial w(p,T,p_\mathrm{sat}(T),\rho_\mathrm{sat}^\mathrm{liq}(T),\nicefrac{\partial p_\mathrm{sat}(T)}{\partial T},\nicefrac{\partial \rho_\mathrm{sat}^\mathrm{liq}(T)}{\partial T})}{\partial T}$	& $\si{\kilogram\per\kilogram\per\kelvin}$ & Analytical function\\
+	$W(A,rho_\mathrm{sat}^\mathrm{liq}(T))$ & $\si{\cubic\meter\per\kilogram}$ & Analytical function \\
+	$A(W,rho_\mathrm{sat}^\mathrm{liq}(T))$ & $\si{\joule\per\mole}$ & Analytical function \\
+	$\frac{\partial W(A,rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial A}$ & $\si{\mole\cubic\meter\per\kilogram\per\joule}$ & Analytical function \\
+	$\frac{\partial A(W,rho_\mathrm{sat}^\mathrm{liq}(T))}{\partial W}$ & $\si{\kilogram\joule\per\mole\per\cubic\meter}$ & Analytical function \\
+	
+	\addlinespace
+\end{longtable}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

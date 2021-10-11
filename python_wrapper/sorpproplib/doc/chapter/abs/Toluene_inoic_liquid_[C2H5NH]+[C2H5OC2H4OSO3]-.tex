@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - Toluene - inoic liquid [C2H5NH]+[C2H5OC2H4OSO3]-'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Inoic liquid [C2H5NH]+[C2H5OC2H4OSO3]-}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{NrtlTemperatureDg - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & inoic liquid \\
+\textbf{Subtype:} & [C2H5NH]+[C2H5OC2H4OSO3]- \\
+\textbf{Refrigerant:} & Toluene \\
+\textbf{Equation:} & NrtlTemperatureDg \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Kato, Ryo; Krummen, Michael; Gmehling, Jürgen (2004): Measurement and correlation of vapor–liquid equilibria and excess enthalpies of binary systems containing ionic liquids and hydrocarbons. In: Fluid Phase Equilibria 224 (1), S. 47–54. DOI: 10.1016/j.fluid.2004.05.009. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Pressure $p$ in $\si{\pascal}$ is calculated depending on molar fraction of refrigerant in the liquid phase $x_1$ in $\si{\mole\per\mole}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat,1}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+p &=& \gamma_1 x_1 p_\mathrm{sat,1} & \quad\text{, and} \\
+\gamma_1 &=& \exp \left( x_2^2 \left( \tau_{21} \left( \frac{G_{21}}{x_1 + x_2 G_{21}} \right) ^2 + \tau_{12} \frac{G_{12}}{\left( x_2 + x_1 G_{12} \right) ^2}\right) \right) & \quad\text{, and} \\
+G_{12} &=& \exp \left( -\alpha_{12} \tau_{12} \right) & \quad\text{, and} \\
+G_{21} &=& \exp \left( -\alpha_{21} \tau_{21} \right) & \quad\text{, and} \\
+\tau_{12} &=& \nicefrac{\Delta g_{12}}{R T} & \quad\text{, and} \\
+\tau_{21} &=& \nicefrac{\Delta g_{21}}{R T} & \quad\text{, and} \\
+\Delta g_{12} &=& a_{12} + b_{12} T & \quad\text{, and} \\
+\Delta g_{21} &=& a_{21} + b_{21} T & \quad\text{, and} \\
+x_2 &=& 1 - x_1  & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$\alpha_{12}$ & - & 2.000000000e-01 & $\alpha_{21}$ & - & 2.000000000e-01 \\
+$a_{12}$ & $\si{\joule\per\mole}$ & 8.690600000e+03 & $a_{21}$ & $\si{\joule\per\mole}$ & 1.291000000e+02 \\
+$b_{12}$ & $\si{\joule\per\mole\per\kelvin}$ & 0.000000000e+00 & $b_{21}$ & $\si{\joule\per\mole\per\kelvin}$ & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $353.15 \si{\kelvin} \leq T \leq 353.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/abs/abs_Toluene_inoic_liquid_[C2H5NH]+[C2H5OC2H4OSO3]-_NrtlTemperatureDg_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 2.03\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

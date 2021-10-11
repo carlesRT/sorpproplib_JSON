@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Nitrogen - activated carbon G32-H'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon G32-H}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon \\
+\textbf{Subtype:} & G32-H \\
+\textbf{Refrigerant:} & Nitrogen \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Henninger, S. K.; Schicktanz, M.; Hügenell, P.P.C.; Sievers, H.; Henning, H.-M. (2012): Evaluation of methanol adsorption on activated carbons for thermally driven chillers part I. Thermophysical characterisation. In: International Journal of Refrigeration 35 (3), S. 543–553. DOI: 10.1016/j.ijrefrig.2011.10.004. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Surface area & \si{\square\meter\per\gram} & 921\\
+Porosity of pellet & - & 0.77\\
+Bulk density & \si{\kilogram\per\cubic\meter} & 370\\
+Solid density & \si{\kilogram\per\cubic\meter} & 2174\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.700000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 6.486000000e+03 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 4.690000000e-04 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+No data on validity available!
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - R-507a'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R-507a}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-507a \\
+\textbf{Equation:} & VaporPressure\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, E. W. (2003): Pseudo-Pure Fluid Equations of State for the Refrigerant Blends R-410A, R-404A, R-507A, and R-407C. In: International Journal of Thermophysics 24 (4), S. 991–1006. DOI: 10.1023/A:1025048800563. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p_\mathrm{sat} &=& p_\mathrm{crit} \exp \left( \nicefrac{1}{\theta} \sum_{i=1}^{7} a_i \xi^{b_i} \right) & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.437650000e+02 & $a_4$ & - & -3.776300000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 3.704900000e+06 & $b_4$ & - & 4.600000000e+00 \\
+$a_1$ & - & -7.485300000e+00 & $a_5$ & - & 0.000000000e+00 \\
+$b_1$ & - & 1.000000000e+00 & $b_5$ & - & 0.000000000e+00 \\
+$a_2$ & - & 2.011500000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_2$ & - & 1.500000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_3$ & - & -2.014100000e+00 & $a_7$ & - & 0.000000000e+00 \\
+$b_3$ & - & 2.200000000e+00 & $b_7$ & - & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $206.259 \si{\kelvin} \leq T \leq 343.765 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ref/ref_R-507a_VaporPressure_EoS1_1.pdf}}
+\end{figure}
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

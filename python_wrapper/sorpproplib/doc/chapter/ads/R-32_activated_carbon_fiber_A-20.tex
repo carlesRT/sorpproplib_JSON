@@ -1,0 +1,112 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - R-32 - activated carbon fiber A-20'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon fiber A-20}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon fiber \\
+\textbf{Subtype:} & A-20 \\
+\textbf{Refrigerant:} & R-32 \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Askalany, Ahmed A.; Saha, Bidyut B.; Uddin, Kutub; Miyzaki, Takahiko; Koyama, Shigeru; Srinivasan, Kandadai; Ismail, Ibrahim M. (2013): Adsorption Isotherms and Heat of Adsorption of Difluoromethane on Activated Carbons. In: J. Chem. Eng. Data 58 (10), S. 2828–2834. DOI: 10.1021/je4005678. \\
+\textbf{Comment:} & See original literature: Use low-level interface for calculations as special form of density of adsorpt is required (i.e., rho\_adsorpt = 1.022 * T - rho\_gas(p, T) in kg/m3); inverse functions may not work anymore. \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Diameter of pore & \si{\milli\meter} & 0.000002\\
+Surface area & \si{\square\meter\per\gram} & 2200\\
+Pore volume & \si{\milli\cubic\meter\per\gram} & 1\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.090000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 4.098000000e+03 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 4.580000000e-03 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $18790.0 \si{\pascal} \leq p \leq 1287470.0 \si{\pascal}$,  $298.08 \si{\kelvin} \leq T \leq 347.37 \si{\kelvin}$, and $0.05 \si{\kilogram\per\kilogram} \leq w \leq 0.94 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_R-32_activated_carbon_fiber_A-20_DubininAstakhov_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\item Special refrigerant functions as described by comment and CoolProp
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\item Pressure, absolute, in $\si{\pascal}$ $\,\to\,$ 4000
+\item Temperature, absolute, in $\si{\kelvin}$ $\,\to\,$ 0.1
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 7.66\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

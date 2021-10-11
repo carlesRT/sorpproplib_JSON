@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Methanol - activated carbon BPL'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon BPL}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon \\
+\textbf{Subtype:} & BPL \\
+\textbf{Refrigerant:} & Methanol \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Passos, E.; Meunier, F.; Gianola, J. C. (1986): Thermodynamic performance improvement of an intermittent solar-powered refrigeration cycle using adsorption of methanol on activated carbon. In: Journal of Heat Recovery Systems 6 (3), S. 259–264. DOI: 10.1016/0198-7593(86)90010-X. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+Property data of sorbent and subtype does not exist.
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.450000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 6.700000000e+03 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 4.140000000e-04 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $311.15 \si{\kelvin} \leq T \leq 400.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

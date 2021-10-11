@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - R-410a - activated carbon powder Maxsorb III'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon powder Maxsorb III}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon powder \\
+\textbf{Subtype:} & Maxsorb III \\
+\textbf{Refrigerant:} & R-410a \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Askalany, Ahmed A.; Saha, Bidyut B.; Ismail, Ibrahim M. (2014): Adsorption isotherms and kinetics of HFC410A onto activated carbons. In: Applied Thermal Engineering 72 (2), S. 237–243. DOI: 10.1016/j.applthermaleng.2014.04.075. \\
+\textbf{Comment:} & See original literature: Use low-level interface for calculations as special form of density of adsorpt is required (i.e., rho\_adsorpt = -1.0015 * T - rho\_gas(p, T) in kg/m3); inverse functions may not work anymore. \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Diameter of pellet & \si{\milli\meter} & 0.072\\
+Surface area & \si{\square\meter\per\gram} & 3140\\
+Pore volume & \si{\milli\cubic\meter\per\gram} & 1.7\\
+Solid density & \si{\kilogram\per\cubic\meter} & 2200\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.170000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 4.326960000e+03 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 5.960000000e-03 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $48831.0 \si{\pascal} \leq p \leq 819185.0 \si{\pascal}$,  $283.15 \si{\kelvin} \leq T \leq 323.15 \si{\kelvin}$, and $0.21476 \si{\kilogram\per\kilogram} \leq w \leq 1.81246 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_R-410a_activated_carbon_powder_Maxsorb_III_DubininAstakhov_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\item Special refrigerant functions as described by comment and CoolProp
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from figure
+\item Temperature, absolute, in $\si{\kelvin}$ $\,\to\,$ 0.1
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 142.46\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon powder \\
+\textbf{Subtype:} & Maxsorb III \\
+\textbf{Refrigerant:} & R-410a \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Loh, Wai Soong; Ismail, Azhar Bin; Xi, Baojuan; Ng, Kim Choon; Chun, Won Gee (2012): Adsorption Isotherms and Isosteric Enthalpy of Adsorption for Assorted Refrigerants on Activated Carbons. In: J. Chem. Eng. Data 57 (10), S. 2766–2773. DOI: 10.1021/je3008099. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Diameter of pore & \si{\milli\meter} & 0.000002\\
+Surface area & \si{\square\meter\per\gram} & 3150\\
+Pore volume & \si{\milli\cubic\meter\per\gram} & 1.7\\
+Solid density & \si{\kilogram\per\cubic\meter} & 2200\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & -1.000000000e+00 & $n$ & - & 1.360000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 5.254380000e+03 & $W_0$ & $\si{\kilogram\per\kilogram}$ & 2.070000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $35045.0 \si{\pascal} \leq p \leq 1433809.0 \si{\pascal}$,  $278.15 \si{\kelvin} \leq T \leq 328.15 \si{\kelvin}$, and $0.11303 \si{\kilogram\per\kilogram} \leq w \leq 2.08346 \si{\kilogram\per\kilogram}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/ads/ads_R-410a_activated_carbon_powder_Maxsorb_III_DubininAstakhov_2.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from figure
+\item Pressure, relative, in \% $\,\to\,$ 0 Pa < p < 5 MPa: 0.1% full scale
+\item Temperature, absolute, in $\si{\kelvin}$ $\,\to\,$ 0.15
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 3.62\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

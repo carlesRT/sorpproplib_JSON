@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Adsorption - Methane - activated carbon BPL'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Activated carbon BPL}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DubininAstakhov - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & activated carbon \\
+\textbf{Subtype:} & BPL \\
+\textbf{Refrigerant:} & Methane \\
+\textbf{Equation:} & DubininAstakhov \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Rahman, Kazi Afzalur; Chakraborty, Anutosh; Saha, Bidyut Baran; Ng, Kim Choon (2012): On thermodynamics of methane+carbonaceous materials adsorption. In: International Journal of Heat and Mass Transfer 55 (4), S. 565–573. DOI: 10.1016/j.ijheatmasstransfer.2011.10.056. \\
+\textbf{Comment:} & See original literature: Use low-level interface for calculations as special form of density of adsorpt (i.e., 1/rho\_adsorpt = 2.3677e-3 * exp(0.0043* (T - 111.67)) in kg/m3) and vapor pressure (i.e., p\_sat = p\_crit *(T / T\_crit)\^2 in Pa if T > T\_crit) are required; inverse functions may not work anymore. \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Properties of sorbent:}
+\newline
+%
+\begin{longtable}[l]{lll}
+\toprule
+\addlinespace
+\textbf{Property} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+Surface area & \si{\square\meter\per\gram} & 1150\\
+Pore volume & \si{\milli\cubic\meter\per\gram} & 0.43\\
+
+\addlinespace\end{longtable}
+
+\textbf{Equation and parameters:}
+\newline
+%
+Loading $w$ in $\si{\kilogram\per\kilogram}$ is calculated depending on pressure $p$ in $\si{\pascal}$, temperature $T$ in $\si{\kelvin}$, and vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ by:
+%
+\begin{equation*}
+\begin{split}
+w &=& \begin{cases} W \rho_\mathrm{sat}^{\mathrm{liq}} & \quad \text{if flag} \geq 0 \\ W & \quad \text{else} \end{cases} & \quad\text{, and} \\
+W &=& W_0 \exp \left( - \left( \nicefrac{A}{E} \right) ^{n} \right) & \quad\text{, and} \\
+A &=& R T \ln \left( \nicefrac{p_\mathrm{sat}}{p} \right) & \quad\text{.} \\
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $n$ & - & 1.540000000e+00 \\
+$E$ & $\si{\joule\per\mole}$ & 7.040000000e+03 & $W_0$ & $\si{\cubic\meter\per\kilogram}$ & 3.600000000e-04 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $273.0 \si{\kelvin} \leq T \leq 333.0 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No experimental data exists. Thus, isotherm is not visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,293 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Refrigerants - R-227ea '
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R-227ea }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturated Liquid Density - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-227ea  \\
+\textbf{Equation:} & SaturatedLiquidDensity\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, Eric W.; Span, Roland (2015): Thermodynamic Properties of R-227ea, R-365mfc, R-115, and R-13I1. In: J. Chem. Eng. Data 60 (12), S. 3745–3758. DOI: 10.1021/acs.jced.5b00684. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Saturated liquid density $\rho_\mathrm{sat}^\mathrm{liq}$ in $\si{\kilogram\per\cubic\meter}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+\rho_\mathrm{sat}^\mathrm{liq} &=& \begin{cases} \rho_\mathrm{ref} \exp(\Omega) & \quad \text{if flag } < 0 \\ \rho_\mathrm{ref} \Omega & \quad \text{else} \end{cases} & \quad\text{, with} \\
+\Omega &=& \sum_{i=1}^{8} a_i \xi^{b_i} & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+flag & - & 1.000000000e+00 & $b_4$ & - & 4.400000000e-01 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.749000000e+02 & $a_5$ & - & 2.078400000e+00 \\
+$\rho_\mathrm{ref}$ & $\si{\kilogram\per\cubic\meter}$ & 5.942548500e+02 & $b_5$ & - & 6.000000000e-01 \\
+$a_1$ & - & 1.000000000e+00 & $a_6$ & - & 2.170100000e-01 \\
+$b_1$ & - & 0.000000000e+00 & $b_6$ & - & 2.750000000e+00 \\
+$a_2$ & - & -2.992600000e-01 & $a_7$ & - & 0.000000000e+00 \\
+$b_2$ & - & 1.500000000e-01 & $b_7$ & - & 0.000000000e+00 \\
+$a_3$ & - & 2.802500000e+00 & $a_8$ & - & 0.000000000e+00 \\
+$b_3$ & - & 3.000000000e-01 & $b_8$ & - & 0.000000000e+00 \\
+$a_4$ & - & -1.960200000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $146.35 \si{\kelvin} \leq T \leq 374.9 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'R-227ea '. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoS1 - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-227ea  \\
+\textbf{Equation:} & VaporPressure\_EoS1 \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, Eric W.; Span, Roland (2015): Thermodynamic Properties of R-227ea, R-365mfc, R-115, and R-13I1. In: J. Chem. Eng. Data 60 (12), S. 3745–3758. DOI: 10.1021/acs.jced.5b00684. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ by:
+%
+\begin{equation*}
+\begin{split}
+p_\mathrm{sat} &=& p_\mathrm{crit} \exp \left( \nicefrac{1}{\theta} \sum_{i=1}^{7} a_i \xi^{b_i} \right) & \quad\text{, and} \\
+\xi &=& 1 - \theta & \quad\text{, and} \\
+\theta &=& \nicefrac{T}{T_\mathrm{crit}} & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.749000000e+02 & $a_4$ & - & -5.744400000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 2.925000000e+06 & $b_4$ & - & 4.800000000e+00 \\
+$a_1$ & - & -7.796100000e+00 & $a_5$ & - & 2.398200000e+00 \\
+$b_1$ & - & 1.000000000e+00 & $b_5$ & - & 6.200000000e+00 \\
+$a_2$ & - & 2.136600000e+00 & $a_6$ & - & 0.000000000e+00 \\
+$b_2$ & - & 1.500000000e+00 & $b_6$ & - & 0.000000000e+00 \\
+$a_3$ & - & -2.602300000e+00 & $a_7$ & - & 0.000000000e+00 \\
+$b_3$ & - & 2.200000000e+00 & $b_7$ & - & 0.000000000e+00 \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $146.35 \si{\kelvin} \leq T \leq 374.9 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'R-227ea '. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-227ea  \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right)} & \quad\text{, and} \\
+a &=& \frac{1}{9 \left(2^{\nicefrac{1}{3}} - 1\right)} \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.08664 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.48508 + 1.55171 \omega - 0.15613 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & -5.000000000e+00 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.749000000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 2.925000000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & 3.570000000e-01 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $168.3025 \si{\kelvin} \leq T \leq 318.665 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'R-227ea '. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vapor Pressure - EoSCubic - ID 2}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Name:} & R-227ea  \\
+\textbf{Equation:} & VaporPressure\_EoSCubic \\
+\textbf{ID:} & 2 \\
+\textbf{Reference:} & Lemmon, E. W.; Bell, I. H.; Huber, M. L.; McLinden, M. O. (2018): NIST Standard Reference Database 23. Reference Fluid Thermodynamic and Transport Properties-REFPROP, Version 10.0, National Institute of Standards and Technology. Online: https://www.nist.gov/srd/refprop. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state is given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+a &=& 0.45724 \frac{\left(R T_\mathrm{crit} \right)^2}{p_\mathrm{crit}} \alpha & \quad\text{, and} \\
+b &=& 0.07780 R \frac{T_\mathrm{crit}}{p_\mathrm{crit}} & \quad\text{, and} \\
+\alpha &=& \left(1 + \kappa \left(1 - \sqrt(\nicefrac{T}{T_\mathrm{crit}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa &=& 0.37464 + 1.54226 \omega - 0.26992 \omega^2 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & 1.000000000e+01 & $\beta_0$ & - & 0.000000000e+00 \\
+$T_\mathrm{crit}$ & $\si{\kelvin}$ & 3.749000000e+02 & $\beta_1$ & - & 0.000000000e+00 \\
+$p_\mathrm{crit}$ & $\si{\pascal}$ & 2.925000000e+06 & $\beta_2$ & - & 0.000000000e+00 \\
+$\omega$ & - & 3.570000000e-01 & $\beta_3$ & - & 0.000000000e+00 \\
+$\kappa_1$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $168.3025 \si{\kelvin} \leq T \leq 318.665 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\newline
+No adsorption or absorption working pair exists, which uses refrigerant 'R-227ea '. Thus, data cannot be visualized!
+%
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

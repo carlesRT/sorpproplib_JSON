@@ -1,0 +1,412 @@
+###################
+# Specify project #
+###################
+#
+# Name of project
+#
+PROJECT = sorpPropLib
+
+
+# Specify build release:
+#
+# YES: Disable debugging information and optimize code
+# NO: Debugging information
+#
+BUILD_RELEASE = YES
+
+
+# Specifiy system
+#
+# LINUX: Linux system
+# OTHER: Other system
+#
+TYPE_SYSTEM = OTHER
+
+# Names of sources
+#
+SOURCES_LIB = $(addprefix $(DIR_SRC)/,\
+	json_interface.c\
+	cJSON.c\
+	adsorption.c\
+	adsorption_dualSiteSips.c\
+	adsorption_langmuir.c\
+	adsorption_toth.c\
+	adsorption_freundlich.c\
+	adsorption_dubininAstakhov.c\
+	adsorption_dubininArctan1.c\
+	absorption.c\
+	absorption_duehring.c\
+	absorption_antoine.c\
+	absorption_activity_wilson.c\
+	absorption_activity_tsubokakatayama.c\
+	absorption_activity_heil.c\
+	absorption_activity_wangchao.c\
+	absorption_activity_nrtl.c\
+	absorption_activity_uniquac.c\
+	absorption_activity_floryhuggins.c\
+	absorption_mixing.c\
+	refrigerant.c\
+	refrigerant_vaporPressure.c\
+	refrigerant_saturatedLiquidDensity.c\
+	refrigerant_cubicEoS.c)
+
+SOURCES = $(SOURCES_LIB) $(DIR_SRC)/workingPair.c
+
+
+# Names of objects generated automatically:
+#
+# 1) Substitute path "src" with "obj"
+# 2) Substitute extension ".c" with ".o"
+#
+TMP_OBJECTS_LIB = $(subst src,obj,$(SOURCES_LIB))
+OBJECTS_LIB = $(TMP_OBJECTS_LIB:%.c=%.o)
+
+TMP_OBJECTS = $(subst src,obj,$(SOURCES))
+OBJECTS = $(TMP_OBJECTS:%.c=%.o)
+
+
+
+
+#################
+# Specify paths #
+#################
+#
+# Top directory
+#
+DIR_TOP 	= $(CURDIR)
+
+
+# Subdirectories
+#
+DIR_INCL 	= $(DIR_TOP)/incl
+DIR_SRC 	= $(DIR_TOP)/src
+DIR_OBJ 	= $(DIR_TOP)/obj
+DIR_LIB 	= $(DIR_TOP)/lib
+DIR_TEST 	= $(DIR_TOP)/test
+
+
+
+
+####################
+# Specify programs #
+####################
+#
+# C compiler
+#
+CC		= gcc
+
+
+# Library
+#
+LIBRARY	= ar
+
+
+
+
+###########################
+# Specify program options #
+###########################
+#
+# C compiler options
+#
+ifeq ($(TYPE_SYSTEM),LINUX)
+FLAGS_CC 		= -fPIC -c
+else
+FLAGS_CC 		= -c
+endif
+
+FLAGS_CC_OBJ	= $(FLAGS_CC_BUILD_DEBUG) -I $(DIR_INCL)/ -o $(DIR_OBJ)/
+
+
+# Library options
+#
+FLAGS_LIBRARY_STATIC	= -rcs $(DIR_LIB)/lib$(PROJECT)_static.a
+
+ifeq ($(TYPE_SYSTEM),LINUX)
+FLAGS_LIBRARY_DYNAMIC	= -shared -o $(DIR_LIB)/lib$(PROJECT).a
+EXTENSION_LIBRARY = a
+else
+FLAGS_LIBRARY_DYNAMIC	= -shared -o $(DIR_LIB)/lib$(PROJECT).dll\
+	-Wl,--out-implib,$(DIR_LIB)/lib$(PROJECT).a
+EXTENSION_LIBRARY = dll
+endif
+
+
+# Program options depending on build
+# or debug release /Zi
+#
+ifeq ($(BUILD_RELEASE),YES)
+FLAGS_CC_BUILD_DEBUG = -Ofast
+FLAGS_LINK_BUILD_DEBUG =
+else
+FLAGS_CC_BUILD_DEBUG = -Og -Wall -Wextra -Werror
+FLAGS_LINK_BUILD_DEBUG = /DEBUG
+endif
+
+
+# Program options depending on system
+#
+ifeq ($(TYPE_SYSTEM),LINUX)
+LINUX = -lm
+else
+LINUX =
+endif
+
+
+
+##########################
+# Specify explicit rules #
+##########################
+#
+# Test all files
+#
+all: test_refrigerants\
+	test_adsorption\
+	test_absorption\
+	test_workingPair\
+	test_libraries
+
+
+# Execute test scripts for refrigerants
+#
+test_refrigerants: test_refrigerant_vaporPressure.exe\
+	test_refrigerant_saturatedLiquidDensity.exe\
+	test_refrigerant.exe
+
+	$(DIR_TEST)/test_refrigerant_vaporPressure.exe
+	$(DIR_TEST)/test_refrigerant_saturatedLiquidDensity.exe
+	$(DIR_TEST)/test_refrigerant.exe
+
+
+# Execute test scripts for adsorption
+#
+test_adsorption: test_adsorption_dualSiteSips.exe\
+	test_adsorption_langmuir.exe\
+	test_adsorption_toth.exe\
+	test_adsorption_freundlich.exe\
+	test_adsorption_dubininAstakhov.exe\
+	test_adsorption_dubininArctan1.exe\
+	test_adsorption.exe
+
+	$(DIR_TEST)/test_adsorption_dualSiteSips.exe
+	$(DIR_TEST)/test_adsorption_langmuir.exe
+	$(DIR_TEST)/test_adsorption_toth.exe
+	$(DIR_TEST)/test_adsorption_freundlich.exe
+	$(DIR_TEST)/test_adsorption_dubininAstakhov.exe
+	$(DIR_TEST)/test_adsorption_dubininArctan1.exe
+	$(DIR_TEST)/test_adsorption.exe
+
+
+# Execute test scripts for absorption
+#
+test_absorption: test_absorption_duehring.exe\
+	test_absorption_antoine.exe\
+	test_absorption_activity_wilson.exe\
+	test_absorption_activity_tsubokakatayama.exe\
+	test_absorption_activity_heil.exe\
+	test_absorption_activity_wangchao.exe\
+	test_absorption_activity_nrtl.exe\
+	test_absorption_activity_uniquac.exe\
+	test_absorption_activity_floryhuggins.exe\
+	test_absorption_mixing.exe\
+	test_absorption.exe
+
+	$(DIR_TEST)/test_absorption_duehring.exe
+	$(DIR_TEST)/test_absorption_antoine.exe
+	$(DIR_TEST)/test_absorption_activity_wilson.exe
+	$(DIR_TEST)/test_absorption_activity_tsubokakatayama.exe
+	$(DIR_TEST)/test_absorption_activity_heil.exe
+	$(DIR_TEST)/test_absorption_activity_wangchao.exe
+	$(DIR_TEST)/test_absorption_activity_nrtl.exe
+	$(DIR_TEST)/test_absorption_activity_uniquac.exe
+	$(DIR_TEST)/test_absorption_activity_floryhuggins.exe
+	$(DIR_TEST)/test_absorption_mixing.exe
+	$(DIR_TEST)/test_absorption.exe
+
+
+# Execute test scripts for refrigerants
+#
+test_workingPair: $(DIR_SRC)/cJSON.c\
+	test_workingPair.exe
+
+	$(DIR_TEST)/test_workingPair.exe
+
+
+# Execute test scripts for libraries
+#
+test_libraries: $(DIR_SRC)/cJSON.c\
+	test_workingPair_staticLibrary.exe\
+	test_workingPair_DLL.exe
+
+	$(DIR_TEST)/test_workingPair_staticLibrary.exe
+	cp "$(DIR_LIB)/lib$(PROJECT).$(EXTENSION_LIBRARY)" "$(DIR_TOP)/lib$(PROJECT).$(EXTENSION_LIBRARY)"
+	$(DIR_TEST)/test_workingPair_DLL.exe
+	rm "$(DIR_TOP)/lib$(PROJECT).$(EXTENSION_LIBRARY)"
+
+
+# Update external libraries:
+# 1.) cJSON
+#
+$(DIR_SRC)/cJSON.c: $(DIR_LIB)/cJSON/cJSON.c
+	cp "$(DIR_LIB)/cJSON/cJSON.h" "$(DIR_INCL)/cJSON.h"
+	cp "$(DIR_LIB)/cJSON/cJSON.c" "$(DIR_SRC)/cJSON.c"
+
+
+# Create internal libraries:
+# 0.) Create libraries
+# 1.) static
+# 2.) dynamic
+#
+create_libraries: $(DIR_LIB)/lib$(PROJECT)_static.a
+
+
+$(DIR_LIB)/lib$(PROJECT)_static.a: $(OBJECTS)
+	$(LIBRARY) $(FLAGS_LIBRARY_STATIC) $?
+
+$(DIR_LIB)/lib$(PROJECT).dll: $(DIR_OBJ)/workingPair_dll.o $(OBJECTS_LIB)
+	$(CC) $(FLAGS_LIBRARY_DYNAMIC) $?
+
+$(DIR_OBJ)/workingPair_dll.o: $(DIR_SRC)/workingPair.c
+	$(CC) $(FLAGS_CC) -D DLL_EXPORTS $< $(FLAGS_CC_OBJ)$(@F)
+
+
+# Create test scripts
+#
+test_refrigerant_vaporPressure.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant_vaporPressure.o refrigerant_vaporPressure.o\
+	refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_refrigerant_saturatedLiquidDensity.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant_saturatedLiquidDensity.o\
+	refrigerant_saturatedLiquidDensity.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_refrigerant.exe: $(addprefix $(DIR_OBJ)/,\
+	test_refrigerant.o refrigerant.o\
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+
+test_adsorption_dualSiteSips.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_dualSiteSips.o adsorption_dualSiteSips.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption_langmuir.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_langmuir.o adsorption_langmuir.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption_toth.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_toth.o adsorption_toth.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption_freundlich.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_freundlich.o adsorption_freundlich.o\
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption_dubininAstakhov.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_dubininAstakhov.o adsorption_dubininAstakhov.o\
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption_dubininArctan1.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption_dubininArctan1.o adsorption_dubininArctan1.o\
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_adsorption.exe: $(addprefix $(DIR_OBJ)/,\
+	test_adsorption.o adsorption.o\
+	adsorption_dualSiteSips.o adsorption_langmuir.o adsorption_toth.o\
+	adsorption_freundlich.o adsorption_dubininAstakhov.o\
+	adsorption_dubininArctan1.o\
+	refrigerant_vaporPressure.o refrigerant_saturatedLiquidDensity.o\
+	refrigerant.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+
+test_absorption_duehring.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_duehring.o absorption_duehring.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_antoine.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_antoine.o absorption_antoine.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_wilson.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_wilson.o absorption_activity_wilson.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_tsubokakatayama.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_tsubokakatayama.o absorption_activity_tsubokakatayama.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_heil.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_heil.o absorption_activity_heil.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_wangchao.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_wangchao.o absorption_activity_wangchao.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_nrtl.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_nrtl.o absorption_activity_nrtl.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_uniquac.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_uniquac.o absorption_activity_uniquac.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_activity_floryhuggins.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_activity_floryhuggins.o absorption_activity_floryhuggins.o\
+	refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption_mixing.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption_mixing.o absorption_mixing.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_absorption.exe: $(addprefix $(DIR_OBJ)/,\
+	test_absorption.o absorption.o absorption_duehring.o\
+	absorption_antoine.o absorption_activity_wilson.o \
+	absorption_activity_nrtl.o absorption_activity_wangchao.o\
+	absorption_activity_uniquac.o absorption_activity_floryhuggins.o\
+	absorption_activity_heil.o absorption_activity_tsubokakatayama.o\
+	absorption_mixing.o refrigerant_vaporPressure.o refrigerant_cubicEoS.o)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+
+test_workingPair.exe: $(DIR_OBJ)/test_workingPair.o $(OBJECTS)
+	$(CC) $? -o $(DIR_TEST)/$(@F) $(LINUX)
+
+
+test_workingPair_staticLibrary.exe: $(DIR_OBJ)/test_workingPair_staticLibrary.o\
+	$(DIR_LIB)/lib$(PROJECT)_static.a
+	$(CC) $< -L $(DIR_LIB) -l $(PROJECT)_static -o $(DIR_TEST)/$(@F) $(LINUX)
+
+test_workingPair_DLL.exe: $(DIR_OBJ)/test_workingPair_DLL.o\
+	$(DIR_LIB)/lib$(PROJECT).dll
+	$(CC) $< -L $(DIR_LIB) -l $(PROJECT) -o $(DIR_TEST)/$(@F) $(LINUX)
+
+
+
+
+###########################
+# Specify inference rules #
+###########################
+#
+# Update object-files that
+# depend on source files
+#
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
+	$(CC) $(FLAGS_CC) $< $(FLAGS_CC_OBJ)$(@F)

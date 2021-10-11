@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter 'Absorption - R-134a - lubricant BAB15'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lubricant BAB15}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{MixingRule - ID 1}
+%
+\begin{tabular}[l]{|lp{11.5cm}|}
+\hline
+\addlinespace
+
+\textbf{Sorbent:} & lubricant \\
+\textbf{Subtype:} & BAB15 \\
+\textbf{Refrigerant:} & R-134a \\
+\textbf{Equation:} & MixingRule \\
+\textbf{ID:} & 1 \\
+\textbf{Reference:} & Takigawa, Katsuya; Sandler, Stanley I.; Yokozeki, Akimichi (2002): Solubility and viscosity of refrigerant/lubricant mixtures. Hydrofluorocarbon/alkylbenzene systems. In: International Journal of Refrigeration 25 (8), S. 1014–1024. DOI: 10.1016/S0140-7007(02)00025-7. \\
+\textbf{Comment:} & None \\
+
+\addlinespace
+\hline
+\end{tabular}
+\newline
+
+\textbf{Equation and parameters:}
+\newline
+%
+Vapor pressure $p_\mathrm{sat}$ in $\si{\pascal}$ is calculated depending on temperature $T$ in $\si{\kelvin}$ and molar volume v in $\si{\mole\per\cubic\meter}$ by using cubic equation of state. For this purpose, molar volumes of liquid and vapor phase are changed iteratively until fugacity coefficients of vapor and liquid phase are equal. Cubic equation of state and mixing rules are given by:
+\begin{equation*}
+\begin{split}
+p &=& R \frac{T}{v - b} - \frac{a}{v \left(v + b\right) + b \left(v - b\right)} & \quad\text{, and} \\
+a &=& z_1^2 a_1 + 2 z_1 z_2 a_{12} + 2_2^2 a_2 & \quad\text{, and} \\
+b &=& z_1 b_1 + z_2 b_2 & \quad\text{, and} \\
+a_{12} &=& \left( a_1 a_2 \right) ^{0.5} \left(1 - k_{12} \right) & \quad\text{, and} \\
+z_j &=& x_j \textrm { or } y_j \textrm{ depending on phase} & \quad\text{, and} \\
+a_j &=& 0.45724 \frac{\left(R T_{\mathrm{crit},j} \right)^2}{p_{\mathrm{crit},j}} \alpha_j & \quad\text{, and} \\
+b_j &=& 0.07780 R \frac{T_{\mathrm{crit},j}}{p_{\mathrm{crit},j}} & \quad\text{, and} \\
+\alpha_j &=& \left(1 + \kappa_j \left(1 - \sqrt(\nicefrac{T}{T_{\mathrm{crit},j}}) \right) \right)^2 & \quad\text{, and} \\
+\kappa_j &=& \kappa_{0,j} + \kappa_{1,j} \left(1 + \sqrt(\nicefrac{T}{T_{\mathrm{crit},j}}) \right) \left(0.7 - \nicefrac{T}{T_{\mathrm{crit},j}}\right)  & \quad\text{, and} \\
+\kappa_{0,j} &=& 0.378893 + 1.4897153 \omega_j - 0.17131848 \omega_j^2 + 0.0196554 \omega_j^3 & \quad\text{.}
+\end{split}
+\end{equation*}
+%
+The parameters of the equation are:
+%
+\begin{longtable}[l]{lll|lll}
+\toprule
+\addlinespace
+\textbf{Par.} & \textbf{Unit} & \textbf{Value} &	\textbf{Par.} & \textbf{Unit} & \textbf{Value} \\
+\addlinespace
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\addlinespace
+
+EoS & - & 2.000000000e+01 & Mix & - & -5.000000000e+00 \\
+$T_\mathrm{crit,1}$ & $\si{\kelvin}$ & 3.742100000e+02 & $T_\mathrm{crit,2}$ & $\si{\kelvin}$ & 7.633500000e+02 \\
+$p_\mathrm{crit,1}$ & $\si{\pascal}$ & 4.059300000e+06 & $p_\mathrm{crit,2}$ & $\si{\pascal}$ & 1.199000000e+06 \\
+$\omega_{1}$ & - & 3.268400000e-01 & $\omega_{2}$ & - & 7.160750000e-01 \\
+$\kappa_{1,1}$ & - & -7.700000000e-03 & $\kappa_{1,2}$ & - & -1.331000000e-01 \\
+$\beta_{0,1}$ & - & 0.000000000e+00 & $\beta_{0,2}$ & - & 0.000000000e+00 \\
+$\beta_{1,1}$ & - & 0.000000000e+00 & $\beta_{1,2}$ & - & 0.000000000e+00 \\
+$\beta_{2,1}$ & - & 0.000000000e+00 & $\beta_{2,2}$ & - & 0.000000000e+00 \\
+$\beta_{3,1}$ & - & 0.000000000e+00 & $\beta_{3,2}$ & - & 0.000000000e+00 \\
+$k_{12}$ & - & 1.496000000e-01 & $m$ & - & 0.000000000e+00 \\
+$l_{12}$ & - & 0.000000000e+00 & $l_{21}$ & - & 0.000000000e+00 \\
+$t$ & - & 0.000000000e+00 & & & \\
+
+\addlinespace\end{longtable}
+
+\textbf{Validity:}
+\newline
+Equation is approximately valid for $313.15 \si{\kelvin} \leq T \leq 353.15 \si{\kelvin}$.
+\newline
+
+\textbf{Visualization:}
+%
+\begin{figure}[!htp]
+{\noindent\includegraphics[height=10cm, keepaspectratio]{figs/abs/abs_R-134a_lubricant_BAB15_MixingRule_1.pdf}}
+\end{figure}
+%
+
+To generate the figure, the following refrigerant functions were selected:
+\begin{itemize}
+\item Vapor pressure: VaporPressure\_EoS1 - ID 1
+\item Saturated liquid density: SaturatedLiquidDensity\_EoS1 - ID 1
+\end{itemize}
+
+The uncertainity of the experimental data is:
+\begin{itemize}
+\item Data source $\,\to\,$ Data was taken from table
+\item Temperature, absolute, in $\si{\kelvin}$ $\,\to\,$ 0.2
+\end{itemize}
+
+The mean absolute percentage error (MAPE) between the experimental and calculated data results in 7.78\%.
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

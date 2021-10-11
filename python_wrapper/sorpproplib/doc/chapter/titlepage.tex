@@ -1,0 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use other geoemetry than for main document
+%
+\newgeometry{top=3mm, left=25mm, right=5mm, bottom=30mm, headsep=5mm, footskip=12mm}
+
+% Start title page
+%
+\begin{titlepage}
+	% Add some space
+	%
+	\begin{minipage}[t]{0.25\textwidth}\end{minipage}\hfill
+	\vspace{11em}	
+
+	% Add text
+	%
+	\begin{minipage}{0.95\textwidth}\begin{center}\fontsize{24}{28}\selectfont \textbf{Sorption Properties Library\\ (SorpPropLib)}\end{center}\end{minipage}
+	
+	\vspace{4.5em}	
+	
+	\begin{minipage}{0.95\textwidth}\begin{center}\fontsize{18}{22}\selectfont \textbf{Manual}\end{center}\end{minipage}
+	
+\end{titlepage}
+
+% Use geometry as defined in header
+%
+\restoregeometry
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
