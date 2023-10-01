@@ -7,7 +7,7 @@ model Test_WPair_absorption_activity "Test model that creates an external absorp
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 
@@ -45,31 +45,31 @@ model Test_WPair_absorption_activity "Test model that creates an external absorp
   //
   // Definition of inputs
   //
-  Modelica.SIunits.Pressure p = 5e5 +150*time
+  Modelica.Units.SI.Pressure p = 5e5 +150*time
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T = 333.15 + 0.25*time
+  Modelica.Units.SI.Temperature T = 333.15 + 0.25*time
     "Equilibrium temperature";
 
   //
   // Definition of variables for refrigerant functions
   //
-  Modelica.SIunits.Pressure p_sat
+  Modelica.Units.SI.Pressure p_sat
     "Vapor pressure";
 
   //
   // Definition of variables for adsorption functions that are always defined
   //
-  Modelica.SIunits.MoleFraction x
+  Modelica.Units.SI.MoleFraction x
     "Equilibrium mole fraction of refrigerant in liquid phase";
-  Modelica.SIunits.Pressure p_inv
+  Modelica.Units.SI.Pressure p_inv
     "Equilibrium pressure";
 
   Real g(unit="1")
     "Activity coefficient of first component (i.e., refrigerant)";
 
-  Modelica.SIunits.MoleFraction x_vap
+  Modelica.Units.SI.MoleFraction x_vap
     "Equilibrium mole fraction of refrigerant in liquid phase";
-  Modelica.SIunits.Pressure p_inv_vap
+  Modelica.Units.SI.Pressure p_inv_vap
     "Equilibrium pressure";
 
 equation

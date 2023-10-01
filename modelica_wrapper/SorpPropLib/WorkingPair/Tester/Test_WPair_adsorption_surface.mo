@@ -7,7 +7,7 @@ model Test_WPair_adsorption_surface
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 

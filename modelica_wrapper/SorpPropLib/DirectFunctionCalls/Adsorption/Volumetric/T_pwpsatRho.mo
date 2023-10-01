@@ -6,23 +6,23 @@ function T_pwpsatRho "Function that calculates equilibrium temperature depending
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Pressure p
+  input Modelica.Units.SI.Pressure p
     "Equilibrium pressure"
     annotation(Dialog(tab="General", group="Inputs"));
   input Real w(unit="kg/kg")
     "Equilibrium loading"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Pressure p_sat
+  input Modelica.Units.SI.Pressure p_sat
     "Vapor pressure"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Density d_liq
+  input Modelica.Units.SI.Density d_liq
     "Saturated liquid density (i.e., density of adsorpt)"
     annotation(Dialog(tab="General", group="Inputs"));
 
   //
   // Definition of outputs
   //
-  output Modelica.SIunits.Temperature T
+  output Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation (Dialog(tab="General", group = "Inputs", enable = false));
 

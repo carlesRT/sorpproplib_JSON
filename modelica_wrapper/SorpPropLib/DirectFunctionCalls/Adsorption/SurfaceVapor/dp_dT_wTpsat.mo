@@ -9,10 +9,10 @@ function dp_dT_wTpsat "Function that calculates partial derivative of equilibriu
   input Real w(unit="kg/kg")
     "Equilibrium loading"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Pressure p_sat
+  input Modelica.Units.SI.Pressure p_sat
     "Vapor pressure"
     annotation(Dialog(tab="General", group="Inputs"));
   input Real dp_sat_dT(unit = "Pa/K")

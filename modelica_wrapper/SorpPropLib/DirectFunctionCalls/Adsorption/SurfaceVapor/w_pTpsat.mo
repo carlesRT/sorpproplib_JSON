@@ -7,13 +7,13 @@ function w_pTpsat
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Pressure p
+  input Modelica.Units.SI.Pressure p
     "Equilibrium pressure"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Pressure p_sat
+  input Modelica.Units.SI.Pressure p_sat
     "Vapor pressure"
     annotation(Dialog(tab="General", group="Inputs"));
 

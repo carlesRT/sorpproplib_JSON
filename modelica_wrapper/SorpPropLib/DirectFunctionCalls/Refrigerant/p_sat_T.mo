@@ -6,14 +6,14 @@ function p_sat_T
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Temperature T_sat
+  input Modelica.Units.SI.Temperature T_sat
     "Saturation temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 
   //
   // Definition of outputs
   //
-  output Modelica.SIunits.Pressure p_sat
+  output Modelica.Units.SI.Pressure p_sat
     "Vapor pressure"
     annotation (Dialog(tab="General", group = "Inputs", enable = false));
 

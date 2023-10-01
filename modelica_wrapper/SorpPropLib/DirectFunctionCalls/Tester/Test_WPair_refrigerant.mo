@@ -8,7 +8,7 @@ model Test_WPair_refrigerant
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 
@@ -46,18 +46,18 @@ model Test_WPair_refrigerant
   //
   // Definition of inputs
   //
-  Modelica.SIunits.Temperature T_sat = 303.15 + 1*time
+  Modelica.Units.SI.Temperature T_sat = 303.15 + 1*time
     "Saturation temperature";
 
   //
   // Definition of variables for refrigerant functions
   //
-  Modelica.SIunits.Pressure p_sat
+  Modelica.Units.SI.Pressure p_sat
     "Vapor pressure";
-  Modelica.SIunits.Density d_liq
+  Modelica.Units.SI.Density d_liq
     "Saturated liquid density";
 
-  Modelica.SIunits.Temperature T_sat_inv
+  Modelica.Units.SI.Temperature T_sat_inv
     "Saturation temperature";
 
   Real dp_dT_sat(unit = "Pa/K")
@@ -69,7 +69,7 @@ equation
   //
   // Call external functions to calculate properties of refrigerant
   //
-  p_sat = Refrigerant.p_sat_T(
+  p_sat = SorpPropLib.DirectFunctionCalls.Refrigerant.p_sat_T(
       path_db,
       name_sorbent,
       name_sorbent_sub_type,
@@ -82,7 +82,7 @@ equation
       func_saturated_liquid_density_ID,
       T_sat)
     "Calculate vapor pressure";
-  d_liq = Refrigerant.rho_liq_T(
+  d_liq = SorpPropLib.DirectFunctionCalls.Refrigerant.rho_liq_T(
       path_db,
       name_sorbent,
       name_sorbent_sub_type,
@@ -97,7 +97,7 @@ equation
     "Calculate saturated liquid density";
 
 
-  T_sat_inv = Refrigerant.T_sat_p(
+  T_sat_inv = SorpPropLib.DirectFunctionCalls.Refrigerant.T_sat_p(
       path_db,
       name_sorbent,
       name_sorbent_sub_type,
@@ -110,7 +110,7 @@ equation
       func_saturated_liquid_density_ID,
       p_sat) "Calculate saturation temperature";
 
-  dp_dT_sat = Refrigerant.dp_dT_sat_T(
+  dp_dT_sat = SorpPropLib.DirectFunctionCalls.Refrigerant.dp_dT_sat_T(
       path_db,
       name_sorbent,
       name_sorbent_sub_type,
@@ -122,7 +122,7 @@ equation
       func_saturated_liquid_density,
       func_saturated_liquid_density_ID,
       T_sat) "Calculate derivative of pressure wrt. temperature";
-  drho_liq_dT_sat = Refrigerant.drho_liq_dT_sat_T(
+  drho_liq_dT_sat = SorpPropLib.DirectFunctionCalls.Refrigerant.drho_liq_dT_sat_T(
       path_db,
       name_sorbent,
       name_sorbent_sub_type,

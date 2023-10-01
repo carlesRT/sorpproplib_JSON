@@ -8,7 +8,7 @@ model Test_WPair_absorption_conventional
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 
@@ -46,9 +46,9 @@ model Test_WPair_absorption_conventional
   //
   // Definition of inputs
   //
-  Modelica.SIunits.Pressure p = 0.25e5 -150*time
+  Modelica.Units.SI.Pressure p = 0.25e5 -150*time
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T = 373.15 + 0.25*time
+  Modelica.Units.SI.Temperature T = 373.15 + 0.25*time
     "Equilibrium temperature";
 
   //
@@ -56,9 +56,9 @@ model Test_WPair_absorption_conventional
   //
   Real X(unit="kg/kg")
     "Equilibrium concentration";
-  Modelica.SIunits.Pressure p_inv
+  Modelica.Units.SI.Pressure p_inv
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T_inv
+  Modelica.Units.SI.Temperature T_inv
     "Equilibrium temperature";
 
   Real dX_dp(unit="kg/(kg.Pa)")

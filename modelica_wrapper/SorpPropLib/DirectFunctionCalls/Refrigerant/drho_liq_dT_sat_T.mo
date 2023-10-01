@@ -7,7 +7,7 @@ function drho_liq_dT_sat_T
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Temperature T_sat
+  input Modelica.Units.SI.Temperature T_sat
     "Saturation temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 

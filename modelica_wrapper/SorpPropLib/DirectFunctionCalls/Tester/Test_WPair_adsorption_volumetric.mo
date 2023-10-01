@@ -8,7 +8,7 @@ model Test_WPair_adsorption_volumetric
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 
@@ -46,22 +46,22 @@ model Test_WPair_adsorption_volumetric
   //
   // Definition of inputs
   //
-  Modelica.SIunits.Pressure p = 1000 + 250*time
+  Modelica.Units.SI.Pressure p = 1000 + 250*time
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T = 303.15 + 1*time
+  Modelica.Units.SI.Temperature T = 303.15 + 1*time
     "Equilibrium temperature";
-  Modelica.SIunits.MolarEnergy A = Modelica.Constants.R * T * log(p_sat/p)
+  Modelica.Units.SI.MolarEnergy A = Modelica.Constants.R * T * log(p_sat/p)
     "Adsorption potential";
 
   //
   // Definition of variables for refrigerant functions
   //
-  Modelica.SIunits.Pressure p_sat
+  Modelica.Units.SI.Pressure p_sat
     "Vapor pressure";
   Real dp_dT_sat(unit = "Pa/K")
     "Derivative of pressure wrt. temperature";
 
-  Modelica.SIunits.Density d_liq
+  Modelica.Units.SI.Density d_liq
     "Saturated liquid density";
   Real drho_liq_dT_sat(unit = "kg/(m3.K)")
     "Derivative of saturated liquid density wrt. temperature";
@@ -71,9 +71,9 @@ model Test_WPair_adsorption_volumetric
   //
   Real w(unit="kg/kg")
     "Equilibrium loading";
-  Modelica.SIunits.Pressure p_inv
+  Modelica.Units.SI.Pressure p_inv
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T_inv
+  Modelica.Units.SI.Temperature T_inv
     "Equilibrium temperature";
 
   Real dw_dp(unit="kg/(kg.Pa)")
@@ -94,7 +94,7 @@ model Test_WPair_adsorption_volumetric
   //
   Real W(unit="m3/kg")
     "Volumetric loading";
-  Modelica.SIunits.MolarEnergy A_inv
+  Modelica.Units.SI.MolarEnergy A_inv
     "Adsorption potential";
 
   Real dW_dA(unit="m3.mol/(kg.J)")
@@ -104,9 +104,9 @@ model Test_WPair_adsorption_volumetric
 
   Real w_vol(unit="kg/kg")
     "Equilibrium loading";
-  Modelica.SIunits.Pressure p_inv_vol
+  Modelica.Units.SI.Pressure p_inv_vol
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T_inv_vol
+  Modelica.Units.SI.Temperature T_inv_vol
     "Equilibrium temperature";
 
   Real dw_dp_vol(unit="kg/(kg.Pa)")

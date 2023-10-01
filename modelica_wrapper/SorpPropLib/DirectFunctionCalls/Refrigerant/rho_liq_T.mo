@@ -6,14 +6,14 @@ function rho_liq_T
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Temperature T_sat
+  input Modelica.Units.SI.Temperature T_sat
     "Saturation temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 
   //
   // Definition of outputs
   //
-  output Modelica.SIunits.Density d_liq
+  output Modelica.Units.SI.Density d_liq
     "Saturated liquid density"
     annotation (Dialog(tab="General", group = "Inputs", enable = false));
 

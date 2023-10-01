@@ -10,14 +10,14 @@ function p_wT
   input Real w(unit="kg/kg")
     "Equilibrium loading"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 
   //
   // Definition of outputs
   //
-  output Modelica.SIunits.Pressure p
+  output Modelica.Units.SI.Pressure p
     "Equilibrium pressure"
     annotation (Dialog(tab="General", group = "Inputs", enable = false));
 

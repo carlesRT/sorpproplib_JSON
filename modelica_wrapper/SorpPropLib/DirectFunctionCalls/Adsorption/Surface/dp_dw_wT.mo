@@ -10,7 +10,7 @@ function dp_dw_wT
   input Real w(unit="kg/kg")
     "Equilibrium loading"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 

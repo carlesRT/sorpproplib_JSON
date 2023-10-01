@@ -9,7 +9,7 @@ function dA_dW_WRho
   input Real W(unit="m3/kg")
     "Volumetric loading"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Density d_liq
+  input Modelica.Units.SI.Density d_liq
     "Saturated liquid density (i.e., density of adsorpt)"
     annotation(Dialog(tab="General", group="Inputs"));
 

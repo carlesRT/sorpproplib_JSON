@@ -7,10 +7,10 @@ function dw_dT_pT
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Pressure p
+  input Modelica.Units.SI.Pressure p
     "Equilibrium pressure"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
 

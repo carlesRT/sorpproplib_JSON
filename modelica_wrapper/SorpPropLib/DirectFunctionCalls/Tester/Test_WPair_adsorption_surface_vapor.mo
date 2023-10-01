@@ -9,7 +9,7 @@ model Test_WPair_adsorption_surface_vapor
   // Definition of parameters
   //
   parameter String path_db=
-    "D:/Engelpracht/04-C/sorproplib/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
+    "PC-SIM1/PC-Sim1-Daten/Carles/rep/SorpProp/sorpproplib_JSON/modelica_wrapper/SorpPropLib/Resources/Data/sorpproplib.json"
     "Path to database, i.e., JSON-file of database."
     annotation (Dialog(tab="General", group = "Working pair"));
 
@@ -47,15 +47,15 @@ model Test_WPair_adsorption_surface_vapor
   //
   // Definition of inputs
   //
-  Modelica.SIunits.Pressure p = 1e5 -250*time
+  Modelica.Units.SI.Pressure p = 1e5 -250*time
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T = 303.15 + 1*time
+  Modelica.Units.SI.Temperature T = 303.15 + 1*time
     "Equilibrium temperature";
 
   //
   // Definition of variables for refrigerant functions
   //
-  Modelica.SIunits.Pressure p_sat
+  Modelica.Units.SI.Pressure p_sat
     "Vapor pressure";
   Real dp_dT_sat(unit = "Pa/K")
     "Derivative of pressure wrt. temperature";
@@ -65,9 +65,9 @@ model Test_WPair_adsorption_surface_vapor
   //
   Real w(unit="kg/kg")
     "Equilibrium loading";
-  Modelica.SIunits.Pressure p_inv
+  Modelica.Units.SI.Pressure p_inv
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T_inv
+  Modelica.Units.SI.Temperature T_inv
     "Equilibrium temperature";
 
   Real dw_dp(unit="kg/(kg.Pa)")
@@ -89,9 +89,9 @@ model Test_WPair_adsorption_surface_vapor
   //
   Real w_sur_vap(unit="kg/kg")
     "Equilibrium loading";
-  Modelica.SIunits.Pressure p_inv_sur_vap
+  Modelica.Units.SI.Pressure p_inv_sur_vap
     "Equilibrium pressure";
-  Modelica.SIunits.Temperature T_inv_sur_vap
+  Modelica.Units.SI.Temperature T_inv_sur_vap
     "Equilibrium temperature";
 
   Real dw_dp_sur_vap(unit="kg/(kg.Pa)")

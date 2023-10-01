@@ -7,7 +7,7 @@ function piStar_pyxgTpsatM "Calculates reduced spreading pressure depending on t
   //
   // Definition of inputs
   //
-  input Modelica.SIunits.Pressure p_total
+  input Modelica.Units.SI.Pressure p_total
     "Total pressure"
     annotation(Dialog(tab="General", group="Inputs"));
   input Real y(unit = "mol/mol")
@@ -19,13 +19,13 @@ function piStar_pyxgTpsatM "Calculates reduced spreading pressure depending on t
   input Real g(unit = "1")
     "Activity coefficient of adsorptive in adsorbed phase"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Temperature T
+  input Modelica.Units.SI.Temperature T
     "Equilibrium temperature"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.Pressure p_sat
+  input Modelica.Units.SI.Pressure p_sat
     "Vapor pressure"
     annotation(Dialog(tab="General", group="Inputs"));
-  input Modelica.SIunits.MolarMass M
+  input Modelica.Units.SI.MolarMass M
     "Molar mass of adsorptive"
     annotation(Dialog(tab="General", group="Inputs"));
 
